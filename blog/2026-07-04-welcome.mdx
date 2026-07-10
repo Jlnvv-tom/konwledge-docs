@@ -1,0 +1,28 @@
+---
+title: 欢迎来到知识库博客
+description: 记录技术决策、迁移经验和最佳实践
+slug: welcome
+authors: [admin]
+tags: [announcement]
+---
+
+# 欢迎来到知识库博客
+
+这是知识库的博客区域，用于记录：
+
+- 📝 技术决策过程
+- 🔄 迁移经验（VitePress → Docusaurus）
+- 📊 性能对比数据
+- 💡 最佳实践
+
+## 为什么从 VitePress 迁移
+
+VitePress 在处理上千份文档时会出现 Node.js V8 堆内存溢出（OOM）问题，根因是 SSG 模型将所有文档全量加载到内存。
+
+Docusaurus 采用逐页编译渲染策略，构建稳定可靠。
+
+## 后续计划
+
+1. 将现有 VitePress 文档迁移到 `docs/` 目录
+2. 完善搜索索引
+3. 添加更多自定义组件
