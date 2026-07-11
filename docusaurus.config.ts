@@ -13,8 +13,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://your-site.example.com',
-  baseUrl: '/',
+  url: 'https://jlnvv-tom.github.io',
+  baseUrl: '/konwledge-docs/',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
