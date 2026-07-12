@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # 第12章 WebSocket网关高可用与总结
 
 ## 从一次线上事故说起

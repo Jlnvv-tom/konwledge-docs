@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # FastAPI初体验：为什么它成了Python Web开发的新宠？
 
 > 在Web框架百花齐放的今天，FastAPI凭借什么在短短几年内迅速崛起？让我们一起探索这个「现代Python Web开发的新选择」。

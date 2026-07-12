@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # 第5章 AI开发工具——编程助手的开源选择
 
 GitHub Copilot每月10美元，这5个开源工具免费替代。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # 第2章 协议基础：理解Domain、Method与Event
 
 > **本章导读**：本章深入剖析Chrome DevTools Protocol（CDP）的协议基础，从通信协议栈的底层原理出发，系统讲解Domain、Method与Event三大核心概念，并通过实战代码示例帮助你掌握CDP连接建立、命令调用与事件监听的完整流程。

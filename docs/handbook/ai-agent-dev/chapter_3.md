@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # 第3章 Manus 实战：通用 Agent 全流程
 
 试了7个 Agent 平台，我靠 Manus 把效率翻了10倍。

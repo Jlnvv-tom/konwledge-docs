@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # FastAPI数据库集成：SQLAlchemy实战完全指南
 
 > 数据库是Web应用的灵魂，而SQLAlchemy是Python世界最强大的ORM。学会如何在FastAPI中优雅地使用SQLAlchemy，是你从API开发者成长为全栈工程师的关键一步。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # 第5章 性能监控与自动化审计
 
 > "你无法优化你无法衡量的东西。" —— Peter Drucker

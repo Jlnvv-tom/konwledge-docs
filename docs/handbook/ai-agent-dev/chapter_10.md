@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # 第10章 LangChain 入门实战：从零搭建你的第一个 Agent
 
 LangChain 学了3天，代码写了200行，一问三不知。问题出在哪？你在学框架，不是在学 Agent。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 第1章 AI Agent 本质与认知框架
 
 你以为 AI Agent 就是个高级聊天机器人？其实差了十万八千里。

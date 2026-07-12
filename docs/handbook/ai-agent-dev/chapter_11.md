@@ -1,3 +1,7 @@
+---
+sidebar_position: 11
+---
+
 # 第11章 LlamaIndex 实战：企业级 RAG 知识库
 
 RAG 做得烂，90%是因为检索不准。LlamaIndex 就是来治这个病的。

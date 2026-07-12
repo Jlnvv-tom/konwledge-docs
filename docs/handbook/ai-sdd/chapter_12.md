@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # 第12章 Codex 进阶技巧：高级 Prompt 与 Hook
 
 基础用法让你跑起来，进阶技巧让你跑得快、跑得稳。本章聚焦 Codex 的高级 Prompt 技巧、Hook 自动化机制、Session 管理和 MCP（Model Context Protocol）集成，帮助你将 AI 编程效率推向极限。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 第8章 SDD 规范驱动开发
 
 Harness Engineering 解决了"AI 如何可靠地执行"的问题，但还有一个更根本的问题没回答：执行什么才是正确的？AI 可以高效地生成代码，但如果需求本身就是模糊的、矛盾的、不完整的，再高效的执行也只是加速犯错。SDD（Specification-Driven Development，规范驱动开发）就是来解决这个问题的——在 AI 写代码之前，先用规范把"做什么"定义清楚。

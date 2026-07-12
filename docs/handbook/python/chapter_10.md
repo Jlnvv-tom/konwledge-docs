@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # Python标准库常用模块：释放Python的真正威力
 
 > 从数学计算到系统操作，掌握Python标准库的核心模块，让代码更强大、更高效

@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 面向对象编程进阶：掌握Python的高级OOP技巧
 
 > 从会用到精通，解锁Python面向对象编程的高级特性与设计艺术

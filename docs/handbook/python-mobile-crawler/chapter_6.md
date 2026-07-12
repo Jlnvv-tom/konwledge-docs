@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # 第6章 掌握Appium的内置功能
 
 我是怕浪猫，一个在移动端爬虫领域摸爬滚打多年的技术老兵。上一章我们打通了Appium环境部署的任督二脉，从JDK安装到Appium Server配置，从模拟器调优到Desired Capabilities参数详解，每一步都踩实了。这一章该进入真正的实战环节了。

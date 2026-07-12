@@ -1,3 +1,7 @@
+---
+sidebar_position: 15
+---
+
 # 第15章 CI/CD与容器化部署
 
 你写完了一个Python项目,本地跑得好好的。你把代码传到服务器上,`pip install -r requirements.txt`报了一堆依赖冲突。你花了两小时解决依赖,启动应用又报`ModuleNotFoundError`。等你把所有问题解决完,天已经亮了,而你的同事问你:能不能在新服务器上再部署一次?你沉默了。

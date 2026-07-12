@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 第4章 Coze 扣子实战：低代码 Agent 全攻略
 
 你以为零代码做 Agent 就是拖拖拽拽？Coze 告诉你：零代码也能做出比代码还复杂的东西。

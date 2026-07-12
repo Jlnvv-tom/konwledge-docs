@@ -1,3 +1,7 @@
+---
+sidebar_position: 13
+---
+
 # 石破天惊 — Transformer架构的革命
 
 2017年，Google的一篇论文《Attention Is All You Need》像一颗石子投入了NLP（Natural Language Processing，自然语言处理）的湖面。那篇论文提出了一个全新的架构——Transformer。在此之前的序列建模领域，RNN（Recurrent Neural Network，循环神经网络）和LSTM（Long Short-Term Memory，长短期记忆网络）是绝对的霸主。Transformer问世之后，整个领域被彻底改写。BERT、GPT、T5、Llama、Claude，你能叫出名字的所有大语言模型，底层架构全部源于Transformer。这不是一次简单的技术迭代，而是一次范式的颠覆。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # 第12章 LangGraph 实战：复杂 Agent 状态机编排
 
 ReAct Agent 就像一个没有导航的司机——知道目的地，但遇到路口容易绕晕。LangGraph 就是给 Agent 装上导航。

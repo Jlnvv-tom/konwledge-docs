@@ -1,3 +1,7 @@
+---
+sidebar_position: 14
+---
+
 # 第14章 CrewAI 实战：角色驱动的 AI 团队
 
 AutoGen 像会议室——大家七嘴八舌讨论。CrewAI 像项目组——各有分工，流程驱动。

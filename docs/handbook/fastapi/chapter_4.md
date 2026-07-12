@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # FastAPI数据验证与类型提示
 
 > 数据验证不只是检查输入，更是API健壮性的第一道防线。FastAPI + Pydantic的组合让Python类型系统发挥出超乎想象的力量。

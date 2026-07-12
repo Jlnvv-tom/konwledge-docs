@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # 第9章 多浏览器上下文与移动端调试
 
 > 🌍 现代浏览器不仅仅是单页面容器——标签页、iframe、Service Worker、WebView 构成了一个复杂的多上下文世界。CDP 让你能精确管理每一个上下文。

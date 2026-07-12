@@ -1,3 +1,7 @@
+---
+sidebar_position: 20
+---
+
 # 第20章：Web服务实战——构建RESTful API
 
 在Golang开发中，构建RESTful API是最常见的Web服务场景之一。不同于传统的单体Web应用，RESTful API专注于“资源”的操作，遵循无状态、统一接口等设计原则，适配前后端分离、微服务等主流架构。

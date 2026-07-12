@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # FastAPI WebSocket实战：从实时聊天室到生产级部署
 
 > WebSocket是实时Web应用的基石。当你的应用需要推送通知、实时聊天或协作编辑时，WebSocket提供了比HTTP轮询更高效的双向通信方案。本文将带你从WebSocket基础到生产级部署，全面掌握FastAPI中的WebSocket开发。

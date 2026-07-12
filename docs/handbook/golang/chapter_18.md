@@ -1,3 +1,7 @@
+---
+sidebar_position: 18
+---
+
 # 第18章：测试与性能调优——unit test与benchmark
 
 大家好～ 前面我们搞定了Go的反射与泛型，今天聚焦Go开发中“保障代码质量、提升程序性能”的核心环节：**测试（unit test）**与**性能调优（benchmark+pprof）**。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # 第6章 检索增强生成：打造知识库驱动型Agent
 
 Agent如果只依赖LLM的内置知识，就像一个只靠记忆力的学生——知识有限且会过时。RAG（Retrieval-Augmented Generation）让Agent能从外部知识库中检索专业、实时的信息，大幅提升回答的准确性和深度。本章将从全流程解析到高级策略，系统讲解RAG技术。

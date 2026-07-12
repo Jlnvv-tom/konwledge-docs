@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # 第3章 LangChain 核心抽象：Models 与 Messages
 
 上一章我们完成了LangChain开发环境的搭建，相当于为大模型应用开发准备好了“工具房”。本章将聚焦LangChain最基础、最核心的两个抽象概念——**Models（模型）**和**Messages（消息）**：Models是LangChain与大模型交互的“入口”，决定了回答的质量和能力；Messages是交互的“载体”，定义了用户、AI和系统之间的对话逻辑。

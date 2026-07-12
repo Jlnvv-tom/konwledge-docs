@@ -1,3 +1,7 @@
+---
+sidebar_position: 16
+---
+
 # 第16章：标准库精讲（二）——net/http、json、time
 
 大家好～ 上一篇我们精讲了Go标准库的基础核心模块，今天继续深挖最常用的3个实用模块：**net/http**（HTTP客户端/服务端）、**encoding/json**（JSON编解码）、**time**（时间处理/定时任务）。

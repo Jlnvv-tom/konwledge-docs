@@ -1,3 +1,7 @@
+---
+sidebar_position: 16
+---
+
 # 第16章 MCP 协议实战：AI 与外部世界的标准接口
 
 Agent 没有手，MCP 就是它的手。

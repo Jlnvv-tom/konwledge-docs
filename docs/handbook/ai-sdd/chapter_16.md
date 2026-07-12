@@ -1,3 +1,7 @@
+---
+sidebar_position: 16
+---
+
 # 第16章 总结与展望：Vibe Coding 到 Harness x SDD 全栈开发之路
 
 经过 15 章的学习和实战，你从直觉式的 Vibe Coding 出发，逐步掌握了 AI 全栈开发的工程化方法论。本章将全书内容系统梳理，提炼核心思想，并展望 AI 编程的未来方向。

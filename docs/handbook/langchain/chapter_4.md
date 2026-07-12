@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 第4章 提示工程基础：Prompt Templates
 
 上一章我们掌握了LangChain的核心抽象——Models与Messages，学会了如何调用不同类型的模型、管理对话消息。而提示工程（Prompt Engineering）是连接“用户需求”与“模型输出”的关键桥梁，直接决定了模型回答的质量和准确性。

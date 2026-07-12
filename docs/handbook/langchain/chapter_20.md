@@ -1,3 +1,7 @@
+---
+sidebar_position: 20
+---
+
 # 第20章 LangServe：部署为 REST API
 
 用LangChain开发完链（Chain）、RAG系统或Agent后，最关键的一步就是“落地部署”——让你的LLM应用能被前端、其他服务调用，真正发挥业务价值。而LangServe，正是LangChain官方推出的“一键部署神器”，专门解决LLM应用的服务化难题。
