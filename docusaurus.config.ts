@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-// 自定义插件：把被 remark-gfm 错误 autolink 的裸 URL（含中文/全角标点）还原为纯文本
+// 自定义插件：在 remark-gfm 之前，把「后接中文/全角标点的裸 URL」包成行内代码，避免 autolink 后 URL 解析失败
 import remarkPlaintextAutolinks from './scripts/remark-plaintext-autolinks.cjs';
 
 const config: Config = {
@@ -21,6 +21,8 @@ const config: Config = {
   onBrokenLinks: 'warn',
   // 迁移自 VitePress 的 .md 含大量 { } 字面量：detect 让 .md 走纯 Markdown、.mdx 仍走 MDX，
   // 避免 MDX 把 { } 当成 JSX 表达式而构建报错
+  // 源文档大量裸 URL 后紧跟中文/全角标点，被 remark-gfm autolink 后 URL 解析失败；
+  // 修复放在 docs/blog 的 beforeDefaultRemarkPlugins（在 gfm 之前运行）
   markdown: {
     format: 'detect',
     hooks: {
@@ -53,7 +55,9 @@ const config: Config = {
           routeBasePath: '/docs',
           sidebarCollapsible: true,
           sidebarCollapsed: false,
-          remarkPlugins: [remarkMath, remarkPlaintextAutolinks],
+          // 在 remark-gfm 之前把「后接中文/全角标点的裸 URL」包成行内代码，避免 autolink 后 URL 解析失败
+          beforeDefaultRemarkPlugins: [remarkPlaintextAutolinks],
+          remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
         },
         blog: {
@@ -65,7 +69,9 @@ const config: Config = {
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
-          remarkPlugins: [remarkMath, remarkPlaintextAutolinks],
+          // 同上：在 remark-gfm 之前修复裸 URL
+          beforeDefaultRemarkPlugins: [remarkPlaintextAutolinks],
+          remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
         },
         theme: {
