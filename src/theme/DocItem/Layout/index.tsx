@@ -19,14 +19,14 @@ export default function LayoutWrapper(props: Props): ReactNode {
             </span>
             <div className={styles.feedbackButtons}>
               <a
-                href="https://github.com/your-repo/docs/issues/new"
+                href="https://github.com/Jlnvv-tom/konwledge-docs/issues/new"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.feedbackBtn}>
                 📝 提交反馈
               </a>
               <a
-                href="https://github.com/your-repo/docs/edit/main/"
+                href="https://github.com/Jlnvv-tom/konwledge-docs/edit/master/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.feedbackBtn}>
