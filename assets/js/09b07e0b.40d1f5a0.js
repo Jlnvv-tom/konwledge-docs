@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_demo=self.webpackChunkdocusaurus_demo||[]).push([["7487"],{11902(e){e.exports=JSON.parse('{"tags":[{"label":"announcement","permalink":"/konwledge-docs/blog/tags/announcement","count":1}]}')}}]);

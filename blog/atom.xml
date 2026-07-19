@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://jlnvv-tom.github.io/konwledge-docs/blog</id>
+    <title>知识库 Blog</title>
+    <updated>2026-07-04T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://jlnvv-tom.github.io/konwledge-docs/blog"/>
+    <subtitle>知识库 Blog</subtitle>
+    <icon>https://jlnvv-tom.github.io/konwledge-docs/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[欢迎来到知识库博客]]></title>
+        <id>https://jlnvv-tom.github.io/konwledge-docs/blog/welcome</id>
+        <link href="https://jlnvv-tom.github.io/konwledge-docs/blog/welcome"/>
+        <updated>2026-07-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[记录技术决策、迁移经验和最佳实践]]></summary>
+        <content type="html"><![CDATA[<p>这是知识库的博客区域，用于记录：</p>
+<ul>
+<li class="">📝 技术决策过程</li>
+<li class="">🔄 迁移经验（VitePress → Docusaurus）</li>
+<li class="">📊 性能对比数据</li>
+<li class="">💡 最佳实践</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="为什么从-vitepress-迁移">为什么从 VitePress 迁移<a href="https://jlnvv-tom.github.io/konwledge-docs/blog/welcome#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BB%8E-vitepress-%E8%BF%81%E7%A7%BB" class="hash-link" aria-label="为什么从 VitePress 迁移的直接链接" title="为什么从 VitePress 迁移的直接链接" translate="no">​</a></h2>
+<p>VitePress 在处理上千份文档时会出现 Node.js V8 堆内存溢出（OOM）问题，根因是 SSG 模型将所有文档全量加载到内存。</p>
+<p>Docusaurus 采用逐页编译渲染策略，构建稳定可靠。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="后续计划">后续计划<a href="https://jlnvv-tom.github.io/konwledge-docs/blog/welcome#%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92" class="hash-link" aria-label="后续计划的直接链接" title="后续计划的直接链接" translate="no">​</a></h2>
+<ol>
+<li class="">将现有 VitePress 文档迁移到 <code>docs/</code> 目录</li>
+<li class="">完善搜索索引</li>
+<li class="">添加更多自定义组件</li>
+</ol>]]></content>
+        <author>
+            <name>知识库管理员</name>
+            <uri>https://github.com/your-repo</uri>
+        </author>
+        <category label="announcement" term="announcement"/>
+    </entry>
+</feed>

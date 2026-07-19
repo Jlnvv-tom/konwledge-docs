@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_demo=self.webpackChunkdocusaurus_demo||[]).push([["4923"],{57095(u){u.exports=JSON.parse('{"authors":[{"name":"\u77E5\u8BC6\u5E93\u7BA1\u7406\u5458","title":"\u7EF4\u62A4\u8005","url":"https://github.com/your-repo","imageURL":"https://github.com/nickdotham.png","key":"admin","page":null,"count":1}]}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_demo=self.webpackChunkdocusaurus_demo||[]).push([["3220"],{1912(s){s.exports=JSON.parse('{"blogBasePath":"/konwledge-docs/blog","blogTitle":"Blog","authorsListPath":"/konwledge-docs/blog/authors"}')}}]);
