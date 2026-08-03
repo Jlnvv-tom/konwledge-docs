@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # 第六章 ControlNet 精准控制
 
 > 你以为AI画图只能靠提示词"盲盒式"抽奖？ControlNet的出现，直接把"抽卡游戏"变成了"精密遥控"。

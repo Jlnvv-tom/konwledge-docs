@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 第八章 DALL·E 3 与 OpenAI 生态
 
 用一句话描述，30秒出图，还能在图片里写对英文单词。这不是Midjourney，也不是Stable Diffusion，而是DALL·E 3。

@@ -137,6 +137,12 @@ const config: Config = {
           position: 'left',
           label: '笔记',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'bookSidebar',
+          position: 'left',
+          label: '书籍',
+        },
         {to: '/blog', label: '博客', position: 'left'},
         {
           href: 'https://github.com/Jlnvv-tom/konwledge-docs',

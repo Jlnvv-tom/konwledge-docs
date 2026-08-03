@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 第四章 Stable Diffusion 深度教程
 
 ## 开篇

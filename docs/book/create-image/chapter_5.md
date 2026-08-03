@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # 第五章 ComfyUI 工作流
 
 你是不是也经历过这种崩溃时刻：在 WebUI 里调了一下午参数，好不容易出了一张满意的图，却发现根本不记得怎么复现？或者你想把图生图、LoRA（Low-Rank Adaptation，低秩适配）、ControlNet 串联成一条流水线，却发现 WebUI 的表单界面根本不允许你自由组合？别急，这些都是进阶玩家必经的痛点，而本章要讲的 ComfyUI，正是解药。
