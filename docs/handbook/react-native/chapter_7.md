@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 第7章 RN网络请求、文件上传与WebSocket通信
 
 你的RN项目是不是每个页面都在手写fetch，错误处理全靠try-catch层层嵌套，接口超时了用户看到的是一片白屏，文件上传连个进度条都没有，WebSocket断线了压根不知道？

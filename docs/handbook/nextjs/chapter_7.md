@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 第7章 Next.js API路由：搭建后端服务接口
 
 试了3种方式搭建后端接口，最后发现Next.js的Route Handler才是全栈开发的最优解——不用单独维护一个后端服务，前端项目里直接写API，部署成本直接砍半。

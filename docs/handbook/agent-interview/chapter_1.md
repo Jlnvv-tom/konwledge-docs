@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 第一章：Agent 基础概念与架构
 
 ## 1.1 什么是 AI Agent：从概念定义到本质特征

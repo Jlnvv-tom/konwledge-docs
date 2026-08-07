@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 第四章：Tool Use 与函数调用
 
 工具使用是 AI Agent 从"对话机器人"迈向"行动主体"的关键分水岭。一个没有工具调用能力的 LLM (Large Language Model, 大语言模型) 只能在自身参数化知识范围内进行推理和生成，而具备工具使用能力后，Agent 可以查询实时数据库、调用外部 API (Application Programming Interface, 应用程序编程接口)、执行代码、操作浏览器，甚至控制物理设备。本章将系统性地拆解 Agent 工具体系的各个层面，从工具分类、调用流程、描述工程到安全控制和编排架构，帮助你建立对 Tool Use 的完整认知。

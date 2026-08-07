@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # 第三章：Prompt Engineering 与推理范式
 
 Prompt Engineering 是大语言模型应用层最核心的工程方法论之一。它不仅决定了模型输出的质量，更是 Agent 系统中行为约束、推理控制和安全的基石。本章将系统展开 Prompt Engineering 中的推理范式、攻击面防御、工程化管理和评估体系，覆盖从基础 CoT 到复杂的 ToT 搜索框架，从 Prompt 模板化到评估体系的完整知识链路。

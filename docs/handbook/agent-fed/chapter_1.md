@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 第一章：FDE 角色认知与职业定位
 
 ## 1.1 什么是 FDE：从 Palantir 到 AI 时代的演进

@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # 第12章 项目工程化与规范配置
 
 团队里5个人写Next.js，5种代码风格。有人用any，有人用unknown，有人不写类型。合并代码时Git冲突能吵一下午。后来花半天配好ESLint + Prettier + husky + commitlint，从此代码风格自动统一，提交信息自动检查，效率提升不止一倍。

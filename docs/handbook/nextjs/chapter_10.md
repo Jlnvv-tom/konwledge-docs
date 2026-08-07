@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # 第10章 身份认证与权限系统开发
 
 认证功能写了3遍，每次都踩不同的坑。第一遍Cookie没设HttpOnly，第二遍Token存在localStorage被XSS偷了，第三遍Refresh Token没轮换被重放攻击。认证系统的坑，一次踩完比分三次踩好。

@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 第七章：多 Agent 系统与协作
 
 ## 7.1 多 Agent 系统概述：为什么需要多个 Agent
