@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # 第5章：WebView 与 App 集成
 
 Hybrid开发踩了3年坑，我把JS Bridge的原理和离线包方案总结成了这篇。我是怕浪猫，一个在Hybrid开发领域实战多年的前端工程师。上一篇讲了性能优化，这篇进入 Hybrid 开发的核心：WebView 原理、JS Bridge 设计、离线包、安全防护。
