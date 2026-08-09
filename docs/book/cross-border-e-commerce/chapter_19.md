@@ -1,3 +1,7 @@
+---
+sidebar_position: 19
+---
+
 # 第19章 成功案例分析
 
 你有没有想过，2024年SHEIN的估值曾一度超过ZARA和H&M的总和，而它的创始人许仰天，最初只是做SEO（Search Engine Optimization，搜索引擎优化）出身的一个普通技术男？
