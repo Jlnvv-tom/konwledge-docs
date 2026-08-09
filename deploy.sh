@@ -9,6 +9,9 @@ npm run build
 # 进入生成的文件夹
 cd build
 
+# 排除超过 GitHub 100MB 限制的大文件（搜索索引）
+echo "search-index.json" > .gitignore
+
 # 初始化临时仓库并提交
 git init
 git add -A
