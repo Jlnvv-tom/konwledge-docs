@@ -1,0 +1,104 @@
+/* ===== 卡片目录页样式 ===== */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.cardLink {
+  text-decoration: none !important;
+  display: block;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  min-height: 64px;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary-lightest);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+[data-theme='dark'] .card {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+[data-theme='dark'] .card:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px -2px rgba(129, 140, 248, 0.15);
+}
+
+.cardCategory {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+[data-theme='dark'] .cardCategory {
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
+  border-color: rgba(129, 140, 248, 0.2);
+}
+
+.cardIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+[data-theme='dark'] .cardTitle {
+  color: var(--ifm-color-emphasis-800);
+}
+
+.cardArrow {
+  font-size: 1.1rem;
+  color: var(--ifm-color-emphasis-400);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.card:hover .cardArrow {
+  transform: translateX(4px);
+  color: var(--ifm-color-primary);
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 1.1rem;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
