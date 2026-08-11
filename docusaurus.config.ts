@@ -60,20 +60,6 @@ const config: Config = {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-          // 同上：在 remark-gfm 之前修复裸 URL
-          beforeDefaultRemarkPlugins: [remarkPlaintextAutolinks],
-          remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
-        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -89,7 +75,7 @@ const config: Config = {
         hashed: true,
         language: ['zh', 'en'],
         indexDocs: true,
-        indexBlog: true,
+        indexBlog: false,
         indexPages: true,
         docsRouteBasePath: ['/docs'],
         searchBarPosition: 'right',
@@ -114,36 +100,47 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          type: 'doc',
+          docId: 'history-humanities/index',
           position: 'left',
-          label: '文档',
+          label: '📜 历史',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'apiSidebar',
+          type: 'doc',
+          docId: 'business-economics/index',
           position: 'left',
-          label: 'API',
+          label: '💰 商业',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'knowledgeSidebar',
+          type: 'doc',
+          docId: 'ai-practice/index',
           position: 'left',
-          label: '知识',
+          label: '🤖 AI',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'notesSidebar',
+          type: 'doc',
+          docId: 'python-crawler/index',
           position: 'left',
-          label: '笔记',
+          label: '🐍 Python',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'bookSidebar',
+          type: 'doc',
+          docId: 'backend-database/index',
           position: 'left',
-          label: '书籍',
+          label: '⚙️ 后端',
         },
-        {to: '/blog', label: '博客', position: 'left'},
+        {
+          type: 'doc',
+          docId: 'frontend-engineering/index',
+          position: 'left',
+          label: '🎨 前端',
+        },
+        {
+          type: 'doc',
+          docId: 'life-encyclopedia/index',
+          position: 'left',
+          label: '📚 生活',
+        },
         {
           href: 'https://github.com/Jlnvv-tom/konwledge-docs',
           label: 'GitHub',
@@ -155,13 +152,6 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: '文档',
-          items: [
-            {label: '入门指南', to: '/docs/intro'},
-            {label: '快速开始', to: '/docs/quick-start'},
-          ],
-        },
-        {
           title: '社区',
           items: [
             {label: 'GitHub Issues', href: 'https://github.com/Jlnvv-tom/konwledge-docs/issues'},
@@ -171,7 +161,6 @@ const config: Config = {
         {
           title: '更多',
           items: [
-            {label: '博客', to: '/blog'},
             {label: 'GitHub', href: 'https://github.com/Jlnvv-tom/konwledge-docs'},
           ],
         },
@@ -191,7 +180,7 @@ const config: Config = {
     // 版本通知条
     announcementBar: {
       id: 'announcement-bar',
-      content: '🎉 知识库 v2.0 已发布，<a href="/docs/changelog">查看更新</a>',
+      content: '🎉 知识库 v2.0 已发布，全新 7 大分类导航',
       backgroundColor: 'var(--ifm-color-primary)',
       textColor: '#ffffff',
       isCloseable: true,
