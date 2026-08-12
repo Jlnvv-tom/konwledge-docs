@@ -422,6 +422,191 @@ window.addEventListener('message', (e) => {
 });
 ```
 
+## 14.7 CORS 预检请求的缓存机制
+
+### 14.7.1 预检缓存的工作方式
+
+每次非简单请求都需要先发送 OPTIONS 预检请求，这会增加一个 RTT 的延迟。为了避免每次请求都预检，浏览器会缓存预检结果。
+
+```
+预检缓存流程
+
+首次请求 PUT /api/data:
+  1. 发送 OPTIONS 预检请求
+     ├─ Access-Control-Request-Method: PUT
+     └─ Access-Control-Request-Headers: Content-Type
+  
+  2. 服务器返回预检响应
+     ├─ Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+     ├─ Access-Control-Allow-Headers: Content-Type, Authorization
+     └─ Access-Control-Max-Age: 86400  ← 缓存 24 小时
+  
+  3. 发送实际 PUT 请求
+
+后续请求 (24小时内):
+  直接发送 PUT 请求
+  → 跳过预检!
+  → 节省 1 RTT
+
+24小时后:
+  预检缓存过期
+  → 下次请求重新预检
+```
+
+Access-Control-Max-Age 的值由服务器控制，但浏览器有自己的上限：Chrome 最大缓存 2 小时（7200 秒），Firefox 最大 24 小时（86400 秒），即使服务器返回更大的值也会被截断。
+
+### 14.7.2 CORS 与 CDN 的配合
+
+在使用 CDN 时，CORS 配置需要特别注意。CDN 的边缘节点会缓存资源响应，如果 CORS 头没有被正确缓存，可能导致跨域请求失败。
+
+```
+CDN 场景下的 CORS 配置
+
+场景1: 字体文件跨域加载
+  页面: https://app.example.com
+  字体: https://cdn.example.com/font.woff2
+  
+  CDN 需要返回:
+    Access-Control-Allow-Origin: https://app.example.com
+    Cache-Control: public, max-age=31536000
+  
+  问题: 如果 CDN 返回 Access-Control-Allow-Origin: *
+  → 可以跨域加载，但无法携带 Cookie
+  
+  问题: 如果 CDN 按请求 Origin 返回具体域名
+  → CDN 缓存键必须包含 Origin
+  → 否则缓存了 A 域名的响应，B 域名收到 A 的 Origin
+
+最佳实践:
+  ├─ 对公开资源: Allow-Origin: *
+  ├─ 对私有资源: 动态返回具体 Origin + Vary: Origin
+  └─ CDN 缓存键包含 Origin (Vary: Origin)
+```
+
+### 14.7.3 CORS 代理方案
+
+当后端 API 不支持 CORS 时，前端可以使用代理方案绕过同源策略。代理方案的原理是：浏览器请求同源的代理服务器，代理服务器转发请求到目标 API。
+
+```
+CORS 代理方案
+
+浏览器                    代理服务器                 API 服务器
+https://app.com           https://app.com/proxy      https://api.com
+  │                          │                          │
+  │  GET /proxy/api/data     │                          │
+  │ ──────────────────────►│                          │
+  │  (同源请求,无 CORS 问题)  │  GET /api/data            │
+  │                          │ ──────────────────────►│
+  │                          │  (服务器间,无 CORS 限制)   │
+  │                          │  ◄──────────────────────│
+  │  ◄──────────────────────│  API 响应                 │
+  │  代理返回数据             │                          │
+
+开发环境:
+  ├─ Webpack DevServer: proxy 配置
+  ├─ Vite: server.proxy 配置
+  └─ create-react-app: 在 package.json 中配置 proxy
+
+生产环境:
+  ├─ Nginx 反向代理
+  ├─ API Gateway
+  └─ 服务端 BFF (Backend for Frontend)
+```
+
+### 14.7.4 CORS 调试技巧
+
+CORS 错误信息可能不够直观，以下是一些调试技巧。
+
+```
+CORS 调试检查清单
+
+错误: "No 'Access-Control-Allow-Origin' header"
+  ├─ 检查1: 服务器是否返回了 CORS 头?
+  │   curl -I -X OPTIONS https://api.com/data
+  │   -H "Origin: https://app.com"
+  │   -H "Access-Control-Request-Method: PUT"
+  ├─ 检查2: Origin 是否匹配?
+  │   服务器返回的 Allow-Origin 必须精确匹配请求的 Origin
+  ├─ 检查3: 是否是 HTTPS vs HTTP 不匹配?
+  └─ 检查4: 端口是否匹配?
+
+错误: "CORS preflight channel failed"
+  ├─ 检查: OPTIONS 请求是否被服务器正确处理?
+  ├─ 检查: 服务器是否返回了 2xx 状态码?
+  └─ 检查: Allow-Methods 是否包含请求方法?
+
+错误: "Credentialed requests require specific Allow-Origin"
+  ├─ 检查: credentials: 'include' 时
+  │   Allow-Origin 不能是 *
+  │   必须是具体域名
+  └─ 检查: Allow-Credentials: true 是否设置?
+```
+
+### 14.7.5 跨域 WebSocket 不受同源策略限制的原因
+
+WebSocket 不受同源策略限制，这看起来像是安全漏洞，但实际上有合理的设计原因。
+
+```
+WebSocket 跨域连接流程
+
+浏览器                    WebSocket 服务器
+  │                          │
+  │  HTTP Upgrade 请求        │
+  │  GET /ws HTTP/1.1         │
+  │  Upgrade: websocket       │
+  │  Origin: https://app.com  │
+  │ ────────────────────────►│
+  │                          │
+  │  服务器检查 Origin        │
+  │  ├─ 允许 → 升级连接       │
+  │  └─ 拒绝 → 返回 403       │
+  │ ◄────────────────────────│
+  │                          │
+  │  WebSocket 连接建立        │
+  │  (双向通信,不受同源限制)   │
+```
+
+WebSocket 不受同源策略限制的原因：WebSocket 在握手阶段使用 HTTP Upgrade 请求，但升级后不再是 HTTP 协议。同源策略是 HTTP 协议层面的限制，不适用于 WebSocket 协议。WebSocket 通过 Origin 头让服务器自行决定是否接受跨域连接——安全责任从浏览器转移到了服务器。
+
+### 14.7.6 Service Worker 中的 CORS 处理
+
+Service Worker 拦截网络请求，它对 CORS 的处理与浏览器原生不同。
+
+```javascript
+// Service Worker 中的 CORS 处理
+self.addEventListener('fetch', (event) => {
+  // Service Worker 可以拦截跨域请求
+  // 但返回的 Response 必须符合 CORS 规则
+  
+  event.respondWith(
+    fetch(event.request).then(response => {
+      // 如果是跨域请求，Response 必须有 CORS 头
+      // 否则浏览器会阻止 JavaScript 读取响应
+      
+      // Service Worker 可以修改响应头
+      const newResponse = new Response(response.body, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',  // 添加 CORS 头
+          'Content-Type': 'application/json'
+        }
+      });
+      return newResponse;
+    })
+  );
+});
+
+// 注意: Service Worker 中的 fetch() 不受同源策略限制
+// 但返回给页面的 Response 必须符合 CORS 规则
+```
+
+Service Worker 中的 fetch 请求不受同源策略限制（可以发送任何跨域请求），但 Service Worker 返回给页面的 Response 必须包含正确的 CORS 头，否则页面 JavaScript 无法读取响应。这意味着 Service Worker 可以充当 CORS 代理，但开发者需要确保这样做不会引入安全风险。
+
+| 场景 | 同源策略 | CORS 头 |
+|------|---------|--------|
+| 页面 fetch | 受限 | 需要 |
+| Service Worker fetch | 不受限 | 不需要 |
+| Service Worker → 页面 | 不适用 | 需要 |
+
 ## 本章核心知识总结
 
 | 知识模块 | 核心内容 | 安全意义 |

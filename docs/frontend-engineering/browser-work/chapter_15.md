@@ -363,6 +363,177 @@ Chrome 安全层级
 
 > 多层防御是安全架构的核心理念。没有任何单一安全机制是完美的，但多层叠加让攻击者需要同时利用多个不同类型的漏洞，大幅提高了攻击成本。Chrome 的安全设计是「不信任任何单一防线」。
 
+## 15.6 Windows/macOS/Linux 沙箱实现的技术细节对比
+
+### 15.6.1 Windows 沙箱: Restricted Token + Job Object
+
+Windows 平台的 Chrome 沙箱使用两个核心机制：受限令牌（Restricted Token）和作业对象（Job Object）。
+
+受限令牌是通过 Windows API `CreateRestrictedToken` 创建的。它从进程的访问令牌中移除特定的权限，包括：移除管理员组 SID（即使以管理员身份运行，渲染进程也没有管理员权限）、移除高完整性级别（Integrity Level）到 Low（低完整性）、添加拒绝访问的 ACE（Access Control Entry），阻止渲染进程访问敏感系统资源。
+
+作业对象通过 `CreateJobObject` 创建，进一步限制进程的行为：限制可分配的内存上限、限制 CPU 时间、限制可创建的子进程数、阻止修改系统全局设置（如壁纸、系统时间）。如果渲染进程被攻破，攻击者也无法修改系统设置。
+
+```
+Windows 沙箱权限对比
+
+正常进程权限:
+  ├─ 完整性级别: Medium/High
+  ├─ 可访问文件系统: 是
+  ├─ 可创建进程: 是
+  ├─ 可修改注册表: 是
+  └─ 可访问网络: 是
+
+渲染进程权限 (沙箱内):
+  ├─ 完整性级别: Low (无法写入 Medium+ 区域)
+  ├─ 可访问文件系统: 仅临时目录
+  ├─ 可创建进程: 否 (Job Object 限制)
+  ├─ 可修改注册表: 否
+  └─ 可访问网络: 否 (通过 IPC 代理)
+```
+
+### 15.6.2 macOS 沙箱: Seatbelt (sandbox-exec)
+
+macOS 使用名为 Seatbelt 的内核级 MAC（Mandatory Access Control，强制访问控制）机制。Chrome 通过编写 Seatbelt 策略文件来限制渲染进程的权限。
+
+Seatbelt 策略使用类似 Scheme 的语法描述允许和拒绝的操作。Chrome 的渲染进程策略包括：允许读写特定目录（如缓存目录）、允许特定的 IPC 操作、拒绝直接文件系统访问、拒绝创建网络套接字、拒绝执行新程序。
+
+```
+macOS Seatbelt 策略示例 (简化)
+
+;; 允许的文件系统访问
+(allow file-write* (subpath "/Users/.../Library/Caches/Chrome"))
+(allow file-read* (subpath "/Users/.../Library/Application Support/Chrome"))
+
+;; 拒绝的操作系统
+(deny file-write*)
+(deny process-exec*)
+(deny network*)
+(deny sysctl*)
+
+;; 允许的 IPC
+(allow mach-lookup (global-name "com.apple.system.notification_center"))
+```
+
+### 15.6.3 Linux 沙箱: Seccomp-BPF + Namespaces
+
+Linux 平台使用两层沙箱：Seccomp-BPF 系统调用过滤和用户命名空间（User Namespace）。
+
+Seccomp-BPF 通过 BPF 字节码过滤系统调用。Chrome 在渲染进程启动前安装 Seccomp 过滤器，限制可调用的系统调用白名单。白名单只包含渲染需要的系统调用（如 read, write, mmap, futex），排除了所有危险的系统调用（如 open, execve, fork, socket）。
+
+```
+Linux Seccomp-BPF 过滤逻辑
+
+允许的系统调用 (白名单):
+  read()       ✓ 读取已打开的文件描述符
+  write()      ✓ 写入已打开的文件描述符
+  mmap()       ✓ 内存映射
+  mprotect()   ✓ 修改内存保护
+  futex()      ✓ 线程同步
+  epoll_*()    ✓ 事件循环
+  clock_gettime() ✓ 获取时间
+
+禁止的系统调用 (默认拒绝):
+  open()       ✗ 打开新文件
+  openat()     ✗ 相对路径打开文件
+  socket()     ✗ 创建网络套接字
+  connect()    ✗ 连接网络
+  execve()     ✗ 执行新程序
+  fork()       ✗ 创建新进程
+  clone()      ✗ 创建新线程 (受限)
+  ptrace()     ✗ 调试其他进程
+```
+
+| 平台 | 核心机制 | 限制层级 | 逃逸难度 |
+|------|---------|---------|--------|
+| Windows | Restricted Token + Job Object | 用户态 + 内核态 | 中 |
+| macOS | Seatbelt (MAC) | 内核态 | 中-高 |
+| Linux | Seccomp-BPF + Namespace | 内核态 | 高 |
+| Android | Isolated Process | 内核态 (UID 隔离) | 中 |
+
+### 15.6.4 站点隔离的内存开销数据
+
+站点隔离带来了显著的安全收益，但代价是内存开销增加。Chrome 团队公布的实测数据显示了具体的内存影响。
+
+| 场景 | 无站点隔离 | 有站点隔离 | 增量 |
+|------|-----------|-----------|------|
+| 10 个同站点标签页 | 1.2 GB | 1.3 GB | +8% |
+| 10 个不同站点标签页 | 1.5 GB | 1.8 GB | +20% |
+| 1 个含 3 个跨站 iframe 的页面 | 300 MB | 450 MB | +50% |
+| 移动端 (Android) | 400 MB | 480 MB | +20% |
+
+内存开销的主要来源：每个渲染进程的基础开销（V8 实例约 20-30MB、Blink 渲染引擎约 10-20MB、进程基础设施约 5-10MB）。进程数越多，这些固定开销的累积越大。
+
+Chrome 的优化措施包括：共享只读内存段（V8 的内置代码快照在进程间共享）、内存压力下的进程合并（低内存设备）、延迟创建 V8 实例（直到页面真正需要 JavaScript）。
+
+### 15.6.5 进程模型演变
+
+Chrome 的进程模型经历了多次演变。
+
+```
+进程模型演变时间线
+
+2008: process-per-site-instance (初始)
+  ├─ 每个标签页的每个站点实例一个进程
+  ├─ 最强隔离
+  └─ 内存开销最大
+
+2011: process-per-site (低内存设备)
+  ├─ 同一站点所有实例共享进程
+  ├─ 减少进程数
+  └─ 牺牲部分隔离
+
+2018: + Site Isolation
+  ├─ 跨站点 iframe 独立进程
+  ├─ 即使在同一标签页内
+  └─ 安全隔离与性能隔离结合
+
+2020: + Process Sharing
+  ├─ 达到进程上限时共享
+  ├─ 相似站点可共享进程
+  └─ 动态调整
+```
+
+### 15.6.6 站点隔离对扩展的影响
+
+浏览器扩展（Extensions）运行在扩展进程中，与渲染进程交互。站点隔离改变了扩展与网页的交互方式。
+
+扩展通过 `chrome.scripting.executeScript` 或 content scripts 注入到网页中的代码，需要与网页的渲染进程关联。在站点隔离之前，一个标签页的所有 content scripts 都在同一个渲染进程中。站点隔离后，跨站点的 iframe 在不同进程中，扩展的 content scripts 也需要分发到不同的渲染进程中。
+
+### 15.6.7 Spectre V1/V2/V3 缓解
+
+Spectre 和 Meltdown 漏洞家族有三个主要变体，每个变体需要不同的缓解措施。
+
+```
+Spectre/Meltdown 变体与缓解
+
+V1: Spectre (Bounds Check Bypass)
+  ├─ 原理: 训练分支预测器绕过边界检查
+  ├─ 影响: 可读取同进程内任意内存
+  └─ 缓解: 站点隔离 (不同站点在不同进程)
+     + 推测执行屏障 (LFENCE 指令)
+
+V2: Spectre (Branch Target Injection)
+  ├─ 原理: 污染间接分支预测器
+  ├─ 影响: 可读取同进程或跨进程内存
+  └─ 缓解: Retpoline (替换间接分支)
+     + Reptiline (编译时重写)
+     + IBRS (CPU 微码更新)
+
+V3: Meltdown (Rogue Data Cache Load)
+  ├─ 原理: 利用乱序执行读取内核内存
+  ├─ 影响: 可读取操作系统内核数据
+  └─ 缓解: KPTI (内核页表隔离)
+     + PCID (进程上下文标识)
+```
+
+| 变体 | 攻击目标 | 浏览器缓解 | OS 缓解 | 硬件缓解 |
+|------|---------|-----------|--------|---------|
+| V1 (Spectre) | 同进程内存 | 站点隔离 | — | 推测屏障 |
+| V2 (Spectre) | 跨进程内存 | Retpoline | — | IBRS 微码 |
+| V3 (Meltdown) | 内核内存 | — | KPTI | 硬件修复 |
+
+Chrome 对 Spectre V1 的主要缓解是站点隔离。通过将不同站点放在不同进程中，V1 攻击只能读取同一进程内的数据，即同一站点的数据。对于攻击者来说，读取自己站点的数据没有意义。
+
 ## 本章核心知识总结
 
 | 知识模块 | 核心内容 | 安全意义 |

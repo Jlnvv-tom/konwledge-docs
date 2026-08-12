@@ -510,6 +510,226 @@ touch-action CSS 属性可以告诉浏览器哪些手势可以被识别，哪些
 
 > Pointer Events 是未来。它统一了鼠标、触摸、笔三种输入，开发者只需要写一套代码。而且它天然支持合成器的快速路径，性能比分别监听 mouse 和 touch 事件更好。
 
+## 10.7 LayoutNG 的块格式化上下文
+
+### 10.7.1 BFC (Block Formatting Context) 在 LayoutNG 中的实现
+
+块格式化上下文（BFC, Block Formatting Context）是 CSS 布局中的核心概念。在 LayoutNG 中，BFC 由 NGBlockLayoutAlgorithm 处理。
+
+BFC 的关键规则是：内部的块级元素垂直排列，每个元素的左外边缘触碰包含块的左边缘。BFC 是一个独立的布局容器，内部的浮动不会影响外部，外部的浮动也不会影响内部。
+
+```
+BFC 的创建条件
+
+以下条件会创建新的 BFC:
+  ├─ 根元素 (<html>)
+  ├─ float 不为 none
+  ├─ position: absolute / fixed
+  ├─ display: inline-block / table-cell / flex / grid / flow-root
+  ├─ overflow 不为 visible
+  ├─ contain: layout / strict / content
+  └─ column-count / column-width 不为 auto
+
+BFC 的布局效果:
+  ┌───────────────────────────┐
+  │  BFC 容器                  │
+  │  ┌─────────┐              │
+  │  │ Block A  │ ← 左边缘触碰  │
+  │  └─────────┘   BFC 左边缘  │
+  │  ┌─────────┐              │
+  │  │ Block B  │              │
+  │  └─────────┘              │
+  │                             │
+  │  BFC 清除内部浮动           │
+  │  BFC 不与外部浮动重叠        │
+  │  BFC 外边距不与外部合并      │
+  └───────────────────────────┘
+```
+
+### 10.7.2 行内格式化上下文
+
+行内格式化上下文（IFC, Inline Formatting Context）处理行内内容的布局。NGInlineLayoutAlgorithm 负责 IFC 的布局计算。
+
+IFC 的核心是行盒（Line Box）的计算。行内内容在行盒中排列，行盒从左到右（LTR 语言）排列，行盒从上到下堆叠。
+
+```
+行内布局流程
+
+1. 收集行内内容
+   ├─ 文本节点
+   ├─ 行内元素 (<span>, <a>, <em> 等)
+   ├─ 行内块元素 (inline-block)
+   └─ 浮动元素 (从流中取出)
+
+2. 分词 (Shaping)
+   ├─ 使用 HarfBuzz 进行文本塑造
+   ├─ 考虑连字、字间距、字偶间距
+   └─ 生成带位置的 glyph 序列
+
+3. 换行 (Line Breaking)
+   ├─ 根据可用宽度分割行
+   ├─ 考虑断词规则 (word-break, overflow-wrap)
+   ├─ 考虑 CJK 字符断行 (中文可以任意位置断行)
+   └─ 考虑 Bidi 算法 (混合方向文本)
+
+4. 基线对齐 (Baseline Alignment)
+   ├─ 计算每行的基线位置
+   ├─ 根据 vertical-align 对齐每个元素
+   │   ├─ baseline: 与行基线对齐
+   │   ├─ top: 与行顶对齐
+   │   ├─ middle: 居中对齐
+   │   └─ bottom: 与行底对齐
+   └─ 计算最终行高
+```
+
+### 10.7.3 Flex 布局算法详解
+
+NGFlexLayoutAlgorithm 的完整计算流程比初看复杂得多。
+
+```
+Flex 布局完整算法
+
+阶段1: 收集 Flex Item
+  ├─ 识别所有子元素为 Flex Item
+  ├─ 读取每个 Item 的 flex-basis, flex-grow, flex-shrink
+  └─ 处理绝对定位的 Item (不参与 flex 计算)
+
+阶段2: 确定主轴尺寸
+  ├─ 计算容器的 main size
+  │   ├─ 如果有明确尺寸 (width/height) → 使用
+  │   └─ 如果是 auto → 根据内容计算
+  ├─ 计算每个 Item 的 flex base size
+  │   ├─ flex-basis: auto → 使用 content size
+  │   ├─ flex-basis: 具体值 → 使用该值
+  │   └─ 考虑 min/max 约束
+  └─ 检查是否需要换行 (flex-wrap)
+
+阶段3: 分配空间 (grow/shrink)
+  ├─ 如果总 base size < 容器 main size
+  │   └─ 按 flex-grow 比例分配剩余空间
+  │      item_final = base + remaining * (grow / total_grow)
+  ├─ 如果总 base size > 容器 main size
+  │   └─ 按 flex-shrink 比例压缩
+  │      item_final = base - excess * (shrink * base / sum(shrink*base))
+  └─ 应用 min/max 约束 (可能需要迭代)
+
+阶段4: 计算交叉轴尺寸
+  ├─ 单行: align-items 决定交叉轴位置
+  ├─ 多行: 先排列每行，再计算行间间距
+  └─ align-content 控制多行整体对齐
+
+阶段5: 生成 Fragment 树
+  └─ 为每个 Item 生成 NGPhysicalBoxFragment
+```
+
+flex-shrink 的计算不是简单的按比例压缩，而是加权压缩。权重是 `flex-shrink * flex-base-size`，这确保大尺寸元素被压缩更多。
+
+### 10.7.4 Grid 布局算法详解
+
+NGGridLayoutAlgorithm 是 LayoutNG 中最复杂的布局算法之一。
+
+```
+Grid 布局完整算法
+
+阶段1: 解析 Grid 定义
+  ├─ grid-template-columns: [track sizes]
+  ├─ grid-template-rows: [track sizes]
+  ├─ grid-template-areas: [area names]
+  └─ gap: row-gap column-gap
+
+阶段2: 放置 Grid Items
+  ├─ 显式放置: grid-column/row 指定了位置
+  ├─ 命名区域放置: grid-area 引用命名区域
+  └─ 自动放置 (Auto-placement):
+     ├─ 稀疏模式 (默认): 跳过已占用区域
+     └─ 密集模式: 回头填充空位
+
+阶段3: 计算 Track 尺寸
+  这是 Grid 布局最复杂的部分，需要迭代计算:
+  
+  迭代1: 初始尺寸
+    ├─ 固定值 (100px) → 直接使用
+    ├─ 内容最小值 (min-content) → 最大不可分割内容
+    ├─ 内容最大值 (max-content) → 所有内容不换行
+    └─ auto → 先用 min-content
+  
+  迭代2: 分配剩余空间
+    ├─ fr 单位的 Track 分配剩余空间
+    │   fr_total = sum(所有 fr 值)
+    │   track_size = remaining * (fr / fr_total)
+    └─ 考虑 minmax() 约束
+  
+  迭代3: 调整
+    ├─ 如果某个 Track 超过 max → 限制
+    └─ 重新分配剩余空间
+```
+
+### 10.7.5 碎片化（分页/分栏）
+
+碎片化（Fragmentation）是布局引擎处理内容跨越多个容器的能力，如打印分页和多栏布局。
+
+LayoutNG 对碎片化的处理方式是：将布局结果分成多个 Fragment，每个 Fragment 对应一个页面或一栏。如果一个元素的内容跨越多个页面/栏，LayoutNG 会将其拆分为多个 Fragment。
+
+```
+碎片化示例 (多栏布局)
+
+CSS: columns: 3; (三栏布局)
+
+内容: 
+  ┌─────────┐
+  │ 段落1    │ → Fragment 1 (第1栏)
+  │ 段落2    │
+  ├─────────┤
+  │ 段落3    │ → Fragment 2 (第2栏)
+  │ 段落4    │
+  ├─────────┤
+  │ 段落5    │ → Fragment 3 (第3栏)
+  └─────────┘
+
+如果段落3跨越栏边界:
+  ├─ 段落3 上半部分 → Fragment 1
+  ├─ 段落3 下半部分 → Fragment 2
+  └─ NGPhysicalBoxFragment 记录 break token
+     (下次布局从断点继续)
+```
+
+### 10.7.6 布局缓存与增量布局
+
+LayoutNG 的不可变 Fragment 设计天然支持布局缓存。如果一个子树的布局输入没有变化，LayoutNG 可以直接复用上次的 Fragment，跳过整个子树的布局计算。
+
+```
+布局缓存策略
+
+DOM 变化:
+  <div id="A">      ← 布局未变 → 复用 Fragment
+    <p id="B">      ← 布局未变 → 复用 Fragment
+    <p id="C">      ← style.width 变了 → 重新布局
+      <span id="D">  ← 父元素变 → 重新布局
+    <p id="E">      ← 布局未变 → 复用 Fragment
+
+结果:
+  A: 复用
+  B: 复用
+  C: 重新计算
+  D: 重新计算
+  E: 复用
+  → 只计算了 C 和 D，而非全部
+```
+
+### 10.7.7 LayoutNG 与旧布局引擎的架构对比
+
+| 维度 | Legacy Layout | LayoutNG |
+|------|--------------|----------|
+| 结果存储 | 直接在 LayoutObject 上 | 独立的 Fragment 树 |
+| 可变性 | 可变（修改和读取混合） | 不可变（生成后不修改） |
+| 布局与绘制 | 耦合在一起 | 分离 |
+| 算法隔离 | 算法间共享状态 | 每个算法独立 |
+| 测试性 | 需要完整渲染环境 | 可独立测试 |
+| 代码量 | 更多（历史包袱） | 更少（清理了遗留代码） |
+| 性能 | 基准 | 提升 10-30% |
+
+LayoutNG 的不可变 Fragment 设计是最根本的改进。旧引擎中，布局结果直接存储在 LayoutObject 的成员变量上，每次布局都会修改这些变量。如果布局过程中发生了重入（回调 JavaScript），可能读到不一致的中间状态。LayoutNG 的 Fragment 是不可变的，一旦生成就不会被修改，彻底消除了状态不一致的风险。
+
 ## 本章核心知识总结
 
 | 知识模块 | 核心内容 | 性能影响 |

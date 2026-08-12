@@ -386,6 +386,236 @@ QUIC 使用 CONNECTION_CLOSE 帧关闭连接。发送 CONNECTION_CLOSE 后，连
 
 对于需要优雅关闭的场景，HTTP/3 定义了 GOAWAY 帧，通知对端不再接受新的请求，但允许已有请求完成。这比 TCP 的 FIN 关闭更明确，不会出现 TIME_WAIT 等模糊状态。
 
+## 13.8 DNS 解析的完整递归流程
+
+### 13.8.1 从浏览器到根域名服务器的完整路径
+
+DNS 递归查询是一个多层级的过程。当本地缓存全部未命中时，DNS 查询会从根域名服务器开始，逐级向下查找。
+
+```
+DNS 递归查询完整流程
+
+用户输入 www.api.example.com
+  │
+  ▼
+1. 浏览器 DNS 缓存检查
+   ├─ 命中 → 返回 IP (0ms)
+   └─ 未命中 ↓
+
+2. 操作系统 DNS 缓存检查
+   ├─ 命中 → 返回 IP (1ms)
+   └─ 未命中 ↓
+
+3. hosts 文件检查
+   ├─ 命中 → 返回 IP (1ms)
+   └─ 未命中 ↓
+
+4. 本地 DNS 服务器 (递归解析器)
+   ├─ 缓存命中 → 返回 IP (5-20ms)
+   └─ 未命中 → 开始递归查询 ↓
+
+5. 查询根域名服务器 (.)
+   ├─ 13 组根服务器 (a.root-servers.net ~ m.root-servers.net)
+   ├─ 返回 .com TLD 服务器的 NS 记录
+   └─ 耗时: 20-100ms (取决于根服务器位置)
+
+6. 查询 .com 顶级域名服务器 (TLD)
+   ├─ 返回 example.com 权威服务器的 NS 记录
+   └─ 耗时: 10-50ms
+
+7. 查询 example.com 权威域名服务器
+   ├─ 返回 www.example.com 的 A 记录
+   │   IP: 93.184.216.34
+   │   TTL: 3600
+   └─ 耗时: 10-50ms
+
+8. 递归解析器缓存结果并返回给浏览器
+   ├─ 总耗时: 50-250ms (首次查询)
+   └─ 后续查询命中缓存: < 5ms
+```
+
+### 13.8.2 DNS 缓存层次详解
+
+DNS 缓存分布在多个层级，每一层都有自己的缓存策略和 TTL 管理。
+
+```
+DNS 缓存层次
+
+层级1: 浏览器 DNS 缓存
+  ├─ Chrome 内置 DNS 缓存 (chrome://net-internals/#dns)
+  ├─ 缓存时间: 通常等于 TTL，但不完全依赖
+  ├─ 容量限制: 最多缓存约 1000 条记录
+  ├─ 异步刷新: 即将过期时后台刷新
+  └─ 特点: 进程级别，关闭浏览器后清除
+
+层级2: 操作系统 DNS 缓存
+  ├─ Windows: DNS Client 服务 (dnscache)
+  ├─ macOS: mDNSResponder
+  ├─ Linux: systemd-resolved 或 nscd
+  ├─ 缓存时间: 遵循 TTL
+  └─ 特点: 系统级别，所有应用共享
+
+层级3: 路由器 DNS 缓存
+  ├─ 家用路由器通常有 DNS 代理/缓存
+  ├─ 缓存时间: 可能不完全遵循 TTL
+  └─ 特点: 局域网内共享
+
+层级4: ISP DNS 服务器缓存
+  ├─ ISP 的递归解析器缓存
+  ├─ 缓存时间: 通常遵循 TTL，但可能修改
+  ├─ 容量大: 可缓存数百万条记录
+  └─ 特点: 同一 ISP 的用户共享
+
+层级5: 权威域名服务器
+  ├─ 不缓存，返回权威记录
+  └─ 设置 TTL 值供下游缓存
+```
+
+### 13.8.3 DNS 预解析的实现机制
+
+Chrome 的 DNS 预解析（DNS Prefetching）分为显式预解析和隐式预解析两种。
+
+```
+显式预解析 (开发者指定)
+  <link rel="dns-prefetch" href="//api.example.com">
+  <link rel="dns-prefetch" href="//cdn.example.com">
+  ├─ 解析时机: HTML 解析到此标签时
+  ├─ 优先级: 低于页面资源加载
+  └─ 效果: 提前完成 DNS 查询
+
+隐式预解析 (Chrome 自动学习)
+  ├─ Chrome 记录用户常访问的域名
+  ├─ 在页面加载时预测性预解析
+  ├─ 基于:
+  │   ├─ 页面中的超链接
+  │   ├─ 页面中的资源 URL
+  │   ├─ 历史浏览模式
+  │   └─ 用户输入的 URL
+  └─ 效果: 减少后续导航的 DNS 延迟
+
+preconnect (更激进的优化)
+  <link rel="preconnect" href="//api.example.com">
+  ├─ DNS + TCP + TLS 全部提前建立
+  ├─ 比 dns-prefetch 开销大
+  └─ 效果更好 (节省全部连接时间)
+```
+
+## 13.9 DNS over HTTPS (DoH) 与 DNS over TLS (DoT) 对比
+
+### 13.9.1 DoH vs DoT 详细对比
+
+DoH 和 DoT 都是加密 DNS 查询的方案，但传输方式和端口不同。
+
+```
+DoH vs DoT 协议栈
+
+传统 DNS:
+  浏览器 → UDP 53 → DNS 服务器
+  明文传输
+
+DoT (DNS-over-TLS):
+  浏览器 → TLS → TCP 853 → DNS 服务器
+  加密传输，专用端口 853
+
+DoH (DNS-over-HTTPS):
+  浏览器 → TLS → TCP 443 → DoH 服务器
+  加密传输，使用标准 HTTPS 端口 443
+  DNS 查询封装在 HTTP/2 或 HTTP/3 请求中
+```
+
+| 特性 | 传统 DNS | DoT | DoH |
+|------|---------|-----|-----|
+| 传输协议 | UDP/TCP | TLS over TCP | HTTPS |
+| 端口 | 53 | 853 | 443 |
+| 加密 | 否 | 是 | 是 |
+| 防篡改 | 否 | 是 | 是 |
+| 防探测 | 否 | 部分 | 是 |
+| 防封锁 | 不适用 | 较难（可封锁 853） | 很难（443 不可区分） |
+| 部署 | 原生 | 需配置 | 需配置 |
+| 浏览器支持 | 原生 | 部分 | Chrome/Firefox |
+
+DoH 的优势在于使用 443 端口，与普通 HTTPS 流量无法区分。这意味着网络管理员无法通过封锁端口来阻止 DoH，只能在应用层深度检测（DPI）来识别。但 DPI 会增加性能开销，且不准确。
+
+### 13.9.2 DNSSEC 验证
+
+DNSSEC（Domain Name System Security Extensions，DNS 安全扩展）通过数字签名验证 DNS 响应的真实性。
+
+```
+DNSSEC 验证流程
+
+1. 请求 www.example.com 的 A 记录
+   服务器返回: A 记录 + RRSIG (签名)
+
+2. 验证签名需要 DNSKEY
+   请求 example.com 的 DNSKEY
+   服务器返回: DNSKEY + RRSIG
+
+3. 验证 example.com 的签名需要上级 DS 记录
+   请求 .com 的 DS 记录
+   服务器返回: DS (Delegation Signer) + RRSIG
+
+4. 验证 .com 的签名需要根的 DNSKEY
+   请求根的 DNSKEY (信任锚)
+   根 DNSKEY 是预置的可信公钥
+
+5. 从根向下验证签名链:
+   根 → .com → example.com → www.example.com
+   全部签名验证通过 → DNS 响应可信
+```
+
+DNSSEC 不加密 DNS 查询（它不是 DoH 的替代品），但确保查询结果未被篡改。DNSSEC + DoH 的组合提供了加密 + 完整性的全面保护。
+
+## 13.10 连接池与 Socket 复用
+
+### 13.10.1 Chrome 连接池的内部管理
+
+Chrome 的连接池管理是一个复杂的系统，需要处理多种协议、超时、限制等。
+
+```
+Chrome 连接池架构
+
+Network Service 进程
+  ├─ Socket Pool Manager
+  │   ├─ HTTP/1.1 连接池 (per-host)
+│   │   ├─ 最大连接数: 6 per host
+  │   │   ├─ 总最大连接数: 255
+  │   │   ├─ 空闲超时: ~60秒
+  │   │   └─ 连接复用: keep-alive
+  │   │
+  │   ├─ HTTP/2 连接池 (per-origin)
+  │   │   ├─ 最大连接数: 1 per origin (多路复用)
+  │   │   ├─ 最大并发流: 100 per connection
+  │   │   └─ 连接复用: 多个请求共享
+  │   │
+  │   ├─ HTTP/3 (QUIC) 连接池
+  │   │   ├─ 最大连接数: 1 per origin
+  │   │   ├─ 最大并发流: 100+ per connection
+  │   │   └─ 连接复用: 多个请求共享
+  │   │
+  │   └─ WebSocket 连接池
+  │       ├─ 持久连接
+  │       └─ 无最大限制 (受系统资源限制)
+  │
+  └─ Proxy Pool (代理连接池)
+      └─ HTTP/SOCKS 代理连接管理
+```
+
+### 13.10.2 Socket 复用的条件
+
+并非所有连接都可以被复用。连接池在复用连接前会检查多个条件。
+
+| 检查条件 | 说明 | 失败处理 |
+|--------|------|--------|
+| 连接是否活跃 | TCP keep-alive 探测 | 创建新连接 |
+| 连接是否空闲 | 没有正在进行的请求 | 等待或新建 |
+| 协议是否匹配 | HTTP/1.1 vs HTTP/2 | 新建对应协议连接 |
+| 域名是否匹配 | 同一 host:port | 新建连接 |
+| 是否超过最大连接数 | per-host 或全局限制 | 排队等待 |
+| 是否超过空闲超时 | 通常 60 秒 | 关闭并新建 |
+| SSL 证书是否有效 | 证书未过期 | 新建连接 |
+
+> 连接池复用是减少网络延迟的关键优化。一个已建立的 HTTPS 连接复用，可以节省 1-2 RTT 的 TCP+TLS 握手时间。对于 100ms RTT 的网络，这意味着节省 100-200ms。HTTP/2 的多路复用进一步减少了需要的连接数，一个连接可以处理所有同源请求。
+
 ## 本章核心知识总结
 
 | 知识模块 | 核心内容 | 优势 |
