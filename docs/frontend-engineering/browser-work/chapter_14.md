@@ -1,3 +1,7 @@
+---
+sidebar_position: 14
+---
+
 # 第14章 同源策略与 CORS
 
 > 同源策略是浏览器安全的基石。它很简单：不同源的页面不能读写彼此的数据。但围绕这个简单规则，CORS、CSP、Cookie 策略衍生出了大量细节。
@@ -606,6 +610,333 @@ Service Worker 中的 fetch 请求不受同源策略限制（可以发送任何�
 | 页面 fetch | 受限 | 需要 |
 | Service Worker fetch | 不受限 | 不需要 |
 | Service Worker → 页面 | 不适用 | 需要 |
+
+## 14.7 CORS 预检请求缓存
+
+### 14.7.1 Access-Control-Max-Age
+
+预检请求（Preflight）是 CORS 中对复杂请求的安全验证机制。每次预检请求都需要一次额外的 HTTP 往返，增加了延迟。浏览器通过 Access-Control-Max-Age 缓存预检结果，避免重复发送。
+
+```http
+# 预检响应头
+Access-Control-Allow-Origin: https://example.com
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: Content-Type, Authorization
+Access-Control-Max-Age: 86400
+```
+
+| 浏览器 | 最大缓存时间 |
+|---------|------------|
+| Chrome | 7200 秒（2 小时） |
+| Firefox | 86400 秒（24 小时） |
+| Safari | 604800 秒（7 天） |
+
+> Access-Control-Max-Age 的值是服务器建议的缓存时间，但浏览器有自己的上限。Chrome 最多缓存 2 小时，Firefox 24 小时。这意味着即使服务器设置 Max-Age: 86400，Chrome 也只会缓存 2 小时。
+
+## 14.8 CORS 与 CDN 配合
+
+### 14.8.1 CDN 上的 CORS 配置
+
+CDN（Content Delivery Network，内容分发网络）上的资源默认不允许跨域访问。需要正确配置 CORS 头才能让其他网站使用。
+
+```
+CDN CORS 配置场景
+
+场景1：字体文件跨域
+  CDN: cdn.example.com
+  网站: www.example.com
+  → 字体需要 CORS：Access-Control-Allow-Origin: https://www.example.com
+
+场景2：API 跨域
+  API: api.example.com
+  前端: app.example.com
+  → 需要 CORS：Access-Control-Allow-Origin: https://app.example.com
+
+场景3：公共资源
+  CDN: cdnjs.cloudflare.com
+  任意网站访问
+  → Access-Control-Allow-Origin: *
+```
+
+### 14.8.2 CORS 调试技巧
+
+```javascript
+// 1. 检查响应头是否包含 CORS 头
+fetch('https://api.example.com/data').then(res => {
+  console.log('Allow-Origin:', res.headers.get('Access-Control-Allow-Origin'));
+  console.log('Allow-Methods:', res.headers.get('Access-Control-Allow-Methods'));
+});
+
+// 2. DevTools Network 面板检查
+//    → 筛选 Fetch/XHR
+//    → 查看响应头
+//    → 检查预检请求（OPTIONS）
+
+// 3. 常见错误排查
+//    ERR: "No 'Access-Control-Allow-Origin' header"
+//    → 服务器未设置 CORS 头
+
+//    ERR: "The value of 'Access-Control-Allow-Origin' must not be wildcard"
+//    → 使用了 * 但请求包含凭据（Cookie）
+```
+
+## 14.9 跨域 WebSocket
+
+### 14.9.1 为什么 WebSocket 不受同源策略限制
+
+WebSocket（WebSocket Protocol，全双工通信协议）不受同源策略限制。这是因为 WebSocket 使用自己的握手协议，在握手阶段通过 Origin 头告知服务器请求来源，由服务器决定是否接受。
+
+```
+HTTP 请求受同源策略限制：
+  浏览器检查目标 URL 的 origin
+  → 不同源 → 检查 CORS 头
+  → 无 CORS 头 → 阻止
+
+WebSocket 连接不受同源策略限制：
+  浏览器不检查 origin
+  → 直接建立连接
+  → 服务器检查 Origin 头
+  → 服务器决定是否接受
+```
+
+```javascript
+// 跨域 WebSocket（不需要 CORS）
+const ws = new WebSocket('wss://api.other-domain.com/ws');
+ws.onopen = () => console.log('连接成功');
+
+// 服务器端验证 Origin
+// Node.js 示例
+const wss = new WebSocketServer({ port: 8080 });
+wss.on('connection', (ws, req) => {
+  const origin = req.headers.origin;
+  if (origin !== 'https://allowed.com') {
+    ws.close(4001, 'Origin not allowed');
+    return;
+  }
+});
+```
+
+| 对比 | HTTP 请求 | WebSocket |
+|------|---------|----------|
+| 同源策略 | 限制 | 不限制 |
+| 安全验证 | 浏览器（CORS） | 服务器（Origin 头） |
+| 凭据 | 需要配置 | 握手时传递 |
+
+> WebSocket 不受同源策略限制的原因是：WebSocket 是有状态的持久连接，不是 HTTP 请求。安全责任从浏览器转移到服务器。服务器必须验证 Origin 头，否则任何网站都可以建立 WebSocket 连接。
+
+## 14.10 Service Worker 中的 CORS
+
+### 14.10.1 Service Worker Fetch 事件中的 CORS
+
+Service Worker 拦截的请求仍然受 CORS 限制。Service Worker 可以修改请求和响应，但不能绕过 CORS。
+
+```javascript
+// Service Worker 中的 CORS 处理
+self.addEventListener('fetch', (event) => {
+  // 跨域请求仍然需要 CORS
+  event.respondWith(
+    fetch(event.request).then(response => {
+      // 可以读取响应，但页面仍然受 CORS 限制
+      return response;
+    }).catch(() => {
+      // 网络失败时返回缓存（需要缓存模式支持跨域）
+      return caches.match(event.request);
+    })
+  );
+});
+
+// no-cors 模式（不透明响应）
+fetch('https://other.com/image.jpg', { mode: 'no-cors' })
+  .then(res => {
+    // res.type === 'opaque'
+    // 无法读取响应内容
+    // 但可以作为图片/脚本使用
+  });
+```
+
+| 请求模式 | CORS 检查 | 可读响应 |
+|---------|----------|---------|
+| cors | 是 | 是 |
+| no-cors | 是（限制） | 否（opaque） |
+| same-origin | 是（阻止跨域） | — |
+
+> no-cors 模式是一个容易误解的概念。它不绕过 CORS，而是告诉浏览器「我不需要读取响应内容」。浏览器仍然发送请求，但返回一个 opaque 响应，JavaScript 无法读取内容。这适用于加载图片、脚本等不需要读取内容的场景。
+
+## 14.11 CORS 安全风险与防护
+
+### 14.11.1 CORS 配置风险
+
+CORS 的安全性完全取决于服务器配置。错误的 CORS 配置可能比没有 CORS 更危险。
+
+```
+危险配置示例
+
+1. 反射任意 Origin
+   Access-Control-Allow-Origin: {request.origin}
+   → 等于允许任何网站跨域访问
+   → 配合 Allow-Credentials: true = 灾难
+
+2. 过宽的通配符
+   Access-Control-Allow-Origin: *
+   + Allow-Credentials: true
+   → 浏览器会拒绝（安全机制）
+   → 但旧版浏览器可能有 bug
+
+3. null Origin
+   Access-Control-Allow-Origin: null
+   → iframe sandbox 的 Origin 是 null
+   → 攻击者可以利用 sandbox iframe 绕过
+```
+
+```javascript
+// 安全的 CORS 配置（Node.js）
+const allowedOrigins = ['https://app.example.com', 'https://admin.example.com'];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Vary', 'Origin'); // 重要：防止缓存污染
+  }
+  next();
+});
+```
+
+| 配置 | 风险等级 | 说明 |
+|------|---------|------|
+| 允许特定 Origin | 低 | 白名单机制 |
+| Allow-Origin: * | 中 | 不能配合 Credentials |
+| 反射 Origin + Credentials | 极高 | 等于无 CORS |
+| Allow-Origin: null | 高 | 可被 sandbox 绕过 |
+
+### 14.11.2 CORS 与 CSRF 的区别
+
+```
+CORS vs CSRF
+
+CORS（Cross-Origin Resource Sharing）
+  → 浏览器安全机制
+  → 防止跨源读取响应
+  → 不阻止跨源请求发送
+
+CSRF（Cross-Site Request Forgery，跨站请求伪造）
+  → 攻击方式
+  → 利用用户已登录的身份
+  → 发送跨站请求
+
+关键区别：
+  CORS 不阻止请求发送，只阻止读取响应
+  CSRF 攻击不需要读取响应
+  → 即使配置了 CORS，仍然需要 CSRF 防护
+```
+
+| 对比 | CORS | CSRF Token |
+|------|------|-----------|
+| 防护对象 | 跨源读取 | 跨源请求 |
+| 机制 | 浏览器检查 | 服务器验证 |
+| 对 GET 有效 | 部分 | 是 |
+| 对 POST 有效 | 是 | 是 |
+
+> CORS 和 CSRF 防护是互补的，不是替代关系。CORS 防止恶意网站读取用户数据的响应，CSRF Token 防止恶意网站冒充用户发送请求。即使 CORS 配置正确，没有 CSRF Token，攻击者仍然可以让用户在不知情的情况下执行操作（如转账）。
+
+## 14.12 跨域 WebSocket 通信
+
+### 14.12.1 WebSocket 不受 CORS 限制
+
+WebSocket 协议不遵循同源策略，浏览器不会对 WebSocket 连接发送 CORS 预检请求。但服务器仍然可以验证 Origin 头。
+
+```
+WebSocket vs HTTP CORS
+
+HTTP 请求:
+  浏览器自动添加 Origin 头
+  → 简单请求：直接发送
+  → 非简单请求：先 OPTIONS 预检
+  → 服务器返回 CORS 头
+  → 浏览器检查 CORS 头
+
+WebSocket 连接:
+  浏览器自动添加 Origin 头
+  → 无预检
+  → 服务器自行检查 Origin
+  → 服务器决定是否接受
+  → 无 CORS 头检查
+```
+
+```javascript
+// WebSocket 服务器端 Origin 验证（Node.js）
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws, req) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = ['https://app.example.com'];
+  
+  if (!allowedOrigins.includes(origin)) {
+    ws.close(1008, 'Origin not allowed');
+    return;
+  }
+  
+  // 正常处理连接
+  ws.on('message', (msg) => {
+    console.log('Received:', msg);
+  });
+});
+```
+
+| 对比 | HTTP | WebSocket |
+|------|------|----------|
+| CORS 预检 | 是 | 否 |
+| Origin 头 | 自动发送 | 自动发送 |
+| 浏览器检查 | 是 | 否 |
+| 服务器检查 | 需返回 CORS 头 | 需验证 Origin |
+
+> WebSocket 不受 CORS 限制是因为 WebSocket 是有状态的长连接，不像 HTTP 是无状态的短连接。CORS 的目的是防止跨源读取响应，而 WebSocket 连接建立后，双方都可以主动发送消息，传统的 CORS 模型不适用。安全由服务器端 Origin 验证保证。
+
+## 14.13 Service Worker 中的 CORS
+
+### 14.13.1 Service Worker 拦截请求的 CORS 处理
+
+Service Worker 可以拦截页面发出的所有请求，但拦截跨域请求时需要特殊处理 CORS。
+
+```javascript
+// Service Worker 中的 CORS 处理
+self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  
+  if (url.origin !== self.location.origin) {
+    // 跨域请求：不修改响应头，否则会破坏 CORS 检查
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  
+  // 同域请求：可以自由处理
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      return cached || fetch(event.request);
+    })
+  );
+});
+```
+
+```
+Service Worker CORS 注意事项
+
+1. 不要修改跨域响应头
+   → 删除 Access-Control-Allow-Origin 会导致 CORS 失败
+   → 添加额外头也可能触发 CORS 错误
+
+2. opaque 响应不能读取
+   → no-cors 请求的响应是 opaque
+   → Service Worker 也无法读取内容
+
+3. 缓存跨域响应
+   → 可以缓存 opaque 响应
+   → 但无法验证内容是否有效
+   → 缓存策略需要谨慎
+```
+
+> Service Worker 拦截跨域请求时要格外小心。最安全的做法是：对跨域请求直接透传（pass-through），不做任何修改。如果需要缓存跨域资源，使用 no-cors 模式获取 opaque 响应，但要注意无法验证缓存内容的有效性。
 
 ## 本章核心知识总结
 

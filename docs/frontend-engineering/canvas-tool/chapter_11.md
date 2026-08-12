@@ -1,3 +1,7 @@
+---
+sidebar_position: 11
+---
+
 # 第11章 WebGL 基础：从 GLSL 到第一个三角形
 
 WebGL 学了三遍还是不会画三角形？

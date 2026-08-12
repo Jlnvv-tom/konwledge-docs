@@ -1,3 +1,7 @@
+---
+sidebar_position: 14
+---
+
 # 第 14 章：音频级音乐生成——从 WaveNet 到 MusicGen
 
 > **系列文章：《语音与音乐的机器之魂》**

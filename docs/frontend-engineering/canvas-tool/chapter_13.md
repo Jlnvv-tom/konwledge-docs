@@ -1,3 +1,7 @@
+---
+sidebar_position: 13
+---
+
 # 第13章 WebGPU：下一代图形 API
 
 WebGPU 比 WebGL 好学？

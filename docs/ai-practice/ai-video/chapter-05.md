@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 ## 第五章 图生视频（Image-to-Video, I2V）
 
 ### 一、图生视频的基本原理与核心约束

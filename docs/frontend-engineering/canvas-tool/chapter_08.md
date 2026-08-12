@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 第8章 Canvas 动画系统
 
 > 你以为动画就是 setInterval？requestAnimationFrame 的 3 个秘密你未必知道。

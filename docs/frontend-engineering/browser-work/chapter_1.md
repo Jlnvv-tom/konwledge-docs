@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 第1章 浏览器演进史与 Chrome 的诞生
 
 > 浏览器用了 30 年，从一只「网景」进化成了一座「 Chromium 帝国」，而 90% 的人只知道它叫 Chrome 。

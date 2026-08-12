@@ -2,6 +2,7 @@
 id: scaling-laws
 title: 缩放定律，谨慎对待
 description: 深入剖析深度学习中的缩放定律，探讨如何在模型规模与数据规模之间最优分配计算资源。
+sidebar_position: 1
 ---
 
 # 缩放定律，谨慎对待

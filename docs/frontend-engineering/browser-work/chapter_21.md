@@ -1,3 +1,7 @@
+---
+sidebar_position: 21
+---
+
 # 第21章 Chrome 扩展开发（MV3）
 
 > Manifest V3 是 Chrome 扩展的重大架构变革。后台页面变成了 Service Worker，Web Request 拦截变成了 DeclarativeNetRequest。这不是改版，是重写。

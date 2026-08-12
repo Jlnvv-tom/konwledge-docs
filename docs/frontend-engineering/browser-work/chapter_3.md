@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # 第3章 V8 引擎概览
 
 > 你写的 JavaScript 代码，V8 引擎不是一行一行翻译的，而是经过一条精密的编译管道，最终变成 CPU 能直接执行的机器码。这条管道上有 6 个关卡，每个关卡都在决定你的代码能跑多快。
@@ -693,6 +697,64 @@ Mojo 消息优先级
 ```
 
 Chrome 的任务调度器在 IO 线程上接收所有 IPC 消息，根据优先级放入不同队列。高优先级队列中的消息会被优先分派到目标线程处理。这种设计确保了即使在大量后台 IPC 消息涌入时，用户交互仍能获得快速响应。
+
+## 3.6 Mojo IDL 与代码生成
+
+### 3.6.1 Mojo IDL 定义
+
+Mojo 使用 IDL（Interface Definition Language，接口定义语言）定义接口，自动生成多语言绑定代码。
+
+```mojom
+// example.mojom
+module example.module;
+
+interface MathService {
+  Add(int32 a, int32 b) => (int32 result);
+  Multiply(int32 a, int32 b) => (int32 result);
+};
+```
+
+```
+Mojo 代码生成流程
+
+example.mojom (IDL 定义)
+  ↓
+mojo_bindings_generator
+  ├─ example.mojom.cc (C++ 绑定)
+  ├─ example.mojom.js (JavaScript 绑定)
+  └─ example.mojom-lite.dart (Dart 绑定)
+  ↓
+使用生成的绑定代码
+  → 创建接口代理（Proxy）
+  → 创建接口实现（Stub）
+  → 自动序列化/反序列化
+```
+
+| IDL 类型 | 映射 |
+|---------|------|
+| int32 | int32_t / number |
+| string | std::string / string |
+| array | std::vector / Array |
+| interface | InterfacePtr |
+
+### 3.6.2 消息优先级与调度
+
+```
+Mojo 消息优先级
+
+HIGH: 用户交互相关
+  → 输入事件、滚动
+  → 优先处理
+
+NORMAL: 默认
+  → 大部分 IPC
+
+LOW: 后台任务
+  → 预取、垃圾回收通知
+  → 空闲时处理
+```
+
+> Mojo 的 IDL 驱动设计让跨进程通信像本地函数调用一样简单。开发者只需定义 .mojom 文件，生成器自动处理序列化、反序列化和传输。这比手动构建消息格式安全得多——不会出现序列化错误或字段不匹配。
 
 ## 本章核心知识总结
 

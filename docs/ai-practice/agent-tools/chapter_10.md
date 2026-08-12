@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # 具身智能与 Agent 协议——AI 的身体与语言
 
 Tesla Optimus 能叠衣服了，Figure AI 的机器人在宝马工厂打工，MCP 协议被称为"AI 的 USB 接口"。当 AI 有了身体、有了共同语言，世界会变成什么样？

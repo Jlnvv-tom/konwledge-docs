@@ -1,3 +1,7 @@
+---
+sidebar_position: 23
+---
+
 # 第23章 WebGPU 与前端 AI
 
 > WebGPU 不只是 WebGL 的升级版。它带来了计算着色器（Compute Shader），让 GPU 通用计算在浏览器中成为可能。配合浏览器内置 AI，前端正在进入一个新时代。

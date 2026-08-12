@@ -2,6 +2,7 @@
 id: why-we-think
 title: 为什么我们思考
 description: 回顾如何有效利用测试时计算（思考时间）以及思维链为何有效的最新研究进展。
+sidebar_position: 1
 ---
 
 # 为什么我们思考

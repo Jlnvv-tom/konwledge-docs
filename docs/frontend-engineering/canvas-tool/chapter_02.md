@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # 第2章 Canvas 核心原理：上下文、像素与状态机
 
 你以为 `getContext('2d')` 就是拿个画笔？

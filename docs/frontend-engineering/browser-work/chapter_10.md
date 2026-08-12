@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # 第10章 事件处理与输入管道
 
 > 你点击屏幕到 JavaScript 的 onClick 回调执行，中间经过了 7 个阶段。如果你在 touchmove 里加了 event.preventDefault()，整个滚动管线可能被你拖慢。
@@ -729,6 +733,128 @@ DOM 变化:
 | 性能 | 基准 | 提升 10-30% |
 
 LayoutNG 的不可变 Fragment 设计是最根本的改进。旧引擎中，布局结果直接存储在 LayoutObject 的成员变量上，每次布局都会修改这些变量。如果布局过程中发生了重入（回调 JavaScript），可能读到不一致的中间状态。LayoutNG 的 Fragment 是不可变的，一旦生成就不会被修改，彻底消除了状态不一致的风险。
+
+## 10.5 块格式化上下文
+
+### 10.5.1 BFC 与 IFC
+
+Formatting Context（格式化上下文）是 CSS 布局的基本概念。LayoutNG 中每个格式化上下文对应独立的布局算法。
+
+```
+格式化上下文类型
+
+BFC（Block Formatting Context，块格式化上下文）
+  → 垂直排列子元素
+  → margin 折叠发生在 BFC 内
+
+IFC（Inline Formatting Context，行内格式化上下文）
+  → 水平排列子元素
+  → 处理文本断行
+
+FFC（Flex Formatting Context，弹性格式化上下文）
+  → Flex 布局算法
+
+GFC（Grid Formatting Context，网格格式化上下文）
+  → Grid 布局算法
+```
+
+| 格式化上下文 | 触发条件 | 布局方向 |
+|------------|---------|--------|
+| BFC | overflow:hidden/float/position:absolute | 垂直 |
+| IFC | 默认行内元素 | 水平 |
+| FFC | display:flex | 一维 |
+| GFC | display:grid | 二维 |
+
+## 10.6 Flex 布局算法
+
+### 10.6.1 Flex 布局核心步骤
+
+```
+Flex 布局算法步骤
+
+1. 确定主轴方向
+   → flex-direction: row → 主轴为水平
+   → flex-direction: column → 主轴为垂直
+
+2. 收集 Flex Item
+   → 将子元素按行/列分组
+   → 处理 flex-wrap 换行
+
+3. 计算灵活尺寸
+   → flex-basis: 初始大小
+   → flex-grow: 分配剩余空间
+   → flex-shrink: 收缩溢出空间
+
+4. 对齐
+   → justify-content: 主轴对齐
+   → align-items: 交叉轴对齐
+```
+
+```css
+/* Flex 布局示例 */
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item {
+  flex: 1 1 100px;  /* grow shrink basis */
+}
+```
+
+## 10.7 Grid 布局算法
+
+### 10.7.1 Grid 布局核心步骤
+
+```
+Grid 布局算法步骤
+
+1. 建立网格
+   → grid-template-columns/rows 定义轨道
+   → 支持固定值、百分比、fr 单位
+
+2. 放置 Grid Item
+   → 显式放置: grid-column/row
+   → 自动放置: auto-placement 算法
+
+3. 计算轨道尺寸
+   → 固定轨道: 直接使用
+   → 弹性轨道: fr 单位分配
+   → 内容轨道: 适应内容大小
+
+4. 对齐
+   → justify-items: 行内对齐
+   → align-items: 块级对齐
+```
+
+| 对比项 | Flex | Grid |
+|--------|------|------|
+| 维度 | 一维 | 二维 |
+| 适用场景 | 导航栏、工具栏 | 页面布局 |
+| 换行 | flex-wrap | 自动 |
+| 对齐 | justify + align | justify + align |
+
+## 10.8 布局缓存与增量布局
+
+### 10.8.1 LayoutNG 的缓存机制
+
+```
+增量布局流程
+
+1. DOM 变化 → 标记 LayoutObject 为脏
+2. 布局开始 → 检查脏标记
+3. 只重新布局脏节点及其子树
+4. 未变化的子树复用之前的 Fragment
+
+缓存命中率高的场景：
+  → 滚动（只更新滚动位置，不重新布局）
+  → 动画 transform/opacity（不触发布局）
+  → 动态添加列表项（只布局新项）
+```
+
+> LayoutNG 的增量布局比旧引擎更高效。因为 Fragment 是不可变的，可以直接引用旧 Fragment 而不需要担心状态被修改。旧引擎中，重新布局会覆盖 LayoutObject 的状态，即使子树未变化也需要重新计算。LayoutNG 通过 Fragment 缓存，将增量布局的性能提升约 30-50%。
 
 ## 本章核心知识总结
 

@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 第1章 浏览器图形渲染全景：从 HTML 到像素的数据流
 
 每次面试被问到"Canvas 在浏览器里到底怎么渲染的"，你就开始背"HTML5 新增、用 JavaScript 绘图"？

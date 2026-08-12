@@ -1,3 +1,7 @@
+---
+sidebar_position: 13
+---
+
 # 第13章 QUIC 协议与 TLS
 
 > QUIC 把传输层和加密层合二为一，用 UDP 替代 TCP，在用户空间重新实现了一遍可靠性、拥塞控制和加密。这不是重复造轮子，而是 30 年 TCP 历史包袱逼出来的彻底重写。
@@ -615,6 +619,221 @@ Network Service 进程
 | SSL 证书是否有效 | 证书未过期 | 新建连接 |
 
 > 连接池复用是减少网络延迟的关键优化。一个已建立的 HTTPS 连接复用，可以节省 1-2 RTT 的 TCP+TLS 握手时间。对于 100ms RTT 的网络，这意味着节省 100-200ms。HTTP/2 的多路复用进一步减少了需要的连接数，一个连接可以处理所有同源请求。
+
+## 13.5 DNS 递归解析完整流程
+
+### 13.5.1 从输入 URL 到 DNS 解析完成
+
+当用户在浏览器地址栏输入域名并回车，DNS 解析在导航开始之前就启动了。整个过程涉及多个层级的 DNS 服务器。
+
+```
+DNS 递归解析流程
+
+用户输入 www.example.com
+  ↓
+1. 浏览器 DNS 缓存
+   → 命中？直接返回
+   → 未命中 ↓
+
+2. 操作系统 DNS 缓存
+   → 命中？直接返回
+   → 未命中 ↓
+
+3. 路由器 DNS 缓存
+   → 命中？直接返回
+   → 未命中 ↓
+
+4. ISP DNS 服务器（递归解析器）
+   → 检查缓存
+   → 未命中 ↓
+
+5. 根 DNS 服务器（.）
+   → 返回 .com TLD 服务器地址
+   ↓
+
+6. TLD DNS 服务器（.com）
+   → 返回 example.com 权威服务器地址
+   ↓
+
+7. 权威 DNS 服务器（example.com）
+   → 返回 www.example.com 的 A 记录
+   → IP: 93.184.216.34
+   ↓
+
+8. 递归解析器缓存结果并返回给浏览器
+```
+
+| 层级 | 典型 TTL | 说明 |
+|------|---------|------|
+| 浏览器 | 60-300s | Chrome 内置缓存 |
+| 操作系统 | 根据响应 | /etc/resolv.conf |
+| 路由器 | 300-3600s | 家用路由器 |
+| ISP DNS | 根据响应 | 通常较大 |
+| 根/TLD/权威 | 各级配置 | 权威服务器设置 |
+
+> DNS 的多层缓存机制保证了大部分 DNS 查询在毫秒级完成。只有所有缓存都未命中时，才会触发完整的递归解析，这通常需要 50-200ms。浏览器 DNS 缓存命中率通常在 80% 以上。
+
+## 13.6 DNS 预解析实现
+
+### 13.6.1 预解析触发时机
+
+DNS 预解析（DNS Prefetching）是在需要之前提前解析域名，减少后续请求的延迟。
+
+```html
+<!-- 显式预解析 -->
+<link rel="dns-prefetch" href="//api.example.com">
+<link rel="dns-prefetch" href="//cdn.example.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<!-- HTTPS 预解析 -->
+<link rel="dns-prefetch" href="https://analytics.example.com">
+```
+
+```
+Chrome 自动预解析触发条件
+
+1. 页面中的 <a href> 链接
+   → 后台预解析链接的域名
+   → 用户点击时已缓存
+
+2. 历史记录
+   → 常访问的域名预解析
+
+3. 学习型预解析
+   → Chrome 学习用户的浏览模式
+   → 预测可能访问的域名
+```
+
+## 13.7 DoH 与 DoT 对比
+
+### 13.7.1 加密 DNS 协议
+
+DoH（DNS over HTTPS）和 DoT（DNS over TLS）都是为了加密 DNS 查询，防止中间人窃听和篡改。
+
+| 对比项 | DoH | DoT |
+|--------|-----|-----|
+| 传输协议 | HTTPS（443） | TLS（853） |
+| 端口 | 443 | 853 |
+| 可检测性 | 低（与网页流量混合） | 高（专用端口） |
+| 防火墙穿透 | 好 | 差 |
+| 部署 | 浏览器支持 | 系统/路由器支持 |
+| 性能 | HTTP/2 多路复用 | TLS 连接 |
+
+```javascript
+// 检测浏览器是否支持 DoH
+if ('dns' in navigator) {
+  // 检查 DoH 配置
+  console.log('DoH supported');
+}
+
+// DoH 查询示例（通过 HTTP API）
+// GET https://dns.google/resolve?name=example.com&type=A
+```
+
+> DoH 的优势在于使用 443 端口，与普通 HTTPS 流量混合，网络管理员无法轻易识别和阻断。DoT 使用专用端口 853，容易被防火墙阻断。对于隐私保护，DoH 是更好的选择。但对于企业网络管理，DoT 更容易实施 DNS 策略。
+
+## 13.8 连接池与 Socket 复用
+
+### 13.8.1 浏览器连接池机制
+
+浏览器为每个域名维护一个连接池，复用已建立的 TCP/TLS 连接。
+
+```
+连接池工作原理
+
+  域名: api.example.com
+  连接池: [conn1, conn2, conn3, conn4, conn5, conn6]
+  
+  请求1 → conn1（复用）
+  请求2 → conn2（复用）
+  ...
+  请求7 → 等待或新建连接
+  
+  连接空闲超过一定时间 → 关闭
+  Chrome 默认：空闲 255 秒后关闭
+```
+
+| 浏览器 | 每域名最大连接 |
+|--------|--------------|
+| Chrome | 6 |
+| Firefox | 6 |
+| Safari | 6 |
+
+> HTTP/2 改变了连接池的意义。HTTP/2 的多路复用允许在一个连接上同时发送多个请求，因此理论上一个域名只需要一个连接。但浏览器仍会维护 2-3 个连接以充分利用带宽。HTTP/3 基于 QUIC，同样支持多路复用，连接池的概念在 HTTP/2/3 中逐渐弱化。
+
+## 13.9 DNS 优化实践
+
+### 13.9.1 DNS 预解析与预连接
+
+```
+DNS 优化策略
+
+1. dns-prefetch: 仅预解析 DNS
+   <link rel="dns-prefetch" href="//cdn.example.com">
+   → 节省 DNS 查询时间（20-120ms）
+
+2. preconnect: DNS + TCP + TLS
+   <link rel="preconnect" href="https://cdn.example.com">
+   → 建立完整连接（100-300ms）
+   → 更激进但更有效
+
+3. 使用顺序
+   → 关键资源: preconnect
+   → 次要资源: dns-prefetch
+   → 最多 3-4 个（过多反而浪费带宽）
+```
+
+```html
+<!-- 实践示例 -->
+<head>
+  <!-- 关键 CDN 预连接 -->
+  <link rel="preconnect" href="https://cdn.example.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- 次要域名 DNS 预解析 -->
+  <link rel="dns-prefetch" href="//analytics.example.com">
+  <link rel="dns-prefetch" href="//api.example.com">
+</head>
+```
+
+| 优化方式 | 节省时间 | 适用场景 |
+|---------|---------|---------|
+| dns-prefetch | 20-120ms | 次要域名 |
+| preconnect | 100-300ms | 关键域名 |
+| HTTP/3 Early Data | 0-RTT | 重复连接 |
+
+### 13.9.2 DoH 与 DoT 对比
+
+DNS over HTTPS (DoH) 和 DNS over TLS (DoT) 都是加密 DNS 查询的协议，防止 DNS 劫持和监听。
+
+```
+DNS 安全协议对比
+
+传统 DNS（端口 53）
+  → 明文传输
+  → 可被 ISP/中间人篡改
+  → 无加密
+
+DoT（DNS over TLS，端口 853）
+  → TLS 加密
+  → 专用端口
+  → 网络管理员可以阻止
+
+DoH（DNS over HTTPS，端口 443）
+  → HTTPS 加密
+  → 与普通 Web 流量混合
+  → 难以阻止（看起来就是普通 HTTPS）
+```
+
+| 对比 | 传统 DNS | DoT | DoH |
+|------|---------|-----|-----|
+| 加密 | 否 | TLS | HTTPS |
+| 端口 | 53 | 853 | 443 |
+| 可阻止 | 是 | 是 | 困难 |
+| 性能 | 最快 | 略慢 | 略慢 |
+| 隐私 | 无 | 高 | 高 |
+
+> DoH 的争议在于它使 DNS 查询对网络管理员不可见。企业 IT 无法通过 DNS 过滤恶意网站，家长控制也难以实施。Chrome 和 Firefox 默认启用 DoH，但允许用户关闭或选择提供商。中国网络上 DoH/DoT 支持有限，公共 DNS 服务如 223.5.5.5 和 119.29.29.29 也在逐步支持加密 DNS。
 
 ## 本章核心知识总结
 

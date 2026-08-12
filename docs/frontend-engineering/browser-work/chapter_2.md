@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # 第2章 Chrome 多进程架构详解
 
 > 你每天打开几十个标签页，Chrome 却能做到一个页面崩溃其他页面安然无恙。这背后的秘密，就藏在一个叫「多进程架构」的设计里。
@@ -580,6 +584,108 @@ Browser 进程
 | iOS | WebKit | Nitro | WebKit2 模型 | 受限于 WebKit |
 
 在 Android 低内存设备上，Chrome 还使用了一种叫做「渲染进程合并」的技术。当内存压力较大时，多个站点的标签页可能被合并到同一个渲染进程中，牺牲部分隔离性来换取内存节省。这种策略是动态的——当内存压力解除时，Chrome 会重新拆分进程。
+
+## 2.5 渲染进程的线程架构
+
+### 2.5.1 四个核心线程
+
+渲染进程内部有四个核心线程，各司其职。
+
+```
+渲染进程线程架构
+
+├─ Main Thread（主线程）
+│   → JavaScript 执行
+│   → DOM 操作
+│   → 样式计算、布局、绘制
+│   → 事件处理
+│
+├─ Compositor Thread（合成线程）
+│   → 接收滚动输入
+│   → 合成层管理
+│   → Tile 调度
+│   → 独立于主线程运行
+│
+├─ IO Thread（IO 线程）
+│   → 处理 IPC 消息
+│   → 网络请求
+│   → 计时器
+│
+└─ Worker Threads（Worker 线程）
+    → Web Worker
+    → Service Worker
+    → Worklet
+```
+
+| 线程 | 职责 | 可被阻塞 |
+|------|------|----------|
+| Main | JS + 渲染 | 是（JS 阻塞） |
+| Compositor | 合成 + 滚动 | 否（独立运行） |
+| IO | IPC + 网络 | 否 |
+| Worker | 后台计算 | 是（不影响主线程） |
+
+> 主线程被 JavaScript 阻塞时，合成线程仍然可以处理滚动。这就是为什么长任务执行期间页面仍然可以滚动（但无法响应点击等交互）。理解这个架构是渲染性能优化的基础。
+
+## 2.6 Chrome on Android/iOS 进程模型差异
+
+### 2.6.1 Android 进程模型
+
+Android Chrome 与桌面版共享大部分代码，但因内存限制采用不同的进程策略。
+
+```
+Android Chrome 进程策略
+
+1. 渲染进程优先级
+   → 前台标签: HIGH
+   → 后台标签: LOW
+   → 后台 5 分钟后: KILLED
+
+2. 内存压力响应
+   → MEMORY_PRESSURE_MODERATE: 释放缓存
+   → MEMORY_PRESSURE_CRITICAL: 合并渲染进程
+
+3. 进程数限制
+   → 低内存设备: 最多 2-3 个渲染进程
+   → 高内存设备: 最多 5-8 个渲染进程
+```
+
+### 2.6.2 iOS 进程模型
+
+iOS 上 Chrome 使用 WKWebView（WebKit 引擎），因为 Apple 不允许第三方浏览器引擎。Chrome on iOS 的架构与桌面完全不同。
+
+| 平台 | 引擎 | 进程模型 |
+|------|------|----------|
+| Desktop | Blink + V8 | 多进程 |
+| Android | Blink + V8 | 多进程（受限） |
+| iOS | WebKit (WKWebView) | 单进程（iOS 限制） |
+
+> iOS 的限制意味着 Chrome on iOS 实际上是套了 Chrome UI 的 Safari。所有渲染和 JavaScript 执行都由系统提供的 WKWebView 完成。这也是为什么 Chrome on iOS 的某些行为与桌面版不同。
+
+## 2.7 进程崩溃恢复
+
+### 2.7.1 Crashpad 崩溃报告系统
+
+Chrome 使用 Crashpad（Crash Reporter）收集崩溃信息并生成崩溃报告。
+
+```
+崩溃恢复流程
+
+1. 渲染进程崩溃
+   → Crashpad 捕获崩溃信息
+   → 生成 minidump（小型崩溃转储）
+   → 上传到 Crash Server
+
+2. 浏览器进程检测到崩溃
+   → 显示「Aw, Snap!」页面
+   → 记录崩溃 URL
+
+3. 恢复
+   → 用户点击「重新加载」
+   → 创建新渲染进程
+   → 重新加载页面
+```
+
+> Crashpad 是 Breakpad 的继任者，支持 macOS、Windows、Linux 和 Android。崩溃报告包含调用栈、寄存器状态和内存信息，帮助开发团队定位和修复崩溃。
 
 ## 本章核心知识总结
 

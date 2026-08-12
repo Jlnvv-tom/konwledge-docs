@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 ## 第四章 文生视频（Text-to-Video, T2V）
 
 ### 一、文生视频的基本原理与形式化定义

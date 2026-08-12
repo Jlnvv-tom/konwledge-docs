@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # AI Agent 开发框架——代码级智能体编排
 
 LangChain、AutoGen、CrewAI 框架三选一，90% 的开发者选错了。

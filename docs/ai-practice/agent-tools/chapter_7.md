@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 企业级 Agent 平台与办公智能体——巨头们的 AI 布局
 
 Salesforce 的 AI Agent 产品已经卖出了 200+ 订单，每单起价 50 万美元。企业为什么愿意花这么多钱？

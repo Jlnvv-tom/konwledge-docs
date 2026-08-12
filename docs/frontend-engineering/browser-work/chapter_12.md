@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # 第12章 HTTP/1.1、HTTP/2 与 HTTP/3
 
 > HTTP/1.1 的队头阻塞让浏览器不得不开 6 个连接，HTTP/2 的多路复用解决了这个问题但又引入了 TCP 层的队头阻塞，HTTP/3 干脆把传输层从 TCP 换成了 QUIC。
@@ -654,6 +658,232 @@ QUIC 的连接迁移依赖 Connection ID。Connection ID 在握手阶段协商�
 ```
 
 这个验证机制防止了 IP 欺骗攻击——攻击者伪造源 IP 发送数据包，但无法收到 PATH_CHALLENGE，因此无法回复 PATH_RESPONSE。
+
+## 12.6 QUIC 数据包格式
+
+### 12.6.1 QUIC 数据包结构
+
+QUIC 数据包分为长头包和短头包。长头包用于握手阶段，短头包用于数据传输阶段。
+
+```
+QUIC 数据包格式
+
+长头包（握手阶段）：
+  ├─ Header Form（1 bit = 1）
+  ├─ Fixed Bit（1 bit = 1）
+  ├─ Long Packet Type（2 bits）
+  ├─ Version（4 bytes）
+  ├─ Destination Connection ID（可变长度）
+  ├─ Source Connection ID（可变长度）
+  ├─ Packet Payload
+  └─ AEAD Auth Tag（加密认证标签）
+
+短头包（数据传输）：
+  ├─ Header Form（1 bit = 0）
+  ├─ Fixed Bit（1 bit = 1）
+  ├─ Spin Bit（1 bit）
+  ├─ Key Phase（1 bit）
+  ├─ Destination Connection ID（可变长度）
+  ├─ Packet Number（1-4 bytes）
+  ├─ Packet Payload
+  └─ AEAD Auth Tag
+```
+
+| 包类型 | 类型值 | 用途 |
+|--------|--------|------|
+| Initial | 0 | 初始握手 |
+| 0-RTT | 1 | 0-RTT 数据 |
+| Handshake | 2 | TLS 握手 |
+| Retry | 3 | 重试（防 DoS） |
+
+### 12.6.2 QUIC 连接 ID
+
+QUIC 使用连接 ID（Connection ID）而非 IP+端口标识连接。这是 QUIC 连接迁移的基础——IP 变了，但连接 ID 不变，连接不会中断。
+
+```
+TCP 连接标识：
+  源 IP + 源端口 + 目标 IP + 目标端口
+  → IP 变化 = 新连接
+
+QUIC 连接标识：
+  Connection ID（8 字节，可变长度）
+  → IP 变化不影响连接
+  → WiFi 切到 4G，连接不断
+```
+
+## 12.7 QUIC 拥塞控制
+
+### 12.7.1 BBR 算法
+
+QUIC 默认使用 BBR（Bottleneck Bandwidth and RTT，瓶颈带宽与往返时间）拥塞控制算法。BBR 与传统的 CUBIC 算法不同，它不依赖丢包来判断拥塞。
+
+```
+CUBIC（传统算法）：
+  丢包 → 减少发送速率 → 慢慢恢复
+  问题：将丢包等同于拥塞（WiFi 下不适用）
+
+BBR（QUIC 默认）：
+  测量瓶颈带宽和最小 RTT
+  → 计算最优发送速率
+  → 不依赖丢包信号
+  → 在 WiFi/移动网络下表现更好
+```
+
+| 对比项 | CUBIC | BBR |
+|--------|-------|-----|
+| 拥塞信号 | 丢包 | 带宽 + RTT |
+| 吞吐量 | 中 | 高 |
+| 延迟 | 中 | 低 |
+| 公平性 | 好 | 较差（BBR v2 改善） |
+| 适用网络 | 有线 | 无线 |
+
+## 12.8 QUIC 延迟对比
+
+### 12.8.1 TCP+TLS vs QUIC 连接建立延迟
+
+```
+TCP + TLS 1.3 + HTTP/2 连接建立：
+
+  RTT 1: TCP SYN/SYN-ACK
+  RTT 2: TLS ClientHello/ServerHello
+  RTT 3: TLS Finished + HTTP 请求
+  → 首字节时间：3 RTT
+
+QUIC + HTTP/3 连接建立：
+
+  RTT 1: QUIC Initial（含 TLS 握手）+ HTTP 请求
+  → 首字节时间：1 RTT
+
+QUIC 0-RTT（恢复连接）：
+
+  RTT 0: 0-RTT 数据（直接发送 HTTP 请求）
+  → 首字节时间：0 RTT
+```
+
+| 连接类型 | 首次连接 | 恢复连接 |
+|---------|---------|---------|
+| TCP + TLS 1.2 | 3 RTT | 2 RTT |
+| TCP + TLS 1.3 | 2 RTT | 1 RTT |
+| QUIC | 1 RTT | 0 RTT |
+
+> 在 100ms RTT 的网络下，QUIC 首次连接比 TCP+TLS 1.3 快 100ms，恢复连接快 100ms。在移动网络下（RTT 50-200ms），这个差异更加明显。这就是 Google 和 Cloudflare 大力推行 HTTP/3 的原因。
+
+## 12.9 QUIC 在中国的部署挑战
+
+### 12.9.1 UDP 限速问题
+
+中国的许多网络环境对 UDP 流量进行限速或封禁，因为 UDP 常被用于 DDoS 攻击和 VPN。QUIC 基于 UDP，因此受到影响。
+
+```
+QUIC 在中国的挑战
+
+1. UDP 限速
+   → 运营商将 UDP 速率限制为 TCP 的 1/10
+   → QUIC 性能反而不如 TCP
+
+2. UDP 封禁
+   → 部分企业网络完全封禁 UDP
+   → QUIC 无法使用
+
+3. 中间设备
+   → 防火墙、DPI 设备不识别 QUIC
+   → 可能丢弃 QUIC 包
+
+4. 解决方案
+   → Chrome 检测到 QUIC 失败后回退 HTTP/2
+   → 但回退增加 1-2 RTT 延迟
+```
+
+> 中国的网络环境是 QUIC 普及的最大障碍。很多国内大厂选择继续使用 HTTP/2 over TCP，而不是 HTTP/3。但随着网络设备的升级和 UDP 支持的改善，HTTP/3 在中国的使用率正在逐步提升。
+
+## 12.7 BBR 拥塞控制算法
+
+### 12.7.1 BBR vs CUBIC
+
+BBR（Bottleneck Bandwidth and RTT）是 Google 开发的拥塞控制算法，QUIC 默认使用 BBR。传统 TCP 使用 CUBIC（基于丢包的拥塞控制）。
+
+```
+CUBIC vs BBR
+
+CUBIC（基于丢包）:
+  → 检测到丢包 → 减小窗口
+  → 没有丢包 → 增大窗口
+  → 问题：丢包不一定是拥塞（无线网络丢包常见）
+  → 问题：bufferbloat（路由器缓冲区过大导致延迟）
+
+BBR（基于带宽和延迟）:
+  → 测量瓶颈带宽和最小 RTT
+  → 发送速率 = 带宽 × RTT
+  → 不依赖丢包判断
+  → 更适合现代网络（WiFi/5G）
+
+性能对比:
+  吞吐量: BBR 比 CUBIC 高 2-25 倍（弱网环境）
+  延迟:   BBR 比 CUBIC 低 10-100 倍（有缓冲的路由器）
+  公平性: BBR vs CUBIC 时 BBR 占更多带宽
+```
+
+| 对比 | CUBIC | BBR |
+|------|-------|-----|
+| 判断依据 | 丢包 | 带宽+RTT |
+| 弱网表现 | 差 | 好 |
+| 延迟 | 高 | 低 |
+| 公平性 | 好 | 较差 |
+| 适用 | 有线网络 | 无线/混合 |
+
+> BBR 的核心创新是不再依赖丢包判断拥塞。在 WiFi 和移动网络中，丢包很常见但并非拥塞。CUBIC 会错误地减小发送窗口，导致吞吐量下降。BBR 通过测量实际带宽和延迟，更准确地判断拥塞状态，在弱网环境下性能提升显著。
+
+## 12.8 QUIC 连接迁移
+
+### 12.8.1 连接迁移原理
+
+QUIC 支持连接迁移——当用户切换网络（如 WiFi 切 5G）时，QUIC 连接不断开。
+
+```
+连接迁移场景
+
+TCP（不支持迁移）:
+  用户: WiFi → 5G
+  → IP 地址变化
+  → TCP 连接断开
+  → 必须重新建立连接
+  → 重新 TLS 握手
+  → 页面加载中断
+
+QUIC（支持迁移）:
+  用户: WiFi → 5G
+  → IP 地址变化
+  → 连接 ID 不变
+  → QUIC 自动迁移
+  → 无需重新握手
+  → 连接继续
+```
+
+```
+连接迁移原理
+
+QUIC 连接标识:
+  → 不用 IP + 端口（TCP 方式）
+  → 用 Connection ID（64 位随机数）
+  → Connection ID 不随网络变化
+
+迁移过程:
+  1. 用户从 WiFi 切到 5G
+  2. 新 IP: 10.0.0.1 → 192.168.1.1
+  3. 客户端用新 IP 发送 QUIC 包
+  4. 包中携带 Connection ID
+  5. 服务器识别 Connection ID
+  6. 连接继续，无需重新建立
+```
+
+| 场景 | TCP | QUIC |
+|------|-----|------|
+| WiFi→5G | 断开重连 | 连续 |
+| 5G→WiFi | 断开重连 | 连续 |
+| 切换基站 | 断开重连 | 连续 |
+| 视频通话 | 中断 | 顺畅 |
+
+> 连接迁移对移动场景特别重要。用户在地铁、电梯、汽车中频繁切换网络，TCP 每次切换都要重新建立连接，导致页面加载中断、视频卡顿。QUIC 的连接迁移让网络切换对用户透明，大幅提升移动体验。
 
 ## 本章核心知识总结
 

@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 ## 第六章 视频生视频（Video-to-Video, V2V）
 
 ### 一、视频生视频的基本原理与形式化定义

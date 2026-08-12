@@ -1,3 +1,7 @@
+---
+sidebar_position: 16
+---
+
 # 第16章 Canvas 与 CSS/SVG/Video/Audio/Worker/AI 的跨技术协作
 
 Canvas 不是孤岛。

@@ -2,6 +2,7 @@
 id: harness-engineering
 title: 面向自我改进的驾驭工程
 description: 探索驾驭工程如何促进递归自我改进，涵盖工作流自动化、持久记忆、评估与权限控制等设计模式。
+sidebar_position: 1
 ---
 
 # 面向自我改进的驾驭工程

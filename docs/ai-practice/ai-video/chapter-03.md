@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 ## 第三章 视频生成的核心架构演进
 
 视频生成技术的发展历程可以划分为三个明确的代际。第一代以GAN（Generative Adversarial Network，生成对抗网络）为核心，代表性工作如vid2vid通过双判别器和光流约束实现可控视频生成。第二代以U-Net架构的扩散模型为标志，从Google的VDM到Stable Video Diffusion，研究者们在3D U-Net和2+1D卷积之间不断探索。第三代则以DiT（Diffusion Transformer，扩散Transformer）为核心驱动力，OpenAI的Sora将其推向高潮，随后可灵、Runway Gen-3、万相等模型纷纷跟进，确立了DiT路线的全面统治地位。

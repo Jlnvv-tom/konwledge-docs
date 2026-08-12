@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 第7章 DOM 与样式计算
 
 > 你以为 document.getElementById 是一个简单的查找？在 Blink 底层，它涉及 DOM 树遍历、标识符索引、缓存策略。而 CSS 选择器匹配更是一个精心设计的算法优化故事。
@@ -690,6 +694,85 @@ Shadow DOM 样式作用域
 | Shadow 内部 → 外部 | 不穿透 | 设置 host | 设置 slot 内容 | 穿透 |
 
 CSS 自定义属性（CSS 变量）可以穿透 Shadow DOM 边界，这是因为自定义属性是继承的，而继承不受 Shadow DOM 边界限制。外部设置 `--theme-color: blue` 可以在 Shadow DOM 内部通过 `var(--theme-color)` 使用。
+
+## 7.5 DOM 树构建流程
+
+### 7.5.1 HTML 解析器流程
+
+HTML 解析器将 HTML 文本转换为 DOM 树，分为两个阶段：Tokenizer（分词器）和 Tree Builder（树构建器）。
+
+```
+HTML 解析流程
+
+原始 HTML 文本
+  ↓
+Tokenizer（分词器）
+  → 将文本拆分为 Token
+  → StartTag: <div>
+  → EndTag: </div>
+  → Text: "Hello"
+  → Comment: <!-- ... -->
+  ↓
+Tree Builder（树构建器）
+  → 根据 Token 构建 DOM 节点
+  → 处理嵌套关系
+  → 自动修复错误嵌套
+  ↓
+DOM 树
+```
+
+### 7.5.2 HTML 容错机制
+
+HTML 解析器有强大的容错能力，能够自动修复错误嵌套的标签。
+
+```
+容错示例
+
+输入: <table><p>Hello</p></table>
+修复: <p></p><table></table>
+原因: <p> 不能在 <table> 内
+  → 解析器将 <p> 弹出表格
+  → 在表格前创建 <p>
+
+输入: <b><i>Bold Italic</b></i>
+修复: <b><i>Bold Italic</i></b><i></i>
+原因: </b> 关闭 <b> 时
+  → 自动关闭内部的 <i>
+  → 重新打开 <i> 以匹配 </i>
+```
+
+> HTML 的容错机制规范在 HTML5 标准中定义了详细的错误处理算法。这是为什么「烂 HTML」仍然能正常显示的原因。但这种容错也带来了安全隐患——XSS 过滤器可能认为输入是安全的，但经过浏览器容错处理后变成了恶意标签。
+
+## 7.6 CSS 选择器匹配优化
+
+### 7.6.1 Bloom Filter 加速
+
+CSS 选择器从右到左匹配，但 Chrome 使用 Bloom Filter 快速排除不可能匹配的元素。
+
+```
+Bloom Filter 优化
+
+传统匹配：
+  div .item → 对每个元素检查
+  → 是否有 .item class？
+  → 祖先是否是 div？
+  → 需要遍历祖先链
+
+Bloom Filter：
+  预计算每个元素的祖先 Bloom Filter
+  → 存储祖先标签名和 class 的 Hash
+  → 检查 div 是否在 Bloom Filter 中
+  → 如果不在 → 快速跳过（100% 确定）
+  → 如果在 → 可能匹配，进一步检查
+```
+
+| 优化手段 | 原理 | 效果 |
+|---------|------|------|
+| Bloom Filter | 快速排除不匹配元素 | 减少 90%+ 遍历 |
+| Style Sharing | 相同样式的元素共享 | 减少计算量 |
+| Rule Tree | 公共选择器路径共享 | 减少匹配开销 |
+
+> Bloom Filter 是一种空间高效的数据结构，可以快速判断一个元素「一定不在」集合中。Chrome 为每个 DOM 元素维护一个祖先 Bloom Filter，包含所有祖先的标签名和 class。匹配选择器时，先检查 Bloom Filter，如果右边界选择器不可能匹配，直接跳过，避免遍历整个祖先链。
 
 ## 本章核心知识总结
 

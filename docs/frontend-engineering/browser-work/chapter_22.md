@@ -1,3 +1,7 @@
+---
+sidebar_position: 22
+---
+
 # 第22章 DevTools 与调试技巧
 
 > DevTools 不只是 console.log 的工具。Performance 面板的火焰图能告诉你时间花在哪，Memory 面板能找到内存泄漏，Network 面板能分析瀑布图。会用 DevTools 是前端工程师的核心竞争力。

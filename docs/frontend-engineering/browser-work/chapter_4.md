@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 第4章 V8 的高级机制
 
 > WebAssembly 让 C++ 代码在浏览器里跑得几乎和原生一样快，而 TurboFan 的激进优化可能让你的 JS 代码比预期快 10 倍，也可能因为一个类型变化瞬间回退。这些机制构成了 V8 最深处的心脏。
@@ -655,6 +659,71 @@ Android 版 Chrome 在内存充足时（> 2GB）启用完整的站点隔离。�
 | Spectre 防护 | 完整 | 完整 | 部分 |
 
 低内存 Android 设备上的轻量级站点隔离仍然能防御大部分 Spectre 攻击，因为跨站点 iframe 仍然在独立进程中。只有当用户直接访问恶意站点时（主框架级别），防护才较弱。
+
+## 4.5 COOP/COEP/CORP 对比
+
+### 4.5.1 三个跨源隔离头
+
+COOP、COEP、CORP 是实现跨源隔离的三个 HTTP 头。它们配合使用可以启用 SharedArrayBuffer 等高精度计时器。
+
+```
+跨源隔离层级
+
+COOP（Cross-Origin Opener Policy，跨源打开者策略）
+  → 隔离顶级窗口
+  → 防止 window.opener 访问
+
+COEP（Cross-Origin Embedder Policy，跨源嵌入者策略）
+  → 要求所有子资源支持 CORP 或 CORS
+  → 启用 SharedArrayBuffer 的前提
+
+CORP（Cross-Origin Resource Policy，跨源资源策略）
+  → 资源级别限制
+  → 响应头声明可被谁加载
+```
+
+| 头 | 作用对象 | 场景 |
+|---|---------|------|
+| COOP | 顶级窗口 | 防止跨源窗口引用 |
+| COEP | 文档 | 要求子资源安全 |
+| CORP | 资源 | 限制加载者 |
+
+```http
+# 启用跨源隔离
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp
+
+# 资源响应头
+Cross-Origin-Resource-Policy: same-origin
+```
+
+## 4.6 跨源窗口操作限制
+
+### 4.6.1 window.opener 限制
+
+COOP 同源策略下，跨源窗口的 opener 引用被切断，无法通过 window.opener 访问原始窗口。
+
+```
+无 COOP：
+  site-a.com 打开 site-b.com（window.open）
+  → site-b.com 可以访问 window.opener（跨站！）
+  → 可能被用于钓鱼攻击
+
+有 COOP: same-origin：
+  site-a.com 打开 site-b.com
+  → 浏览器创建独立浏览上下文
+  → window.opener = null
+  → 无法访问原始窗口
+```
+
+| 窗口属性 | 无 COOP | COOP: same-origin |
+|---------|---------|------------------|
+| window.opener | 可访问 | null |
+| window.closed | 可访问 | 可访问 |
+| postMessage | 可用 | 可用 |
+| frame.length | 可访问 | 不可访问 |
+
+> postMessage 不受 COOP 限制，仍然是跨源窗口通信的安全方式。COOP 切断的是同步引用访问，postMessage 是异步通信，由接收方决定如何处理消息。
 
 ## 本章核心知识总结
 

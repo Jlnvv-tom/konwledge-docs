@@ -1,3 +1,7 @@
+---
+sidebar_position: 15
+---
+
 # 第15章 浏览器沙箱与站点隔离
 
 > 浏览器是用户接触恶意代码的第一线。沙箱让即使渲染进程被攻破，恶意代码也无法逃逸到操作系统。站点隔离则让不同网站的数据互不可见，即使 Spectre 漏洞也无法偷取。
@@ -533,6 +537,206 @@ V3: Meltdown (Rogue Data Cache Load)
 | V3 (Meltdown) | 内核内存 | — | KPTI | 硬件修复 |
 
 Chrome 对 Spectre V1 的主要缓解是站点隔离。通过将不同站点放在不同进程中，V1 攻击只能读取同一进程内的数据，即同一站点的数据。对于攻击者来说，读取自己站点的数据没有意义。
+
+## 15.5 各平台沙箱实现对比
+
+### 15.5.1 Windows 沙箱
+
+Windows 上 Chrome 使用 Job Object + Restricted Token 实现沙箱。Job Object 限制进程的资源使用（内存、CPU、句柄数），Restricted Token 限制进程的权限（不能创建全局对象、不能访问其他进程）。
+
+```
+Windows 沙箱机制
+
+1. Job Object（作业对象）
+   → 限制进程组资源
+   → 内存上限、CPU 时间、IO 带宽
+   → 防止资源耗尽攻击
+
+2. Restricted Token（受限令牌）
+   → 移除权限 SID
+   → 不能访问系统资源
+   → 不能创建全局对象
+   → 不能打开其他进程
+
+3. Desktop隔离
+   → 进程在不同 Desktop
+   → 不能发送窗口消息
+   → 防止 UI 攻击
+```
+
+### 15.5.2 macOS 沙箱
+
+macOS 使用 seatbelt（sandboxd）实现沙箱。seatbelt 是基于 TrustedBSD MAC 框架的强制访问控制系统。
+
+```scheme
+;; macOS 沙箱配置示例（简化）
+(deny default)
+(allow process-fork)
+(allow signal (target self))
+(allow file-read* (subpath "/usr/lib"))
+(deny file-write* (subpath "/etc"))
+```
+
+### 15.5.3 Linux 沙箱
+
+Linux 使用 seccomp-bpf + namespaces 实现沙箱。seccomp-bpf 过滤系统调用，namespaces 隔离进程视图。
+
+```
+Linux 沙箱机制
+
+1. seccomp-bpf
+   → 过滤系统调用
+   → 只允许 read/write/epoll 等安全调用
+   → 阻止 fork/exec/open 等
+
+2. namespaces
+   → PID namespace: 进程隔离
+   → Network namespace: 网络隔离
+   → Mount namespace: 文件系统隔离
+   → User namespace: 用户隔离
+
+3. 结合使用
+   → seccomp 限制系统调用
+   → namespaces 隔离资源视图
+```
+
+| 平台 | 机制 | 特点 |
+|------|------|------|
+| Windows | Job Object + Restricted Token | 句柄限制 + 权限限制 |
+| macOS | seatbelt (sandboxd) | 声明式配置 |
+| Linux | seccomp-bpf + namespaces | 系统调用过滤 + 资源隔离 |
+
+## 15.6 站点隔离的内存开销
+
+### 15.6.1 进程数与内存消耗
+
+站点隔离的代价是内存。每个渲染进程都需要独立的 V8 堆、Blink 对象、GPU 上下文等，基础开销约 30-50MB。
+
+```
+无站点隔离（旧模式）：
+  10 个标签页 → 1-4 个渲染进程 → 基础内存: 120-200MB
+
+有站点隔离（当前模式）：
+  10 个标签页 → 10-15 个渲染进程 → 基础内存: 300-750MB
+
+内存开销增加: 2-4 倍
+```
+
+| 场景 | 进程数 | 内存开销 |
+|------|--------|---------|
+| 单站点 | 1-2 | 30-80MB |
+| 5 个站点 | 5-8 | 150-400MB |
+| 10 个站点 | 10-15 | 300-750MB |
+| Android（内存限制） | 部分隔离 | 减半 |
+
+> Android 上由于内存限制（通常 2-4GB），Chrome 不会完全启用站点隔离。Android Chrome 使用「大页面隔离」策略——只有顶级框架跨站时才隔离，嵌入的 iframe 可能与顶级页面共享进程。这是安全与资源的权衡。
+
+## 15.7 Spectre 缓解措施
+
+### 15.7.1 Spectre 变体与缓解
+
+| 变体 | 攻击方式 | Chrome 缓解 |
+|------|---------|------------|
+| V1 (Bounds Check Bypass) | 训练分支预测器 | 站点隔离 + Speculative Load Hardening |
+| V2 (Branch Target Injection) | 污染 BTB | Retpoline 编译 | 
+| V3 (Meltdown) | 利用异常处理 | 操作系统级 KPTI |
+| V3a (Lazy FP) | 延迟 FPU 切换 | 禁用延迟切换 |
+
+> Spectre 缓解是多层的。硬件层有 Retpoline（间接分支预测隔离），操作系统层有 KPTI（内核页表隔离），浏览器层有站点隔离和跨源读屏蔽。站点隔离是最重要的浏览器级缓解——即使 Spectre 攻击成功，也只能读取同站数据。
+
+## 15.7 沙箱逃逸防护
+
+### 15.7.1 沙箱逃逸路径
+
+沙箱是浏览器的最后一道防线。即使渲染进程被攻破，沙箱也能阻止攻击者访问操作系统。但沙箱本身也可能存在漏洞。
+
+```
+沙箱逃逸常见路径
+
+1. 系统调用漏洞
+   → seccomp-bpf 过滤器缺陷
+   → 新增系统调用未纳入过滤
+   → 利用允许的系统调用组合攻击
+
+2. IPC 漏洞
+   → 渲染进程向浏览器进程发送恶意 IPC
+   → 浏览器进程解析时触发漏洞
+   → 绕过沙箱获得浏览器进程权限
+
+3. GPU 进程漏洞
+   → 渲染进程通过 GPU 命令攻击 GPU 进程
+   → GPU 进程不在沙箱中（或沙箱较弱）
+   → 通过 GPU 进程逃逸
+
+4. 文件描述符泄漏
+   → 沙箱启动时未关闭的文件描述符
+   → 攻击者利用泄漏的 fd 访问外部资源
+```
+
+| 逃逸路径 | 难度 | 影响 |
+|---------|------|------|
+| 系统调用 | 高 | 完全控制 |
+| IPC 漏洞 | 中 | 浏览器进程 |
+| GPU 进程 | 中 | 系统级 |
+| FD 泄漏 | 低 | 有限访问 |
+
+### 15.7.2 Chrome 的漏洞奖励计划
+
+```
+Chrome 漏洞奖励（2024 年）
+
+沙箱逃逸:    $20,000 - $100,000
+渲染进程 RCE: $10,000 - $50,000
+浏览器进程 RCE: $20,000 - $80,000
+沙箱绕过:     $10,000 - $30,000
+
+报告流程:
+  1. 发现漏洞
+  2. 提交报告（chromereporting.com）
+  3. Chrome 团队验证
+  4. 修复并发布补丁
+  5. 发布漏洞详情（90 天后）
+```
+> Chrome 的漏洞奖励计划是沙箱安全的重要保障。高额奖励鼓励安全研究员寻找漏洞并负责任地报告，而不是将漏洞出售给攻击者。Chrome 团队通常在 24 小时内响应报告，并在 90 天内发布修复。这种快速响应机制是 Chrome 安全性的关键。
+
+## 15.8 跨平台沙箱对比
+
+### 15.8.1 Windows/macOS/Linux 沙箱技术
+
+```
+跨平台沙箱对比
+
+Windows 沙箱:
+  技术: Integrity Level + Job Object
+  → Low Integrity: 不能写入 Medium+ 路径
+  → Job Object: 限制 CPU/内存/进程创建
+  → AppContainer: 更严格的隔离
+
+macOS 沙箱:
+  技术: Seatbelt（sandbox-exec）
+  → 基于 BSD 的 Mandatory Access Control
+  → 配置文件定义允许/拒绝的操作
+  → 比传统 Unix 权限更精细
+
+Linux 沙箱:
+  技术: seccomp-bpf + Namespaces + PID
+  → seccomp-bpf: 过滤系统调用
+  → Namespaces: 隔离进程/网络/文件系统视图
+  → PID: 限制进程间访问
+
+Chrome 统一抽象:
+  → sandbox/ 目录封装跨平台 API
+  → 各平台实现不同但接口一致
+  → 渲染进程启动时统一进入沙箱
+```
+
+| 平台 | 核心技术 | 限制强度 |
+|------|---------|----------|
+| Windows | Integrity + Job | 强 |
+| macOS | Seatbelt | 强 |
+| Linux | seccomp + NS | 中 |
+
+> Linux 沙箱相对较弱，因为 Linux 内核攻击面较大。Chrome 在 Linux 上使用 seccomp-bpf 过滤系统调用，配合 PID/Network Namespace 隔离。但 Linux 内核漏洞可能导致 Namespace 逃逸。Windows 的 AppContainer 和 macOS 的 Seatbelt 提供了更强的内核级保护。
 
 ## 本章核心知识总结
 
