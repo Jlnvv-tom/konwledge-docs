@@ -1,0 +1,358 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-audio/music-theory-ai" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第 12 章：音乐理论基础与 AI 表示 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第 12 章：音乐理论基础与 AI 表示 | 知识库"/><meta data-rh=true name=description content=系列文章：《语音与音乐的机器之魂》 /><meta data-rh=true property=og:description content=系列文章：《语音与音乐的机器之魂》 /><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/","name":"AI 语音与音乐","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai","name":"第 12 章：音乐理论基础与 AI 表示","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="折叠侧边栏分类 'AI 语音与音乐'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/sound-digital-world><span title="第 1 章：声音的数字世界——从声波到比特" class=linkLabel_WmDU>第 1 章：声音的数字世界——从声波到比特</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/ai-speech-history><span title="第 2 章：AI 语音技术发展简史" class=linkLabel_WmDU>第 2 章：AI 语音技术发展简史</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/deep-learning-audio-basics><span title="第 3 章：深度学习基础与音频建模入门" class=linkLabel_WmDU>第 3 章：深度学习基础与音频建模入门</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/tts-core-principles><span title="第 4 章：语音合成（TTS）核心原理" class=linkLabel_WmDU>第 4 章：语音合成（TTS）核心原理</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/vocoder><span title="第 5 章：声码器（Vocoder）——从特征到波形" class=linkLabel_WmDU>第 5 章：声码器（Vocoder）——从特征到波形</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/asr-speech-understanding><span title="第 6 章：语音识别（ASR）与语音理解" class=linkLabel_WmDU>第 6 章：语音识别（ASR）与语音理解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/voice-cloning-zero-shot><span title="第 7 章：声音克隆与零样本语音合成" class=linkLabel_WmDU>第 7 章：声音克隆与零样本语音合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/streaming-realtime><span title="第 8 章：流式与实时语音模型" class=linkLabel_WmDU>第 8 章：流式与实时语音模型</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/timbre-perception><span title="第 9 章：音色的数学描述与感知维度" class=linkLabel_WmDU>第 9 章：音色的数学描述与感知维度</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/timbre-generation><span title="第 10 章：音色生成模型与控制技术" class=linkLabel_WmDU>第 10 章：音色生成模型与控制技术</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/singing-voice-synthesis><span title="第 11 章：歌声合成（SVS）与歌声转换（SVC）" class=linkLabel_WmDU>第 11 章：歌声合成（SVS）与歌声转换（SVC）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/music-theory-ai><span title="第 12 章：音乐理论基础与 AI 表示" class=linkLabel_WmDU>第 12 章：音乐理论基础与 AI 表示</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/symbolic-music-generation><span title="第 13 章：符号级音乐生成（MIDI/乐谱）" class=linkLabel_WmDU>第 13 章：符号级音乐生成（MIDI/乐谱）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/audio-music-generation><span title="第 14 章：音频级音乐生成——从 WaveNet 到 MusicGen" class=linkLabel_WmDU>第 14 章：音频级音乐生成——从 WaveNet 到 MusicGen</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/lyrics-song-creation><span title="第 15 章：歌词生成与歌曲级 AI 创作" class=linkLabel_WmDU>第 15 章：歌词生成与歌曲级 AI 创作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/interactive-ai-music><span title="第 16 章：交互式 AI 音乐工具与实践" class=linkLabel_WmDU>第 16 章：交互式 AI 音乐工具与实践</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/data-preparation><span title="第 17 章：数据采集、标注与清洗" class=linkLabel_WmDU>第 17 章：数据采集、标注与清洗</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/training-pipeline><span title="第 18 章：训练 Pipeline 与分布式训练" class=linkLabel_WmDU>第 18 章：训练 Pipeline 与分布式训练</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/evaluation><span title="第 19 章：评估指标与主观评测" class=linkLabel_WmDU>第 19 章：评估指标与主观评测</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/deployment><span title="第 20 章：部署优化——从云端到端侧" class=linkLabel_WmDU>第 20 章：部署优化——从云端到端侧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/deepfake-defense><span title="第 21 章：深度伪造防御" class=linkLabel_WmDU>第 21 章：深度伪造防御</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/copyright-ethics><span title="第 22 章：版权、伦理与法律" class=linkLabel_WmDU>第 22 章：版权、伦理与法律</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/future-outlook><span title="第 23 章：未来展望——通用音频智能" class=linkLabel_WmDU>第 23 章：未来展望——通用音频智能</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/appendix-a-glossary><span title="附录 A：术语表" class=linkLabel_WmDU>附录 A：术语表</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/appendix-b-datasets><span title="附录 B：数据集索引" class=linkLabel_WmDU>附录 B：数据集索引</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/appendix-c-projects><span title="附录 C：开源项目索引" class=linkLabel_WmDU>附录 C：开源项目索引</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-audio/appendix-d-papers><span title="附录 D：推荐论文清单" class=linkLabel_WmDU>附录 D：推荐论文清单</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-audio/><span>AI 语音与音乐</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第 12 章：音乐理论基础与 AI 表示</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第 12 章：音乐理论基础与 AI 表示</h1></header>
+<blockquote>
+<p><strong>系列文章：《语音与音乐的机器之魂》</strong>
+音乐有自己的"语法"——音阶、和弦、节奏、曲式。本章速览音乐理论，并解析如何将音乐编码为 AI 可处理的形式。</p>
+</blockquote>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-音乐理论速览>1. 音乐理论速览<a href=#1-音乐理论速览 class=hash-link aria-label="1. 音乐理论速览的直接链接" title="1. 音乐理论速览的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-音高与音阶>1.1 音高与音阶<a href=#11-音高与音阶 class=hash-link aria-label="1.1 音高与音阶的直接链接" title="1.1 音高与音阶的直接链接" translate=no>​</a></h3>
+<p><strong>十二平均律：</strong> 一个八度均分为 12 个半音</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">C  C#  D  D#  E  F  F#  G  G#  A  A#  B  C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">0  1   2  3   4  5  6   7  8   9  10  11  12</span><br/></div></code></pre></div></div>
+<p>每个半音频率比 = <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><msup><mn>2</mn><mrow><mn>1</mn><mi mathvariant=normal>/</mi><mn>12</mn></mrow></msup><mo>≈</mo><mn>1.0595</mn></mrow><annotation encoding=application/x-tex>2^{1/12} \approx 1.0595</annotation></semantics></math></span><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:0.888em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:0.888em><span style=top:-3.063em;margin-right:0.05em><span class=pstrut style=height:2.7em></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1/12</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:0.2778em></span><span class=mrel>≈</span><span class=mspace style=margin-right:0.2778em></span></span><span class=base><span class=strut style=height:0.6444em></span><span class=mord>1.0595</span></span></span></span></p>
+<p><strong>大调音阶</strong>（全全半全全全半）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">C大调: C  D  E  F  G  A  B  C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">间隔:  全  全  半  全  全  全  半</span><br/></div></code></pre></div></div>
+<p><strong>小调音阶</strong>（全半全全半全全）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">A小调: A  B  C  D  E  F  G  A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">间隔:  全  半  全  全  半  全  全</span><br/></div></code></pre></div></div>
+<p><strong>五声音阶</strong>（中国风/布鲁斯）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">C大调五声: C  D  E  G  A  (去掉了半音冲突，永远"好听")</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-和弦与和声>1.2 和弦与和声<a href=#12-和弦与和声 class=hash-link aria-label="1.2 和弦与和声的直接链接" title="1.2 和弦与和声的直接链接" translate=no>​</a></h3>
+<p><strong>三和弦：</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型<th>构成<th>感觉<th>示例<tbody><tr><td>大三和弦<td>根音+大三度+纯五度<td>明亮<td>C-E-G (C)<tr><td>小三和弦<td>根音+小三度+纯五度<td>暗淡<td>C-Eb-G (Cm)<tr><td>减三和弦<td>根音+小三度+减五度<td>紧张<td>C-Eb-Gb (Cdim)<tr><td>增三和弦<td>根音+大三度+增五度<td>悬浮<td>C-E-G# (Caug)</table>
+<p><strong>常见和弦进行：</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">I-V-vi-IV  (C-G-Am-F)   ← 流行万能进行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ii-V-I     (Dm-G-C)     ← 爵士标准</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">I-IV-V-I   (C-F-G-C)    ← 摇滚/民谣</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">vi-IV-I-V  (Am-F-C-G)   ← 另一个流行经典</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-节拍与节奏>1.3 节拍与节奏<a href=#13-节拍与节奏 class=hash-link aria-label="1.3 节拍与节奏的直接链接" title="1.3 节拍与节奏的直接链接" translate=no>​</a></h3>
+<p><strong>拍号：</strong> 分子=每小节拍数，分母=以什么音符为一拍</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>拍号<th>感觉<th>典型风格<tbody><tr><td>4/4<td>稳定<td>流行/摇滚<tr><td>3/4<td>圆舞<td>华尔兹<tr><td>6/8<td>律动<td>摇篮曲/布鲁斯<tr><td>7/8<td>不规则<td>前卫/民谣</table>
+<p><strong>BPM 参考范围：</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">60-80:  慢歌、抒情</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">80-100: 中速、R&B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">100-120: 流行、轻快</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">120-140: 摇滚、EDM</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">140-180: 金属、Drum & Bass</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-曲式结构>1.4 曲式结构<a href=#14-曲式结构 class=hash-link aria-label="1.4 曲式结构的直接链接" title="1.4 曲式结构的直接链接" translate=no>​</a></h3>
+<p>流行歌曲的标准结构：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Intro → Verse 1 → Pre-Chorus → Chorus → Verse 2 → Pre-Chorus </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → Chorus → Bridge → Chorus → Outro</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>部分<th>功能<tbody><tr><td>Intro<td>建立调性和氛围<tr><td>Verse（主歌）<td>讲故事、推进叙事<tr><td>Pre-Chorus<td>蓄力、过渡<tr><td>Chorus（副歌）<td>高潮、记忆点<tr><td>Bridge<td>对比、转折<tr><td>Outro<td>收尾</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-音乐的-ai-表示方法>2. 音乐的 AI 表示方法<a href=#2-音乐的-ai-表示方法 class=hash-link aria-label="2. 音乐的 AI 表示方法的直接链接" title="2. 音乐的 AI 表示方法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-符号表示>2.1 符号表示<a href=#21-符号表示 class=hash-link aria-label="2.1 符号表示的直接链接" title="2.1 符号表示的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>表示<th>描述<th>示例<tbody><tr><td><strong>MIDI</strong><td>事件序列<td><code>[Note On C4 v=80] [Note Off C4]</code><tr><td><strong>Piano Roll</strong><td>钢琴卷帘矩阵<td>(time, pitch) 二维矩阵<tr><td><strong>REMI</strong><td>事件型 Token<td><code>[Bar] [Position 0] [Pitch C4] [Duration 1/4]</code><tr><td><strong>Octuple</strong><td>八元组<td>(bar, position, pitch, duration, velocity, ...)<tr><td><strong>ABC Notation</strong><td>文本乐谱<td>`C D E F<tr><td><strong>MusicXML</strong><td>XML 乐谱<td>结构化乐谱表示</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-midi-格式详解>2.2 MIDI 格式详解<a href=#22-midi-格式详解 class=hash-link aria-label="2.2 MIDI 格式详解的直接链接" title="2.2 MIDI 格式详解的直接链接" translate=no>​</a></h3>
+<p>MIDI 是音乐 AI 最常用的符号表示：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># MIDI 事件示例</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> mido </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> Message</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> MidiFile</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> MidiTrack</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">track </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> MidiTrack</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">track</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">Message</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'note_on'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> note</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>60</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> velocity</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>80</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> time</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">   </span><span class="token comment" style=color:#999988;font-style:italic># C4 开始</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">track</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">Message</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'note_off'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> note</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>60</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> velocity</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> time</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>480</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># C4 结束(480 ticks)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">track</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">Message</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'note_on'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> note</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>64</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> velocity</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>75</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> time</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">   </span><span class="token comment" style=color:#999988;font-style:italic># E4 开始</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">track</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">Message</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'note_off'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> note</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>64</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> velocity</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> time</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>480</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># E4 结束</span><br/></div></code></pre></div></div>
+<p>MIDI 的优势：</p>
+<ul>
+<li class="">精确的音高和时值</li>
+<li class="">多轨道（不同乐器）</li>
+<li class="">紧凑的表示</li>
+<li class="">大量现有数据（Lakh MIDI）</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-remi-表示>2.3 REMI 表示<a href=#23-remi-表示 class=hash-link aria-label="2.3 REMI 表示的直接链接" title="2.3 REMI 表示的直接链接" translate=no>​</a></h3>
+<p>REMI（Revamped MIDI-Derived Token Format）专为 Transformer 设计：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">[Bar] [Tempo 120] [Position 0] [Pitch C4] [Velocity 80] [Duration 1/4]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                   [Position 0] [Pitch E4] [Velocity 75] [Duration 1/4]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                   [Position 1] [Pitch G4] [Velocity 70] [Duration 1/4]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Bar] [Position 0] [Pitch C5] ...</span><br/></div></code></pre></div></div>
+<p>每个 Token 是一个事件类型，模型逐 Token 生成。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-音频表示>2.4 音频表示<a href=#24-音频表示 class=hash-link aria-label="2.4 音频表示的直接链接" title="2.4 音频表示的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>表示<th>信息密度<th>序列长度<th>用途<tbody><tr><td>波形<td>最高<td>极长<td>直接音频生成<tr><td>STFT/Mel<td>中<td>中<td>声码器、特征提取<tr><td>音频 Token<td>低<td>较短<td>LLM 范式生成</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-混合表示>2.5 混合表示<a href=#25-混合表示 class=hash-link aria-label="2.5 混合表示的直接链接" title="2.5 混合表示的直接链接" translate=no>​</a></h3>
+<p>现代音乐生成模型常使用<strong>层次化混合表示</strong>：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">符号层: 控制结构、旋律、和声</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → MIDI/REMI Token (结构清晰、可控)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">音频层: 控制音色、表现力、混音</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → EnCodec Token (音质好、细节丰富)</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-音乐数据集>3. 音乐数据集<a href=#3-音乐数据集 class=hash-link aria-label="3. 音乐数据集的直接链接" title="3. 音乐数据集的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=31-符号数据集>3.1 符号数据集<a href=#31-符号数据集 class=hash-link aria-label="3.1 符号数据集的直接链接" title="3.1 符号数据集的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集<th>类型<th>规模<th>特点<tbody><tr><td>Lakh MIDI<td>MIDI<td>176K 首<td>多流派<tr><td>MAESTRO<td>MIDI+Audio<td>200h<td>古典钢琴比赛<tr><td>Hooktheory<td>和弦+旋律<td>15K 首<td>流行歌曲<tr><td>JSB Chorales<td>四声部<td>382 首<td>巴赫赞美诗</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=32-音频数据集>3.2 音频数据集<a href=#32-音频数据集 class=hash-link aria-label="3.2 音频数据集的直接链接" title="3.2 音频数据集的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集<th>规模<th>特点<tbody><tr><td>MTG-Jamendo<td>5586 首<td>Creative Commons<tr><td>FMA<td>106K 首<td>多流派<tr><td>MUSDB18<td>150 首<td>分轨（人声/鼓/贝斯/其他）<tr><td>MusicCaps<td>5.5K 首<td>Google，文本标注<tr><td>NSynth<td>306K 样本<td>单音，1000+ 乐器</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=33-数据集选择指南>3.3 数据集选择指南<a href=#33-数据集选择指南 class=hash-link aria-label="3.3 数据集选择指南的直接链接" title="3.3 数据集选择指南的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">做符号生成 → Lakh MIDI / Hooktheory</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">做音频生成 → FMA / MTG-Jamendo</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">做文本条件 → MusicCaps</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">做音色研究 → NSynth</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">做源分离   → MUSDB18</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">做钢琴生成 → MAESTRO</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-音乐与-ai-的交汇>4. 音乐与 AI 的交汇<a href=#4-音乐与-ai-的交汇 class=hash-link aria-label="4. 音乐与 AI 的交汇的直接链接" title="4. 音乐与 AI 的交汇的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-ai-在音乐中的能力谱>4.1 AI 在音乐中的能力谱<a href=#41-ai-在音乐中的能力谱 class=hash-link aria-label="4.1 AI 在音乐中的能力谱的直接链接" title="4.1 AI 在音乐中的能力谱的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">理解 ←───────────────────→ 创作</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|         |          |           |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">分类    标注      生成         编曲</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流派   情感      旋律        配器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">乐器   和弦      歌词        混音</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-当前能力评估>4.2 当前能力评估<a href=#42-当前能力评估 class=hash-link aria-label="4.2 当前能力评估的直接链接" title="4.2 当前能力评估的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>能力<th>AI 水平<th>人类水平差距<tbody><tr><td>单音音色生成<td>接近人类<td>很小<tr><td>短片段生成（&lt; 30s）<td>接近人类<td>很小<tr><td>完整歌曲生成<td>可用但需人工修<td>结构/歌词/编曲<tr><td>即兴演奏<td>初级<td>差距大<tr><td>编曲/配器<td>辅助级<td>差距大<tr><td>音乐分析<td>优秀<td>超越一般人类</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-本章小结>5. 本章小结<a href=#5-本章小结 class=hash-link aria-label="5. 本章小结的直接链接" title="5. 本章小结的直接链接" translate=no>​</a></h2>
+<p>音乐理论提供了 AI 音乐生成的"语法"基础：</p>
+<ul>
+<li class=""><strong>音阶/和弦</strong>定义了什么听起来"好听"</li>
+<li class=""><strong>节奏/拍号</strong>定义了时间结构</li>
+<li class=""><strong>曲式</strong>定义了歌曲的整体架构</li>
+</ul>
+<p>选择合适的表示方法是设计音乐生成模型的第一步——符号表示适合结构和旋律，音频表示适合音色和表现力。</p>
+<hr/>
+<blockquote>
+<p><strong>上一章</strong>：<a class="" href=/konwledge-docs/docs/ai-practice/ai-audio/singing-voice-synthesis>第 11 章：歌声合成与歌声转换</a></p>
+<p><strong>下一章</strong>：<a class="" href=/konwledge-docs/docs/ai-practice/ai-audio/symbolic-music-generation>第 13 章：符号级音乐生成</a></p>
+</blockquote></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-audio/12-music-theory-ai.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-audio/singing-voice-synthesis><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第 11 章：歌声合成（SVS）与歌声转换（SVC）</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-audio/symbolic-music-generation><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第 13 章：符号级音乐生成（MIDI/乐谱）</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#1-音乐理论速览 class="table-of-contents__link toc-highlight">1. 音乐理论速览</a><ul><li><a href=#11-音高与音阶 class="table-of-contents__link toc-highlight">1.1 音高与音阶</a><li><a href=#12-和弦与和声 class="table-of-contents__link toc-highlight">1.2 和弦与和声</a><li><a href=#13-节拍与节奏 class="table-of-contents__link toc-highlight">1.3 节拍与节奏</a><li><a href=#14-曲式结构 class="table-of-contents__link toc-highlight">1.4 曲式结构</a></ul><li><a href=#2-音乐的-ai-表示方法 class="table-of-contents__link toc-highlight">2. 音乐的 AI 表示方法</a><ul><li><a href=#21-符号表示 class="table-of-contents__link toc-highlight">2.1 符号表示</a><li><a href=#22-midi-格式详解 class="table-of-contents__link toc-highlight">2.2 MIDI 格式详解</a><li><a href=#23-remi-表示 class="table-of-contents__link toc-highlight">2.3 REMI 表示</a><li><a href=#24-音频表示 class="table-of-contents__link toc-highlight">2.4 音频表示</a><li><a href=#25-混合表示 class="table-of-contents__link toc-highlight">2.5 混合表示</a></ul><li><a href=#3-音乐数据集 class="table-of-contents__link toc-highlight">3. 音乐数据集</a><ul><li><a href=#31-符号数据集 class="table-of-contents__link toc-highlight">3.1 符号数据集</a><li><a href=#32-音频数据集 class="table-of-contents__link toc-highlight">3.2 音频数据集</a><li><a href=#33-数据集选择指南 class="table-of-contents__link toc-highlight">3.3 数据集选择指南</a></ul><li><a href=#4-音乐与-ai-的交汇 class="table-of-contents__link toc-highlight">4. 音乐与 AI 的交汇</a><ul><li><a href=#41-ai-在音乐中的能力谱 class="table-of-contents__link toc-highlight">4.1 AI 在音乐中的能力谱</a><li><a href=#42-当前能力评估 class="table-of-contents__link toc-highlight">4.2 当前能力评估</a></ul><li><a href=#5-本章小结 class="table-of-contents__link toc-highlight">5. 本章小结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

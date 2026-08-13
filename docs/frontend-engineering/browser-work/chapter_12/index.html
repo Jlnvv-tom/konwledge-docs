@@ -1,0 +1,885 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_12" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第12章 HTTP/1.1、HTTP/2 与 HTTP/3 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第12章 HTTP/1.1、HTTP/2 与 HTTP/3 | 知识库"/><meta data-rh=true name=description content="HTTP/1.1 的队头阻塞让浏览器不得不开 6 个连接，HTTP/2 的多路复用解决了这个问题但又引入了 TCP 层的队头阻塞，HTTP/3 干脆把传输层从 TCP 换成了 QUIC。"/><meta data-rh=true property=og:description content="HTTP/1.1 的队头阻塞让浏览器不得不开 6 个连接，HTTP/2 的多路复用解决了这个问题但又引入了 TCP 层的队头阻塞，HTTP/3 干脆把传输层从 TCP 换成了 QUIC。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12","name":"第12章 HTTP/1.1、HTTP/2 与 HTTP/3","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</h1></header>
+<blockquote>
+<p>HTTP/1.1 的队头阻塞让浏览器不得不开 6 个连接，HTTP/2 的多路复用解决了这个问题但又引入了 TCP 层的队头阻塞，HTTP/3 干脆把传输层从 TCP 换成了 QUIC。</p>
+</blockquote>
+<p>我是怕浪猫，上期讲了 DNS 和 TCP 基础，今天进入第 12 章：HTTP 协议的三代演进。这一章会拆解 HTTP/1.1 的性能瓶颈、HTTP/2 的多路复用与 Server Push、以及 HTTP/3 基于 QUIC 的创新。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=121-http11-的性能瓶颈>12.1 HTTP/1.1 的性能瓶颈<a href=#121-http11-的性能瓶颈 class=hash-link aria-label="12.1 HTTP/1.1 的性能瓶颈的直接链接" title="12.1 HTTP/1.1 的性能瓶颈的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1211-队头阻塞head-of-line-blocking>12.1.1 队头阻塞（Head-of-Line Blocking）<a href=#1211-队头阻塞head-of-line-blocking class=hash-link aria-label="12.1.1 队头阻塞（Head-of-Line Blocking）的直接链接" title="12.1.1 队头阻塞（Head-of-Line Blocking）的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 的核心问题是队头阻塞（HOL Blocking，Head-of-Line Blocking）。在 HTTP/1.1 中，一个 TCP 连接上同时只能处理一个请求。前一个请求的响应未完成时，后续请求必须等待。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 队头阻塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接1：  请求A ──────── 响应A ──────── 请求B ──────── 响应B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                    ↑ B 必须等 A 完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">浏览器的解决方案：开多个连接（最多6个）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接1：  请求A ──── 响应A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接2：  请求B ──── 响应B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接3：  请求C ──── 响应C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接4：  请求D ──── 响应D</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接5：  请求E ──── 响应E</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接6：  请求F ──── 响应F</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">如果超过 6 个资源，第 7 个必须等前面的连接释放</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1212-http11-的优化手段>12.1.2 HTTP/1.1 的优化手段<a href=#1212-http11-的优化手段 class=hash-link aria-label="12.1.2 HTTP/1.1 的优化手段的直接链接" title="12.1.2 HTTP/1.1 的优化手段的直接链接" translate=no>​</a></h3>
+<p>在 HTTP/1.1 下，开发者发明了各种绕过限制的优化手段。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优化手段<th>原理<th>效果<th>副作用<tbody><tr><td>域名分片<td>使用多个子域名<td>突破 6 连接限制<td>增加 DNS + 连接开销<tr><td>雪碧图<td>合并多个图片<td>减少请求数<td>难以维护<tr><td>内联资源<td>CSS/JS 内联到 HTML<td>减少请求数<td>无法缓存<tr><td>Data URI<td>图片转 Base64<td>减少请求数<td>增大 HTML 体积<tr><td>合并文件<td>合并 JS/CSS<td>减少请求数<td>缓存粒度粗</table>
+<blockquote>
+<p>域名分片是 HTTP/1.1 时代最常用的优化。把图片放在 img1.example.com 到 img6.example.com，每个子域名各 6 个连接，总共 36 个并发连接。但每个子域名都需要额外的 DNS 解析和 TLS 握手，得不偿失。HTTP/2 时代这些 hack 都可以扔掉了。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1213-keep-alive-连接复用>12.1.3 Keep-Alive 连接复用<a href=#1213-keep-alive-连接复用 class=hash-link aria-label="12.1.3 Keep-Alive 连接复用的直接链接" title="12.1.3 Keep-Alive 连接复用的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 默认开启 Keep-Alive，允许在同一个 TCP 连接上发送多个请求。但请求仍然是串行的，前一个响应完成后才能发送下一个。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># HTTP/1.1 Keep-Alive</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GET /index.html HTTP/1.1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Host: example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Connection: keep-alive</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 响应</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 200 OK</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Content-Length: 1024</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Connection: keep-alive</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Keep-Alive: timeout=60, max=100</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 在同一连接上发送下一个请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GET /style.css HTTP/1.1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Host: example.com</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>HTTP/1.0<th>HTTP/1.1<tbody><tr><td>连接复用<td>默认关闭<td>默认开启（Keep-Alive）<tr><td>请求方式<td>串行<td>串行（但可复用连接）<tr><td>Host 头<td>可选<td>必需（支持虚拟主机）<tr><td>缓存<td>基础<td>增强（ETag、Cache-Control）<tr><td>断点续传<td>不支持<td>支持（Range 请求）</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=122-http2-的多路复用>12.2 HTTP/2 的多路复用<a href=#122-http2-的多路复用 class=hash-link aria-label="12.2 HTTP/2 的多路复用的直接链接" title="12.2 HTTP/2 的多路复用的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1221-二进制分帧>12.2.1 二进制分帧<a href=#1221-二进制分帧 class=hash-link aria-label="12.2.1 二进制分帧的直接链接" title="12.2.1 二进制分帧的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 将 HTTP 消息拆分为二进制帧（Frame），在单个 TCP 连接上多路复用。每个请求/响应被分配一个流 ID（Stream ID），帧可以乱序发送，接收端按流 ID 重组。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 多路复用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">单个 TCP 连接上的 3 个并发请求/响应：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流1（请求A）：  DATA(1) ── DATA(1) ── DATA(1,END)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流3（请求B）：  DATA(3) ── DATA(3) ── DATA(3,END)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流5（请求C）：  DATA(5) ── DATA(5) ── DATA(5,END)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">实际在 TCP 上发送的帧序列（可交错）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DATA(1) | DATA(3) | DATA(5) | DATA(1) | DATA(3) | DATA(5) | ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">接收端按流 ID 重组：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流1 → 完整响应A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流3 → 完整响应B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流5 → 完整响应C</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1222-http2-帧类型>12.2.2 HTTP/2 帧类型<a href=#1222-http2-帧类型 class=hash-link aria-label="12.2.2 HTTP/2 帧类型的直接链接" title="12.2.2 HTTP/2 帧类型的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 定义了多种帧类型，每种帧有不同的功能。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>帧类型<th>说明<th>用途<tbody><tr><td>DATA<td>数据帧<td>传输请求/响应体<tr><td>HEADERS<td>头部帧<td>传输请求/响应头<tr><td>PRIORITY<td>优先级帧<td>设置流的优先级<tr><td>RST_STREAM<td>重置帧<td>取消流<tr><td>SETTINGS<td>设置帧<td>连接参数协商<tr><td>PUSH_PROMISE<td>推送承诺帧<td>服务器推送通知<tr><td>PING<td>心跳帧<td>连接保活<tr><td>GOAWAY<td>关闭帧<td>优雅关闭连接<tr><td>WINDOW_UPDATE<td>窗口更新帧<td>流量控制<tr><td>CONTINUATION<td>续帧<td>继续头部块</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1223-hpack-头部压缩>12.2.3 HPACK 头部压缩<a href=#1223-hpack-头部压缩 class=hash-link aria-label="12.2.3 HPACK 头部压缩的直接链接" title="12.2.3 HPACK 头部压缩的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 使用 HPACK 算法压缩头部。HPACK 通过静态表、动态表和哈夫曼编码减少头部大小。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 头部（重复传输）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  GET / HTTP/1.1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Host: example.com        ← 每次请求都发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  User-Agent: Mozilla/5.0  ← 每次请求都发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Accept: text/html        ← 每次请求都发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Cookie: session=abc123   ← 每次请求都发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 HPACK 压缩：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  首次请求：发送完整头部 → 存入动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  后续请求：只发送变化的头部 → 引用动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  压缩率可达 80-90%</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>HPACK 组件<th>说明<th>效果<tbody><tr><td>静态表<td>61 个常见头部字段预定义<td>常用头部用索引代替<tr><td>动态表<td>连接内共享的头部历史<td>重复头部只发一次<tr><td>哈夫曼编码<td>字符串压缩<td>减少字符串体积</table>
+<p>HPACK 的动态表是连接级别的，所有流共享一个动态表。这意味着第一个请求发送的 Cookie 头部可以被后续请求引用，不需要重复发送。动态表的大小由 SETTINGS 帧协商，默认 4096 字节。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1224-流优先级>12.2.4 流优先级<a href=#1224-流优先级 class=hash-link aria-label="12.2.4 流优先级的直接链接" title="12.2.4 流优先级的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 允许客户端为每个流设置优先级，告诉服务器哪些资源更重要，应该优先分配带宽。</p>
+<p>在 HTTP/2 的早期版本中，优先级通过 PRIORITY 帧设置，采用树形依赖结构。但在实际使用中，这个树形结构过于复杂，服务器实现困难。HTTP/2 后来引入了简化的优先级方案： urgency（紧急程度）和 incremental（是否可增量）。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 使用 fetch 设置优先级（HTTP/2）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/critical.css'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>priority</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'high'</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 高优先级</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/analytics.js'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>priority</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'low'</span><span class="token plain">   </span><span class="token comment" style=color:#999988;font-style:italic>// 低优先级</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优先级<th>适用资源<th>说明<tbody><tr><td>highest<td>关键 CSS<td>首屏渲染必需<tr><td>high<td>关键 JS<td>交互功能必需<tr><td>medium<td>图片<td>视觉填充<tr><td>low<td>分析脚本<td>后台上报<tr><td>lowest<td>预加载资源<td>未来可能使用</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1224-server-push>12.2.4 Server Push<a href=#1224-server-push class=hash-link aria-label="12.2.4 Server Push的直接链接" title="12.2.4 Server Push的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 的 Server Push 允许服务器在客户端请求 HTML 时，主动推送 HTML 中引用的 CSS、JS 等资源。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Server Push 流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端请求 GET /index.html</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">服务器响应 index.html</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  同时发送 PUSH_PROMISE（承诺推送 /style.css）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端收到 PUSH_PROMISE</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 如果已有缓存 → 发送 RST_STREAM 拒绝</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 如果没有缓存 → 接受推送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">服务器推送 /style.css 的内容</span><br/></div></code></pre></div></div>
+<p>Server Push 的实际效果并不理想。服务器很难准确判断客户端是否已经缓存了资源，导致推送了不需要的内容，浪费带宽。Chrome 在 105 版本中移除了对 HTTP/2 Server Push 的支持。</p>
+<blockquote>
+<p>Server Push 是 HTTP/2 中一个听起来美好但实际效果不佳的特性。服务器无法知道客户端的缓存状态，推送了已缓存的资源反而浪费带宽。Chrome 已经移除了这个功能，推荐使用 <code>&lt;link rel="preload"></code> 替代。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1226-http2-的实际性能表现>12.2.6 HTTP/2 的实际性能表现<a href=#1226-http2-的实际性能表现 class=hash-link aria-label="12.2.6 HTTP/2 的实际性能表现的直接链接" title="12.2.6 HTTP/2 的实际性能表现的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 在实际使用中的性能提升主要来自多路复用和头部压缩。对于一个加载 50 个资源的页面，HTTP/2 的优势非常明显。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>HTTP/1.1<th>HTTP/2<th>提升<tbody><tr><td>50 个小资源<td>6 连接串行<td>1 连接并发<td>3-5x<tr><td>大量重复头部<td>每次完整发送<td>HPACK 压缩<td>80% 带宽<tr><td>单个大文件<td>单连接<td>单连接<td>无提升<tr><td>API 请求<td>6 连接限制<td>无限制<td>消除排队</table>
+<p>但 HTTP/2 并非在所有场景下都比 HTTP/1.1 快。当只有一个大文件下载时，HTTP/2 和 HTTP/1.1 性能相当，因为多路复用和头部压缩的优势在这种场景下不存在。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=123-http3-与-quic>12.3 HTTP/3 与 QUIC<a href=#123-http3-与-quic class=hash-link aria-label="12.3 HTTP/3 与 QUIC的直接链接" title="12.3 HTTP/3 与 QUIC的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1231-tcp-层的队头阻塞>12.3.1 TCP 层的队头阻塞<a href=#1231-tcp-层的队头阻塞 class=hash-link aria-label="12.3.1 TCP 层的队头阻塞的直接链接" title="12.3.1 TCP 层的队头阻塞的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 解决了 HTTP 层的队头阻塞，但 TCP 层仍有队头阻塞。TCP 保证数据的有序传输，如果一个 TCP 包丢失，后续包必须等待重传。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TCP 层队头阻塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 多路复用，3 个流共享一个 TCP 连接：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">发送序列：  包1(流1) | 包2(流3) | 包3(流5) | 包4(流1) | ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">如果包2丢失：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  包1 → 接收 ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  包2 → 丢失 ✗ → 等待重传</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  包3 → 到达但被 TCP 缓存（因为必须按序交付）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  包4 → 同上</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">结果：流5的数据被流3的丢包阻塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      即使流5的数据已经到达，也不能交付给应用</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1232-quic-协议>12.3.2 QUIC 协议<a href=#1232-quic-协议 class=hash-link aria-label="12.3.2 QUIC 协议的直接链接" title="12.3.2 QUIC 协议的直接链接" translate=no>​</a></h3>
+<p>HTTP/3 将传输层从 TCP 换成了 QUIC（Quick UDP Internet Connections，快速 UDP 互联网连接）。QUIC 基于 UDP，在用户空间实现了可靠传输、拥塞控制和加密。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/3 协议栈对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 和 HTTP/2：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HTTP → TLS → TCP → IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/3：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HTTP → QUIC → UDP → IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC 内部集成了 TLS 1.3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  不需要额外的 TLS 层</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>TCP + TLS<th>QUIC<tbody><tr><td>传输层<td>TCP<td>UDP<tr><td>加密<td>TLS（独立层）<td>集成 TLS 1.3<tr><td>队头阻塞<td>有（流间影响）<td>无（流独立）<tr><td>连接迁移<td>不支持<td>支持（IP 变化不断连）<tr><td>连接建立<td>TCP 3次握手 + TLS 握手<td>1-RTT（或 0-RTT）<tr><td>拥塞控制<td>内核空间<td>用户空间（灵活）</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1233-quic-的流独立性>12.3.3 QUIC 的流独立性<a href=#1233-quic-的流独立性 class=hash-link aria-label="12.3.3 QUIC 的流独立性的直接链接" title="12.3.3 QUIC 的流独立性的直接链接" translate=no>​</a></h3>
+<p>QUIC 的每个流有独立的确认和重传机制。一个流的丢包只影响该流，不影响其他流。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QUIC 流独立性</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流1：  数据1 ──── 数据2 ──── 数据3 ────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流3：  数据1 ──── [丢失] ──── 数据3 ────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流5：  数据1 ──── 数据2 ──── 数据3 ────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流3的数据2丢失：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流1 → 正常交付 ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流3 → 数据2等待重传，数据3缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  流5 → 正常交付 ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流5 不受流3丢包影响！</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1234-连接迁移>12.3.4 连接迁移<a href=#1234-连接迁移 class=hash-link aria-label="12.3.4 连接迁移的直接链接" title="12.3.4 连接迁移的直接链接" translate=no>​</a></h3>
+<p>QUIC 使用 Connection ID（连接 ID）标识连接，而不是像 TCP 那样依赖 IP 地址和端口。当设备切换网络（如从 WiFi 切换到 4G）时，IP 地址变化但 QUIC 连接不断。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接迁移示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">设备从 WiFi 切换到 4G：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  WiFi: IP=192.168.1.100, Port=12345</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4G:   IP=10.0.0.50, Port=54321</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">TCP：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  IP 变化 → TCP 连接断开 → 必须重新建立连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  （DNS + TCP 握手 + TLS 握手）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  IP 变化 → Connection ID 不变 → 连接保持</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  继续发送数据，无感知切换</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1235-quic-的拥塞控制>12.3.5 QUIC 的拥塞控制<a href=#1235-quic-的拥塞控制 class=hash-link aria-label="12.3.5 QUIC 的拥塞控制的直接链接" title="12.3.5 QUIC 的拥塞控制的直接链接" translate=no>​</a></h3>
+<p>QUIC 在用户空间实现拥塞控制，可以比内核空间的 TCP 更快地迭代算法。QUIC 支持 CUBIC、BBR、BBRv2 等多种拥塞控制算法。</p>
+<p>QUIC 的拥塞控制还有一个优势：更精确的 RTT 测量。TCP 的 RTT 测量受重传歧义影响（无法确认收到的 ACK 是对原始包还是重传包的确认）。QUIC 在包级别使用唯一单调递增的包号，重传的包使用新包号，彻底消除了重传歧义。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>拥塞控制特性<th>TCP<th>QUIC<tbody><tr><td>实现位置<td>内核空间<td>用户空间<tr><td>算法迭代<td>需要内核更新<td>随浏览器更新<tr><td>RTT 测量<td>有重传歧义<td>精确<tr><td>包号<td>重传复用<td>单调递增</table>
+<blockquote>
+<p>连接迁移是 QUIC 的杀手锏。在移动场景下，用户从 WiFi 切换到蜂窝网络时，TCP 连接会断开，页面加载中断。QUIC 的连接迁移让这个过程无感知，用户甚至不会感觉到网络切换。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=124-三个版本对比>12.4 三个版本对比<a href=#124-三个版本对比 class=hash-link aria-label="12.4 三个版本对比的直接链接" title="12.4 三个版本对比的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1241-核心特性对比>12.4.1 核心特性对比<a href=#1241-核心特性对比 class=hash-link aria-label="12.4.1 核心特性对比的直接链接" title="12.4.1 核心特性对比的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>HTTP/1.1<th>HTTP/2<th>HTTP/3<tbody><tr><td>传输层<td>TCP<td>TCP<td>QUIC（UDP）<tr><td>多路复用<td>否<td>是<td>是<tr><td>队头阻塞<td>HTTP 层<td>TCP 层<td>无<tr><td>头部压缩<td>否<td>HPACK<td>QPACK<tr><td>加密<td>可选<td>可选（实践中必须）<td>强制（TLS 1.3 集成）<tr><td>Server Push<td>否<td>是（已废弃）<td>否<tr><td>连接建立 RTT<td>1-RTT（TCP）+ 1-RTT（TLS）<td>同 HTTP/1.1<td>1-RTT（或 0-RTT）<tr><td>连接迁移<td>不支持<td>不支持<td>支持</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1242-连接建立时间对比>12.4.2 连接建立时间对比<a href=#1242-连接建立时间对比 class=hash-link aria-label="12.4.2 连接建立时间对比的直接链接" title="12.4.2 连接建立时间对比的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接建立时间对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1（HTTPS）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1RTT) + TCP(1RTT) + TLS(1-2RTT) + 请求(1RTT)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  = 4-5 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/2（HTTPS）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1RTT) + TCP(1RTT) + TLS(1-2RTT) + 请求(1RTT)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  = 4-5 RTT（与 HTTP/1.1 相同）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  但后续请求可多路复用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/3（首次连接）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1RTT) + QUIC握手(1RTT，含TLS) + 请求(0RTT，握手同时发数据)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  = 2 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/3（会话恢复）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1RTT) + QUIC(0RTT，数据在握手前发送)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  = 1 RTT</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=125-qpack-头部压缩>12.5 QPACK 头部压缩<a href=#125-qpack-头部压缩 class=hash-link aria-label="12.5 QPACK 头部压缩的直接链接" title="12.5 QPACK 头部压缩的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1251-qpack-与-hpack-的差异>12.5.1 QPACK 与 HPACK 的差异<a href=#1251-qpack-与-hpack-的差异 class=hash-link aria-label="12.5.1 QPACK 与 HPACK 的差异的直接链接" title="12.5.1 QPACK 与 HPACK 的差异的直接链接" translate=no>​</a></h3>
+<p>HTTP/3 使用 QPACK 替代 HTTP/2 的 HPACK。QPACK 针对 QUIC 的流独立性做了适配。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>HPACK<th>QPACK<tbody><tr><td>静态表<td>61 项<td>99 项<tr><td>动态表<td>连接级共享<td>连接级共享<tr><td>编码<td>同步<td>异步（带确认）<tr><td>流阻塞<td>可能<td>避免动态表引用</table>
+<p>QPACK 的核心设计是避免头部压缩引入的流间阻塞。QPACK 对动态表的引用是异步的，如果一个引用了动态表的请求被阻塞，不会影响其他请求。</p>
+<p>QPACK 的工作方式是：当请求需要引用动态表中的条目时，它发送一个引用索引。如果动态表中的条目尚未被确认（可能是新加入的），请求标记为「可能需要阻塞」。接收端收到后，如果引用有效，正常处理；如果引用无效（动态表条目已被淘汰），发送一个拒绝信号，发送方回退到字面值编码。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1252-qpack-的插入计数>12.5.2 QPACK 的插入计数<a href=#1252-qpack-的插入计数 class=hash-link aria-label="12.5.2 QPACK 的插入计数的直接链接" title="12.5.2 QPACK 的插入计数的直接链接" translate=no>​</a></h3>
+<p>QPACK 使用 Insert Count（插入计数）来同步发送方和接收方的动态表状态。发送方每次向动态表插入新条目时，计数加一。接收端通过 ACK 帧确认它已收到的动态表条目数。</p>
+<p>这个机制确保了即使某些包丢失或乱序，动态表的状态也能正确同步。如果发送方收到确认后发现某些动态表条目未被接收方收到，它可以重发这些条目或回退到字面值编码。</p>
+<blockquote>
+<p>QPACK 比 HPACK 复杂得多，但这种复杂度是值得的。HTTP/2 的 HPACK 可能导致流间阻塞（一个流的头部引用了动态表，动态表更新被另一个流阻塞），QPACK 通过异步确认机制彻底解决了这个问题。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=126-浏览器对-http3-的支持>12.6 浏览器对 HTTP/3 的支持<a href=#126-浏览器对-http3-的支持 class=hash-link aria-label="12.6 浏览器对 HTTP/3 的支持的直接链接" title="12.6 浏览器对 HTTP/3 的支持的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1261-http3-的发现机制>12.6.1 HTTP/3 的发现机制<a href=#1261-http3-的发现机制 class=hash-link aria-label="12.6.1 HTTP/3 的发现机制的直接链接" title="12.6.1 HTTP/3 的发现机制的直接链接" translate=no>​</a></h3>
+<p>浏览器如何知道服务器支持 HTTP/3？有两种机制：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/3 发现机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. Alt-Svc 头（HTTP/2 响应中）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   HTTP/2 200 OK</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Alt-Svc: h3=":443"; ma=86400</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   浏览器收到后，下次请求尝试用 HTTP/3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. DNS SVCB/HTTPS 记录</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   example.com. IN HTTPS 1 . alpn=h3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   浏览器从 DNS 记录中发现 HTTP/3 支持</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   可以在首次请求就用 HTTP/3</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>发现方式<th>说明<th>首次可用？<tbody><tr><td>Alt-Svc<td>通过 HTTP/2 响应头通知<td>否（先用 HTTP/2）<tr><td>DNS SVCB<td>通过 DNS 记录通知<td>是（首次即可用）</table>
+<blockquote>
+<p>HTTP/3 的发现需要一次「升级」过程。首次访问通常走 HTTP/2，服务器通过 Alt-Svc 头告知支持 HTTP/3，浏览器下次才用 HTTP/3。DNS SVCB 记录可以让首次访问就走 HTTP/3，但需要 DNS 基础设施支持。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1262-http3-的部署挑战>12.6.2 HTTP/3 的部署挑战<a href=#1262-http3-的部署挑战 class=hash-link aria-label="12.6.2 HTTP/3 的部署挑战的直接链接" title="12.6.2 HTTP/3 的部署挑战的直接链接" translate=no>​</a></h3>
+<p>HTTP/3 的部署比 HTTP/2 复杂得多。HTTP/2 只需要服务器软件升级，底层 TCP 不变。HTTP/3 需要 QUIC 支持，而 QUIC 基于 UDP，许多网络设备对 UDP 流量做了限速或阻断。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>挑战<th>说明<th>解决方案<tbody><tr><td>UDP 限速<td>部分 ISP/企业网络限制 UDP<td>连接失败回退 HTTP/2<tr><td>中间盒兼容<td>某些防火墙阻止 QUIC<td>检测并回退<tr><td>服务器支持<td>需要 QUIC 实现<td>Nginx/Caddy 已支持<tr><td>调试困难<td>QUIC 加密更难抓包<td>需专用工具</table>
+<p>Chrome 实现了智能回退机制：如果 QUIC 连接失败，自动回退到 HTTP/2 over TCP，不影响用户体验。这使得 HTTP/3 的部署可以渐进进行，不会因为兼容性问题导致页面无法访问。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=127-quic-的数据包格式详解>12.7 QUIC 的数据包格式详解<a href=#127-quic-的数据包格式详解 class=hash-link aria-label="12.7 QUIC 的数据包格式详解的直接链接" title="12.7 QUIC 的数据包格式详解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1271-quic-long-header-包格式>12.7.1 QUIC Long Header 包格式<a href=#1271-quic-long-header-包格式 class=hash-link aria-label="12.7.1 QUIC Long Header 包格式的直接链接" title="12.7.1 QUIC Long Header 包格式的直接链接" translate=no>​</a></h3>
+<p>QUIC 的包格式设计兼顾了紧凑性和可扩展性。Long Header 用于连接建立阶段，包含版本号和完整的 Connection ID。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QUIC Long Header 包格式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> 0                   1                   2                   3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|1|1|  Type (2) |R|R| PN Len(2)|    Version (32 bits)          |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|          Destination Connection ID Length (8 bits)           |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|         Destination Connection ID (0-160 bits)               |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|          Source Connection ID Length (8 bits)                |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|         Source Connection ID (0-160 bits)                    |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|          Packet Number (8-32 bits)                           |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|          Payload (encrypted)                                  |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">字段说明:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Header Form (1 bit): 1=Long Header, 0=Short Header</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Fixed Bit (1 bit): 总是 1 (协议保留)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Type (2 bits): Initial=0, 0-RTT=1, Handshake=2, Retry=3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  PN Len (2 bits): Packet Number 长度 (1-4 bytes)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Version (32 bits): QUIC 版本号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DCID Length + DCID: 目标连接 ID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  SCID Length + SCID: 源连接 ID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Packet Number: 包号 (单调递增)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Payload: 加密的应用数据</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1272-quic-short-header-包格式>12.7.2 QUIC Short Header 包格式<a href=#1272-quic-short-header-包格式 class=hash-link aria-label="12.7.2 QUIC Short Header 包格式的直接链接" title="12.7.2 QUIC Short Header 包格式的直接链接" translate=no>​</a></h3>
+<p>连接建立完成后，使用 Short Header 减少开销。Short Header 省略了版本号和源 Connection ID，只保留目标 Connection ID。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QUIC Short Header 包格式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> 0 1 2 3 4 5 6 7</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|0|1|S|R|R|PN Len|</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|    DCID       |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|  Packet Number|</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|  Payload      |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">+-+-+-+-+-+-+-+-+</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Short Header 比 Long Header 少了:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - Version (4 bytes)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - DCID Length (1 byte)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - SCID Length + SCID (1+N bytes)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 节省 6-20 bytes per packet</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>包类型<th>头部大小<th>使用阶段<th>主要内容<tbody><tr><td>Initial<td>50-100+ bytes<td>连接建立<td>TLS ClientHello<tr><td>0-RTT<td>40-80 bytes<td>会话恢复<td>0-RTT 数据<tr><td>Handshake<td>40-80 bytes<td>TLS 握手<td>TLS 握手消息<tr><td>Retry<td>30-60 bytes<td>反射防护<td>Retry Token<tr><td>Short<td>8-20 bytes<td>数据传输<td>应用数据</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=128-quic-拥塞控制bbr详解>12.8 QUIC 拥塞控制（BBR）详解<a href=#128-quic-拥塞控制bbr详解 class=hash-link aria-label="12.8 QUIC 拥塞控制（BBR）详解的直接链接" title="12.8 QUIC 拥塞控制（BBR）详解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1281-bbr-算法核心原理>12.8.1 BBR 算法核心原理<a href=#1281-bbr-算法核心原理 class=hash-link aria-label="12.8.1 BBR 算法核心原理的直接链接" title="12.8.1 BBR 算法核心原理的直接链接" translate=no>​</a></h3>
+<p>BBR（Bottleneck Bandwidth and Round-trip propagation time）是 Google 开发的拥塞控制算法。与传统的基于丢包的 CUBIC 不同，BBR 基于带宽和延迟来调整发送速率。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">BBR vs CUBIC 核心差异</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CUBIC (基于丢包):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 原理: 丢包 = 拥塞信号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 行为: 丢包时减半窗口，然后缓慢增长</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 问题: 在高延迟/丢包网络中性能差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → WiFi/蜂窝网络天然有丢包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → CUBIC 误判为拥塞，过度减速</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 问题: 带宽利用率低</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">BBR (基于带宽+延迟):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 原理: 测量瓶颈带宽和最小 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 行为: 根据测量的带宽设置发送速率</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 不依赖丢包判断拥塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 在有丢包的网络中保持高吞吐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 优势: 高延迟网络中性能提升 2-5x</span><br/></div></code></pre></div></div>
+<p>BBR 的四个状态：Startup（初始探测阶段，速率倍增）、Drain（排空队列，降低速率）、ProbeBW（稳态探测，周期性增减速）、ProbeRTT（定期测量最小 RTT）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1282-quic-与-tcptls-的延迟对比>12.8.2 QUIC 与 TCP+TLS 的延迟对比<a href=#1282-quic-与-tcptls-的延迟对比 class=hash-link aria-label="12.8.2 QUIC 与 TCP+TLS 的延迟对比的直接链接" title="12.8.2 QUIC 与 TCP+TLS 的延迟对比的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">首次连接延迟对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 over TCP + TLS 1.2:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1) + TCP(1) + TLS(2) + HTTP(1) = 5 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  实际时间: ~200-500ms</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 over TCP + TLS 1.3:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1) + TCP(1) + TLS(1) + HTTP(1) = 4 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  实际时间: ~150-400ms</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/3 over QUIC (首次):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1) + QUIC(1,含TLS) + HTTP(0,数据随握手发送) = 2 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  实际时间: ~80-200ms</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/3 over QUIC (会话恢复):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DNS(1) + QUIC(0,0-RTT) = 1 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  实际时间: ~40-100ms</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">如果有 DNS 缓存:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HTTP/3 会话恢复 = 0-1 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  实际时间: ~20-50ms</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>HTTP/1.1+TLS1.2<th>HTTP/2+TLS1.3<th>HTTP/3 首次<th>HTTP/3 恢复<tbody><tr><td>RTT 数<td>5<td>4<td>2<td>1 (或 0)<tr><td>典型延迟<td>200-500ms<td>150-400ms<td>80-200ms<td>40-100ms<tr><td>优势<td>—<td>快 25%<td>快 60%<td>快 80%</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1283-quic-0-rtt-的安全考量>12.8.3 QUIC 0-RTT 的安全考量<a href=#1283-quic-0-rtt-的安全考量 class=hash-link aria-label="12.8.3 QUIC 0-RTT 的安全考量的直接链接" title="12.8.3 QUIC 0-RTT 的安全考量的直接链接" translate=no>​</a></h3>
+<p>0-RTT 虽然性能最优，但安全限制也最多。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">0-RTT 安全限制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">允许的请求:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✓ GET /api/data (幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✓ HEAD /resource (幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✓ OPTIONS (幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">禁止的请求:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✗ POST /transfer (非幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✗ PUT /update (非幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ✗ DELETE /resource (非幂等)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">服务器的额外责任:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 实现重放检测 (单次使用 Token)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 限制 0-RTT 数据大小 (通常 &lt; 10KB)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 设置 0-RTT 有效期 (通常几分钟)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 记录已使用的 PSK (防止重放)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1284-quic-在中国的部署挑战>12.8.4 QUIC 在中国的部署挑战<a href=#1284-quic-在中国的部署挑战 class=hash-link aria-label="12.8.4 QUIC 在中国的部署挑战的直接链接" title="12.8.4 QUIC 在中国的部署挑战的直接链接" translate=no>​</a></h3>
+<p>QUIC 在中国的部署面临一些独特挑战。</p>
+<p>国内运营商对 UDP 流量的管理策略与 TCP 不同。部分运营商会对 UDP 流量进行限速或降低 QoS 优先级，这导致 QUIC 的实际性能可能不如预期。企业网络的防火墙可能完全阻断 UDP 流量，导致 QUIC 不可用。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">中国网络环境下的 QUIC 回退策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户请求 https://example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Chrome 尝试 QUIC (UDP 443)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 成功 → 使用 HTTP/3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 超时 (3秒) → 回退到 HTTP/2 over TCP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 连接被拒 → 立即回退</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回退开销:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 白等了 3 秒 (超时情况)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 需要重新建立 TCP+TLS 连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 总延迟可能比直接用 HTTP/2 还差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Chrome 的优化:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 维护 QUIC 可用性记录</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 某域名在某个网络下 QUIC 失败过</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 30 分钟内不再尝试 QUIC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 使用 Alt-Svc 头的 max-age 控制重试频率</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=129-quic-的连接迁移机制>12.9 QUIC 的连接迁移机制<a href=#129-quic-的连接迁移机制 class=hash-link aria-label="12.9 QUIC 的连接迁移机制的直接链接" title="12.9 QUIC 的连接迁移机制的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1291-连接迁移的技术细节>12.9.1 连接迁移的技术细节<a href=#1291-连接迁移的技术细节 class=hash-link aria-label="12.9.1 连接迁移的技术细节的直接链接" title="12.9.1 连接迁移的技术细节的直接链接" translate=no>​</a></h3>
+<p>QUIC 的连接迁移依赖 Connection ID。Connection ID 在握手阶段协商，在连接生命周期内不变。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接迁移的详细过程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段1: WiFi 网络</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  客户端: IP=192.168.1.100, Port=54321</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Connection ID: 0x1A2B3C4D</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  服务器: IP=93.184.216.34, Port=443</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  数据包:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    [Src: 192.168.1.100:54321] [Dst: 93.184.216.34:443]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    [CID: 0x1A2B3C4D] [Packet#: 42] [Data: ...]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段2: 切换到 4G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  客户端: IP=10.0.0.50, Port=38912 (新IP和新端口)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Connection ID: 0x1A2B3C4D (不变!)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  数据包:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    [Src: 10.0.0.50:38912] [Dst: 93.184.216.34:443]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    [CID: 0x1A2B3C4D] [Packet#: 43] [Data: ...]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  服务器收到包:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ 检查 Connection ID: 0x1A2B3C4D</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ 查找连接表: 已有此 CID 的连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ 更新客户端地址: 10.0.0.50:38912</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └─ 继续传输数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  连接不中断!</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1292-路径验证的安全意义>12.9.2 路径验证的安全意义<a href=#1292-路径验证的安全意义 class=hash-link aria-label="12.9.2 路径验证的安全意义的直接链接" title="12.9.2 路径验证的安全意义的直接链接" translate=no>​</a></h3>
+<p>连接迁移时，服务器必须验证新路径确实属于同一客户端，防止攻击者劫持连接。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">路径验证流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端从新 IP 发送数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">服务器检测到 IP 变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 发送 PATH_CHALLENGE (包含随机数)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 通过新路径发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 同时继续在旧路径发送 (直到验证完成)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端收到 PATH_CHALLENGE</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 回复 PATH_RESPONSE (相同的随机数)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">服务器验证 PATH_RESPONSE</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 匹配 → 新路径有效</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 停止旧路径传输</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 切换到新路径</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 不匹配 → 路径无效，拒绝迁移</span><br/></div></code></pre></div></div>
+<p>这个验证机制防止了 IP 欺骗攻击——攻击者伪造源 IP 发送数据包，但无法收到 PATH_CHALLENGE，因此无法回复 PATH_RESPONSE。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=126-quic-数据包格式>12.6 QUIC 数据包格式<a href=#126-quic-数据包格式 class=hash-link aria-label="12.6 QUIC 数据包格式的直接链接" title="12.6 QUIC 数据包格式的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1261-quic-数据包结构>12.6.1 QUIC 数据包结构<a href=#1261-quic-数据包结构 class=hash-link aria-label="12.6.1 QUIC 数据包结构的直接链接" title="12.6.1 QUIC 数据包结构的直接链接" translate=no>​</a></h3>
+<p>QUIC 数据包分为长头包和短头包。长头包用于握手阶段，短头包用于数据传输阶段。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QUIC 数据包格式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">长头包（握手阶段）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Header Form（1 bit = 1）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Fixed Bit（1 bit = 1）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Long Packet Type（2 bits）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Version（4 bytes）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Destination Connection ID（可变长度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Source Connection ID（可变长度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Packet Payload</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ AEAD Auth Tag（加密认证标签）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">短头包（数据传输）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Header Form（1 bit = 0）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Fixed Bit（1 bit = 1）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Spin Bit（1 bit）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Key Phase（1 bit）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Destination Connection ID（可变长度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Packet Number（1-4 bytes）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Packet Payload</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ AEAD Auth Tag</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>包类型<th>类型值<th>用途<tbody><tr><td>Initial<td>0<td>初始握手<tr><td>0-RTT<td>1<td>0-RTT 数据<tr><td>Handshake<td>2<td>TLS 握手<tr><td>Retry<td>3<td>重试（防 DoS）</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1262-quic-连接-id>12.6.2 QUIC 连接 ID<a href=#1262-quic-连接-id class=hash-link aria-label="12.6.2 QUIC 连接 ID的直接链接" title="12.6.2 QUIC 连接 ID的直接链接" translate=no>​</a></h3>
+<p>QUIC 使用连接 ID（Connection ID）而非 IP+端口标识连接。这是 QUIC 连接迁移的基础——IP 变了，但连接 ID 不变，连接不会中断。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TCP 连接标识：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  源 IP + 源端口 + 目标 IP + 目标端口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → IP 变化 = 新连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC 连接标识：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Connection ID（8 字节，可变长度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → IP 变化不影响连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → WiFi 切到 4G，连接不断</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=127-quic-拥塞控制>12.7 QUIC 拥塞控制<a href=#127-quic-拥塞控制 class=hash-link aria-label="12.7 QUIC 拥塞控制的直接链接" title="12.7 QUIC 拥塞控制的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1271-bbr-算法>12.7.1 BBR 算法<a href=#1271-bbr-算法 class=hash-link aria-label="12.7.1 BBR 算法的直接链接" title="12.7.1 BBR 算法的直接链接" translate=no>​</a></h3>
+<p>QUIC 默认使用 BBR（Bottleneck Bandwidth and RTT，瓶颈带宽与往返时间）拥塞控制算法。BBR 与传统的 CUBIC 算法不同，它不依赖丢包来判断拥塞。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">CUBIC（传统算法）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  丢包 → 减少发送速率 → 慢慢恢复</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  问题：将丢包等同于拥塞（WiFi 下不适用）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">BBR（QUIC 默认）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  测量瓶颈带宽和最小 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 计算最优发送速率</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 不依赖丢包信号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 在 WiFi/移动网络下表现更好</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比项<th>CUBIC<th>BBR<tbody><tr><td>拥塞信号<td>丢包<td>带宽 + RTT<tr><td>吞吐量<td>中<td>高<tr><td>延迟<td>中<td>低<tr><td>公平性<td>好<td>较差（BBR v2 改善）<tr><td>适用网络<td>有线<td>无线</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=128-quic-延迟对比>12.8 QUIC 延迟对比<a href=#128-quic-延迟对比 class=hash-link aria-label="12.8 QUIC 延迟对比的直接链接" title="12.8 QUIC 延迟对比的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1281-tcptls-vs-quic-连接建立延迟>12.8.1 TCP+TLS vs QUIC 连接建立延迟<a href=#1281-tcptls-vs-quic-连接建立延迟 class=hash-link aria-label="12.8.1 TCP+TLS vs QUIC 连接建立延迟的直接链接" title="12.8.1 TCP+TLS vs QUIC 连接建立延迟的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TCP + TLS 1.3 + HTTP/2 连接建立：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RTT 1: TCP SYN/SYN-ACK</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RTT 2: TLS ClientHello/ServerHello</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RTT 3: TLS Finished + HTTP 请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 首字节时间：3 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC + HTTP/3 连接建立：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RTT 1: QUIC Initial（含 TLS 握手）+ HTTP 请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 首字节时间：1 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC 0-RTT（恢复连接）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RTT 0: 0-RTT 数据（直接发送 HTTP 请求）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 首字节时间：0 RTT</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>连接类型<th>首次连接<th>恢复连接<tbody><tr><td>TCP + TLS 1.2<td>3 RTT<td>2 RTT<tr><td>TCP + TLS 1.3<td>2 RTT<td>1 RTT<tr><td>QUIC<td>1 RTT<td>0 RTT</table>
+<blockquote>
+<p>在 100ms RTT 的网络下，QUIC 首次连接比 TCP+TLS 1.3 快 100ms，恢复连接快 100ms。在移动网络下（RTT 50-200ms），这个差异更加明显。这就是 Google 和 Cloudflare 大力推行 HTTP/3 的原因。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=129-quic-在中国的部署挑战>12.9 QUIC 在中国的部署挑战<a href=#129-quic-在中国的部署挑战 class=hash-link aria-label="12.9 QUIC 在中国的部署挑战的直接链接" title="12.9 QUIC 在中国的部署挑战的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1291-udp-限速问题>12.9.1 UDP 限速问题<a href=#1291-udp-限速问题 class=hash-link aria-label="12.9.1 UDP 限速问题的直接链接" title="12.9.1 UDP 限速问题的直接链接" translate=no>​</a></h3>
+<p>中国的许多网络环境对 UDP 流量进行限速或封禁，因为 UDP 常被用于 DDoS 攻击和 VPN。QUIC 基于 UDP，因此受到影响。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QUIC 在中国的挑战</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. UDP 限速</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 运营商将 UDP 速率限制为 TCP 的 1/10</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → QUIC 性能反而不如 TCP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. UDP 封禁</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 部分企业网络完全封禁 UDP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → QUIC 无法使用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 中间设备</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 防火墙、DPI 设备不识别 QUIC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 可能丢弃 QUIC 包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 解决方案</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Chrome 检测到 QUIC 失败后回退 HTTP/2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 但回退增加 1-2 RTT 延迟</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>中国的网络环境是 QUIC 普及的最大障碍。很多国内大厂选择继续使用 HTTP/2 over TCP，而不是 HTTP/3。但随着网络设备的升级和 UDP 支持的改善，HTTP/3 在中国的使用率正在逐步提升。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=127-bbr-拥塞控制算法>12.7 BBR 拥塞控制算法<a href=#127-bbr-拥塞控制算法 class=hash-link aria-label="12.7 BBR 拥塞控制算法的直接链接" title="12.7 BBR 拥塞控制算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1271-bbr-vs-cubic>12.7.1 BBR vs CUBIC<a href=#1271-bbr-vs-cubic class=hash-link aria-label="12.7.1 BBR vs CUBIC的直接链接" title="12.7.1 BBR vs CUBIC的直接链接" translate=no>​</a></h3>
+<p>BBR（Bottleneck Bandwidth and RTT）是 Google 开发的拥塞控制算法，QUIC 默认使用 BBR。传统 TCP 使用 CUBIC（基于丢包的拥塞控制）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">CUBIC vs BBR</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CUBIC（基于丢包）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 检测到丢包 → 减小窗口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 没有丢包 → 增大窗口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 问题：丢包不一定是拥塞（无线网络丢包常见）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 问题：bufferbloat（路由器缓冲区过大导致延迟）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">BBR（基于带宽和延迟）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 测量瓶颈带宽和最小 RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 发送速率 = 带宽 × RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 不依赖丢包判断</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 更适合现代网络（WiFi/5G）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">性能对比:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  吞吐量: BBR 比 CUBIC 高 2-25 倍（弱网环境）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  延迟:   BBR 比 CUBIC 低 10-100 倍（有缓冲的路由器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  公平性: BBR vs CUBIC 时 BBR 占更多带宽</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>CUBIC<th>BBR<tbody><tr><td>判断依据<td>丢包<td>带宽+RTT<tr><td>弱网表现<td>差<td>好<tr><td>延迟<td>高<td>低<tr><td>公平性<td>好<td>较差<tr><td>适用<td>有线网络<td>无线/混合</table>
+<blockquote>
+<p>BBR 的核心创新是不再依赖丢包判断拥塞。在 WiFi 和移动网络中，丢包很常见但并非拥塞。CUBIC 会错误地减小发送窗口，导致吞吐量下降。BBR 通过测量实际带宽和延迟，更准确地判断拥塞状态，在弱网环境下性能提升显著。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=128-quic-连接迁移>12.8 QUIC 连接迁移<a href=#128-quic-连接迁移 class=hash-link aria-label="12.8 QUIC 连接迁移的直接链接" title="12.8 QUIC 连接迁移的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1281-连接迁移原理>12.8.1 连接迁移原理<a href=#1281-连接迁移原理 class=hash-link aria-label="12.8.1 连接迁移原理的直接链接" title="12.8.1 连接迁移原理的直接链接" translate=no>​</a></h3>
+<p>QUIC 支持连接迁移——当用户切换网络（如 WiFi 切 5G）时，QUIC 连接不断开。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接迁移场景</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">TCP（不支持迁移）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户: WiFi → 5G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → IP 地址变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → TCP 连接断开</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 必须重新建立连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 重新 TLS 握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 页面加载中断</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC（支持迁移）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户: WiFi → 5G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → IP 地址变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 连接 ID 不变</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → QUIC 自动迁移</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 无需重新握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 连接继续</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接迁移原理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">QUIC 连接标识:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 不用 IP + 端口（TCP 方式）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 用 Connection ID（64 位随机数）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Connection ID 不随网络变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">迁移过程:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 用户从 WiFi 切到 5G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 新 IP: 10.0.0.1 → 192.168.1.1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 客户端用新 IP 发送 QUIC 包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 包中携带 Connection ID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  5. 服务器识别 Connection ID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  6. 连接继续，无需重新建立</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>TCP<th>QUIC<tbody><tr><td>WiFi→5G<td>断开重连<td>连续<tr><td>5G→WiFi<td>断开重连<td>连续<tr><td>切换基站<td>断开重连<td>连续<tr><td>视频通话<td>中断<td>顺畅</table>
+<blockquote>
+<p>连接迁移对移动场景特别重要。用户在地铁、电梯、汽车中频繁切换网络，TCP 每次切换都要重新建立连接，导致页面加载中断、视频卡顿。QUIC 的连接迁移让网络切换对用户透明，大幅提升移动体验。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>性能影响<tbody><tr><td>HTTP/1.1<td>队头阻塞 + 6 连接限制<td>性能瓶颈<tr><td>HTTP/2<td>多路复用 + HPACK + 优先级<td>解决 HTTP 层阻塞<tr><td>HTTP/3<td>QUIC + 无队头阻塞 + 连接迁移<td>解决 TCP 层阻塞<tr><td>QPACK<td>异步头部压缩<td>避免流间阻塞<tr><td>连接建立<td>HTTP/3 最快（1-RTT/0-RTT）<td>减少首次加载延迟</table>
+<p>觉得有用？收藏起来，下次和面试官聊 HTTP 协议演进时直接用。</p>
+<p>你的网站升级到 HTTP/2 或 HTTP/3 了吗？评论区聊聊你的经验。</p>
+<p>关注怕浪猫，下期我们深入 QUIC 协议和 TLS 安全机制。系列进度 12/24。</p>
+<p>下期预告：第 13 章「QUIC 协议与 TLS」。我们会拆解 QUIC 的包格式、拥塞控制算法、0-RTT 连接恢复的原理，以及 TLS 1.3 的密码套件选择和证书链验证。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_12.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第11章 DNS 与网络协议基础</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第13章 QUIC 协议与 TLS</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#121-http11-的性能瓶颈 class="table-of-contents__link toc-highlight">12.1 HTTP/1.1 的性能瓶颈</a><ul><li><a href=#1211-队头阻塞head-of-line-blocking class="table-of-contents__link toc-highlight">12.1.1 队头阻塞（Head-of-Line Blocking）</a><li><a href=#1212-http11-的优化手段 class="table-of-contents__link toc-highlight">12.1.2 HTTP/1.1 的优化手段</a><li><a href=#1213-keep-alive-连接复用 class="table-of-contents__link toc-highlight">12.1.3 Keep-Alive 连接复用</a></ul><li><a href=#122-http2-的多路复用 class="table-of-contents__link toc-highlight">12.2 HTTP/2 的多路复用</a><ul><li><a href=#1221-二进制分帧 class="table-of-contents__link toc-highlight">12.2.1 二进制分帧</a><li><a href=#1222-http2-帧类型 class="table-of-contents__link toc-highlight">12.2.2 HTTP/2 帧类型</a><li><a href=#1223-hpack-头部压缩 class="table-of-contents__link toc-highlight">12.2.3 HPACK 头部压缩</a><li><a href=#1224-流优先级 class="table-of-contents__link toc-highlight">12.2.4 流优先级</a><li><a href=#1224-server-push class="table-of-contents__link toc-highlight">12.2.4 Server Push</a><li><a href=#1226-http2-的实际性能表现 class="table-of-contents__link toc-highlight">12.2.6 HTTP/2 的实际性能表现</a></ul><li><a href=#123-http3-与-quic class="table-of-contents__link toc-highlight">12.3 HTTP/3 与 QUIC</a><ul><li><a href=#1231-tcp-层的队头阻塞 class="table-of-contents__link toc-highlight">12.3.1 TCP 层的队头阻塞</a><li><a href=#1232-quic-协议 class="table-of-contents__link toc-highlight">12.3.2 QUIC 协议</a><li><a href=#1233-quic-的流独立性 class="table-of-contents__link toc-highlight">12.3.3 QUIC 的流独立性</a><li><a href=#1234-连接迁移 class="table-of-contents__link toc-highlight">12.3.4 连接迁移</a><li><a href=#1235-quic-的拥塞控制 class="table-of-contents__link toc-highlight">12.3.5 QUIC 的拥塞控制</a></ul><li><a href=#124-三个版本对比 class="table-of-contents__link toc-highlight">12.4 三个版本对比</a><ul><li><a href=#1241-核心特性对比 class="table-of-contents__link toc-highlight">12.4.1 核心特性对比</a><li><a href=#1242-连接建立时间对比 class="table-of-contents__link toc-highlight">12.4.2 连接建立时间对比</a></ul><li><a href=#125-qpack-头部压缩 class="table-of-contents__link toc-highlight">12.5 QPACK 头部压缩</a><ul><li><a href=#1251-qpack-与-hpack-的差异 class="table-of-contents__link toc-highlight">12.5.1 QPACK 与 HPACK 的差异</a><li><a href=#1252-qpack-的插入计数 class="table-of-contents__link toc-highlight">12.5.2 QPACK 的插入计数</a></ul><li><a href=#126-浏览器对-http3-的支持 class="table-of-contents__link toc-highlight">12.6 浏览器对 HTTP/3 的支持</a><ul><li><a href=#1261-http3-的发现机制 class="table-of-contents__link toc-highlight">12.6.1 HTTP/3 的发现机制</a><li><a href=#1262-http3-的部署挑战 class="table-of-contents__link toc-highlight">12.6.2 HTTP/3 的部署挑战</a></ul><li><a href=#127-quic-的数据包格式详解 class="table-of-contents__link toc-highlight">12.7 QUIC 的数据包格式详解</a><ul><li><a href=#1271-quic-long-header-包格式 class="table-of-contents__link toc-highlight">12.7.1 QUIC Long Header 包格式</a><li><a href=#1272-quic-short-header-包格式 class="table-of-contents__link toc-highlight">12.7.2 QUIC Short Header 包格式</a></ul><li><a href=#128-quic-拥塞控制bbr详解 class="table-of-contents__link toc-highlight">12.8 QUIC 拥塞控制（BBR）详解</a><ul><li><a href=#1281-bbr-算法核心原理 class="table-of-contents__link toc-highlight">12.8.1 BBR 算法核心原理</a><li><a href=#1282-quic-与-tcptls-的延迟对比 class="table-of-contents__link toc-highlight">12.8.2 QUIC 与 TCP+TLS 的延迟对比</a><li><a href=#1283-quic-0-rtt-的安全考量 class="table-of-contents__link toc-highlight">12.8.3 QUIC 0-RTT 的安全考量</a><li><a href=#1284-quic-在中国的部署挑战 class="table-of-contents__link toc-highlight">12.8.4 QUIC 在中国的部署挑战</a></ul><li><a href=#129-quic-的连接迁移机制 class="table-of-contents__link toc-highlight">12.9 QUIC 的连接迁移机制</a><ul><li><a href=#1291-连接迁移的技术细节 class="table-of-contents__link toc-highlight">12.9.1 连接迁移的技术细节</a><li><a href=#1292-路径验证的安全意义 class="table-of-contents__link toc-highlight">12.9.2 路径验证的安全意义</a></ul><li><a href=#126-quic-数据包格式 class="table-of-contents__link toc-highlight">12.6 QUIC 数据包格式</a><ul><li><a href=#1261-quic-数据包结构 class="table-of-contents__link toc-highlight">12.6.1 QUIC 数据包结构</a><li><a href=#1262-quic-连接-id class="table-of-contents__link toc-highlight">12.6.2 QUIC 连接 ID</a></ul><li><a href=#127-quic-拥塞控制 class="table-of-contents__link toc-highlight">12.7 QUIC 拥塞控制</a><ul><li><a href=#1271-bbr-算法 class="table-of-contents__link toc-highlight">12.7.1 BBR 算法</a></ul><li><a href=#128-quic-延迟对比 class="table-of-contents__link toc-highlight">12.8 QUIC 延迟对比</a><ul><li><a href=#1281-tcptls-vs-quic-连接建立延迟 class="table-of-contents__link toc-highlight">12.8.1 TCP+TLS vs QUIC 连接建立延迟</a></ul><li><a href=#129-quic-在中国的部署挑战 class="table-of-contents__link toc-highlight">12.9 QUIC 在中国的部署挑战</a><ul><li><a href=#1291-udp-限速问题 class="table-of-contents__link toc-highlight">12.9.1 UDP 限速问题</a></ul><li><a href=#127-bbr-拥塞控制算法 class="table-of-contents__link toc-highlight">12.7 BBR 拥塞控制算法</a><ul><li><a href=#1271-bbr-vs-cubic class="table-of-contents__link toc-highlight">12.7.1 BBR vs CUBIC</a></ul><li><a href=#128-quic-连接迁移 class="table-of-contents__link toc-highlight">12.8 QUIC 连接迁移</a><ul><li><a href=#1281-连接迁移原理 class="table-of-contents__link toc-highlight">12.8.1 连接迁移原理</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

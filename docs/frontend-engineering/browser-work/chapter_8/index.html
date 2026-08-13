@@ -1,0 +1,643 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_8" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第8章 布局（Layout） | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第8章 布局（Layout） | 知识库"/><meta data-rh=true name=description content="浏览器要把你的 CSS 变成精确的像素坐标，需要经过布局这个阶段。Chrome 用了 5 年时间把旧的布局引擎替换成 LayoutNG，这是一次彻底的架构重写。"/><meta data-rh=true property=og:description content="浏览器要把你的 CSS 变成精确的像素坐标，需要经过布局这个阶段。Chrome 用了 5 年时间把旧的布局引擎替换成 LayoutNG，这是一次彻底的架构重写。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8","name":"第8章 布局（Layout）","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第8章 布局（Layout）</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第8章 布局（Layout）</h1></header>
+<blockquote>
+<p>浏览器要把你的 CSS 变成精确的像素坐标，需要经过布局这个阶段。Chrome 用了 5 年时间把旧的布局引擎替换成 LayoutNG，这是一次彻底的架构重写。</p>
+</blockquote>
+<p>我是怕浪猫，上期我们讲了 DOM 和样式计算，今天进入第 8 章：布局。这一章会拆解 LayoutNG 布局引擎的工作原理、盒模型计算、Flexbox 和 Grid 布局算法的内部实现，以及布局抖动（Layout Thrashing）的成因和解决方案。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=81-layoutng-布局引擎>8.1 LayoutNG 布局引擎<a href=#81-layoutng-布局引擎 class=hash-link aria-label="8.1 LayoutNG 布局引擎的直接链接" title="8.1 LayoutNG 布局引擎的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=811-为什么需要-layoutng>8.1.1 为什么需要 LayoutNG<a href=#811-为什么需要-layoutng class=hash-link aria-label="8.1.1 为什么需要 LayoutNG的直接链接" title="8.1.1 为什么需要 LayoutNG的直接链接" translate=no>​</a></h3>
+<p>LayoutNG（Next Generation Layout）是 Chrome 从 2017 年开始开发的下一代布局引擎，在 Chrome 76 中正式启用。它替换了旧的布局引擎（现在被称为 Legacy Layout）。</p>
+<p>旧布局引擎的问题在于架构上的缺陷。它将布局计算和绘制记录混在一起，导致代码耦合严重，难以维护和扩展。布局结果直接存储在 LayoutObject 上，没有清晰的数据边界。每个布局算法（Block、Flex、Grid）都有自己的实现，但共享状态管理混乱。</p>
+<p>LayoutNG 的设计目标：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>目标<th>说明<th>效果<tbody><tr><td>关注分离<td>布局计算与绘制记录分离<td>代码清晰<tr><td>不可变结果<td>布局结果独立于布局对象<td>避免状态污染<tr><td>算法模块化<td>每种布局算法独立实现<td>易于扩展<tr><td>可测试性<td>布局算法可独立测试<td>减少回归</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=812-layoutng-的核心架构>8.1.2 LayoutNG 的核心架构<a href=#812-layoutng-的核心架构 class=hash-link aria-label="8.1.2 LayoutNG 的核心架构的直接链接" title="8.1.2 LayoutNG 的核心架构的直接链接" translate=no>​</a></h3>
+<p>LayoutNG 将布局过程拆分为三个清晰的阶段：输入、布局算法、输出。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">LayoutNG 工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入（Input）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGLayoutInputNode    ← 布局输入节点（从 DOM/LayoutObject 转换）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ ConstraintSpace      ← 约束空间（可用尺寸、写入模式等）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ComputedStyle         ← 计算后的样式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">布局算法（Layout Algorithm）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGBlockLayoutAlgorithm      ← 块级布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGFlexLayoutAlgorithm       ← Flex 布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGGridLayoutAlgorithm       ← Grid 布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGInlineLayoutAlgorithm     ← 行内布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ NGTableLayoutAlgorithm      ← 表格布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出（Output）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ NGPhysicalFragment          ← 物理片段（最终布局结果）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ NGPhysicalBoxFragment   ← 盒子片段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ NGPhysicalTextFragment  ← 文本片段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ NGPhysicalLineBoxFragment ← 行盒片段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ NGLayoutResult              ← 布局结果（含片段树）</span><br/></div></code></pre></div></div>
+<p>LayoutNG 的关键设计是 Fragment（片段）概念。布局结果不是直接写回 LayoutObject，而是生成一棵 Fragment 树。Fragment 是不可变的，一旦生成就不会被修改。如果布局变化，生成新的 Fragment 树替换旧的。</p>
+<blockquote>
+<p>不可变 Fragment 是 LayoutNG 最聪明的设计。旧的布局引擎把布局结果直接存在布局对象上，修改和读取混在一起，状态管理一团糟。LayoutNG 把布局结果变成独立的数据结构，生成后不可变，彻底解决了状态污染问题。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=813-布局对象layoutobject与布局树>8.1.3 布局对象（LayoutObject）与布局树<a href=#813-布局对象layoutobject与布局树 class=hash-link aria-label="8.1.3 布局对象（LayoutObject）与布局树的直接链接" title="8.1.3 布局对象（LayoutObject）与布局树的直接链接" translate=no>​</a></h3>
+<p>DOM 树中的元素并非全部需要布局。例如 <code>&lt;head></code>、<code>&lt;script></code>、<code>&lt;meta></code> 等元素不产生视觉输出，不需要布局。Blink 会为需要布局的 DOM 节点创建 LayoutObject，形成布局树（Layout Tree）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">DOM 树到布局树的映射</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">DOM 树：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;html></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;head>           ← 无 LayoutObject</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;title>...&lt;/title></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;meta>...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/head></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;body></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;div>           ← LayoutObject (block)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        &lt;span>        ← LayoutObject (inline)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          text        ← LayoutObject (text)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        &lt;/span></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;script>...&lt;/script>  ← 无 LayoutObject</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/body></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;/html></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">布局树：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  LayoutView (html)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └── LayoutBlockFlow (body)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          └── LayoutBlockFlow (div)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                └── LayoutInline (span)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      └── LayoutText (text)</span><br/></div></code></pre></div></div>
+<p>某些 CSS 属性会导致 LayoutObject 的变化：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>CSS 属性<th>LayoutObject 类型<th>说明<tbody><tr><td>display: block<td>LayoutBlockFlow<td>块级布局<tr><td>display: inline<td>LayoutInline<td>行内布局<tr><td>display: flex<td>LayoutFlexibleBox<td>Flex 布局<tr><td>display: grid<td>LayoutGrid<td>Grid 布局<tr><td>display: none<td>无 LayoutObject<td>不参与布局<tr><td>float: left/right<td>LayoutBlockFlow (floated)<td>浮动布局<tr><td>position: absolute<td>LayoutBlockFlow (abspos)<td>绝对定位</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=82-盒模型计算>8.2 盒模型计算<a href=#82-盒模型计算 class=hash-link aria-label="8.2 盒模型计算的直接链接" title="8.2 盒模型计算的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=821-css-盒模型的层级>8.2.1 CSS 盒模型的层级<a href=#821-css-盒模型的层级 class=hash-link aria-label="8.2.1 CSS 盒模型的层级的直接链接" title="8.2.1 CSS 盒模型的层级的直接链接" translate=no>​</a></h3>
+<p>CSS 盒模型从内到外有四层：Content（内容）、Padding（内边距）、Border（边框）、Margin（外边距）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">CSS 盒模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                Margin                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────────────────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │            Border                 │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌──────────────────────────────┐│  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │          Padding              ││  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │  ┌──────────────────────────┐││  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │  │       Content            │││  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │  │                          │││  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │  └──────────────────────────┘││  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └──────────────────────────────┘│  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────────────────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└────────────────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">box-sizing: content-box（默认）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  width = Content width</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  总宽度 = width + padding + border + margin</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">box-sizing: border-box</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  width = Content + Padding + Border</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  总宽度 = width + margin</span><br/></div></code></pre></div></div>
+<p>box-sizing 的两种模式对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>box-sizing<th>width 包含<th>适用场景<th>优势<tbody><tr><td>content-box<td>仅 Content<td>传统 CSS<td>直观<tr><td>border-box<td>Content + Padding + Border<td>现代开发<td>尺寸可控</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=822-包含块containing-block>8.2.2 包含块（Containing Block）<a href=#822-包含块containing-block class=hash-link aria-label="8.2.2 包含块（Containing Block）的直接链接" title="8.2.2 包含块（Containing Block）的直接链接" translate=no>​</a></h3>
+<p>布局计算的基础是包含块（Containing Block）。每个元素的布局都相对于它的包含块进行。包含块决定了元素的可用空间和定位参考。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">包含块规则</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">元素的包含块取决于其 position 属性：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">position: static / relative</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 包含块 = 最近的块级祖先元素的内容区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">position: absolute</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 包含块 = 最近的 position 非 static 祖先的 Padding 区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">position: fixed</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 包含块 = 视口（Viewport）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果有 transform/filter/perspective 祖先，则为该祖先</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">position: sticky</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 包含块 = 最近的滚动祖先</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>包含块是布局的坐标系原点。理解了包含块，就理解了为什么 absolute 元素相对于最近的非 static 祖先定位，而不是相对于父元素。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=83-flexbox-布局算法>8.3 Flexbox 布局算法<a href=#83-flexbox-布局算法 class=hash-link aria-label="8.3 Flexbox 布局算法的直接链接" title="8.3 Flexbox 布局算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=831-flex-布局的核心概念>8.3.1 Flex 布局的核心概念<a href=#831-flex-布局的核心概念 class=hash-link aria-label="8.3.1 Flex 布局的核心概念的直接链接" title="8.3.1 Flex 布局的核心概念的直接链接" translate=no>​</a></h3>
+<p>Flexbox（Flexible Box Layout，弹性盒布局）是 CSS3 引入的一维布局模型，专为在一个方向上排列元素而设计。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Flex 布局核心概念</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│            Flex Container                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  main-start                    main-end  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Item │ │ Item │ │ Item │ │ Item │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  1   │ │  2   │ │  3   │ │  4   │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────┘ └──────┘ └──────┘ └──────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │← main size →│                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │                                       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  cross-start                 cross-end   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">主轴（Main Axis）：flex-direction 决定的方向</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">交叉轴（Cross Axis）：垂直于主轴的方向</span><br/></div></code></pre></div></div>
+<p>Flex 布局的关键属性：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>属性<th>作用<th>说明<tbody><tr><td>flex-direction<td>主轴方向<td>row / column / row-reverse / column-reverse<tr><td>justify-content<td>主轴对齐<td>flex-start / center / space-between / space-around<tr><td>align-items<td>交叉轴对齐<td>stretch / center / flex-start / flex-end<tr><td>flex-grow<td>放大比例<td>0 = 不放大<tr><td>flex-shrink<td>缩小比例<td>1 = 可缩小<tr><td>flex-basis<td>初始大小<td>auto = 根据内容<tr><td>flex<td>简写<td>grow shrink basis</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=832-flex-布局计算过程>8.3.2 Flex 布局计算过程<a href=#832-flex-布局计算过程 class=hash-link aria-label="8.3.2 Flex 布局计算过程的直接链接" title="8.3.2 Flex 布局计算过程的直接链接" translate=no>​</a></h3>
+<p>NGFlexLayoutAlgorithm 的布局计算分为多个步骤：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Flex 布局计算流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤1：确定主轴方向和可用空间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 读取 flex-direction</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 计算容器的 main size 和 cross size</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 考虑容器的 padding/border</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤2：确定每个 Flex Item 的 flex base size</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ flex-basis auto → 使用 content size</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ flex-basis 具体值 → 使用该值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 考虑 min/max width 约束</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤3：计算 flex grow / shrink</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 如果总 base size &lt; 容器 main size</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 按 flex-grow 比例分配剩余空间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 如果总 base size > 容器 main size</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      → 按 flex-shrink 比例压缩</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤4：计算交叉轴尺寸</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 单行：align-items 决定每个 item 的交叉轴位置</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 多行：先排列每行，再计算行间间距</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤5：处理 align-self / align-items</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 每个 item 在交叉轴上的最终位置</span><br/></div></code></pre></div></div>
+<p>flex-grow 的计算示例：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">容器 main size = 500px</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">三个 Flex Item：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Item1: base=100px, flex-grow=1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Item2: base=150px, flex-grow=2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Item3: base=100px, flex-grow=1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">总 base size = 100 + 150 + 100 = 350px</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">剩余空间 = 500 - 350 = 150px</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">总 grow = 1 + 2 + 1 = 4</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Item1 最终 = 100 + 150 * (1/4) = 137.5px</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Item2 最终 = 150 + 150 * (2/4) = 225px</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Item3 最终 = 100 + 150 * (1/4) = 137.5px</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=84-grid-布局算法>8.4 Grid 布局算法<a href=#84-grid-布局算法 class=hash-link aria-label="8.4 Grid 布局算法的直接链接" title="8.4 Grid 布局算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=841-grid-布局的核心概念>8.4.1 Grid 布局的核心概念<a href=#841-grid-布局的核心概念 class=hash-link aria-label="8.4.1 Grid 布局的核心概念的直接链接" title="8.4.1 Grid 布局的核心概念的直接链接" translate=no>​</a></h3>
+<p>CSS Grid Layout（网格布局）是 CSS3 引入的二维布局模型，可以同时控制行和列的排列。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Grid 布局核心概念</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      Col1    Col2    Col3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ┌───────┬───────┬───────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Row1│   A   │   B   │   C   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├───────┼───────┼───────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Row2│   D   │   E   │   F   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├───────┼───────┼───────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Row3│   G   │   H   │   I   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └───────┴───────┴───────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Container: 定义网格的容器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Item: 网格中的子元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Line: 网格线（水平和垂直）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Track: 两条相邻网格线之间的空间（行或列）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Cell: 一个行和列交叉形成的单元</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grid Area: 多个 Grid Cell 组成的矩形区域</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=842-grid-布局计算过程>8.4.2 Grid 布局计算过程<a href=#842-grid-布局计算过程 class=hash-link aria-label="8.4.2 Grid 布局计算过程的直接链接" title="8.4.2 Grid 布局计算过程的直接链接" translate=no>​</a></h3>
+<p>NGGridLayoutAlgorithm 的计算比 Flex 更复杂，因为需要同时处理两个维度。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Grid 布局计算流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤1：解析 grid-template-columns/rows</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 固定值（如 100px）→ 直接使用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 比例值（如 1fr）→ 记录，后续分配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ auto → 根据内容计算</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ minmax(min, max) → 约束范围</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤2：放置 Grid Items</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 根据 grid-column/row 放置每个 item</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 处理 span（跨多个 cell）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 处理 auto-placement（自动放置）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤3：计算 Track 尺寸</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 固定 Track：直接使用指定值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ auto Track：根据内容尺寸</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ fr Track：按比例分配剩余空间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤4：处理对齐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ justify-items：行内对齐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ align-items：列内对齐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ justify-content：整体水平对齐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ align-content：整体垂直对齐</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>布局模型<th>维度<th>适用场景<th>复杂度<tbody><tr><td>Block<td>一维<td>文档流<td>低<tr><td>Flex<td>一维<td>组件内排列<td>中<tr><td>Grid<td>二维<td>页面整体布局<td>高<tr><td>Table<td>二维<td>表格数据<td>中</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=85-布局抖动layout-thrashing>8.5 布局抖动（Layout Thrashing）<a href=#85-布局抖动layout-thrashing class=hash-link aria-label="8.5 布局抖动（Layout Thrashing）的直接链接" title="8.5 布局抖动（Layout Thrashing）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=851-什么是布局抖动>8.5.1 什么是布局抖动<a href=#851-什么是布局抖动 class=hash-link aria-label="8.5.1 什么是布局抖动的直接链接" title="8.5.1 什么是布局抖动的直接链接" translate=no>​</a></h3>
+<p>布局抖动（Layout Thrashing）是前端性能问题中最常见的一种。它发生在 JavaScript 中反复交叉执行「修改 DOM」和「读取布局信息」的操作时。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">布局抖动示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 反模式：交叉读写</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">function badResize() {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  for (let i = 0; i &lt; items.length; i++) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    items[i].style.width = box.offsetWidth + 'px';  // 读布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    items[i].style.height = box.offsetHeight + 'px'; // 读布局</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    // 每次循环都触发一次 Layout</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 正确模式：先读后写</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">function goodResize() {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  const width = box.offsetWidth;    // 读一次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  const height = box.offsetHeight;  // 读一次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  for (let i = 0; i &lt; items.length; i++) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    items[i].style.width = width + 'px';   // 只写</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    items[i].style.height = height + 'px';  // 只写</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    // 所有写操作完成后才触发一次 Layout</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=852-强制同步布局的触发>8.5.2 强制同步布局的触发<a href=#852-强制同步布局的触发 class=hash-link aria-label="8.5.2 强制同步布局的触发的直接链接" title="8.5.2 强制同步布局的触发的直接链接" translate=no>​</a></h3>
+<p>Blink 有一套优化机制，将布局计算延迟到下一帧。但某些 API 会强制 Blink 立即执行布局计算，称为强制同步布局（Forced Synchronous Layout）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>API<th>是否强制布局<th>说明<tbody><tr><td>offsetWidth / offsetHeight<td>是<td>需要布局信息<tr><td>getBoundingClientRect()<td>是<td>需要布局信息<tr><td>clientWidth / clientHeight<td>是<td>需要布局信息<tr><td>scrollWidth / scrollHeight<td>是<td>需要布局信息<tr><td>getComputedStyle()<td>部分<td>某些属性需要布局<tr><td>innerWidth / innerHeight<td>否<td>视口尺寸，不需要布局<tr><td>style.width = '100px'<td>否<td>只写不读，不触发</table>
+<blockquote>
+<p>每次读取 offsetWidth，Blink 都要检查是否有待处理的 DOM 修改。如果有，必须先执行布局计算才能返回准确的 offsetWidth。这就是强制同步布局的原理。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=853-fastdom-模式>8.5.3 FastDOM 模式<a href=#853-fastdom-模式 class=hash-link aria-label="8.5.3 FastDOM 模式的直接链接" title="8.5.3 FastDOM 模式的直接链接" translate=no>​</a></h3>
+<p>FastDOM 是一种避免布局抖动的编程模式，核心思想是将 DOM 读操作和写操作分批执行。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">FastDOM 模式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 读写分离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">function optimizeResize() {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 批量读</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  const reads = items.map(item => ({</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    el: item,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    width: item.offsetWidth,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    height: item.offsetHeight</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  }));</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 批量写</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  reads.forEach(({ el, width, height }) => {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    el.style.width = width + 'px';</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    el.style.height = height + 'px';</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  });</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 只触发一次 Layout</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<p>现代框架（如 React、Vue）的虚拟 DOM 机制天然避免了布局抖动：所有 DOM 修改在虚拟 DOM 层批量计算，最后一次性应用到真实 DOM，不会出现读写交叉。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=86-布局失效与增量布局>8.6 布局失效与增量布局<a href=#86-布局失效与增量布局 class=hash-link aria-label="8.6 布局失效与增量布局的直接链接" title="8.6 布局失效与增量布局的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=861-布局失效标记>8.6.1 布局失效标记<a href=#861-布局失效标记 class=hash-link aria-label="8.6.1 布局失效标记的直接链接" title="8.6.1 布局失效标记的直接链接" translate=no>​</a></h3>
+<p>当 DOM 或样式变化影响布局时，Blink 标记受影响的布局对象为「需要布局」（needs_layout）。布局失效会沿着布局树传播。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">布局失效传播</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修改 div 的 width</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → div 标记为 needs_layout</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → div 的子节点标记为 needs_layout（子树失效）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → div 的兄弟节点可能标记为 needs_layout（如果影响排列）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → div 的父节点标记为 needs_layout（尺寸变化影响父容器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">失效传播的边界：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果子树尺寸变化不影响外部（如 contain: layout）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 失效不传播到外部</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=862-增量布局>8.6.2 增量布局<a href=#862-增量布局 class=hash-link aria-label="8.6.2 增量布局的直接链接" title="8.6.2 增量布局的直接链接" translate=no>​</a></h3>
+<p>Blink 不会在每次 DOM 修改时都执行完整布局。它使用增量布局（Incremental Layout）策略：只对标记为 needs_layout 的布局对象执行布局计算，跳过未标记的对象。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>布局类型<th>触发方式<th>计算范围<th>性能<tbody><tr><td>完整布局<td>首次渲染、窗口大小变化<td>所有布局对象<td>慢<tr><td>增量布局<td>DOM/样式变化<td>仅标记的对象<td>快<tr><td>约束布局<td>父布局变化<td>受约束的子树<td>中等</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=87-文本布局与换行算法>8.7 文本布局与换行算法<a href=#87-文本布局与换行算法 class=hash-link aria-label="8.7 文本布局与换行算法的直接链接" title="8.7 文本布局与换行算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=871-行内布局>8.7.1 行内布局<a href=#871-行内布局 class=hash-link aria-label="8.7.1 行内布局的直接链接" title="8.7.1 行内布局的直接链接" translate=no>​</a></h3>
+<p>行内布局（Inline Layout）是布局引擎中最复杂的部分之一。与块级元素的规则布局不同，行内文本涉及换行、混合方向（如中英文混排）、字体度量、基线对齐等复杂因素。</p>
+<p>NGInlineLayoutAlgorithm 的工作分为几个步骤：首先将行内内容（文本节点、行内元素）分解为 NGInlineItem，每个 item 记录文本片段及其样式。然后执行换行算法（Line Breaking），根据可用宽度将内容分割到多行。最后对每行执行基线对齐，计算每个 item 的精确位置。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=872-bidi-算法与混合方向文本>8.7.2 Bidi 算法与混合方向文本<a href=#872-bidi-算法与混合方向文本 class=hash-link aria-label="8.7.2 Bidi 算法与混合方向文本的直接链接" title="8.7.2 Bidi 算法与混合方向文本的直接链接" translate=no>​</a></h3>
+<p>当文本中混合了从左到右（LTR，Left-To-Right）和从右到左（RTL，Right-To-Left）的文字时（如中英文混排阿拉伯文），Blink 使用 Bidi（Bidirectional，双向）算法确定每个字符的最终方向。</p>
+<p>Bidi 算法由 Unicode 标准定义，将字符分为强类型（如拉丁字母为 LTR，阿拉伯字母为 RTL）、弱类型（数字）和中性类型（标点）。算法根据字符类型和段落基础方向，计算每个字符的显示顺序。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=873-字体度量与基线>8.7.3 字体度量与基线<a href=#873-字体度量与基线 class=hash-link aria-label="8.7.3 字体度量与基线的直接链接" title="8.7.3 字体度量与基线的直接链接" translate=no>​</a></h3>
+<p>文本布局中的基线（Baseline）对齐是一个精细的工作。不同的字体有不同的度量参数：ascent（基线上方高度）、descent（基线下方深度）、x-height（小写字母高度）。当同一行中混合了不同字体的文本时，Blink 需要计算每段文本的基线位置，确保视觉上对齐。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字体度量<th>说明<th>影响<tbody><tr><td>ascent<td>基线到字符顶部<td>行高计算<tr><td>descent<td>基线到字符底部<td>行高计算<tr><td>x-height<td>基线到小写字母顶部<td>垂直对齐<tr><td>cap-height<td>基线到大写字母顶部<td>大写字母对齐<tr><td>line-gap<td>建议行间距<td>行高计算</table>
+<blockquote>
+<p>文本布局是渲染引擎中最被低估的复杂度来源。一个简单的换行操作，背后涉及 Unicode 分词、Bidi 算法、字体度量、基线对齐等多层计算。这也是为什么 LayoutNG 把行内布局单独作为一个算法模块来实现。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=88-v8-增量标记的三色标记算法详解>8.8 V8 增量标记的三色标记算法详解<a href=#88-v8-增量标记的三色标记算法详解 class=hash-link aria-label="8.8 V8 增量标记的三色标记算法详解的直接链接" title="8.8 V8 增量标记的三色标记算法详解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=881-三色标记法原理>8.8.1 三色标记法原理<a href=#881-三色标记法原理 class=hash-link aria-label="8.8.1 三色标记法原理的直接链接" title="8.8.1 三色标记法原理的直接链接" translate=no>​</a></h3>
+<p>V8 的老生代垃圾回收使用三色标记算法（Tri-color Marking）来追踪对象的可达性。这个算法是增量标记和并发标记的基础。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">三色标记法</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">白色 (White): 尚未被访问的对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 初始状态：所有对象都是白色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">灰色 (Gray): 已被访问，但其子对象尚未全部访问</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 等待处理的对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">黑色 (Black): 已被访问，且其子对象也全部被访问</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 确认可达的对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标记过程:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 初始: 所有对象为白色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 根集合中的对象标记为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 从灰色集合取出一个对象:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     ├─ 将其引用的对象从白色标记为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     └─ 将自身标记为黑色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 重复步骤3，直到灰色集合为空</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  5. 所有仍为白色的对象即为垃圾</span><br/></div></code></pre></div></div>
+<p>三色标记法的关键不变量（Tricolor Invariant）：黑色对象不能直接指向白色对象。任何从黑色对象到白色对象的引用必须经过灰色对象。这个不变量保证了不会遗漏可达对象。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=882-写屏障write-barrier的实现>8.8.2 写屏障（Write Barrier）的实现<a href=#882-写屏障write-barrier的实现 class=hash-link aria-label="8.8.2 写屏障（Write Barrier）的实现的直接链接" title="8.8.2 写屏障（Write Barrier）的实现的直接链接" translate=no>​</a></h3>
+<p>在并发标记过程中，主线程可能修改对象的引用关系，可能破坏三色不变量。写屏障（Write Barrier）是解决这个问题的核心机制。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">写屏障工作原理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">场景: 并发标记中，主线程修改了引用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">主线程:                          GC 线程:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  obj.field = new_obj             (正在标记)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // new_obj 可能是白色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 如果 obj 已经是黑色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 就违反了三色不变量</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // (黑色指向白色)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">写屏障触发:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  obj.field = new_obj  // 赋值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Write Barrier:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    if (obj is black && new_obj is white)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      mark new_obj as gray  // 将 new_obj 标记为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      add new_obj to gray set</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">结果: 三色不变量得以维持</span><br/></div></code></pre></div></div>
+<p>V8 使用的是 Dijkstra 风格的写屏障（也叫 "snapshot-at-the-beginning" 屏障的变体）。每次对象引用被修改时，写屏障检查新引用的对象是否为白色，如果是则标记为灰色，确保它不会被遗漏。</p>
+<p>写屏障的性能开销：每次对象属性赋值都会触发写屏障检查，大约增加 1-5% 的运行时开销。这是并发标记的必要代价。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=883-orinoco-gc-的并行整理>8.8.3 Orinoco GC 的并行整理<a href=#883-orinoco-gc-的并行整理 class=hash-link aria-label="8.8.3 Orinoco GC 的并行整理的直接链接" title="8.8.3 Orinoco GC 的并行整理的直接链接" translate=no>​</a></h3>
+<p>Orinoco 项目是 V8 GC 的现代化改进计划，它将 GC 的各个阶段尽可能并行化和并发化，减少主线程暂停。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Orinoco GC 并行化策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段          传统方式      Orinoco 方式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标记          主线程暂停    并发标记 + 写屏障</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              (长暂停)      (主线程几乎不暂停)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">清除          主线程暂停    并行清除</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              (中等暂停)    (工作线程并行)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">整理          主线程暂停    并行整理 + 对象迁移</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              (长暂停)      (工作线程并行移动)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">最终标记      主线程暂停    短暂暂停 (修正标记)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              (中等暂停)    (1-5ms)</span><br/></div></code></pre></div></div>
+<p>整理阶段（Compaction）是最难并行化的，因为需要移动对象并更新所有指向这些对象的引用。V8 使用「迁移页」（Migrating Page）策略：将存活对象从碎片化的页复制到新页，然后释放旧页。多个工作线程可以并行处理不同的页。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=884-年轻代-scavenge-的存活率自适应调整>8.8.4 年轻代 Scavenge 的存活率自适应调整<a href=#884-年轻代-scavenge-的存活率自适应调整 class=hash-link aria-label="8.8.4 年轻代 Scavenge 的存活率自适应调整的直接链接" title="8.8.4 年轻代 Scavenge 的存活率自适应调整的直接链接" translate=no>​</a></h3>
+<p>新生代的 Scavenge 回收效率取决于存活对象的多少。如果大部分对象已经死亡（低存活率），Scavenge 很快；如果很多对象存活（高存活率），需要复制大量数据，Scavenge 变慢。</p>
+<p>V8 会动态监控每次 Scavenge 的存活率，并据此调整新生代的大小。如果存活率持续较低，V8 可能缩小新生代（减少每次 Scavenge 的耗时）；如果存活率较高，V8 可能扩大新生代（减少 Scavenge 频率）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Scavenge 自适应调整</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第1次 Scavenge:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  From-Space: 4MB, 存活对象: 200KB (5%)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  存活率低 → 大部分是垃圾</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 200KB 晋升到老生代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Scavenge 很快 (1-2ms)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第2次 Scavenge:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  From-Space: 4MB, 存活对象: 800KB (20%)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  存活率升高</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 800KB 晋升到老生代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Scavenge 稍慢 (2-4ms)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">自适应决策:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果存活率持续 > 25%:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    → 扩大新生代到 8MB (减少 Scavenge 频率)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果存活率持续 &lt; 5%:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    → 缩小新生代到 2MB (减少每次暂停时间)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=885-gc-触发条件与堆大小管理>8.8.5 GC 触发条件与堆大小管理<a href=#885-gc-触发条件与堆大小管理 class=hash-link aria-label="8.8.5 GC 触发条件与堆大小管理的直接链接" title="8.8.5 GC 触发条件与堆大小管理的直接链接" translate=no>​</a></h3>
+<p>V8 的 GC 不是定时触发的，而是根据内存分配情况动态触发。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GC 触发条件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Minor GC (Scavenge) 触发:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 新生代 From-Space 耗尽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 分配新对象时空间不足</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 立即触发 Scavenge</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 自适应触发</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → V8 预测即将耗尽时提前触发</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Major GC (Mark-Sweep-Compact) 触发:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 老生代空间达到阈值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 阈值 = 当前堆大小 * 触发因子</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 触发因子约 0.8 (80%)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 晋升速率</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 大量对象从新生代晋升到老生代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 老生代增长过快</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 内存压力</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 系统发出内存压力信号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → Chrome 通知 V8 执行 GC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 空闲时间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 浏览器空闲时主动 GC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → Idle-Time GC</span><br/></div></code></pre></div></div>
+<p>V8 的堆大小管理是动态的。V8 会根据历史使用情况和系统可用内存调整堆大小上限。如果应用程序持续分配内存，V8 会逐步扩大堆上限（直到系统限制）。如果 GC 后堆使用率很低，V8 可能缩小堆上限，将内存还给操作系统。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>触发条件<th>GC 类型<th>典型暂停时间<th>频率<tbody><tr><td>新生代满<td>Minor GC<td>1-5ms<td>频繁<tr><td>老生代达阈值<td>Major GC<td>5-50ms (增量)<td>较少<tr><td>系统内存压力<td>Major GC<td>可能较长<td>偶发<tr><td>浏览器空闲<td>Idle GC<td>几乎无暂停<td>定期</table>
+<blockquote>
+<p>V8 的 GC 设计哲学是「分代收集 + 增量并行」。新生代用快速 Scavenge，老生代用并发标记+并行清除。现代 V8 的 GC 暂停通常控制在 5ms 以内，大部分 Web 应用感受不到 GC 暂停。但如果代码频繁创建和丢弃大对象，仍然可能导致可感知的 GC 卡顿。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=85-三色标记算法>8.5 三色标记算法<a href=#85-三色标记算法 class=hash-link aria-label="8.5 三色标记算法的直接链接" title="8.5 三色标记算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=851-标记阶段的三色标记>8.5.1 标记阶段的三色标记<a href=#851-标记阶段的三色标记 class=hash-link aria-label="8.5.1 标记阶段的三色标记的直接链接" title="8.5.1 标记阶段的三色标记的直接链接" translate=no>​</a></h3>
+<p>V8 的增量标记和并发标记使用三色标记算法（Tri-color Marking）。这个算法将对象分为白色、灰色、黑色三种状态，允许 GC 与应用代码交替执行。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">三色标记算法</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">初始状态：所有对象为白色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">规则：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  白色：未访问（可能需要回收）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  灰色：已访问但未处理引用（待处理）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  黑色：已访问且已处理引用（存活）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流程：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 根对象标记为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 取灰色对象，标记其引用对象为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 当前对象标记为黑色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 重复直到无灰色对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  5. 白色对象 = 垃圾</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">示例：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Root → A → B → C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  初始:  [白 A] [白 B] [白 C]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  步骤1: [灰 A] [白 B] [白 C]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  步骤2: [黑 A] [灰 B] [白 C]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  步骤3: [黑 A] [黑 B] [灰 C]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  步骤4: [黑 A] [黑 B] [黑 C]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  完成: 无白色对象，无垃圾</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>颜色<th>状态<th>含义<tbody><tr><td>白色<td>未访问<td>可能是垃圾<tr><td>灰色<td>待处理<td>已发现但引用未跟踪<tr><td>黑色<td>已完成<td>存活，引用已跟踪</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=852-写屏障>8.5.2 写屏障<a href=#852-写屏障 class=hash-link aria-label="8.5.2 写屏障的直接链接" title="8.5.2 写屏障的直接链接" translate=no>​</a></h3>
+<p>并发标记时，应用代码可能修改对象引用关系，导致标记不准确。写屏障（Write Barrier）解决这个问题。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">写屏障问题场景</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">并发标记进行中...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 黑色对象 A 已标记完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 应用代码：A.ref = B（B 是白色）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. GC 不知麦 A 引用了 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. B 被误回收 → 崩溃！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">写屏障解决方案：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每次 A.ref = B 时触发写屏障</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果 A 是黑色且 B 是白色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 将 B 标记为灰色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 确保后续不会被遗漏</span><br/></div></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// V8 写屏障伪代码</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>writeBarrier</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter">object</span><span class="token parameter punctuation" style=color:#393A34>,</span><span class="token parameter"> field</span><span class="token parameter punctuation" style=color:#393A34>,</span><span class="token parameter"> value</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>if</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">object</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">color</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>===</span><span class="token plain"> </span><span class="token constant" style=color:#36acaa>BLACK</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>&&</span><span class="token plain"> value</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">color</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>===</span><span class="token plain"> </span><span class="token constant" style=color:#36acaa>WHITE</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    value</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">color</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token constant" style=color:#36acaa>GRAY</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token function" style=color:#d73a49>addToWorklist</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">value</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  field </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> value</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>写屏障保证了三色标记的正确性：黑色对象永远不会指向白色对象。代价是每次对象属性赋值都需要额外检查，约 2-5% 的性能开销。这是并发 GC 的必要代价。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=86-orinoco-gc-并行整理>8.6 Orinoco GC 并行整理<a href=#86-orinoco-gc-并行整理 class=hash-link aria-label="8.6 Orinoco GC 并行整理的直接链接" title="8.6 Orinoco GC 并行整理的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=861-并发整理>8.6.1 并发整理<a href=#861-并发整理 class=hash-link aria-label="8.6.1 并发整理的直接链接" title="8.6.1 并发整理的直接链接" translate=no>​</a></h3>
+<p>传统的标记-清除算法会导致内存碎片化。Orinoco GC（V8 的下一代 GC 引擎）引入了并发整理，在不阻塞主线程的情况下移动对象、消除碎片。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">传统标记-清除：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  标记 → 清除 → 碎片化严重</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标记-压缩：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  标记 → 移动对象 → 消除碎片</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  但移动对象需要暂停主线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Orinoco 并发整理：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  标记 → 并发移动对象 → 更新指针</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 主线程暂停时间大幅减少</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=87-scavenge-自适应调整>8.7 Scavenge 自适应调整<a href=#87-scavenge-自适应调整 class=hash-link aria-label="8.7 Scavenge 自适应调整的直接链接" title="8.7 Scavenge 自适应调整的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=871-存活率自适应>8.7.1 存活率自适应<a href=#871-存活率自适应 class=hash-link aria-label="8.7.1 存活率自适应的直接链接" title="8.7.1 存活率自适应的直接链接" translate=no>​</a></h3>
+<p>新生代 Scavenge 的存活率影响 GC 频率和新生代大小。V8 会根据存活率自动调整。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Scavenge 自适应策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">低存活率 (&lt; 20%)：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 大部分对象是垃圾</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Scavenge 很快</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 可以缩小新生代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">高存活率 (> 80%)：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 大部分对象存活</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Scavenge 成本高</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 扩大新生代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 考虑提前晋升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">V8 动态调整新生代大小：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1MB - 16MB（根据存活率自动调整）</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>存活率<th>V8 调整<th>效果<tbody><tr><td>&lt; 20%<td>缩小新生代<td>减少 GC 开销<tr><td>20-80%<td>保持稳定<td>正常运行<tr><td>> 80%<td>扩大新生代<td>减少 GC 频率<tr><td>持续高<td>提前晋升<td>避免反复复制</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=88-gc-触发条件与堆管理>8.8 GC 触发条件与堆管理<a href=#88-gc-触发条件与堆管理 class=hash-link aria-label="8.8 GC 触发条件与堆管理的直接链接" title="8.8 GC 触发条件与堆管理的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=881-gc-触发时机>8.8.1 GC 触发时机<a href=#881-gc-触发时机 class=hash-link aria-label="8.8.1 GC 触发时机的直接链接" title="8.8.1 GC 触发时机的直接链接" translate=no>​</a></h3>
+<p>V8 在多种条件下触发 GC，理解这些条件有助于编写对 GC 友好的代码。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GC 触发条件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 新生代空间不足</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 新分配无法在新生代完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 触发 Scavenge GC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 最频繁的 GC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 老生代空间增长</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 老生代大小超过阈值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 触发标记-清除/标记-压缩</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 全局 GC，影响较大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 增量标记跟进</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 分配速率超过标记速率</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 触发并发标记</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 避免堆无限增长</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 显式触发（不建议）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → gc() 函数（需 --expose-gc）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 仅用于调试</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>触发条件<th>GC 类型<th>频率<th>影响<tbody><tr><td>新生代满<td>Scavenge<td>高<td>小<tr><td>老生代增长<td>Mark-Sweep<td>中<td>中<tr><td>分配速率高<td>并发标记<td>中<td>低<tr><td>显式调用<td>Full GC<td>—<td>大</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=882-堆大小限制>8.8.2 堆大小限制<a href=#882-堆大小限制 class=hash-link aria-label="8.8.2 堆大小限制的直接链接" title="8.8.2 堆大小限制的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">V8 堆大小限制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">32 位系统：  ~700MB</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">64 位系统：  ~1.4GB（默认）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">           ~4GB（--max-old-space-size=4096）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Node.js 可以调整：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  node --max-old-space-size=4096 app.js</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">浏览器中无法调整，由浏览器统一管理。</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>堆大小限制不是物理内存限制，而是 V8 的软限制。超过限制会触发 OOM（Out of Memory）崩溃。在浏览器中，每个标签页的堆大小由浏览器统一管理，通常会根据系统内存动态调整。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=89-内存泄漏排查>8.9 内存泄漏排查<a href=#89-内存泄漏排查 class=hash-link aria-label="8.9 内存泄漏排查的直接链接" title="8.9 内存泄漏排查的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=891-常见内存泄漏模式>8.9.1 常见内存泄漏模式<a href=#891-常见内存泄漏模式 class=hash-link aria-label="8.9.1 常见内存泄漏模式的直接链接" title="8.9.1 常见内存泄漏模式的直接链接" translate=no>​</a></h3>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 1. 意外的全局变量</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  leak </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'data'</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 忘记 let/const/var → 变成全局变量</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>this</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">data</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'data'</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 忘记 new 调用 → this 指向 window</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 2. 被遗忘的定时器</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>setup</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> heavyData </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>new</span><span class="token plain"> </span><span class="token class-name">Array</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>1e6</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token function" style=color:#d73a49>setInterval</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">heavyData</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">length</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// heavyData 永远不会被回收</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>1000</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 3. 闭包引用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>createHandler</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> largeData </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>new</span><span class="token plain"> </span><span class="token class-name">Array</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>1e6</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'click'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// largeData 被闭包持有</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 4. DOM 引用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> elements </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>addElement</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> div </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>createElement</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'div'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  elements</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>push</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">div</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 即使从 DOM 移除，数组仍持有引用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">body</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>appendChild</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">div</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>泄漏类型<th>原因<th>检测方法<tbody><tr><td>全局变量<td>未声明变量<td>严格模式<tr><td>定时器<td>未清理<td>检查 setInterval<tr><td>闭包<td>不必要的引用<td>Heap Snapshot<tr><td>DOM 引用<td>缓存 DOM<td>WeakRef/WeakMap</table>
+<blockquote>
+<p>Chrome DevTools 的 Memory 面板是排查内存泄漏的主要工具。Heap Snapshot 对比（拍三次快照）可以定位泄漏对象。Allocation Timeline 可以看到实时分配情况。使用 <code>console.record()</code> 和 <code>console.recordEnd()</code> 可以针对性记录。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>性能影响<tbody><tr><td>LayoutNG<td>不可变 Fragment 架构<td>更清晰的布局流程<tr><td>盒模型<td>Content/Padding/Border/Margin<td>box-sizing 影响尺寸计算<tr><td>Flex 布局<td>一维布局，grow/shrink 分配<td>适合组件内排列<tr><td>Grid 布局<td>二维布局，同时控制行列<td>适合页面布局<tr><td>布局抖动<td>读写交叉导致反复布局<td>避免读写交叉<tr><td>增量布局<td>只计算受影响的部分<td>减少布局开销</table>
+<p>觉得有用？收藏起来，下次做布局性能优化时直接翻出来参考。</p>
+<p>你在项目中遇到过布局抖动问题吗？是怎么排查和解决的？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们进入绘制和合成阶段，讲 PaintNG 绘制引擎、合成层（Compositing Layer）的创建条件和工作原理。系列进度 8/24。</p>
+<p>下期预告：第 9 章「绘制与合成」。我们会拆解绘制记录的生成、PaintNG 绘制引擎的工作原理、合成层提升条件、以及 GPU 合成的工作流程。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_8.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第7章 DOM 与样式计算</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第9章 绘制与合成</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#81-layoutng-布局引擎 class="table-of-contents__link toc-highlight">8.1 LayoutNG 布局引擎</a><ul><li><a href=#811-为什么需要-layoutng class="table-of-contents__link toc-highlight">8.1.1 为什么需要 LayoutNG</a><li><a href=#812-layoutng-的核心架构 class="table-of-contents__link toc-highlight">8.1.2 LayoutNG 的核心架构</a><li><a href=#813-布局对象layoutobject与布局树 class="table-of-contents__link toc-highlight">8.1.3 布局对象（LayoutObject）与布局树</a></ul><li><a href=#82-盒模型计算 class="table-of-contents__link toc-highlight">8.2 盒模型计算</a><ul><li><a href=#821-css-盒模型的层级 class="table-of-contents__link toc-highlight">8.2.1 CSS 盒模型的层级</a><li><a href=#822-包含块containing-block class="table-of-contents__link toc-highlight">8.2.2 包含块（Containing Block）</a></ul><li><a href=#83-flexbox-布局算法 class="table-of-contents__link toc-highlight">8.3 Flexbox 布局算法</a><ul><li><a href=#831-flex-布局的核心概念 class="table-of-contents__link toc-highlight">8.3.1 Flex 布局的核心概念</a><li><a href=#832-flex-布局计算过程 class="table-of-contents__link toc-highlight">8.3.2 Flex 布局计算过程</a></ul><li><a href=#84-grid-布局算法 class="table-of-contents__link toc-highlight">8.4 Grid 布局算法</a><ul><li><a href=#841-grid-布局的核心概念 class="table-of-contents__link toc-highlight">8.4.1 Grid 布局的核心概念</a><li><a href=#842-grid-布局计算过程 class="table-of-contents__link toc-highlight">8.4.2 Grid 布局计算过程</a></ul><li><a href=#85-布局抖动layout-thrashing class="table-of-contents__link toc-highlight">8.5 布局抖动（Layout Thrashing）</a><ul><li><a href=#851-什么是布局抖动 class="table-of-contents__link toc-highlight">8.5.1 什么是布局抖动</a><li><a href=#852-强制同步布局的触发 class="table-of-contents__link toc-highlight">8.5.2 强制同步布局的触发</a><li><a href=#853-fastdom-模式 class="table-of-contents__link toc-highlight">8.5.3 FastDOM 模式</a></ul><li><a href=#86-布局失效与增量布局 class="table-of-contents__link toc-highlight">8.6 布局失效与增量布局</a><ul><li><a href=#861-布局失效标记 class="table-of-contents__link toc-highlight">8.6.1 布局失效标记</a><li><a href=#862-增量布局 class="table-of-contents__link toc-highlight">8.6.2 增量布局</a></ul><li><a href=#87-文本布局与换行算法 class="table-of-contents__link toc-highlight">8.7 文本布局与换行算法</a><ul><li><a href=#871-行内布局 class="table-of-contents__link toc-highlight">8.7.1 行内布局</a><li><a href=#872-bidi-算法与混合方向文本 class="table-of-contents__link toc-highlight">8.7.2 Bidi 算法与混合方向文本</a><li><a href=#873-字体度量与基线 class="table-of-contents__link toc-highlight">8.7.3 字体度量与基线</a></ul><li><a href=#88-v8-增量标记的三色标记算法详解 class="table-of-contents__link toc-highlight">8.8 V8 增量标记的三色标记算法详解</a><ul><li><a href=#881-三色标记法原理 class="table-of-contents__link toc-highlight">8.8.1 三色标记法原理</a><li><a href=#882-写屏障write-barrier的实现 class="table-of-contents__link toc-highlight">8.8.2 写屏障（Write Barrier）的实现</a><li><a href=#883-orinoco-gc-的并行整理 class="table-of-contents__link toc-highlight">8.8.3 Orinoco GC 的并行整理</a><li><a href=#884-年轻代-scavenge-的存活率自适应调整 class="table-of-contents__link toc-highlight">8.8.4 年轻代 Scavenge 的存活率自适应调整</a><li><a href=#885-gc-触发条件与堆大小管理 class="table-of-contents__link toc-highlight">8.8.5 GC 触发条件与堆大小管理</a></ul><li><a href=#85-三色标记算法 class="table-of-contents__link toc-highlight">8.5 三色标记算法</a><ul><li><a href=#851-标记阶段的三色标记 class="table-of-contents__link toc-highlight">8.5.1 标记阶段的三色标记</a><li><a href=#852-写屏障 class="table-of-contents__link toc-highlight">8.5.2 写屏障</a></ul><li><a href=#86-orinoco-gc-并行整理 class="table-of-contents__link toc-highlight">8.6 Orinoco GC 并行整理</a><ul><li><a href=#861-并发整理 class="table-of-contents__link toc-highlight">8.6.1 并发整理</a></ul><li><a href=#87-scavenge-自适应调整 class="table-of-contents__link toc-highlight">8.7 Scavenge 自适应调整</a><ul><li><a href=#871-存活率自适应 class="table-of-contents__link toc-highlight">8.7.1 存活率自适应</a></ul><li><a href=#88-gc-触发条件与堆管理 class="table-of-contents__link toc-highlight">8.8 GC 触发条件与堆管理</a><ul><li><a href=#881-gc-触发时机 class="table-of-contents__link toc-highlight">8.8.1 GC 触发时机</a><li><a href=#882-堆大小限制 class="table-of-contents__link toc-highlight">8.8.2 堆大小限制</a></ul><li><a href=#89-内存泄漏排查 class="table-of-contents__link toc-highlight">8.9 内存泄漏排查</a><ul><li><a href=#891-常见内存泄漏模式 class="table-of-contents__link toc-highlight">8.9.1 常见内存泄漏模式</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

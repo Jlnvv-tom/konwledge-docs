@@ -1,0 +1,577 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_9" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第9章 绘制与合成 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第9章 绘制与合成 | 知识库"/><meta data-rh=true name=description content="一个页面可能有几十个图层，GPU 把它们像叠胶片一样合成在一起。理解合成层的工作原理，你才能理解为什么 transform 动画比 top/left 动画快那么多。"/><meta data-rh=true property=og:description content="一个页面可能有几十个图层，GPU 把它们像叠胶片一样合成在一起。理解合成层的工作原理，你才能理解为什么 transform 动画比 top/left 动画快那么多。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9","name":"第9章 绘制与合成","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第9章 绘制与合成</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第9章 绘制与合成</h1></header>
+<blockquote>
+<p>一个页面可能有几十个图层，GPU 把它们像叠胶片一样合成在一起。理解合成层的工作原理，你才能理解为什么 transform 动画比 top/left 动画快那么多。</p>
+</blockquote>
+<p>我是怕浪猫，上期我们拆了 LayoutNG 布局引擎，今天进入第 9 章：绘制与合成。这一章会讲 PaintNG 绘制引擎如何生成绘制指令、合成层（Compositing Layer）的创建条件和提升机制、以及 GPU 合成的完整工作流程。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=91-paintng-绘制引擎>9.1 PaintNG 绘制引擎<a href=#91-paintng-绘制引擎 class=hash-link aria-label="9.1 PaintNG 绘制引擎的直接链接" title="9.1 PaintNG 绘制引擎的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=911-从布局树到绘制记录>9.1.1 从布局树到绘制记录<a href=#911-从布局树到绘制记录 class=hash-link aria-label="9.1.1 从布局树到绘制记录的直接链接" title="9.1.1 从布局树到绘制记录的直接链接" translate=no>​</a></h3>
+<p>布局完成后，Blink 拥有一棵 Fragment 树，记录了每个元素的精确位置和尺寸。下一步是将这棵 Fragment 树转换为一系列绘制指令，这个过程叫做绘制（Paint）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">绘制流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Fragment 树（布局结果）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">绘制阶段1：构建绘制属性（Paint Properties）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  为每个 Fragment 计算变换、裁剪、效果等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  生成 PaintPropertyTree</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">绘制阶段2：绘制遍历（Paint Traversal）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  按正确的顺序遍历 Fragment 树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  生成绘制操作列表（Paint Ops）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">绘制阶段3：光栅化（Rasterization）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  将绘制操作转换为像素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  在工作线程上并行执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">最终像素</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=912-绘制顺序与-z-index>9.1.2 绘制顺序与 z-index<a href=#912-绘制顺序与-z-index class=hash-link aria-label="9.1.2 绘制顺序与 z-index的直接链接" title="9.1.2 绘制顺序与 z-index的直接链接" translate=no>​</a></h3>
+<p>绘制顺序决定了元素在视觉上的层叠关系。Blink 的绘制顺序遵循 CSS 规范定义的「绘制上下文」（Painting Order）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">CSS 绘制顺序（从底到顶）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 背景色和背景图</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 负 z-index 的定位元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 块级元素的背景和边框</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 浮动元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 行内元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">6. 正 z-index 的定位元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">在每一层内，按以下顺序绘制单个元素：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  a. 背景色</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  b. 背景图</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  c. 边框</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  d. 内容（文本、子元素）</span><br/></div></code></pre></div></div>
+<p>z-index 只对 position 非 static 的元素生效。理解这一点很重要：两个 position: static 的元素，z-index 值没有意义。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>z-index 值<th>绘制位置<th>说明<tbody><tr><td>负值<td>最底层<td>在所有其他内容之下<tr><td>auto/0<td>正常层<td>按文档顺序<tr><td>正值<td>顶层<td>按值大小排序</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=913-绘制属性树>9.1.3 绘制属性树<a href=#913-绘制属性树 class=hash-link aria-label="9.1.3 绘制属性树的直接链接" title="9.1.3 绘制属性树的直接链接" translate=no>​</a></h3>
+<p>PaintNG 的一个关键创新是绘制属性树（Paint Property Tree）。它将元素的变换、裁剪、滚动、效果等信息提取为独立的属性节点，形成一棵树。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">绘制属性树结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Transform Tree（变换树）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 根节点（视口变换）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 元素 A 的 transform</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 元素 B 的 transform（父节点 = A 的 transform）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Clip Tree（裁剪树）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 根节点（视口裁剪）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ overflow: hidden 的裁剪</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Effect Tree（效果树）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 根节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ opacity 变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ filter 效果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ...</span><br/></div></code></pre></div></div>
+<p>绘制属性树的价值在于合成阶段。合成器可以直接使用属性树中的变换和裁剪信息，不需要重新从布局树计算。这也是为什么 transform 和 opacity 变化只需要合成阶段，不需要重新布局和绘制。</p>
+<blockquote>
+<p>绘制属性树是 PaintNG 的核心创新。它把变换、裁剪、效果从绘制内容中分离出来，让合成器可以独立处理这些属性。这就是 CSS transform 动画不触发重排和重绘的底层原因。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=914-绘制记录的生成>9.1.4 绘制记录的生成<a href=#914-绘制记录的生成 class=hash-link aria-label="9.1.4 绘制记录的生成的直接链接" title="9.1.4 绘制记录的生成的直接链接" translate=no>​</a></h3>
+<p>绘制遍历（Paint Traversal）过程中，PaintNG 按照正确的绘制顺序遍历 Fragment 树，为每个节点生成绘制操作（Paint Ops）。每个绘制操作是一个底层绘图指令，如「绘制矩形」「绘制文本」「绘制图片」。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 绘制记录示例（简化概念）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> paintOps </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>type</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'drawRect'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>x</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>y</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>w</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>800</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>h</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>600</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>color</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'#fff'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>type</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'drawText'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>x</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>10</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>y</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>20</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>text</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'Hello'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>font</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'16px Arial'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>type</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'drawRect'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>x</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>10</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>y</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>40</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>w</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>100</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>h</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>30</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>color</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'#007bff'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<p>绘制记录列表是一个平台无关的指令序列，可以被光栅化引擎（CPU 或 GPU）执行。这种设计让绘制和光栅化解耦：同一个绘制记录可以在不同的光栅化后端上执行。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=92-合成层compositing-layer>9.2 合成层（Compositing Layer）<a href=#92-合成层compositing-layer class=hash-link aria-label="9.2 合成层（Compositing Layer）的直接链接" title="9.2 合成层（Compositing Layer）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=921-什么是合成层>9.2.1 什么是合成层<a href=#921-什么是合成层 class=hash-link aria-label="9.2.1 什么是合成层的直接链接" title="9.2.1 什么是合成层的直接链接" translate=no>​</a></h3>
+<p>合成层（Compositing Layer，也叫 Compositor Layer）是 Chrome 渲染管线中的核心概念。每个合成层对应一个独立的位图，可以在 GPU 上独立变换和合成。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">合成层结构示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">页面：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  背景层（body）              │ ← 合成层 0</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌───────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  内容层（div）         │  │ ← 合成层 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌─────────────────┐  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │  动画层（card）  │  │  │ ← 合成层 2（有 transform 动画）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └─────────────────┘  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └───────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 合成：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Layer 0 (背景)  ──┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Layer 1 (内容)  ──┼── 合成 → 最终画面</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Layer 2 (动画)  ──┘  (在 GPU 上完成)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=922-合成层提升条件>9.2.2 合成层提升条件<a href=#922-合成层提升条件 class=hash-link aria-label="9.2.2 合成层提升条件的直接链接" title="9.2.2 合成层提升条件的直接链接" translate=no>​</a></h3>
+<p>Blink 在什么情况下会将一个元素提升为独立的合成层？这个决策基于一系列条件。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>提升条件<th>说明<th>常见原因<tbody><tr><td>3D 变换<td>transform: translate3d/rotate3d/matrix3d<td>强制硬件加速<tr><td>will-change<td>will-change: transform/opacity<td>开发者提示<tr><td>透明度动画<td>opacity 有动画<td>避免重绘<tr><td>transform 动画<td>transform 有动画<td>避免重排重绘<tr><td>filter 动画<td>filter 有动画<td>避免重绘<tr><td>position: fixed<td>固定定位元素<td>滚动时独立合成<tr><td>硬件加速视频<td>video 元素<td>视频解码独立<tr><td>Canvas 2D/WebGL<td>canvas 元素<td>独立绘图表面<tr><td>负 z-index 子树<td>有 3D 变换<td>层叠上下文</table>
+<div class="language-css codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-css codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>/* 强制创建合成层 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.gpu</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>transform</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>translateZ</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 或 translate3d(0,0,0) */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>/* 更明确的提示 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.optimized</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>will-change</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> transform</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=923-层爆炸与层压缩>9.2.3 层爆炸与层压缩<a href=#923-层爆炸与层压缩 class=hash-link aria-label="9.2.3 层爆炸与层压缩的直接链接" title="9.2.3 层爆炸与层压缩的直接链接" translate=no>​</a></h3>
+<p>不合理的合成层创建可能导致「层爆炸」（Layer Explosion）：一个合成层的创建引发大量相邻元素也被提升为合成层，导致内存和 GPU 带宽暴增。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">层爆炸示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;div class="container"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div class="layer" style="transform: translateZ(0);"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;!-- 容器变成合成层 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;!-- 后面的元素如果与 .layer 有重叠 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;!-- 可能被强制提升为合成层 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div class="sibling">大量内容...&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div class="sibling">大量内容...&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div class="sibling">大量内容...&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;!-- 每个 sibling 都可能成为独立合成层 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;/div></span><br/></div></code></pre></div></div>
+<p>Blink 有「层压缩」（Layer Squashing）机制来缓解层爆炸：当多个小的合成层在视觉上重叠时，Blink 可以将它们合并为一个合成层。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>问题<th>原因<th>解决方案<tbody><tr><td>层爆炸<td>过度使用 translateZ(0)<td>只在必要元素上使用<tr><td>层过多<td>大量 will-change<td>动画结束后移除 will-change<tr><td>内存占用<td>每个合成层有独立位图<td>减少合成层数量<tr><td>合成开销<td>GPU 合成大量层<td>合并相邻层</table>
+<blockquote>
+<p>will-change 不是越多越好。每个合成层都消耗 GPU 内存。在 1000 个元素上加 will-change: transform，你的页面会先因为内存爆炸而崩溃，而不是变快。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=93-gpu-合成工作流程>9.3 GPU 合成工作流程<a href=#93-gpu-合成工作流程 class=hash-link aria-label="9.3 GPU 合成工作流程的直接链接" title="9.3 GPU 合成工作流程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=931-光栅化>9.3.1 光栅化<a href=#931-光栅化 class=hash-link aria-label="9.3.1 光栅化的直接链接" title="9.3.1 光栅化的直接链接" translate=no>​</a></h3>
+<p>光栅化（Rasterization）是将绘制指令转换为像素位图的过程。Chrome 的光栅化在工作线程上并行执行，利用多核 CPU 加速。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">光栅化工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">绘制记录列表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">分块（Tiling）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  将页面分成多个图块（Tile）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  通常每块 256x256 或 512x512 像素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">优先级排序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  可视区域内的图块优先光栅化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  离可视区域近的次优先</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  远处的最后光栅化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">并行光栅化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  多个工作线程同时光栅化不同图块</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  光栅化结果存入 GPU 纹理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成准备完成</span><br/></div></code></pre></div></div>
+<p>光栅化的分块策略让 Chrome 可以优先光栅化用户可见区域的图块，让内容尽快显示。屏幕外的图块延迟光栅化，节省资源。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=932-合成器线程>9.3.2 合成器线程<a href=#932-合成器线程 class=hash-link aria-label="9.3.2 合成器线程的直接链接" title="9.3.2 合成器线程的直接链接" translate=no>​</a></h3>
+<p>Chrome 的合成工作在独立的合成器线程（Compositor Thread）上执行，不阻塞主线程。这是 Chrome 渲染架构的一个关键设计。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">主线程与合成器线程的分工</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">主线程（Main Thread）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ JavaScript 执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 样式计算</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 布局计算</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 绘制记录生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 提交到合成器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成器线程（Compositor Thread）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 接收合成层树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 处理滚动（不阻塞主线程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 处理 CSS transform 动画</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 调度光栅化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 提交合成帧到 GPU</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 执行 GPU 命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 纹理上传</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 输出最终像素到屏幕</span><br/></div></code></pre></div></div>
+<p>合成器线程能独立处理滚动和 transform 动画的原因是：这些操作只改变合成层的变换矩阵，不需要重新布局和绘制。合成器直接更新变换矩阵，让 GPU 重新合成，全程不涉及主线程。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>操作<th>主线程参与？<th>合成器独立处理？<th>性能<tbody><tr><td>滚动<td>否<td>是<td>流畅<tr><td>transform 动画<td>否<td>是<td>流畅<tr><td>opacity 动画<td>否<td>是<td>流畅<tr><td>改变 width<td>是<td>否<td>可能卡顿<tr><td>改变 background<td>是<td>否<td>可能卡顿<tr><td>JavaScript 执行<td>是<td>否<td>阻塞渲染</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=933-合成帧与-vsync>9.3.3 合成帧与 vsync<a href=#933-合成帧与-vsync class=hash-link aria-label="9.3.3 合成帧与 vsync的直接链接" title="9.3.3 合成帧与 vsync的直接链接" translate=no>​</a></h3>
+<p>合成器以 vsync（垂直同步）信号为节拍生成合成帧。每个 vsync 周期（约 16.6ms），合成器生成一帧合成输出。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">vsync 驱动的渲染周期</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">vsync 信号 → 合成器开始合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 检查是否有新的合成层树更新</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 更新动画状态（transform/opacity）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 计算合成层变换矩阵</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 生成 GPU 命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 提交到 GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 执行 GPU 命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 合成各层纹理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 输出到屏幕</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">下一个 vsync → 重复</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=94-合成与动画性能>9.4 合成与动画性能<a href=#94-合成与动画性能 class=hash-link aria-label="9.4 合成与动画性能的直接链接" title="9.4 合成与动画性能的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=941-为什么-transform-动画快>9.4.1 为什么 transform 动画快<a href=#941-为什么-transform-动画快 class=hash-link aria-label="9.4.1 为什么 transform 动画快的直接链接" title="9.4.1 为什么 transform 动画快的直接链接" translate=no>​</a></h3>
+<p>理解了合成层和 GPU 合成后，就能理解为什么 transform 动画比 top/left 动画快得多。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">top/left 动画 vs transform 动画</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">top/left 动画（每帧）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  JavaScript 执行 → Style Recalc → Layout → Paint → Composite</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每帧都要走完整管线</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">transform 动画（每帧）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  合成器线程更新变换矩阵 → Composite</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  只走合成阶段，跳过 Style/Layout/Paint</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">性能差异：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  top/left:  ~16ms/帧（可能掉帧）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  transform: ~1-2ms/帧（几乎不可能掉帧）</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=942-动画性能最佳实践>9.4.2 动画性能最佳实践<a href=#942-动画性能最佳实践 class=hash-link aria-label="9.4.2 动画性能最佳实践的直接链接" title="9.4.2 动画性能最佳实践的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>实践<th>说明<th>效果<tbody><tr><td>用 transform 代替 top/left<td>只触发合成<td>性能最优<tr><td>用 opacity 代替 visibility<td>只触发合成<td>性能最优<tr><td>动画元素提升为合成层<td>will-change 或 translateZ<td>避免重绘<tr><td>避免大面积重绘<td>缩小绘制范围<td>减少光栅化<tr><td>动画结束后移除 will-change<td>释放合成层<td>节省内存<tr><td>使用 content-visibility: auto<td>跳过屏幕外渲染<td>减少渲染范围</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=943-检查合成层>9.4.3 检查合成层<a href=#943-检查合成层 class=hash-link aria-label="9.4.3 检查合成层的直接链接" title="9.4.3 检查合成层的直接链接" translate=no>​</a></h3>
+<p>Chrome DevTools 的 Layers 面板可以查看页面的合成层结构。</p>
+<p>在 Layers 面板中，你可以看到：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>信息<th>说明<th>用途<tbody><tr><td>合成层列表<td>所有合成层的层级树<td>检查层数量<tr><td>每层的大小<td>位图尺寸<td>评估内存占用<tr><td>提升原因<td>为什么成为合成层<td>优化依据<tr><td>绘制内容<td>每层的可视化预览<td>调试绘制问题</table>
+<blockquote>
+<p>打开 Chrome DevTools 的 Layers 面板，看看你的页面有多少合成层。如果发现几十个甚至上百个合成层，你的页面可能存在层爆炸问题。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=95-硬件加速与-gpu-路径>9.5 硬件加速与 GPU 路径<a href=#95-硬件加速与-gpu-路径 class=hash-link aria-label="9.5 硬件加速与 GPU 路径的直接链接" title="9.5 硬件加速与 GPU 路径的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=951-gpu-纹理上传>9.5.1 GPU 纹理上传<a href=#951-gpu-纹理上传 class=hash-link aria-label="9.5.1 GPU 纹理上传的直接链接" title="9.5.1 GPU 纹理上传的直接链接" translate=no>​</a></h3>
+<p>合成层的位图存储在 GPU 纹理中。当合成层的内容更新时，Blink 需要将新的位图上传到 GPU。这个上传操作是有开销的，尤其是对于大尺寸的合成层。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GPU 纹理上传流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CPU 侧：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  绘制记录 → 光栅化 → 位图（CPU 内存）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  纹理上传（CPU → GPU）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  通过 GL/Dawn API 上传</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  大尺寸位图上传耗时</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 侧：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  纹理存储在 GPU 内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  GPU 合成（变换 + 混合）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  输出到屏幕</span><br/></div></code></pre></div></div>
+<p>这也是为什么频繁更新大尺寸合成层的内容（如视频播放、Canvas 动画）会消耗较多 GPU 带宽。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=952-零拷贝光栅化>9.5.2 零拷贝光栅化<a href=#952-零拷贝光栅化 class=hash-link aria-label="9.5.2 零拷贝光栅化的直接链接" title="9.5.2 零拷贝光栅化的直接链接" translate=no>​</a></h3>
+<p>为了减少纹理上传的开销，Chrome 使用了零拷贝光栅化（Zero-Copy Rasterization）技术。光栅化直接在 GPU 内存中进行，生成的位图直接作为 GPU 纹理，无需从 CPU 内存上传。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>光栅化方式<th>路径<th>开销<th>适用场景<tbody><tr><td>CPU 光栅化 + 上传<td>CPU → GPU<td>高<td>兼容模式<tr><td>GPU 光栅化（GPU Raster）<td>直接在 GPU<td>低<td>支持的 GPU<tr><td>零拷贝光栅化<td>GPU 内存直接使用<td>最低<td>现代设备</table>
+<p>零拷贝光栅化配合 GPU 光栅化，让 Chrome 的渲染性能在现代设备上大幅提升。GPU 光栅化使用 GPU 的 shader（着色器）程序执行绘制指令，比 CPU 光栅化快得多。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=953-dawn-图形-api-抽象层>9.5.3 Dawn 图形 API 抽象层<a href=#953-dawn-图形-api-抽象层 class=hash-link aria-label="9.5.3 Dawn 图形 API 抽象层的直接链接" title="9.5.3 Dawn 图形 API 抽象层的直接链接" translate=no>​</a></h3>
+<p>Chrome 在 2021 年开始使用 Dawn 替代直接的 OpenGL ES 调用。Dawn 是 Chrome 团队开发的 WebGPU 实现，同时也作为 Chrome 内部的图形 API 抽象层。</p>
+<p>Dawn 的价值在于跨平台抽象：它在不同平台上分别映射到 Vulkan（Android/Linux）、Metal（macOS/iOS）、D3D12（Windows），让 Chrome 不需要为每个平台写不同的 GPU 代码。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>底层图形 API<th>Dawn 映射<tbody><tr><td>Windows<td>D3D12<td>Dawn → D3D12<tr><td>macOS<td>Metal<td>Dawn → Metal<tr><td>Linux<td>Vulkan<td>Dawn → Vulkan<tr><td>Android<td>Vulkan<td>Dawn → Vulkan</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=954-合成器的-cc-模块>9.5.4 合成器的 cc 模块<a href=#954-合成器的-cc-模块 class=hash-link aria-label="9.5.4 合成器的 cc 模块的直接链接" title="9.5.4 合成器的 cc 模块的直接链接" translate=no>​</a></h3>
+<p>Chrome 的合成器在代码中被称为 cc（Chrome Compositor）。cc 是 Blink 之外的一个独立模块，运行在渲染进程的合成器线程上。</p>
+<p>cc 模块的核心数据结构是 LayerTreeHost（主线程侧）和 LayerTreeHostImpl（合成器线程侧）。主线程通过 LayerTreeHost 提交合成层树，合成器线程通过 LayerTreeHostImpl 执行合成。这两个对象通过 commit 操作同步数据。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">cc 合成流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">主线程                          合成器线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────────┐              ┌──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│LayerTreeHost  │   commit    │LayerTreeHostImpl│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ Layer 1   │ ──────────► │  ├─ LayerImpl 1│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ Layer 2   │              │  ├─ LayerImpl 2│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └─ Layer 3   │              │  └─ LayerImpl 3│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────────┘              └──────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                     ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              生成合成帧</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                     ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              提交到 GPU 进程</span><br/></div></code></pre></div></div>
+<p>commit 操作是主线程到合成器线程的数据同步点。每次主线程完成布局和绘制后，通过 commit 将新的合成层树传递给合成器线程。commit 操作本身有开销，频繁 commit 会影响性能。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=96-滚动的渲染优化>9.6 滚动的渲染优化<a href=#96-滚动的渲染优化 class=hash-link aria-label="9.6 滚动的渲染优化的直接链接" title="9.6 滚动的渲染优化的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=961-滚动合成>9.6.1 滚动合成<a href=#961-滚动合成 class=hash-link aria-label="9.6.1 滚动合成的直接链接" title="9.6.1 滚动合成的直接链接" translate=no>​</a></h3>
+<p>滚动是网页中最频繁的交互之一。Chrome 的合成器线程可以独立处理滚动，不需要主线程参与，这是滚动性能流畅的关键。</p>
+<p>当用户滚动页面时，合成器线程接收滚动输入，更新合成层的偏移量，重新合成并输出。整个过程在合成器线程上完成，不触发主线程的任何工作。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">滚动处理流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户滚动</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成器线程接收滚动事件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">更新滚动层的位置偏移</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  (只修改变换矩阵，不重新布局/绘制)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">重新合成各层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出新帧到屏幕</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">全程在合成器线程完成，主线程可以继续执行 JavaScript</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=962-touch-action-与滚动优化>9.6.2 touch-action 与滚动优化<a href=#962-touch-action-与滚动优化 class=hash-link aria-label="9.6.2 touch-action 与滚动优化的直接链接" title="9.6.2 touch-action 与滚动优化的直接链接" translate=no>​</a></h3>
+<p>touch-action CSS 属性可以控制触摸滚动的行为，帮助浏览器提前优化滚动处理。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>touch-action 值<th>说明<th>效果<tbody><tr><td>auto<td>默认，允许所有操作<td>无优化<tr><td>none<td>禁止所有触摸手势<td>元素处理所有手势<tr><td>pan-x<td>只允许水平滚动<td>合成器可优化垂直方向<tr><td>pan-y<td>只允许垂直滚动<td>合成器可优化水平方向<tr><td>manipulation<td>只允许滚动和缩放<td>禁用双击缩放</table>
+<p>设置 touch-action 后，合成器可以提前决定是否需要将触摸事件发送给主线程。如果 touch-action: pan-y，合成器知道不需要处理水平滚动手势，可以更高效地处理垂直滚动。</p>
+<blockquote>
+<p>滚动性能的秘诀就是「合成器线程能独立完成」。只要你的页面不阻塞主线程，滚动就会流畅。如果你在 touchmove 事件中做了大量计算，合成器可能需要等待主线程，滚动就会卡顿。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=97-合成层提升条件详解>9.7 合成层提升条件详解<a href=#97-合成层提升条件详解 class=hash-link aria-label="9.7 合成层提升条件详解的直接链接" title="9.7 合成层提升条件详解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=971-合成层提升的完整判定流程>9.7.1 合成层提升的完整判定流程<a href=#971-合成层提升的完整判定流程 class=hash-link aria-label="9.7.1 合成层提升的完整判定流程的直接链接" title="9.7.1 合成层提升的完整判定流程的直接链接" translate=no>​</a></h3>
+<p>Blink 在判断是否将元素提升为合成层时，会执行一个复杂的判定流程。提升条件分为「直接原因」（Direct Reasons）和「后处理原因」（Post-Order Reasons）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">合成层提升判定流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤1: 检查直接原因</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 有 3D 变换? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 有 will-change: transform/opacity/filter? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 有 transform/opacity/filter 动画? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ position: fixed? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 是 video/canvas/webgl 元素? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 是 backface-visibility: hidden? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 有 will-change 配合其他提升条件? → 提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 有 IntersectionObserver 根? → 可能提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤2: 检查后处理原因</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 与其他合成层重叠?</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 是 → 可能被迫提升 (层爆炸风险)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 否 → 不提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 是否可以压缩 (Squashing)?</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 多个小合成层合并为一个</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 减少合成层数量</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 是否需要独立的 z-index 排序?</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤3: 最终决定</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 提升为独立合成层 / 合并到现有层 / 留在普通层</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=972-层爆炸的具体触发条件>9.7.2 层爆炸的具体触发条件<a href=#972-层爆炸的具体触发条件 class=hash-link aria-label="9.7.2 层爆炸的具体触发条件的直接链接" title="9.7.2 层爆炸的具体触发条件的直接链接" translate=no>​</a></h3>
+<p>层爆炸（Layer Explosion）是合成层数量失控增长的场景。理解其触发条件对避免性能问题至关重要。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">层爆炸场景示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">场景1: 大量重叠元素 + 一个合成层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div class="container"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;div class="animating" style="transform: translateZ(0)"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;!-- 这个元素成为合成层 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;!-- 后面的 1000 个元素如果与 .animating 重叠 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;!-- 每个都可能被强制提升为合成层 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;div class="item">...&lt;/div> × 1000</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">场景2: 嵌套的合成层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;div style="transform: translateZ(0)">     ← 合成层 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;div style="transform: translateZ(0)">   ← 合成层 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;div style="transform: translateZ(0)"> ← 合成层 3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每层都有独立的位图 → 内存开销巨大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">场景3: will-change 滥用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    * { will-change: transform; }  /* 灾难性 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;/style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 每个元素都成为合成层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 内存立即爆炸</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=973-合成线程的完整工作流程>9.7.3 合成线程的完整工作流程<a href=#973-合成线程的完整工作流程 class=hash-link aria-label="9.7.3 合成线程的完整工作流程的直接链接" title="9.7.3 合成线程的完整工作流程的直接链接" translate=no>​</a></h3>
+<p>合成器线程（Compositor Thread）是渲染进程中独立于主线程的关键组件。它的工作流程可以分为几个阶段。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">合成器线程工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段1: 接收合成层树 (Commit)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  主线程完成布局和绘制后</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 通过 commit 将合成层树传递给合成器线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 包含: 层级、位置、变换、裁剪等信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段2: 层合成计算</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 计算每层的变换矩阵</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 计算每层的裁剪区域</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 确定层的可见性 (在视口内?)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 对层进行排序 (z-index)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段3: 光栅化调度</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 确定需要光栅化的 Tile (图块)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 按优先级排序 (视口内优先)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 分发给光栅化工作线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段4: 接收光栅化结果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 光栅化完成的 Tile 存入 GPU 纹理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 更新合成层的纹理引用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段5: 生成合成帧</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 将所有可见层的纹理和变换矩阵打包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 生成 GPU 命令缓冲区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 提交给 GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段6: GPU 执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  GPU 进程执行合成命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 各层纹理按变换矩阵合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 输出最终像素到屏幕</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=974-tile-化渲染与光栅化线程>9.7.4 Tile 化渲染与光栅化线程<a href=#974-tile-化渲染与光栅化线程 class=hash-link aria-label="9.7.4 Tile 化渲染与光栅化线程的直接链接" title="9.7.4 Tile 化渲染与光栅化线程的直接链接" translate=no>​</a></h3>
+<p>Chrome 将页面内容分成固定大小的图块（Tile，通常 256x256 或 512x512 像素），每个 Tile 独立光栅化。这种策略让光栅化可以并行执行，且可以按优先级处理。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Tile 化渲染</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">页面被分割为 Tiles:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ┌──┬──┬──┬──┬──┬──┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │T1 │T2 │T3 │T4 │T5 │T6 │  ← 优先光栅化 (视口内)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├──┼──┼──┼──┼──┼──┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │T7 │T8 │T9 │T10│T11│T12│ ← 次优先 (接近视口)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├──┼──┼──┼──┼──┼──┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │T13│T14│T15│T16│T17│T18│← 延迟光栅化 (远离视口)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └──┴──┴──┴──┴──┴──┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">光栅化线程池:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Worker Thread 1: 光栅化 T1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Worker Thread 2: 光栅化 T2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Worker Thread 3: 光栅化 T3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Worker Thread 4: 光栅化 T4</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (并行执行, 互不阻塞)</span><br/></div></code></pre></div></div>
+<p>Tile 化的优势：按需光栅化（只光栅化可见区域，节省 CPU 和 GPU 资源）、并行处理（多线程同时光栅化不同 Tile）、增量更新（只重新光栅化变化的 Tile，而非整个页面）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=975-gpu-进程的绘制命令>9.7.5 GPU 进程的绘制命令<a href=#975-gpu-进程的绘制命令 class=hash-link aria-label="9.7.5 GPU 进程的绘制命令的直接链接" title="9.7.5 GPU 进程的绘制命令的直接链接" translate=no>​</a></h3>
+<p>GPU 进程是 Chrome 中唯一直接与 GPU 硬件交互的进程。它接收来自多个渲染进程的合成命令，通过 Dawn 图形 API 抽象层执行 GPU 操作。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GPU 进程命令执行流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 A ──┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 B ──┼──→ 命令缓冲区 ──→ GPU 进程 ──→ GPU 硬件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 C ──┘    (序列化)        (执行)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 命令示例 (概念):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. bindTexture(layer_1_texture)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. setTransform(matrix_1)     // 应用层的变换矩阵</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. drawQuad(0, 0, 256, 256)   // 绘制 Tile</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. bindTexture(layer_2_texture)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  5. setTransform(matrix_2)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  6. drawQuad(0, 0, 256, 256)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  7. present()                   // 输出到屏幕</span><br/></div></code></pre></div></div>
+<p>命令缓冲区机制确保了渲染进程不能直接调用 GPU API，提供了安全隔离。GPU 进程验证每个命令的合法性后才执行。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=976-滚动合成的优化>9.7.6 滚动合成的优化<a href=#976-滚动合成的优化 class=hash-link aria-label="9.7.6 滚动合成的优化的直接链接" title="9.7.6 滚动合成的优化的直接链接" translate=no>​</a></h3>
+<p>Chrome 的滚动优化是合成器线程最重要的能力之一。当用户滚动页面时，合成器线程可以完全独立地处理滚动，不需要主线程参与。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">滚动合成优化流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户滚动 (触摸/滚轮)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成器线程接收滚动事件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 检查滚动区域是否有 non-passive 事件监听器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 有 → 需要通知主线程 (可能卡顿)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 无 → 独立处理 (快速路径)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 更新滚动层的偏移量</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   (只修改变换矩阵中的 translation)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 检查是否需要新的 Tile</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 滚动到未光栅化的区域 → 请求光栅化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 已光栅化 → 直接使用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 重新合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   (用更新后的变换矩阵合成各层)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 提交到 GPU → 屏幕更新</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">全程不涉及主线程!</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=977-will-change-的正确使用与滥用风险>9.7.7 will-change 的正确使用与滥用风险<a href=#977-will-change-的正确使用与滥用风险 class=hash-link aria-label="9.7.7 will-change 的正确使用与滥用风险的直接链接" title="9.7.7 will-change 的正确使用与滥用风险的直接链接" translate=no>​</a></h3>
+<p>will-change 是一个强大的优化工具，但滥用会导致严重的性能问题。</p>
+<div class="language-css codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-css codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>/* 正确使用: 动画前添加，动画后移除 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.card</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>transition</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> transform </span><span class="token number" style=color:#36acaa>0.3</span><span class="token unit">s</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.card</span><span class="token selector class" style=color:#00009f>.animating</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>will-change</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> transform</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 动画期间 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.card</span><span class="token selector pseudo-class" style=color:#00009f>:not</span><span class="token selector punctuation" style=color:#393A34>(</span><span class="token selector class" style=color:#00009f>.animating</span><span class="token selector punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>will-change</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> auto</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">       </span><span class="token comment" style=color:#999988;font-style:italic>/* 非动画期间 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>/* 滥用: 永久 will-change */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.card</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>will-change</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> transform</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 永久占用 GPU 内存 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>/* 灾难: 通配符 will-change */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector" style=color:#00009f>*</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>will-change</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> transform</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 每个元素都是合成层 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>使用方式<th>合成层数量<th>内存占用<th>性能影响<tbody><tr><td>正确使用<td>少量<td>低<td>正向<tr><td>永久使用<td>中等<td>中等<td>中性偏负<tr><td>通配符使用<td>大量<td>极高<td>灾难性</table>
+<p>每个合成层的内存开销取决于其位图大小。一个全屏的合成层在 Retina 显示器上可能占用 8-16MB GPU 内存。10个全屏合成层就是 80-160MB，仅用于存储位图数据。</p>
+<blockquote>
+<p>will-change 的正确用法是「临时性」的：在动画即将开始时添加，动画结束后移除。可以通过 JavaScript 动态添加和移除 will-change 类名。如果元素频繁动画，可以保持 will-change，但要定期评估是否还需要。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=96-合成线程工作流程>9.6 合成线程工作流程<a href=#96-合成线程工作流程 class=hash-link aria-label="9.6 合成线程工作流程的直接链接" title="9.6 合成线程工作流程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=961-合成线程职责>9.6.1 合成线程职责<a href=#961-合成线程职责 class=hash-link aria-label="9.6.1 合成线程职责的直接链接" title="9.6.1 合成线程职责的直接链接" translate=no>​</a></h3>
+<p>合成线程（Compositor Thread）是渲染进程中独立于主线程的线程，负责处理滚动、动画和合成。它不执行 JavaScript，因此不会被主线程阻塞。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">合成线程工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 接收主线程的 Property Tree（属性树）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 包含每个图层的 transform、opacity、clip</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 接收光栅化结果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → GPU 进程完成光栅化后通知合成线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 计算可见 Tile</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 根据滚动位置确定哪些 Tile 可见</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 构造 Draw Quad</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 将可见 Tile + 变换信息组合为绘制指令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 提交给 GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → GPU 进程执行实际绘制</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>操作<th>主线程<th>合成线程<tbody><tr><td>JavaScript<td>是<td>否<tr><td>滚动<td>否<td>是<tr><td>CSS 动画<td>是（非合成属性）<td>是（合成属性）<tr><td>绘制<td>是<td>否</table>
+<blockquote>
+<p>合成线程是滚动流畅的关键。当用户滚动页面时，合成线程直接处理滚动偏移，重新计算可见 Tile 并提交给 GPU，全程不涉及主线程。如果主线程被 JavaScript 阻塞，滚动仍然流畅。只有当主线程需要处理滚动事件（如无限滚动加载）时才可能卡顿。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=97-tile-化渲染>9.7 Tile 化渲染<a href=#97-tile-化渲染 class=hash-link aria-label="9.7 Tile 化渲染的直接链接" title="9.7 Tile 化渲染的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=971-光栅化线程池>9.7.1 光栅化线程池<a href=#971-光栅化线程池 class=hash-link aria-label="9.7.1 光栅化线程池的直接链接" title="9.7.1 光栅化线程池的直接链接" translate=no>​</a></h3>
+<p>大页面无法一次性光栅化所有内容。Chrome 将页面分成 Tile（图块），由光栅化线程池并行处理。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Tile 化渲染流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">页面 → 分割为 Tile（256x256 或 512x512）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">光栅化线程池（4 个 Worker）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Worker 1: 光栅化 Tile (0,0)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Worker 2: 光栅化 Tile (0,1)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Worker 3: 光栅化 Tile (1,0)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ Worker 4: 光栅化 Tile (1,1)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">光栅化结果存储在 GPU 内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成线程根据滚动位置选择可见 Tile</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Tile 的大小是动态的。高分辨率屏幕使用更大的 Tile（512x512）以减少 Tile 数量。低分辨率屏幕使用更小的 Tile（128x128）以减少内存。光栅化优先级：可见区域 > 即将可见区域 > 不可见区域。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=98-gpu-进程绘制命令>9.8 GPU 进程绘制命令<a href=#98-gpu-进程绘制命令 class=hash-link aria-label="9.8 GPU 进程绘制命令的直接链接" title="9.8 GPU 进程绘制命令的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=981-绘制命令队列>9.8.1 绘制命令队列<a href=#981-绘制命令队列 class=hash-link aria-label="9.8.1 绘制命令队列的直接链接" title="9.8.1 绘制命令队列的直接链接" translate=no>​</a></h3>
+<p>合成线程将绘制指令提交给 GPU 进程，GPU 进程将指令转换为 OpenGL/Vulkan/Metal 调用。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">绘制命令流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">合成线程 → Commit → GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 进程构建命令缓冲区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ glUseProgram(shaderProgram)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ glUniformMatrix4fv(transform)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ glBindTexture(tileTexture)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ glDrawArrays(GL_TRIANGLES, 0, 6)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ... 更多绘制命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU 执行渲染</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 最终像素输出到屏幕</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>GPU 进程是 Chrome 中唯一允许直接调用 GPU API 的进程。渲染进程通过合成线程向 GPU 进程发送绘制命令，GPU 进程统一执行。这种设计保证了 GPU 上下文的隔离和安全性。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>性能影响<tbody><tr><td>PaintNG<td>绘制属性树分离变换/裁剪/效果<td>合成可独立处理<tr><td>合成层<td>独立位图，GPU 合成<td>transform/opacity 动画快<tr><td>层提升条件<td>3D 变换、will-change、动画<td>合理使用避免层爆炸<tr><td>合成器线程<td>独立于主线程处理滚动/动画<td>不阻塞主线程<tr><td>GPU 光栅化<td>直接在 GPU 内存光栅化<td>减少纹理上传开销<tr><td>分块光栅化<td>优先可视区域<td>快速首屏渲染</table>
+<p>觉得有用？收藏起来，这是理解浏览器渲染性能的关键一章。</p>
+<p>你在项目中用 will-change 优化过动画吗？有没有遇到过层爆炸的问题？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲浏览器如何处理用户输入事件，从硬件到 JavaScript 的完整事件传递路径。系列进度 9/24。</p>
+<p>下期预告：第 10 章「事件处理与输入管道」。我们会拆解从硬件事件到 JavaScript 回调的完整路径、事件捕获与冒泡机制、以及 passive event listener 的作用。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_9.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第8章 布局（Layout）</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第10章 事件处理与输入管道</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#91-paintng-绘制引擎 class="table-of-contents__link toc-highlight">9.1 PaintNG 绘制引擎</a><ul><li><a href=#911-从布局树到绘制记录 class="table-of-contents__link toc-highlight">9.1.1 从布局树到绘制记录</a><li><a href=#912-绘制顺序与-z-index class="table-of-contents__link toc-highlight">9.1.2 绘制顺序与 z-index</a><li><a href=#913-绘制属性树 class="table-of-contents__link toc-highlight">9.1.3 绘制属性树</a><li><a href=#914-绘制记录的生成 class="table-of-contents__link toc-highlight">9.1.4 绘制记录的生成</a></ul><li><a href=#92-合成层compositing-layer class="table-of-contents__link toc-highlight">9.2 合成层（Compositing Layer）</a><ul><li><a href=#921-什么是合成层 class="table-of-contents__link toc-highlight">9.2.1 什么是合成层</a><li><a href=#922-合成层提升条件 class="table-of-contents__link toc-highlight">9.2.2 合成层提升条件</a><li><a href=#923-层爆炸与层压缩 class="table-of-contents__link toc-highlight">9.2.3 层爆炸与层压缩</a></ul><li><a href=#93-gpu-合成工作流程 class="table-of-contents__link toc-highlight">9.3 GPU 合成工作流程</a><ul><li><a href=#931-光栅化 class="table-of-contents__link toc-highlight">9.3.1 光栅化</a><li><a href=#932-合成器线程 class="table-of-contents__link toc-highlight">9.3.2 合成器线程</a><li><a href=#933-合成帧与-vsync class="table-of-contents__link toc-highlight">9.3.3 合成帧与 vsync</a></ul><li><a href=#94-合成与动画性能 class="table-of-contents__link toc-highlight">9.4 合成与动画性能</a><ul><li><a href=#941-为什么-transform-动画快 class="table-of-contents__link toc-highlight">9.4.1 为什么 transform 动画快</a><li><a href=#942-动画性能最佳实践 class="table-of-contents__link toc-highlight">9.4.2 动画性能最佳实践</a><li><a href=#943-检查合成层 class="table-of-contents__link toc-highlight">9.4.3 检查合成层</a></ul><li><a href=#95-硬件加速与-gpu-路径 class="table-of-contents__link toc-highlight">9.5 硬件加速与 GPU 路径</a><ul><li><a href=#951-gpu-纹理上传 class="table-of-contents__link toc-highlight">9.5.1 GPU 纹理上传</a><li><a href=#952-零拷贝光栅化 class="table-of-contents__link toc-highlight">9.5.2 零拷贝光栅化</a><li><a href=#953-dawn-图形-api-抽象层 class="table-of-contents__link toc-highlight">9.5.3 Dawn 图形 API 抽象层</a><li><a href=#954-合成器的-cc-模块 class="table-of-contents__link toc-highlight">9.5.4 合成器的 cc 模块</a></ul><li><a href=#96-滚动的渲染优化 class="table-of-contents__link toc-highlight">9.6 滚动的渲染优化</a><ul><li><a href=#961-滚动合成 class="table-of-contents__link toc-highlight">9.6.1 滚动合成</a><li><a href=#962-touch-action-与滚动优化 class="table-of-contents__link toc-highlight">9.6.2 touch-action 与滚动优化</a></ul><li><a href=#97-合成层提升条件详解 class="table-of-contents__link toc-highlight">9.7 合成层提升条件详解</a><ul><li><a href=#971-合成层提升的完整判定流程 class="table-of-contents__link toc-highlight">9.7.1 合成层提升的完整判定流程</a><li><a href=#972-层爆炸的具体触发条件 class="table-of-contents__link toc-highlight">9.7.2 层爆炸的具体触发条件</a><li><a href=#973-合成线程的完整工作流程 class="table-of-contents__link toc-highlight">9.7.3 合成线程的完整工作流程</a><li><a href=#974-tile-化渲染与光栅化线程 class="table-of-contents__link toc-highlight">9.7.4 Tile 化渲染与光栅化线程</a><li><a href=#975-gpu-进程的绘制命令 class="table-of-contents__link toc-highlight">9.7.5 GPU 进程的绘制命令</a><li><a href=#976-滚动合成的优化 class="table-of-contents__link toc-highlight">9.7.6 滚动合成的优化</a><li><a href=#977-will-change-的正确使用与滥用风险 class="table-of-contents__link toc-highlight">9.7.7 will-change 的正确使用与滥用风险</a></ul><li><a href=#96-合成线程工作流程 class="table-of-contents__link toc-highlight">9.6 合成线程工作流程</a><ul><li><a href=#961-合成线程职责 class="table-of-contents__link toc-highlight">9.6.1 合成线程职责</a></ul><li><a href=#97-tile-化渲染 class="table-of-contents__link toc-highlight">9.7 Tile 化渲染</a><ul><li><a href=#971-光栅化线程池 class="table-of-contents__link toc-highlight">9.7.1 光栅化线程池</a></ul><li><a href=#98-gpu-进程绘制命令 class="table-of-contents__link toc-highlight">9.8 GPU 进程绘制命令</a><ul><li><a href=#981-绘制命令队列 class="table-of-contents__link toc-highlight">9.8.1 绘制命令队列</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

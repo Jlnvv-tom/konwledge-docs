@@ -1,0 +1,257 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-sdd/chapter_1" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第1章 AI 编程范式与 Vibe Coding 导论 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第1章 AI 编程范式与 Vibe Coding 导论 | 知识库"/><meta data-rh=true name=description content="软件开发的世界正在经历一场静悄悄的革命。过去几十年里，我们习惯了从需求文档到代码实现的漫长路径，习惯了在 IDE 中逐行敲击键盘，习惯了 Stack Overflow 上反复搜索答案。但当 AI 真正理解了你的意图并直接生成可用代码时，一切都变了。这一章，我们从宏观视角审视这场变革，理解 Vibe Coding 到底意味着什么，它从何而来，又将走向何方。"/><meta data-rh=true property=og:description content="软件开发的世界正在经历一场静悄悄的革命。过去几十年里，我们习惯了从需求文档到代码实现的漫长路径，习惯了在 IDE 中逐行敲击键盘，习惯了 Stack Overflow 上反复搜索答案。但当 AI 真正理解了你的意图并直接生成可用代码时，一切都变了。这一章，我们从宏观视角审视这场变革，理解 Vibe Coding 到底意味着什么，它从何而来，又将走向何方。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/","name":"AI-SDD 实战","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1","name":"第1章 AI 编程范式与 Vibe Coding 导论","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="折叠侧边栏分类 'AI-SDD 实战'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_1><span title="第1章 AI 编程范式与 Vibe Coding 导论" class=linkLabel_WmDU>第1章 AI 编程范式与 Vibe Coding 导论</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_2><span title="第2章 AI 全栈开发工具链全景" class=linkLabel_WmDU>第2章 AI 全栈开发工具链全景</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_3><span title="第3章 开发环境准备：从零搭建全栈工程环境" class=linkLabel_WmDU>第3章 开发环境准备：从零搭建全栈工程环境</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_4><span title="第4章 Vibe Coding 快速实战：ChatBot 从 0 到 1" class=linkLabel_WmDU>第4章 Vibe Coding 快速实战：ChatBot 从 0 到 1</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_5><span title="第5章 Codex 编程实战：智能问数据平台" class=linkLabel_WmDU>第5章 Codex 编程实战：智能问数据平台</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_6><span title="第6章 Codex 编程实战：开源项目二次开发" class=linkLabel_WmDU>第6章 Codex 编程实战：开源项目二次开发</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_7><span title="第7章 Harness Engineering 驾驭工程" class=linkLabel_WmDU>第7章 Harness Engineering 驾驭工程</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_8><span title="第8章 SDD 规范驱动开发" class=linkLabel_WmDU>第8章 SDD 规范驱动开发</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_9><span title="第9章 驾驭工程实操：核心能力深度演练" class=linkLabel_WmDU>第9章 驾驭工程实操：核心能力深度演练</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_10><span title="第10章 项目实战：SDD + Harness 规范从零启动旅游项目" class=linkLabel_WmDU>第10章 项目实战：SDD + Harness 规范从零启动旅游项目</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_11><span title="第11章 项目实战：后端工程开发与 AI 功能集成" class=linkLabel_WmDU>第11章 项目实战：后端工程开发与 AI 功能集成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_12><span title="第12章 Codex 进阶技巧：高级 Prompt 与 Hook" class=linkLabel_WmDU>第12章 Codex 进阶技巧：高级 Prompt 与 Hook</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_13><span title="第13章 Codex 调试与重构：遗留代码安全操作" class=linkLabel_WmDU>第13章 Codex 调试与重构：遗留代码安全操作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_14><span title="第14章 团队协作与规范落地" class=linkLabel_WmDU>第14章 团队协作与规范落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_15><span title="第15章 AI 编程的安全与合规" class=linkLabel_WmDU>第15章 AI 编程的安全与合规</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_16><span title="第16章 总结与展望：Vibe Coding 到 Harness x SDD 全栈开发之路" class=linkLabel_WmDU>第16章 总结与展望：Vibe Coding 到 Harness x SDD 全栈开发之路</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-sdd/><span>AI-SDD 实战</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第1章 AI 编程范式与 Vibe Coding 导论</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第1章 AI 编程范式与 Vibe Coding 导论</h1></header>
+<p>软件开发的世界正在经历一场静悄悄的革命。过去几十年里，我们习惯了从需求文档到代码实现的漫长路径，习惯了在 IDE 中逐行敲击键盘，习惯了 Stack Overflow 上反复搜索答案。但当 AI 真正理解了你的意图并直接生成可用代码时，一切都变了。这一章，我们从宏观视角审视这场变革，理解 Vibe Coding 到底意味着什么，它从何而来，又将走向何方。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-软件开发范式的三代演进>1.1 软件开发范式的三代演进<a href=#11-软件开发范式的三代演进 class=hash-link aria-label="1.1 软件开发范式的三代演进的直接链接" title="1.1 软件开发范式的三代演进的直接链接" translate=no>​</a></h2>
+<p>回顾软件开发的历史，我们可以清晰地划分出三代编程范式。每一代的更替，本质上都是人机交互方式的根本性变革。</p>
+<p><strong>第一代：手工编码范式（1950s-2000s）</strong></p>
+<p>这是最原始也最持久的范式。程序员通过键盘将逻辑逐行写入源文件，编译器或解释器负责将代码转化为机器可执行的指令。这个阶段的核心特征是"人写代码，机器执行"。开发效率完全取决于程序员的经验、记忆力和打字速度。</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 典型的第一代开发流程</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>vim</span><span class="token plain"> main.c        </span><span class="token comment" style=color:#999988;font-style:italic># 手写代码</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">gcc </span><span class="token parameter variable" style=color:#36acaa>-o</span><span class="token plain"> app main.c </span><span class="token comment" style=color:#999988;font-style:italic># 编译</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">./app             </span><span class="token comment" style=color:#999988;font-style:italic># 运行</span><br/></div></code></pre></div></div>
+<p>这一阶段的效率瓶颈显而易见：人类大脑的短期记忆容量有限，API 文档查阅占据了大量时间，而重复性的样板代码（boilerplate）消耗了本该用于核心逻辑的精力。</p>
+<p><strong>第二代：辅助编码范式（2010s-2023）</strong></p>
+<p>以 GitHub Copilot 的发布为标志，AI 开始介入编码过程。这一代范式的核心特征是"人机协作"：AI 根据上下文补全代码片段，生成函数实现，但决策权仍然牢牢掌握在人类手中。IntelliSense、代码片段（snippets）、自动补全等特性是这一阶段的典型产物。</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Copilot 风格的辅助编码</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>calculate_total</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">items</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 输入函数签名后，AI 自动补全函数体</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> </span><span class="token builtin">sum</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">item</span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"price"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>*</span><span class="token plain"> item</span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"quantity"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> item </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> items</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p>辅助编码范式的进步是显著的，但它有明确的边界：AI 只能"续写"，不能"创造"。程序员仍然需要自己拆解问题、设计架构、规划模块，AI 的角色更像一个高效的打字员。</p>
+<p><strong>第三代：意图驱动范式（2024-至今）</strong></p>
+<p>Vibe Coding 代表了第三代范式的到来。在这个阶段，程序员不再逐行编写代码，而是通过自然语言描述意图，AI 负责理解需求、拆解任务、生成代码并验证结果。核心转变是：从"告诉计算机怎么做"到"告诉计算机做什么"。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>第一代：手工编码<th>第二代：辅助编码<th>第三代：意图驱动<tbody><tr><td>人机关系<td>人写机器执行<td>人机协作<td>人意图机器实现<tr><td>交互方式<td>键盘输入代码<td>补全+Tab接受<td>自然语言描述<tr><td>核心技能<td>语法记忆+算法<td>Prompt技巧+审查<td>架构思维+验证<tr><td>效率瓶颈<td>人的编码速度<td>人的审查速度<td>人的意图表达精度<tr><td>错误来源<td>逻辑错误<td>补全偏差<td>意图偏差</table>
+<p>这三代范式并非完全替代关系，而是层层叠加的。即使在 Vibe Coding 时代，程序员仍然需要阅读和审查代码，甚至偶尔手写关键逻辑。但主战场已经转移。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-什么是-vibe-coding概念起源与行业争议>1.2 什么是 Vibe Coding？——概念、起源与行业争议<a href=#12-什么是-vibe-coding概念起源与行业争议 class=hash-link aria-label="1.2 什么是 Vibe Coding？——概念、起源与行业争议的直接链接" title="1.2 什么是 Vibe Coding？——概念、起源与行业争议的直接链接" translate=no>​</a></h2>
+<p><strong>Vibe Coding 的定义</strong></p>
+<p>Vibe Coding 一词由 Andrej Karpathy 在 2025 年初首次提出，他将其描述为一种"完全靠感觉编程"的方式——你不需要理解每一行代码的细节，只需要对 AI 说出你想要什么，然后接受它给出的结果。这个概念迅速在技术社区引爆讨论。</p>
+<p>更严谨地说，Vibe Coding 是一种以自然语言意图表达为核心、以 AI 代码生成为引擎、以人类审查和验证为保障的软件开发方式。它不要求开发者逐行编写代码，而是要求开发者精确地描述需求、高效地审查输出、系统地验证结果。</p>
+<p><strong>起源与演变</strong></p>
+<p>Vibe Coding 并非凭空出现，它是多个技术趋势交汇的产物：</p>
+<ul>
+<li class="">大语言模型能力的飞跃：GPT-4、Claude 3.5 Sonnet 等模型在代码生成质量上的突破</li>
+<li class="">AI 编程工具的成熟：Cursor、Codex、Claude Code 等工具提供了流畅的交互体验</li>
+<li class="">规范驱动开发（SDD）理念的兴起：为 AI 生成代码提供了结构化的约束框架</li>
+</ul>
+<p>Karpathy 的原始表述带有一种"放手让 AI 去做"的潇洒感，但社区很快发现，完全不加约束的 Vibe Coding 在复杂项目中会迅速失控。于是，从"纯粹的感觉编程"到"意图驱动+规范约束"的务实版本，Vibe Coding 的内涵在不断进化。</p>
+<p><strong>行业争议</strong></p>
+<p>围绕 Vibe Coding 的争议从未停止，主要集中在三个层面：</p>
+<ol>
+<li class=""><strong>质量控制问题</strong>：AI 生成的代码是否可靠？谁来为 bug 负责？</li>
+<li class=""><strong>开发者能力退化</strong>：长期依赖 AI 生成代码，程序员的底层能力是否会萎缩？</li>
+<li class=""><strong>适用边界模糊</strong>：Vibe Coding 适合什么场景？企业级项目能否用？</li>
+</ol>
+<p>这些争议的核心矛盾在于：Vibe Coding 大幅降低了"写出代码"的门槛，但"写出好代码"的门槛并未降低，反而要求开发者具备更强的架构思维和验证能力。这正是 Harness Engineering 和 SDD 要解决的核心问题。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-vibe-coding-的核心特征意图驱动与上下文感知>1.3 Vibe Coding 的核心特征：意图驱动与上下文感知<a href=#13-vibe-coding-的核心特征意图驱动与上下文感知 class=hash-link aria-label="1.3 Vibe Coding 的核心特征：意图驱动与上下文感知的直接链接" title="1.3 Vibe Coding 的核心特征：意图驱动与上下文感知的直接链接" translate=no>​</a></h2>
+<p>理解 Vibe Coding 的本质，需要抓住两个核心特征。</p>
+<p><strong>意图驱动（Intent-Driven）</strong></p>
+<p>传统编程中，开发者需要将高层意图翻译成低层代码。比如"我想做一个用户登录功能"，你需要手动实现路由定义、参数校验、数据库查询、Token 生成等一系列细节。而在 Vibe Coding 模式下，你只需要表达意图：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">实现一个用户登录接口，支持邮箱和手机号登录，</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">返回 JWT Token，有效期 24 小时</span><br/></div></code></pre></div></div>
+<p>AI 会根据这段描述生成完整的实现代码。开发者的精力从"如何实现"转向"要实现什么"和"实现是否正确"。</p>
+<p>但意图驱动也带来了新的挑战：意图的表达精度直接决定了代码质量。模糊的需求描述会产生模糊的代码实现。这也是为什么 Prompt 工程在 Vibe Coding 中如此重要——我们在第11章会深入探讨。</p>
+<p><strong>上下文感知（Context-Aware）</strong></p>
+<p>Vibe Coding 不是简单的"自然语言转代码"。AI 编程工具会实时感知项目的上下文信息：</p>
+<ul>
+<li class="">已有的代码结构和命名约定</li>
+<li class="">项目使用的技术栈和依赖版本</li>
+<li class="">数据库 Schema 和 API 接口定义</li>
+<li class="">团队的编码规范和架构模式</li>
+</ul>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 当项目中已有 User 模型时，AI 生成的代码会自动对齐</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 而不是凭空创造一个新的模型定义</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>getUserById</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter literal-property property" style=color:#36acaa>id</span><span class="token parameter operator" style=color:#393A34>:</span><span class="token parameter"> string</span><span class="token punctuation" style=color:#393A34>)</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token known-class-name class-name">Promise</span><span class="token operator" style=color:#393A34>&lt;</span><span class="token maybe-class-name">User</span><span class="token operator" style=color:#393A34>></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>this</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">userRepository</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>findById</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">id</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>上下文感知能力是 AI 编程工具区别于早期代码生成工具的关键。它让 AI 生成的代码不再是孤立的代码片段，而是融入项目整体架构的有机组成部分。</p>
+<p>但这种感知能力有其边界。当项目规模增大、上下文窗口溢出时，AI 会"遗忘"关键信息，导致生成的代码与项目风格不一致。这恰恰是 Harness Engineering 中上下文管理（Context Management）要解决的核心问题。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-vibe-coding-的难点与常见陷阱>1.4 Vibe Coding 的难点与常见陷阱<a href=#14-vibe-coding-的难点与常见陷阱 class=hash-link aria-label="1.4 Vibe Coding 的难点与常见陷阱的直接链接" title="1.4 Vibe Coding 的难点与常见陷阱的直接链接" translate=no>​</a></h2>
+<p>Vibe Coding 看起来简单——说几句话就能生成代码，但实际上存在大量隐性难点，初学者很容易踩坑。</p>
+<p><strong>难点一：意图表达的精确性</strong></p>
+<p>人类习惯用模糊的自然语言交流，但 AI 对模糊指令的解读可能完全偏离你的预期。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// 模糊指令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">"做一个搜索功能"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 精确指令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">"实现一个商品搜索接口，支持按名称模糊查询和价格区间筛选，</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">返回分页结果，每页 20 条，按相关度排序"</span><br/></div></code></pre></div></div>
+<p>精确的意图表达需要开发者对需求有深度的理解，这恰恰是最难的部分。</p>
+<p><strong>难点二：上下文窗口的有限性</strong></p>
+<p>当前主流 AI 模型的上下文窗口在 128K-200K Token 之间。对于一个中大型项目，上下文很快就会被填满。当 AI 无法"看到"项目的全貌时，生成的代码质量会急剧下降。</p>
+<p><strong>难点三：幻觉与错误代码</strong></p>
+<p>AI 会自信地生成看似正确但实际有 bug 的代码，包括：</p>
+<ul>
+<li class="">调用不存在的 API 或方法</li>
+<li class="">使用过时的库版本</li>
+<li class="">逻辑正确但性能极差的实现</li>
+<li class="">忽略边界条件和异常处理</li>
+</ul>
+<p><strong>难点四：缺乏全局架构视角</strong></p>
+<p>AI 擅长生成局部代码，但不擅长进行全局架构决策。让 AI 设计一个微服务架构，它可能给出看似合理的方案，但忽略了团队的运维能力、流量规模、数据一致性等实际约束。</p>
+<p><strong>常见陷阱汇总</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>陷阱<th>表现<th>根因<th>应对策略<tbody><tr><td>意图漂移<td>AI 生成的代码偏离需求<td>指令模糊或上下文丢失<td>精确 Prompt + SDD 规范<tr><td>幻觉代码<td>调用不存在的 API<td>模型训练数据局限<td>代码审查 + 验证闭环<tr><td>上下文溢出<td>代码风格不一致<td>上下文窗口有限<td>Harness 上下文管理<tr><td>架构失控<td>模块间耦合严重<td>缺乏全局规划<td>Spec 驱动 + 架构评审<tr><td>过度依赖<td>离开 AI 就无法开发<td>技能退化<td>定期手写核心逻辑</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-vibe-coding-的开发生命周期模型>1.5 Vibe Coding 的开发生命周期模型<a href=#15-vibe-coding-的开发生命周期模型 class=hash-link aria-label="1.5 Vibe Coding 的开发生命周期模型的直接链接" title="1.5 Vibe Coding 的开发生命周期模型的直接链接" translate=no>​</a></h2>
+<p>传统软件开发生命周期（SDLC）包含需求、设计、开发、测试、部署等阶段。Vibe Coding 没有改变这些阶段的本质，但彻底改变了每个阶段的执行方式。</p>
+<p><strong>Vibe Coding 生命周期（VC-SDLC）</strong></p>
+<p><strong>阶段一：意图表达（Intent Expression）</strong></p>
+<p>替代传统的需求文档编写。开发者用自然语言描述需求，AI 辅助将模糊想法转化为结构化的 Spec 文档。SDD 规范在这一阶段发挥核心作用。</p>
+<p><strong>阶段二：规范驱动（Spec-Driven Design）</strong></p>
+<p>将意图转化为可执行的开发规范，包括架构设计、接口定义、数据模型等。Harness Engineering 的 Feature List 和任务拆解能力在此阶段发挥作用。</p>
+<p><strong>阶段三：AI 生成（AI Generation）</strong></p>
+<p>AI 根据 Spec 和上下文生成代码。这不是简单的代码补全，而是完整的模块实现。开发者在此阶段的核心工作是审查和微调，而非编写。</p>
+<p><strong>阶段四：验证闭环（Verification Loop）</strong></p>
+<p>对 AI 生成的代码进行系统验证，包括自动化测试、代码审查、性能检测等。Harness Engineering 的 Verification Loop 机制确保每次生成都经过充分验证。</p>
+<p><strong>阶段五：迭代优化（Iteration & Optimization）</strong></p>
+<p>根据验证结果进行迭代，AI 辅助修复 bug、优化性能、重构代码。SDD 迭代规范确保每次变更都有迹可循。</p>
+<p><strong>阶段六：部署交付（Deployment & Delivery）</strong></p>
+<p>AI 辅助完成部署方案设计、环境配置、上线验证等工作。整个生命周期形成闭环。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">意图表达 → 规范驱动 → AI 生成 → 验证闭环 → 迭代优化 → 部署交付</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↑                                                    |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └────────────────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p><strong>与传统 SDLC 的对比</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段<th>传统 SDLC<th>Vibe Coding SDLC<tbody><tr><td>需求<td>文档驱动，人工编写<td>意图驱动，AI 辅助生成 Spec<tr><td>设计<td>架构师主导，文档先行<td>Spec 驱动，AI 辅助架构决策<tr><td>开发<td>人工编码为主<td>AI 生成+人工审查<tr><td>测试<td>测试团队执行<td>AI 自动化测试+验证闭环<tr><td>部署<td>运维团队执行<td>AI 辅助部署+自动验收<tr><td>迭代<td>周期较长<td>持续迭代，快速反馈</table>
+<p>Vibe Coding 生命周期的核心变化在于：人从"执行者"变为"指挥者"和"审查者"。但这并不意味着人的角色被弱化——恰恰相反，对人的架构思维、验证能力和规范意识提出了更高的要求。</p>
+<p>这正是后续章节要深入探讨的：Harness Engineering 提供了驾驭 AI 的工程框架，SDD 提供了规范驱动的开发方法论，两者结合才能让 Vibe Coding 从"感觉编程"进化为"可靠的工程实践"。</p>
+<hr/>
+<p><strong>本章小结</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>概念<th>核心要点<tbody><tr><td>三代范式<td>手工编码 → 辅助编码 → 意图驱动，每代都是人机交互方式的根本变革<tr><td>Vibe Coding<td>以自然语言意图表达为核心，AI 代码生成为引擎，人类审查验证为保障<tr><td>核心特征<td>意图驱动（精确表达需求）+ 上下文感知（融入项目全局）<tr><td>难点与陷阱<td>意图漂移、幻觉代码、上下文溢出、架构失控、过度依赖<tr><td>生命周期<td>意图表达 → 规范驱动 → AI 生成 → 验证闭环 → 迭代优化 → 部署交付</table>
+<p>下一章，我们将全面盘点 AI 全栈开发的工具链生态，横向对比 Codex、Claude Code 等主流工具，帮你建立精准的工具选型能力。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-sdd/chapter_1.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-sdd/><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>目录</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-sdd/chapter_2><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第2章 AI 全栈开发工具链全景</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#11-软件开发范式的三代演进 class="table-of-contents__link toc-highlight">1.1 软件开发范式的三代演进</a><li><a href=#12-什么是-vibe-coding概念起源与行业争议 class="table-of-contents__link toc-highlight">1.2 什么是 Vibe Coding？——概念、起源与行业争议</a><li><a href=#13-vibe-coding-的核心特征意图驱动与上下文感知 class="table-of-contents__link toc-highlight">1.3 Vibe Coding 的核心特征：意图驱动与上下文感知</a><li><a href=#14-vibe-coding-的难点与常见陷阱 class="table-of-contents__link toc-highlight">1.4 Vibe Coding 的难点与常见陷阱</a><li><a href=#15-vibe-coding-的开发生命周期模型 class="table-of-contents__link toc-highlight">1.5 Vibe Coding 的开发生命周期模型</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

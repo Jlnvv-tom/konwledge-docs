@@ -1,0 +1,466 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-video/chapter-08" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>chapter-08 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-08 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="chapter-08 | 知识库"/><meta data-rh=true name=description content="第八章 训练数据工程"/><meta data-rh=true property=og:description content="第八章 训练数据工程"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-08 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-08 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-08 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/","name":"AI 视频生成","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-08","name":"chapter-08","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="折叠侧边栏分类 'AI 视频生成'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-01><span title=chapter-01 class=linkLabel_WmDU>chapter-01</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-02><span title=chapter-02 class=linkLabel_WmDU>chapter-02</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-03><span title=chapter-03 class=linkLabel_WmDU>chapter-03</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-04><span title=chapter-04 class=linkLabel_WmDU>chapter-04</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-05><span title=chapter-05 class=linkLabel_WmDU>chapter-05</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-06><span title=chapter-06 class=linkLabel_WmDU>chapter-06</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-07><span title=chapter-07 class=linkLabel_WmDU>chapter-07</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-08><span title=chapter-08 class=linkLabel_WmDU>chapter-08</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-09><span title=chapter-09 class=linkLabel_WmDU>chapter-09</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-10><span title=chapter-10 class=linkLabel_WmDU>chapter-10</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-11><span title=chapter-11 class=linkLabel_WmDU>chapter-11</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-12><span title=chapter-12 class=linkLabel_WmDU>chapter-12</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-13><span title=chapter-13 class=linkLabel_WmDU>chapter-13</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-video/><span>AI 视频生成</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>chapter-08</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>chapter-08</h1></header><h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=第八章-训练数据工程>第八章 训练数据工程<a href=#第八章-训练数据工程 class=hash-link aria-label="第八章 训练数据工程的直接链接" title="第八章 训练数据工程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频生成数据的需求特点>视频生成数据的需求特点<a href=#视频生成数据的需求特点 class=hash-link aria-label=视频生成数据的需求特点的直接链接 title=视频生成数据的需求特点的直接链接 translate=no>​</a></h3>
+<p>视频生成模型与图像生成模型相比，在训练数据层面面临着更为复杂的挑战。图像生成模型仅需学习空间维度的视觉分布，而视频生成模型则需要同时建模空间与时间两个维度的联合分布。这意味着训练数据不仅要提供高质量的空间视觉信息，还必须包含连贯的时间动态信息。这种双重需求使得视频生成数据的构建成为一个独立的工程难题。</p>
+<p>视频-文本配对数据是当前视频生成模型训练的核心数据形式。其基本结构为一段视频片段与一段对应的自然语言描述。视频侧提供视觉与动态信息，文本侧提供语义抽象与控制信号。在训练过程中，模型通过学习这两种模态之间的对齐关系，逐步获得根据文本指令生成视频的能力。这种配对关系的质量直接决定了模型对文本指令的理解精度和生成内容的语义准确性。</p>
+<p>数据质量对模型效果的影响是决定性的。在视频生成领域，研究者们反复验证了一个基本规律：数据质量的上限决定了模型效果的上限，而模型架构和训练策略只是在逼近这个上限。低质量数据带来的问题包括但不限于：模糊的视频帧导致模型学习到错误的纹理分布，不匹配的文本描述导致模型建立错误的跨模态对齐关系，运动不自然的视频片段导致模型生成不符合物理规律动态内容。这些问题在推理阶段会以伪影、结构崩塌、语义偏离等形式集中爆发。</p>
+<p>值得注意的是，视频生成数据的稀缺性远高于图像数据。互联网上的图像数据量级达到数百亿级别，而高质量的视频-文本配对数据即便经过大规模挖掘，也仅在数亿级别。这种稀缺性既源于视频数据本身的存储和带宽成本，也源于视频标注的高昂人力和计算成本。一段视频包含数十帧甚至上百帧图像，对其进行准确的文本描述需要对视频内容进行时间维度的理解，这比描述单张图像复杂得多。</p>
+<p>视频生成数据还需要考虑时间一致性这一特殊维度。所谓时间一致性，是指视频帧与帧之间在物体运动、光照变化、相机运动等方面保持物理上的合理性。训练数据中如果混入大量剪辑跳跃、帧率不一致、画面闪烁的视频片段，模型将难以学习到稳定的运动模式。因此，在数据准备阶段对时间一致性的把控成为视频生成数据工程区别于图像数据工程的显著特征。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=主流视频数据集介绍>主流视频数据集介绍<a href=#主流视频数据集介绍 class=hash-link aria-label=主流视频数据集介绍的直接链接 title=主流视频数据集介绍的直接链接 translate=no>​</a></h3>
+<p>视频生成领域在过去几年涌现了多个大规模数据集。这些数据集在数据规模、来源、标注方式和质量控制策略上各有侧重，也各自存在局限性。理解这些数据集的特点对于构建有效的训练数据pipeline至关重要。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=webvid-10m>WebVid-10M<a href=#webvid-10m class=hash-link aria-label=WebVid-10M的直接链接 title=WebVid-10M的直接链接 translate=no>​</a></h4>
+<p>WebVid-10M是最早被广泛使用的大规模视频-文本配对数据集之一。该数据集从互联网视频分享平台采集了约1000万个视频-文本配对，总时长约5万小时。其文本标注来源于视频平台上创作者添加的标题和描述信息。WebVid-10M的出现在一定程度上推动了早期视频生成和视频理解模型的发展。</p>
+<p>WebVid-10M的优势在于数据规模相对较大，且采集成本较低，能够快速投入使用。但其不足也十分明显。首先，文本描述由创作者自行撰写，质量参差不齐，许多描述与视频实际内容存在偏差甚至完全无关。其次，视频来源单一，缺乏视觉风格和内容类型的多样性。最后，该数据集在版权方面存在潜在风险，大量视频的使用权限并未经过严格审查。这些问题促使后续数据集在构建时更加注重质量控制和合规性。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=hd-vila-100m>HD-VILA-100M<a href=#hd-vila-100m class=hash-link aria-label=HD-VILA-100M的直接链接 title=HD-VILA-100M的直接链接 translate=no>​</a></h4>
+<p>HD-VILA-100M（High-Definition VIdeo-Language dataset, 100M pairs）是由微软研究院发布的大规模高清视频-语言数据集，包含约1亿个视频-文本配对。该数据集的显著特点是强调视频的高清分辨率，大部分视频分辨率为720p及以上，部分达到1080p。这种高分辨率特性使其特别适合训练对视觉细节要求较高的视频生成模型。</p>
+<p>HD-VILA-100M的数据来源涵盖了多种类型的视频平台，包括YouTube等主流视频分享网站。其文本标注同样主要依赖视频元数据中的标题和描述信息，并经过一定的清洗和过滤。该数据集还提供了详细的时间戳信息，支持视频片段级别的检索和标注。</p>
+<p>HD-VILA-100M的不足之处在于：文本标注的粒度仍然较粗，大部分描述仅覆盖视频整体内容，缺乏对具体片段的细致描述。此外，虽然整体分辨率较高，但仍有部分视频存在压缩伪影。数据集中的视频时长分布也较为不均匀，长视频占比偏高，需要在使用时进行额外的切割处理。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=panda-70m>Panda-70M<a href=#panda-70m class=hash-link aria-label=Panda-70M的直接链接 title=Panda-70M的直接链接 translate=no>​</a></h4>
+<p>Panda-70M是由Snap Research发布的包含约7000万个视频-文本配对的大规模数据集。该数据集的核心创新在于其文本标注策略：不直接使用视频元数据中的描述，而是训练一个检索模型，从视频对应的多个候选文本（包括自动语音识别结果、OCR结果、原始描述等）中选择最优的一段作为标注。这种策略显著提高了文本-视频的相关性。</p>
+<p>Panda-70M的视频来源主要为公开视频平台，经过多轮质量筛选，包括美学评分、运动质量评估、文本-视频相关性过滤等环节。数据集还提供了丰富的元信息，如视频类别、时长、分辨率等，方便下游使用者进行针对性的子集选择。</p>
+<p>Panda-70M的局限在于：其检索模型本身的质量决定了标注质量的上限，而检索模型的训练又依赖于已有数据，存在一定的循环依赖问题。此外，该数据集虽然总量达到7000万，但经过严格质量筛选后的高质量子集规模会显著缩小。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=internvid>InternVid<a href=#internvid class=hash-link aria-label=InternVid的直接链接 title=InternVid的直接链接 translate=no>​</a></h4>
+<p>InternVid是由上海AI实验室等机构发布的大规模视频-文本学习数据集。该数据集的设计目标是同时服务于视频理解和视频生成任务，因此在数据选择上兼顾了多样性和质量。InternVid的核心特点是引入了多模态大语言模型进行自动标注，通过MLLM（Multimodal Large Language Model，多模态大语言模型）对视频内容进行细粒度的文本描述。</p>
+<p>InternVid在构建过程中采用了多阶段过滤策略，包括基础质量过滤、美学评分、时间一致性检测等。数据集还提供了不同粒度的标注，从简短的视频摘要到详细的逐帧描述，满足不同训练任务的需求。</p>
+<p>InternVid的不足之处在于：MLLM生成的标注虽然粒度较细，但仍可能存在幻觉问题，即生成视频中实际不存在的内容描述。此外，多阶段过滤流程增加了数据集构建的计算成本和时间成本。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=kovideo>KoVideo<a href=#kovideo class=hash-link aria-label=KoVideo的直接链接 title=KoVideo的直接链接 translate=no>​</a></h4>
+<p>KoVideo是一个注重数据质量和标注精度的视频-文本数据集。与上述数据集不同，KoVideo在构建时投入了大量资源进行人工校验，确保文本描述与视频内容的准确对齐。该数据集的规模相对较小，但标注质量显著高于纯自动标注的数据集。</p>
+<p>KoVideo的标注流程包括：自动生成初始描述，人工审核和修正，以及多人交叉校验。这种流程保证了标注的准确性和一致性，使其成为评估自动标注质量的理想基准数据集。</p>
+<p>KoVideo的主要局限是规模有限，难以单独支撑大规模视频生成模型的训练。它更适合作为高质量训练数据的补充，或者用于训练和评估标注模型。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据集对比>数据集对比<a href=#数据集对比 class=hash-link aria-label=数据集对比的直接链接 title=数据集对比的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>数据集<th>规模（配对数）<th>分辨率特点<th>标注方式<th>主要优势<th>主要不足<tbody><tr><td>WebVid-10M<td>~1000万<td>标清/高清混合<td>平台元数据<td>规模大、获取成本低<td>文本质量低、版权风险<tr><td>HD-VILA-100M<td>~1亿<td>720p及以上为主<td>平台元数据<td>高分辨率、来源多样<td>标注粒度粗、时长不均匀<tr><td>Panda-70M<td>~7000万<td>多种分辨率<td>检索模型选最优标注<td>标注质量高、元信息丰富<td>检索模型依赖、循环依赖<tr><td>InternVid<td>~7000万<td>多种分辨率<td>MLLM自动标注<td>标注粒度细、多任务适用<td>标注幻觉问题、构建成本高<tr><td>KoVideo<td>较小规模<td>高清为主<td>自动生成+人工校验<td>标注精度高、质量可靠<td>规模有限、难以单独使用</table>
+<p>上述数据集反映了视频生成数据工程的发展趋势：从依赖平台元数据的粗放采集，逐步过渡到多模型协同标注和人工校验的精细化构建。这一趋势的背后是研究者对数据质量重要性的认识不断深化。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据采集pipeline>数据采集Pipeline<a href=#数据采集pipeline class=hash-link aria-label=数据采集Pipeline的直接链接 title=数据采集Pipeline的直接链接 translate=no>​</a></h3>
+<p>数据采集是视频生成数据工程的第一步，也是决定后续所有环节质量基础的环节。一个完善的数据采集pipeline需要综合考虑数据来源的多样性、数据去重的有效性、版权合规性等多个维度。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频来源选择>视频来源选择<a href=#视频来源选择 class=hash-link aria-label=视频来源选择的直接链接 title=视频来源选择的直接链接 translate=no>​</a></h4>
+<p>视频来源的选择直接影响训练数据的多样性和质量分布。当前主流的视频数据来源可以分为以下几类：</p>
+<p>第一类是公开视频分享平台，如YouTube、Vimeo等。这类平台拥有海量的视频内容，涵盖纪录片、教程、影视片段、动画、自然风光等多种类型。其优势在于内容丰富、元数据相对完善。但这类平台上的视频质量差异极大，从专业制作到手机随手拍摄均有覆盖，需要严格的质量筛选。此外，平台的服务条款对数据抓取和使用的限制也需要仔细评估。</p>
+<p>第二类是专业视频素材库，如Pexels、Pixabay等。这类来源的视频质量普遍较高，分辨率和帧率有保障，且通常具有明确的开源许可证。其局限在于内容类型相对集中，主要为自然风光、城市景观、人物活动等常见主题，缺乏极端场景和特殊领域的视频内容。此外，素材库的总量有限，难以支撑超大规模模型训练。</p>
+<p>第三类是影视和纪录片资源。这类视频的制作质量最高，画面构图、色彩、运动等方面均达到专业水准。但影视数据的使用涉及复杂的版权问题，且影视内容的叙事性强，单帧画面的语义信息可能不足以支撑通用的视频生成训练。此外，影视视频中的特效、转场等元素可能对模型学习物理运动规律产生干扰。</p>
+<p>第四类是合成数据来源。随着渲染引擎和计算机图形学技术的发展，使用UE（Unreal Engine，虚幻引擎）等工具合成视频数据成为一种可行的补充方案。合成数据的优势在于可以精确控制场景内容、光照条件、相机运动等参数，且不存在版权问题。其局限在于合成内容的视觉分布与真实视频存在差距，过度依赖合成数据可能导致模型在生成真实风格视频时表现不佳。</p>
+<p>在实际的数据采集pipeline中，通常会组合使用多种来源，以达到规模和多样性的平衡。一个典型的策略是：以公开平台数据作为规模基础，以素材库数据作为质量补充，以合成数据覆盖稀有场景，以人工拍摄数据填补特定需求。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=去重策略>去重策略<a href=#去重策略 class=hash-link aria-label=去重策略的直接链接 title=去重策略的直接链接 translate=no>​</a></h4>
+<p>视频去重是数据采集pipeline中的关键环节。互联网上的视频内容存在大量重复，包括完全相同的视频被多次上传、同一视频的不同分辨率版本、同一视频的片段剪辑等。如果不去重，模型在训练时会对重复样本过拟合，导致泛化能力下降。</p>
+<p>视频去重可以在多个粒度上进行。最粗粒度的是URL去重，即直接过滤掉相同URL的视频。这种方式的实现简单，但只能去除完全相同的下载链接，无法处理同一视频被不同URL上传的情况。</p>
+<p>中等粒度的是感知哈希去重。感知哈希算法（如pHash、dHash等）通过提取视频关键帧的视觉特征指纹，计算不同视频之间的指纹相似度来判断是否为重复内容。这种方法能够有效识别同一视频的不同分辨率版本和轻微编辑版本。在实际应用中，通常会提取视频的多个关键帧，分别计算感知哈希，然后综合判断。</p>
+<p>最细粒度的是视频内容级去重。这种方法使用视频嵌入模型（如基于 VideoMAE（Video Masked Autoencoders，视频掩码自编码器）训练的模型）提取视频的全局特征向量，然后通过计算向量间的余弦相似度或欧氏距离来判断重复。这种方法能够识别内容相似但编辑程度较高的视频片段，如不同字幕版本、不同水印版本等。其计算成本相对较高，但去重效果最为精确。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>去重策略<th>粒度<th>计算成本<th>去重效果<th>适用场景<tbody><tr><td>URL去重<td>最粗<td>极低<td>有限<td>初步过滤<tr><td>感知哈希去重<td>中等<td>低<td>较好<td>大规模快速去重<tr><td>视频嵌入去重<td>最细<td>高<td>最佳<td>精细去重<tr><td>组合策略<td>多级<td>中等<td>最佳<td>工程实践首选</table>
+<p>在工程实践中，通常采用多级去重策略：先进行URL去重快速过滤明显重复，再通过感知哈希进行中等粒度过滤，最后对剩余数据使用视频嵌入去重进行精细过滤。这种级联策略在保证去重效果的同时有效控制了计算成本。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=版权筛选>版权筛选<a href=#版权筛选 class=hash-link aria-label=版权筛选的直接链接 title=版权筛选的直接链接 translate=no>​</a></h4>
+<p>版权合规是视频数据采集中不可回避的问题。与图像数据不同，视频数据的版权关系更为复杂，可能涉及视频本身、背景音乐、出镜人物、品牌标志等多个层面的知识产权。</p>
+<p>版权筛选的第一步是许可证识别。对于来自素材库和开源平台的视频，需要解析其附带的许可证信息，如CC（Creative Commons，知识共享许可协议）系列许可证的不同条款。CC-BY（署名）许可证允许自由使用但需要注明原作者，CC-BY-NC（非商业性使用）许可证则限制数据用于商业目的。在数据采集pipeline中，需要根据模型训练的目的选择合适许可证类型的视频。</p>
+<p>对于来自公开视频平台的视频，版权判断更为复杂。部分平台的服务条款禁止未经授权的数据抓取和使用。即便视频本身允许嵌入和分享，也不意味着允许下载用于模型训练。因此，在使用这类数据时，需要仔细评估法律风险，并考虑通过与平台或内容创作者签署数据使用协议的方式来合规获取数据。</p>
+<p>出镜人物的肖像权是另一个需要关注的问题。视频中如果包含可识别的人物面孔，使用这些视频可能涉及肖像权问题。在数据采集阶段，可以使用人脸检测模型对视频中的人物进行识别，并根据需要模糊处理或过滤掉包含特定人物的视频片段。</p>
+<p>品牌标志和商标的过滤也需要纳入考虑。视频中出现的品牌标志、产品包装等元素可能涉及商标权问题。虽然非商业用途下的偶然出现通常被认为属于合理使用范围，但对于计划商业化使用的模型训练，需要更加谨慎地处理这类内容。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频预处理>视频预处理<a href=#视频预处理 class=hash-link aria-label=视频预处理的直接链接 title=视频预处理的直接链接 translate=no>​</a></h3>
+<p>视频预处理是将采集到的原始视频转化为适合模型训练的标准化格式的过程。这一环节虽然看似技术性较强，但其质量直接影响模型训练的稳定性和最终效果。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=分辨率统一>分辨率统一<a href=#分辨率统一 class=hash-link aria-label=分辨率统一的直接链接 title=分辨率统一的直接链接 translate=no>​</a></h4>
+<p>视频生成模型通常在固定分辨率下训练，如256x256、512x512或1024x1024。然而，采集到的原始视频分辨率千差万别，从360p到4K不等。分辨率统一的目标是在尽可能保留视频信息的前提下，将所有视频转换为模型所需的统一分辨率。</p>
+<p>分辨率统一的第一步是确定目标分辨率。目标分辨率的选择需要在视觉质量和计算成本之间权衡。更高的分辨率能够保留更多视觉细节，但会显著增加GPU显存消耗和训练时间。当前主流视频生成模型多采用512x512或768x768的分辨率进行训练。</p>
+<p>在将视频从原始分辨率调整到目标分辨率时，需要考虑视频的宽高比。直接对非正方形视频进行拉伸或裁剪到正方形会导致画面变形或信息丢失。常见的处理策略包括：居中裁剪，即从视频中心截取正方形区域，保证主体内容完整但可能丢失边缘信息；填充缩放，即将视频等比缩放至目标尺寸内，空白区域用黑色或模糊背景填充，保留完整画面但可能引入不自然边界；智能裁剪，即使用目标检测模型识别视频中的主要区域，以该区域为中心进行裁剪。</p>
+<p>对于高分辨率视频，需要特别注意下采样过程中的混叠问题。直接使用最近邻插值进行下采样会在画面中引入锯齿和摩尔纹。通常使用双三次插值或Lanczos重采样等更高质量的插值方法来减轻这一问题。对于包含大量高频细节的视频（如文字密集场景），还可以在下采样前施加轻微的低通滤波来防止混叠。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=帧率统一>帧率统一<a href=#帧率统一 class=hash-link aria-label=帧率统一的直接链接 title=帧率统一的直接链接 translate=no>​</a></h4>
+<p>视频的帧率（FPS，Frames Per Second，每秒帧数）同样需要统一。原始视频的帧率可能从15fps到60fps不等，部分高帧率视频甚至达到120fps或更高。模型训练时需要固定的帧率以保证时间维度的一致性。</p>
+<p>帧率统一的常用目标帧率为8fps或16fps。选择较低帧率的原因是：视频生成模型通常不需要生成高帧率视频，且较低帧率能够减少训练时的计算负担。8fps是许多视频生成模型的标准选择，它在保留主要运动信息的同时将计算量降低到可管理的水平。</p>
+<p>帧率转换的常见方法包括：最近帧选择，即直接从原始视频中按目标帧率选取最近的帧，实现简单但可能导致运动不流畅；线性插值，即在相邻帧之间通过线性插值生成中间帧，运动更流畅但可能引入画面模糊；光流插值，即使用光流模型估计帧间运动并生成中间帧，效果最好但计算成本高。</p>
+<p>帧率高于目标帧率时需要进行下采样，即跳过部分帧。帧率低于目标帧率时需要进行上采样，即插入新帧。上采样比下采样更为复杂，因为需要生成原始视频中不存在的帧。对于训练数据预处理而言，通常建议直接过滤掉帧率过低（如低于10fps）的视频，避免引入插值伪影。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=时长切割>时长切割<a href=#时长切割 class=hash-link aria-label=时长切割的直接链接 title=时长切割的直接链接 translate=no>​</a></h4>
+<p>训练视频的时长需要统一到模型支持的固定长度。视频生成模型通常生成固定时长的视频，如2秒、4秒或10秒。训练数据也需要切割到相应时长。过长或过短的视频都不适合直接用于训练。</p>
+<p>时长切割的核心挑战在于切割点的选择。随机切割可能导致视频片段在语义上不完整，如将一个连续的动作切割成两段。为减少这种情况，可以采用以下策略：基于场景检测的切割，即使用场景检测算法识别视频中的场景边界，在场景边界处进行切割，保证每个片段在语义上的完整性；基于运动连续性的切割，即分析视频中的运动场，在运动变化较小的位置进行切割，避免在剧烈运动中截断。</p>
+<p>对于长视频，可以采用滑动窗口的方式进行多次切割，以充分利用视频内容。滑动窗口的步长通常设置为片段长度的一半，相邻片段有50%的重叠。这种方式虽然增加了数据量，但也可能导致过度相似的片段进入训练集，需要在后续去重环节中处理。</p>
+<p>对于短于目标时长的视频，通常直接丢弃，因为通过循环或填充来延长视频会引入不自然的内容。但也有研究工作尝试将多个语义相关的短视频片段拼接为一段长视频，通过学习片段间的过渡来增强模型的时间建模能力。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=黑边检测与裁剪>黑边检测与裁剪<a href=#黑边检测与裁剪 class=hash-link aria-label=黑边检测与裁剪的直接链接 title=黑边检测与裁剪的直接链接 translate=no>​</a></h4>
+<p>视频中的黑边是常见的质量问题。黑边可能出现在视频的上下两侧（信箱格式）或左右两侧（柱箱格式），通常是由于不同宽高比视频之间的转换不当造成的。黑边不仅浪费像素资源，还可能干扰模型学习真实的视觉分布。</p>
+<p>黑边检测的基本方法是逐行或逐列扫描视频帧的边缘区域，检测是否存在大面积的连续黑色像素。具体而言，可以从帧的四个边缘向内扫描，计算每行或每列的平均亮度。如果某一行或列的平均亮度接近0且方差接近0，则判定为黑边。持续向内扫描直到找到非黑边区域，即可确定黑边的范围。</p>
+<p>更鲁棒的黑边检测方法还会考虑近似黑色的情况，即亮度低于某个阈值但并非完全为0的像素。此外，某些视频可能包含非黑色的固定边框（如白色或灰色边框），这需要更通用的边框检测算法来处理。</p>
+<p>检测到黑边后，通过裁剪操作去除黑边区域，然后将裁剪后的视频缩放到目标分辨率。需要注意的是，裁剪操作可能改变视频的宽高比，需要在裁剪和缩放之间做好协调。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>预处理步骤<th>目标<th>常见问题<th>推荐方案<tbody><tr><td>分辨率统一<td>256x256 / 512x512 / 768x768<td>拉伸变形、混叠<td>智能裁剪 + Lanczos重采样<tr><td>帧率统一<td>8fps / 16fps<td>运动不流畅、插值伪影<td>最近帧选择（下采样）/ 直接丢弃（低帧率）<tr><td>时长切割<td>2s / 4s / 10s<td>语义不完整<td>场景检测 + 滑动窗口<tr><td>黑边裁剪<td>去除黑边<td>误检测、宽高比变化<td>边缘亮度扫描 + 阈值自适应</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频质量筛选>视频质量筛选<a href=#视频质量筛选 class=hash-link aria-label=视频质量筛选的直接链接 title=视频质量筛选的直接链接 translate=no>​</a></h3>
+<p>经过预处理后的视频数据仍需要进行严格的质量筛选。质量筛选的目标是从大规模数据中识别出适合模型训练的高质量子集，过滤掉低质量、不相关或有害的内容。视频质量筛选通常包含多个维度的评估，每个维度对应一个或多个筛选器。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=美学评分>美学评分<a href=#美学评分 class=hash-link aria-label=美学评分的直接链接 title=美学评分的直接链接 translate=no>​</a></h4>
+<p>美学评分是评估视频画面视觉质量的重要手段。其核心思想是使用一个训练好的评分模型对视频帧的视觉美感进行打分，保留高分视频，过滤低分视频。</p>
+<p>美学评分模型通常基于图像美学评估方法扩展而来。在图像领域，LAION-Aesthetics（Large-scale AI Open Network Aesthetics，大规模AI开放网络美学评分模型）等模型已经得到广泛应用。这些模型在大量带有美学评分标注的图像上训练，能够对任意图像输出一个0到10之间的美学分数。</p>
+<p>将美学评分应用于视频领域时，需要对视频的多个帧进行评分，然后聚合为视频级别的美学分数。聚合策略包括：取所有帧评分的均值，反映视频整体美学水平；取最低帧评分，确保视频中没有质量很差的片段；取加权均值，对视频中间帧赋予更高权重，因为中间帧通常是视频的主要内容。</p>
+<p>美学评分的阈值设置需要仔细权衡。设置过高会导致大量数据被过滤，训练数据量不足；设置过低则无法有效提升数据质量。实践中通常通过人工抽检来确定合适的阈值，即在不同的美学分数区间随机抽取样本，人工评估质量，找到质量显著下降的分数拐点。</p>
+<p>需要注意的是，美学评分模型本身也存在偏差。这些模型通常在特定风格的数据上训练，可能对某些视频类型（如动画、水墨画风格）评分偏低。在使用美学评分作为筛选标准时，需要评估其对不同视频类型的公平性，避免因评分偏差导致训练数据多样性降低。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=运动质量评估>运动质量评估<a href=#运动质量评估 class=hash-link aria-label=运动质量评估的直接链接 title=运动质量评估的直接链接 translate=no>​</a></h4>
+<p>运动质量是视频数据区别于图像数据的独特质量维度。一段视频可能每帧的视觉质量都很高，但帧间的运动可能存在问题，如：画面抖动导致运动不连贯，帧率过低导致运动卡顿，过度压缩导致运动伪影，静态画面过多导致缺乏有效运动信息。</p>
+<p>运动质量评估的第一步是计算视频的光流（Optical Flow）。光流描述了相邻帧之间像素级的运动场，是分析视频运动特征的基础工具。通过分析光流的统计特性，可以提取多种运动质量指标。</p>
+<p>运动幅度是指光流向量的平均大小，反映视频中运动的剧烈程度。运动幅度过小的视频接近静态图像，对视频生成模型训练的价值有限。运动幅度过大的视频可能存在剧烈的相机运动或画面切换，不利于模型学习稳定的运动模式。通常保留运动幅度在适中范围的视频。</p>
+<p>运动一致性是指光流方向的空间分布的一致程度。高质量的视频通常具有空间上连贯的运动场，如整体平移（相机运动）或局部刚体运动（物体运动）。如果光流方向在空间上高度分散，可能意味着视频存在严重的运动伪影或画面闪烁。</p>
+<p>时间稳定性是指运动在时间维度上的变化平滑程度。通过计算相邻帧间光流场的变化量，可以评估运动的稳定性。时间稳定性低的视频通常存在画面跳变或抖动，这些内容会干扰模型对时间连续性的学习。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=文本-视频相关性过滤>文本-视频相关性过滤<a href=#文本-视频相关性过滤 class=hash-link aria-label=文本-视频相关性过滤的直接链接 title=文本-视频相关性过滤的直接链接 translate=no>​</a></h4>
+<p>在视频-文本配对数据中，文本描述与视频内容的相关性是决定数据质量的关键因素。不相关的文本-视频配对会导致模型建立错误的跨模态对齐关系，严重影响模型对文本指令的理解和执行能力。</p>
+<p>文本-视频相关性评估通常使用CLIP（Contrastive Language-Image Pre-training，对比语言-图像预训练）模型或其视频版本进行。CLIP模型通过对比学习训练，能够计算任意图像/视频与文本之间的语义相似度。使用CLIP的视频版本（如VideoCLIP、X-CLIP等）对视频-文本对进行打分，保留高相似度配对，过滤低相似度配对。</p>
+<p>相似度阈值的选择同样需要权衡。一种实用的方法是绘制相似度分布直方图，观察分布形态。通常，高质量配对和低质量配对在相似度分布上会形成两个峰，阈值可以设置在两峰之间的谷底位置。如果分布呈单峰形态，则说明数据集整体相关性较为均匀，需要根据人工评估结果确定阈值。</p>
+<p>需要注意的是，CLIP模型本身可能存在领域偏差。CLIP主要在自然图像数据上训练，对某些特殊类型视频（如医学影像、显微视频、红外视频）的文本-视频相关性评估可能不准确。在这些情况下，可能需要使用领域特定的相关性模型或人工评估。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=人脸水印nsfw内容过滤>人脸/水印/NSFW内容过滤<a href=#人脸水印nsfw内容过滤 class=hash-link aria-label=人脸/水印/NSFW内容过滤的直接链接 title=人脸/水印/NSFW内容过滤的直接链接 translate=no>​</a></h4>
+<p>内容安全过滤是视频数据预处理中不可或缺的环节。模型生成的内容需要符合安全规范，而训练数据中的有害内容会直接影响模型的行为。内容安全过滤通常包括以下几个方面：</p>
+<p>人脸过滤的主要目的是保护隐私和控制数据分布。训练数据中如果包含大量特定人物的镜头，模型可能过拟合这些人物的特征，在生成时产生偏差。人脸过滤通常使用MTCNN（Multi-task Cascaded Convolutional Networks，多任务级联卷积网络）或RetinaFace等检测模型识别视频中的人脸，然后根据需要执行模糊处理或直接过滤包含人脸的视频片段。对于出镜人物签署了肖像权使用许可的视频，可以保留人脸数据。</p>
+<p>水印过滤的目的是去除视频中叠加的文字、图标或其他标识性元素。水印不仅影响视频的视觉质量，还可能泄露数据来源，引发版权争议。水印检测可以通过训练专门的检测模型来实现，该模型在带有水印标注的数据上训练，学习识别不同类型的水印。检测到水印后，可以采用图像修复（Inpainting）技术尝试去除水印，但修复效果可能不理想，因此对于水印面积较大的视频通常直接丢弃。</p>
+<p>NSFW（Not Safe For Work，不适合工作场所）内容过滤是内容安全的核心环节。NSFW内容包括色情、暴力、血腥等不适宜内容。NSFW过滤通常使用分类模型对视频帧进行逐一检测，将包含NSFW内容的视频或片段从训练集中移除。由于NSFW内容的判定标准因文化和法律环境而异，过滤策略需要根据目标应用场景进行调整。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>质量筛选维度<th>评估方法<th>过滤策略<th>主要挑战<tbody><tr><td>美学评分<td>美学评分模型<td>阈值过滤<td>评分偏差、类型不公平<tr><td>运动质量<td>光流分析<td>范围过滤<td>计算成本高<tr><td>文本-视频相关性<td>CLIP相似度<td>阈值过滤<td>领域偏差<tr><td>人脸过滤<td>人脸检测模型<td>模糊或丢弃<td>隐私保护与数据利用的平衡<tr><td>水印过滤<td>水印检测模型<td>修复或丢弃<td>检测精度、修复质量<tr><td>NSFW过滤<td>分类模型<td>直接丢弃<td>判定标准因文化而异</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=文本标注pipeline>文本标注Pipeline<a href=#文本标注pipeline class=hash-link aria-label=文本标注Pipeline的直接链接 title=文本标注Pipeline的直接链接 translate=no>​</a></h3>
+<p>文本标注是视频生成数据工程中最核心也最具挑战性的环节。视频的视觉内容需要被准确、完整、细粒度地转化为自然语言描述，这些描述将作为模型训练时的条件信号，直接决定模型能够理解和执行什么样的文本指令。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=使用clipblipllm自动生成视频描述>使用CLIP/BLIP/LLM自动生成视频描述<a href=#使用clipblipllm自动生成视频描述 class=hash-link aria-label=使用CLIP/BLIP/LLM自动生成视频描述的直接链接 title=使用CLIP/BLIP/LLM自动生成视频描述的直接链接 translate=no>​</a></h4>
+<p>自动生成视频描述是解决大规模视频标注的主要途径。手动标注的成本过高，难以匹配视频生成模型对数据量的需求。当前主流的自动标注方案主要基于以下几类模型：</p>
+<p>CLIP（Contrastive Language-Image Pre-training，对比语言-图像预训练）虽然本身不是一个生成模型，但其图像-文本对齐能力可以用于辅助标注。一种常见的做法是：预定义一组候选描述模板，使用CLIP计算视频帧与每个候选描述的匹配度，选择匹配度最高的描述作为标注。这种方法的局限在于候选描述空间有限，难以覆盖视频内容的多样性。</p>
+<p>BLIP（Bootstrapping Language-Image Pre-training，自举语言-图像预训练）及其后续版本BLIP-2具备图像描述生成能力，可以直接为视频帧生成自然语言描述。BLIP-2通过Q-Former（Querying Transformer，查询Transformer）桥接视觉编码器和语言模型，能够生成质量较高的图像描述。将其应用于视频标注时，通常对视频的多个关键帧分别生成描述，然后通过文本聚合策略合并为视频级别的描述。这种方法的局限在于：逐帧标注可能丢失帧间动态信息，且帧级描述的聚合过程可能引入信息失真。</p>
+<p>LLM（Large Language Model，大语言模型）在视频标注中的应用是近年来的重要进展。具体做法是：首先使用多模态模型（如LLaVA、Qwen-VL等）将视频帧序列编码为视觉特征，然后将这些特征输入到LLM中，由LLM生成视频的文本描述。这种方法的优势在于LLM具有强大的语言生成能力，能够生成流畅、连贯、细粒度的描述。此外，通过精心设计prompt（提示词），可以引导LLM生成不同风格和粒度的描述，如简洁摘要、详细叙事、技术分析等。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>标注模型<th>标注方式<th>描述质量<th>适用场景<th>主要局限<tbody><tr><td>CLIP<td>候选描述匹配<td>简短、模板化<td>快速粗标注<td>候选空间有限<tr><td>BLIP-2<td>帧级描述生成+聚合<td>中等粒度<td>通用标注<td>动态信息丢失<tr><td>MLLM<td>视频级描述生成<td>细粒度、流畅<td>高质量标注<td>幻觉问题<tr><td>人工标注<td>人工撰写<td>最高质量<td>基准校验<td>成本高、规模有限</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=多模型交叉标注>多模型交叉标注<a href=#多模型交叉标注 class=hash-link aria-label=多模型交叉标注的直接链接 title=多模型交叉标注的直接链接 translate=no>​</a></h4>
+<p>单一模型的标注不可避免地存在偏差和盲区。多模型交叉标注策略通过组合多个模型的标注结果，取长补短，提升标注的全面性和准确性。</p>
+<p>多模型交叉标注的一种实现方式是并行标注后融合。具体而言，同时使用BLIP-2、LLaVA、Qwen-VL等多个模型对同一视频生成描述，然后通过文本聚合模型将多个描述融合为最终标注。融合策略可以是：简单拼接后由LLM重写为统一描述；按内容维度拆分，各模型负责不同维度（如一个模型负责场景描述，另一个负责运动描述），再合并为完整描述。</p>
+<p>另一种实现方式是级联标注。先用快速但粗略的模型（如CLIP匹配）生成初始标注，再用精确但慢速的模型（如MLLM）对初始标注进行修正和细化。这种策略在计算效率与标注质量之间取得了较好的平衡。</p>
+<p>多模型交叉标注的核心挑战是模型间的标注一致性。不同模型可能对同一视频内容使用不同的描述风格和粒度，直接合并可能导致标注不统一。为此，需要在标注前对所有模型施加统一的标注模板或格式规范，确保输出风格的一致性。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=人工标注校验>人工标注校验<a href=#人工标注校验 class=hash-link aria-label=人工标注校验的直接链接 title=人工标注校验的直接链接 translate=no>​</a></h4>
+<p>尽管自动标注能够处理大规模数据，但其质量仍无法完全替代人工标注。人工标注校验在数据pipeline中扮演着质量兜底的角色。</p>
+<p>人工标注校验通常在两个层面进行。第一个层面是批量抽检。从自动标注的结果中按一定比例（如1%到5%）随机抽取样本，由人工评估标注的准确性、完整性和一致性。评估结果用于量化自动标注的整体质量水平，并指导标注模型的优化。</p>
+<p>第二个层面是针对性校验。对于自动标注中置信度较低的样本（如CLIP相似度低的配对），或涉及敏感内容的样本，进行人工逐条校验。这种方式能够在有限的人力投入下最大化质量提升效果。</p>
+<p>人工标注还需要关注标注者间一致性。不同标注人员对同一视频的描述可能存在差异，这种差异如果过大，会影响训练数据的统一性。通常通过制定详细的标注规范、进行标注培训、引入多人交叉标注和一致性度量等手段来控制标注质量。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=panda-70m的检索模型选择最优字幕方案>Panda-70M的检索模型选择最优字幕方案<a href=#panda-70m的检索模型选择最优字幕方案 class=hash-link aria-label=Panda-70M的检索模型选择最优字幕方案的直接链接 title=Panda-70M的检索模型选择最优字幕方案的直接链接 translate=no>​</a></h4>
+<p>Panda-70M数据集在文本标注方面提出了一种创新的方案，值得专门讨论。该数据集面临的核心问题是：对于每个视频，可能存在多个候选文本来源，包括视频标题、视频描述、自动语音识别（ASR，Automatic Speech Recognition）结果、OCR（Optical Character Recognition，光学字符识别）结果等。这些候选文本的质量参差不齐，如何从中选择最优的文本作为标注是一个关键问题。</p>
+<p>Panda-70M的解决方案是训练一个视频-文本检索模型作为选择器。具体步骤如下：首先，在一个高质量的种子数据集上训练视频-文本检索模型。该模型学习将视频内容与正确的文本描述对齐。然后，对于大规模无标注视频，使用该检索模型计算视频与每个候选文本之间的匹配度，选择匹配度最高的文本作为最终标注。</p>
+<p>这种方案的优势在于：利用了已有文本来源（如ASR、OCR等），无需从零生成描述，大幅降低了标注成本。同时，检索模型的判断比简单的规则匹配（如选择最长的文本或选择标题）更加准确，能够真正基于视频内容选择最相关的文本。</p>
+<p>Panda-70M的实验结果表明，使用检索模型选择的最优字幕在文本-视频相关性上显著优于直接使用任何单一文本来源。这种方案为后续大规模视频数据集的构建提供了有价值的参考。</p>
+<p>该方案的局限在于：检索模型的质量依赖种子数据集的质量，存在一定的冷启动问题。当视频的候选文本均与内容不相关时（如标题党视频），检索模型也无法选出合适的标注。在这种情况下，仍需要依赖生成式标注模型作为补充。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据增强>数据增强<a href=#数据增强 class=hash-link aria-label=数据增强的直接链接 title=数据增强的直接链接 translate=no>​</a></h3>
+<p>数据增强是在不增加实际数据量的前提下，通过对训练数据施加变换来扩充数据多样性的技术。在视频生成领域，合理的数据增强能够有效提升模型的泛化能力和鲁棒性。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=随机裁剪>随机裁剪<a href=#随机裁剪 class=hash-link aria-label=随机裁剪的直接链接 title=随机裁剪的直接链接 translate=no>​</a></h4>
+<p>随机裁剪是视频数据增强中最基础也最常用的方法。其操作是从视频帧中随机选取一个矩形区域，将该区域作为训练样本。随机裁剪的变体包括：空间随机裁剪，在视频帧的空间维度上随机选取裁剪区域；时间随机裁剪，在视频的时间维度上随机选取起始时间点，截取固定时长的片段。</p>
+<p>空间随机裁剪的作用是增强模型对物体位置和尺度的鲁棒性。通过裁剪不同位置和尺度的区域，模型能够学习到同一内容在不同构图下的表示，减少对特定空间布局的依赖。时间随机裁剪的作用是增强模型对时间起点的鲁棒性，使模型能够从视频的不同时刻开始生成连贯的内容。</p>
+<p>随机裁剪需要注意保持裁剪区域的有效性。裁剪区域不能过小，否则丢失过多上下文信息；裁剪区域的长宽比应与训练目标匹配，避免额外的缩放变形。一些改进策略包括：注意力引导的裁剪，即使用显著性检测模型识别视频帧中的重要区域，在保证覆盖重要区域的前提下进行随机裁剪。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=时间采样>时间采样<a href=#时间采样 class=hash-link aria-label=时间采样的直接链接 title=时间采样的直接链接 translate=no>​</a></h4>
+<p>时间采样是对视频时间维度进行增强的策略。与简单的随机裁剪不同，时间采样包括更丰富的操作：时间翻转，即将视频帧序列逆序排列，生成时间上倒放的视频。这种增强方式适用于运动可逆的场景（如自然风光），但不适用于具有明确因果方向的视频（如打碎物体）；时间插值，即在视频帧之间插入中间帧，改变视频的播放速度。这种增强可以模拟不同运动速度的视频，增强模型对速度变化的适应性；时间窗口滑动，即在训练时从同一视频中多次采样不同时间窗口的片段，充分利用视频内容。</p>
+<p>时间采样的策略需要根据视频内容类型进行调整。对于运动主导的视频（如体育、动作），时间翻转可能产生不合理的运动模式。对于叙事性视频，时间窗口的选择需要考虑语义完整性。因此，在实际应用中，时间采样策略通常与视频内容分类结合使用，对不同类型的视频施加不同的增强操作。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=颜色扰动>颜色扰动<a href=#颜色扰动 class=hash-link aria-label=颜色扰动的直接链接 title=颜色扰动的直接链接 translate=no>​</a></h4>
+<p>颜色扰动是对视频帧的色彩属性进行随机变换的增强方法。常见的颜色扰动操作包括：亮度调整，随机增减帧的整体亮度；对比度调整，随机改变帧的亮暗对比；色调调整，在HSV（Hue-Saturation-Value，色调-饱和度-明度）颜色空间中随机偏移色调通道；饱和度调整，随机改变颜色的纯度。</p>
+<p>颜色扰动的一个重要原则是保持时间一致性。如果在帧间独立施加颜色扰动，会导致视频出现闪烁现象，破坏时间连贯性。正确的做法是对整个视频施加一致的颜色变换参数，即所有帧使用相同的亮度偏移量、对比度系数等。这样既实现了颜色增强，又保持了时间一致性。</p>
+<p>颜色扰动的强度需要谨慎控制。过强的颜色扰动会导致视频色彩严重失真，使模型学习到不真实的色彩分布。通常通过限制扰动参数的范围来控制增强强度，如亮度调整范围限制在正负20%以内。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=mixup>Mixup<a href=#mixup class=hash-link aria-label=Mixup的直接链接 title=Mixup的直接链接 translate=no>​</a></h4>
+<p>Mixup是一种通过线性混合两个样本来生成新样本的增强方法。在图像分类领域，Mixup通过对两幅图像及其标签进行线性插值来生成新样本，已被证明能有效提升模型的泛化能力。</p>
+<p>将Mixup应用于视频生成领域需要考虑视频数据的特殊性。视频数据包含空间和时间两个维度，Mixup可以在不同维度上进行。空间Mixup是对两个视频的对应帧进行像素级线性混合，生成一个新视频。时间Mixup是将一个视频的前半段与另一个视频的后半段进行拼接，在拼接处使用淡入淡出过渡。</p>
+<p>视频Mixup的效果与传统分类任务有所不同。在视频生成中，混合两个视频可能产生语义不明确的内容，对模型训练产生干扰。因此，视频Mixup通常只在语义相近的视频之间进行，如同类场景的不同视频。此外，Mixup的混合比例通常设置在0.7到0.3之间，避免过度混合导致内容完全模糊。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>增强方法<th>操作维度<th>主要效果<th>注意事项<tbody><tr><td>随机裁剪<td>空间/时间<td>位置和尺度鲁棒性<td>裁剪区域不宜过小<tr><td>时间采样<td>时间<td>时间起点鲁棒性、速度适应性<td>需按内容类型调整策略<tr><td>颜色扰动<td>色彩<td>光照和色彩鲁棒性<td>保持时间一致性、控制强度<tr><td>Mixup<td>像素级混合<td>泛化能力提升<td>仅限语义相近视频混合</table>
+<p>数据增强在视频生成模型训练中的效果通常是积极的，但并非越多越好。过度增强可能导致训练数据偏离真实分布，反而降低模型生成质量。最佳实践是根据模型在验证集上的表现，逐步调整增强策略和强度，找到最适宜的增强配置。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据规模与模型效果的关系>数据规模与模型效果的关系<a href=#数据规模与模型效果的关系 class=hash-link aria-label=数据规模与模型效果的关系的直接链接 title=数据规模与模型效果的关系的直接链接 translate=no>​</a></h3>
+<p>Scaling Law（缩放定律）是近年来深度学习领域最重要的经验规律之一。它描述了模型性能与模型规模、数据规模、计算量之间的幂律关系。在语言模型领域，Scaling Law已经得到了广泛验证和深入研究。但在视频生成领域，Scaling Law的表现有其独特性。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=scaling-law的基本原理>Scaling Law的基本原理<a href=#scaling-law的基本原理 class=hash-link aria-label="Scaling Law的基本原理的直接链接" title="Scaling Law的基本原理的直接链接" translate=no>​</a></h4>
+<p>Scaling Law的核心观察是：在自回归模型训练中，模型的交叉熵损失随着模型参数量、数据量和计算量的增加而以幂律形式下降。具体而言，损失L可以近似表示为L = A/N^alpha + B/D^beta + L_inf，其中N为模型参数量，D为数据量，alpha和beta为幂指数，A和B为常数，L_inf为不可约损失。</p>
+<p>这一公式揭示了一个重要规律：模型性能的提升需要模型规模和数据规模的协同增长。单纯增加模型参数而不增加数据量，或者单纯增加数据量而不增加模型参数，都会导致收益递减。这一规律在视频生成领域同样适用。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频生成中的scaling-law表现>视频生成中的Scaling Law表现<a href=#视频生成中的scaling-law表现 class=hash-link aria-label="视频生成中的Scaling Law表现的直接链接" title="视频生成中的Scaling Law表现的直接链接" translate=no>​</a></h4>
+<p>在视频生成领域，Scaling Law的表现与语言模型和图像生成模型既有相似之处，也有显著差异。</p>
+<p>相似之处在于：视频生成模型的质量同样随数据规模和模型规模的增加而提升。当数据量从百万级增加到千万级，再增加到亿级时，模型生成视频的清晰度、连贯性和多样性均有显著改善。当模型参数量从亿级增加到十亿级、百亿级时，模型对复杂场景和精细运动的理解能力明显增强。</p>
+<p>差异之处在于：视频生成模型的数据效率更低。由于视频数据的信息密度远高于文本数据（一段10秒的视频包含数十帧图像和复杂的运动信息），相同数据量下视频生成模型能学习到的有效信息更少。这意味着视频生成模型需要更大规模的数据才能达到与语言模型相当的Scaling Law效果。</p>
+<p>此外，视频生成中数据质量的Scaling效应更为显著。在语言模型领域，数据质量的影响相对平缓，即使混入一定比例的低质量数据，模型的总体性能也不会严重下降。但在视频生成领域，低质量数据的影响被放大。少量低质量视频可能导致模型学习到错误的运动模式或视觉伪影，这些错误在生成时会以明显的视觉缺陷表现出来。因此，在视频生成的Scaling Law中，有效数据量（高质量数据量）比原始数据量更能决定模型效果。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据规模的实际参考>数据规模的实际参考<a href=#数据规模的实际参考 class=hash-link aria-label=数据规模的实际参考的直接链接 title=数据规模的实际参考的直接链接 translate=no>​</a></h4>
+<p>当前主流视频生成模型的数据规模提供了有价值的参考。早期的视频生成模型（如Make-A-Video、Imagen Video等）通常在数百万到数千万视频-文本配对上训练。这些模型已经能够生成基本的视频内容，但在复杂场景和精细运动方面表现有限。</p>
+<p>近期的视频生成模型（如Sora、Kling、CogVideoX等）的训练数据规模据估计已达到数亿级别。这些模型在生成质量和多样性方面有显著提升，部分模型已经能够生成接近真实视频质量的复杂场景。这种提升既来自模型架构的改进，也来自数据规模的大幅增加。</p>
+<p>从数据效率的角度来看，高质量数据的价值远大于低质量数据。研究表明，在Panda-70M的经过严格筛选的高质量子集（约1000万配对）上训练的模型，其效果可以接近甚至超过在数千万未筛选配对上训练的模型。这一发现进一步证实了数据质量在视频生成Scaling Law中的重要性。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据规模与多样性的平衡>数据规模与多样性的平衡<a href=#数据规模与多样性的平衡 class=hash-link aria-label=数据规模与多样性的平衡的直接链接 title=数据规模与多样性的平衡的直接链接 translate=no>​</a></h4>
+<p>在扩大数据规模时，保持数据多样性是一个容易被忽视但至关重要的考量。简单增加数据量而不关注多样性，可能导致数据集中某些类型的视频过度代表，而其他类型严重不足。这种不均衡会导致模型在生成过度代表的类型时表现良好，但在生成其他类型时效果较差。</p>
+<p>多样性的保障需要在数据采集和筛选阶段就加以考虑。可以通过以下方式提升数据多样性：按内容类别进行配额采样，确保每个类别在数据集中有合理的比例；按视觉风格进行多样性分析，使用特征提取模型对视频进行聚类，确保数据集覆盖不同的视觉风格；按运动类型进行分类，确保数据集包含不同运动模式（如相机运动、物体运动、形变等）的视频。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>语言模型<th>图像生成模型<th>视频生成模型<tbody><tr><td>典型数据规模<td>万亿Token级<td>十亿图像级<td>亿级视频配对<tr><td>数据效率<td>较高<td>中等<td>较低<tr><td>质量敏感度<td>中等<td>较高<td>最高<tr><td>多样性要求<td>重要<td>重要<td>极其重要<tr><td>Scaling Law表现<td>明确<td>较明确<td>存在但更复杂</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=未来趋势>未来趋势<a href=#未来趋势 class=hash-link aria-label=未来趋势的直接链接 title=未来趋势的直接链接 translate=no>​</a></h4>
+<p>视频生成数据工程的未来发展趋势可以从以下几个方向来展望：</p>
+<p>数据规模的持续增长是确定性趋势。随着视频采集设备的普及和网络视频内容的爆炸式增长，可用的视频数据量将持续增加。但原始数据量的增长并不意味着有效数据量的同比例增长，数据质量筛选的成本也会随之增加。</p>
+<p>标注质量的持续提升是另一个重要趋势。随着多模态大语言模型能力的提升，自动标注的质量将逐步逼近人工标注水平。这将使得在更大规模上获得高质量标注成为可能，从而进一步推动视频生成模型的能力提升。</p>
+<p>合成数据的应用将更加广泛。随着渲染引擎和物理仿真技术的进步，合成视频的真实感将不断提升。合成数据可以精确控制场景和运动，在补充真实数据不足、覆盖稀有场景方面发挥重要作用。但合成数据与真实数据之间的分布差距仍需关注，两者的混合比例需要仔细调优。</p>
+<p>数据工程的整体趋势是从"规模优先"向"质量优先"转变。早期的视频生成数据pipeline以尽可能多地收集数据为目标，质量筛选处于次要位置。随着领域经验的积累和数据质量的瓶颈效应日益显著，越来越多的研究者和工程师开始将质量筛选置于更重要的位置，投入更多资源构建精细化的质量评估和筛选pipeline。这种转变不仅是技术策略的调整，更是对数据价值认识的深化。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=总结>总结<a href=#总结 class=hash-link aria-label=总结的直接链接 title=总结的直接链接 translate=no>​</a></h3>
+<p>训练数据工程是视频生成模型开发中不可替代的基础环节。从数据采集到预处理，从质量筛选到文本标注，每一个步骤都对最终模型效果产生深远影响。本章系统介绍了视频生成数据的完整pipeline，包括数据需求特点、主流数据集、采集策略、预处理方法、质量筛选维度、文本标注方案、数据增强技术以及数据规模与模型效果的关系。</p>
+<p>视频生成数据工程的核心挑战在于：在规模、质量、多样性三个维度上同时取得平衡。单纯追求规模而忽视质量会导致模型学习到错误的分布；单纯追求质量而牺牲规模会导致模型泛化能力不足；忽视多样性则会导致模型在某些领域表现失衡。一个成功的视频生成数据pipeline需要在采集阶段就考虑多样性保障，在预处理阶段建立标准化的质量基线，在筛选阶段实施多维度的质量评估，在标注阶段融合多模型的自动标注与人工校验，最终输出高质量、大规模、多样性的训练数据。</p>
+<p>随着视频生成技术的不断进步，数据工程的重要性将更加凸显。模型架构的改进可以在一定程度上提升效果，但数据质量的提升才是突破性能天花板的关键。未来的视频生成数据工程将更加自动化、精细化、智能化，为视频生成模型的持续进步提供坚实的数据基础。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-video/chapter-08.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-07><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>chapter-07</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-09><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>chapter-09</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#第八章-训练数据工程 class="table-of-contents__link toc-highlight">第八章 训练数据工程</a><ul><li><a href=#视频生成数据的需求特点 class="table-of-contents__link toc-highlight">视频生成数据的需求特点</a><li><a href=#主流视频数据集介绍 class="table-of-contents__link toc-highlight">主流视频数据集介绍</a><ul><li><a href=#webvid-10m class="table-of-contents__link toc-highlight">WebVid-10M</a><li><a href=#hd-vila-100m class="table-of-contents__link toc-highlight">HD-VILA-100M</a><li><a href=#panda-70m class="table-of-contents__link toc-highlight">Panda-70M</a><li><a href=#internvid class="table-of-contents__link toc-highlight">InternVid</a><li><a href=#kovideo class="table-of-contents__link toc-highlight">KoVideo</a><li><a href=#数据集对比 class="table-of-contents__link toc-highlight">数据集对比</a></ul><li><a href=#数据采集pipeline class="table-of-contents__link toc-highlight">数据采集Pipeline</a><ul><li><a href=#视频来源选择 class="table-of-contents__link toc-highlight">视频来源选择</a><li><a href=#去重策略 class="table-of-contents__link toc-highlight">去重策略</a><li><a href=#版权筛选 class="table-of-contents__link toc-highlight">版权筛选</a></ul><li><a href=#视频预处理 class="table-of-contents__link toc-highlight">视频预处理</a><ul><li><a href=#分辨率统一 class="table-of-contents__link toc-highlight">分辨率统一</a><li><a href=#帧率统一 class="table-of-contents__link toc-highlight">帧率统一</a><li><a href=#时长切割 class="table-of-contents__link toc-highlight">时长切割</a><li><a href=#黑边检测与裁剪 class="table-of-contents__link toc-highlight">黑边检测与裁剪</a></ul><li><a href=#视频质量筛选 class="table-of-contents__link toc-highlight">视频质量筛选</a><ul><li><a href=#美学评分 class="table-of-contents__link toc-highlight">美学评分</a><li><a href=#运动质量评估 class="table-of-contents__link toc-highlight">运动质量评估</a><li><a href=#文本-视频相关性过滤 class="table-of-contents__link toc-highlight">文本-视频相关性过滤</a><li><a href=#人脸水印nsfw内容过滤 class="table-of-contents__link toc-highlight">人脸/水印/NSFW内容过滤</a></ul><li><a href=#文本标注pipeline class="table-of-contents__link toc-highlight">文本标注Pipeline</a><ul><li><a href=#使用clipblipllm自动生成视频描述 class="table-of-contents__link toc-highlight">使用CLIP/BLIP/LLM自动生成视频描述</a><li><a href=#多模型交叉标注 class="table-of-contents__link toc-highlight">多模型交叉标注</a><li><a href=#人工标注校验 class="table-of-contents__link toc-highlight">人工标注校验</a><li><a href=#panda-70m的检索模型选择最优字幕方案 class="table-of-contents__link toc-highlight">Panda-70M的检索模型选择最优字幕方案</a></ul><li><a href=#数据增强 class="table-of-contents__link toc-highlight">数据增强</a><ul><li><a href=#随机裁剪 class="table-of-contents__link toc-highlight">随机裁剪</a><li><a href=#时间采样 class="table-of-contents__link toc-highlight">时间采样</a><li><a href=#颜色扰动 class="table-of-contents__link toc-highlight">颜色扰动</a><li><a href=#mixup class="table-of-contents__link toc-highlight">Mixup</a></ul><li><a href=#数据规模与模型效果的关系 class="table-of-contents__link toc-highlight">数据规模与模型效果的关系</a><ul><li><a href=#scaling-law的基本原理 class="table-of-contents__link toc-highlight">Scaling Law的基本原理</a><li><a href=#视频生成中的scaling-law表现 class="table-of-contents__link toc-highlight">视频生成中的Scaling Law表现</a><li><a href=#数据规模的实际参考 class="table-of-contents__link toc-highlight">数据规模的实际参考</a><li><a href=#数据规模与多样性的平衡 class="table-of-contents__link toc-highlight">数据规模与多样性的平衡</a><li><a href=#未来趋势 class="table-of-contents__link toc-highlight">未来趋势</a></ul><li><a href=#总结 class="table-of-contents__link toc-highlight">总结</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

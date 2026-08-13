@@ -1,0 +1,458 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_1" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_1 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁 | 知识库'/><meta data-rh=true name=description content="你以为 AI 还停留在聊天阶段？其实 2026 年的 AI Agent 已经能帮你订机票、写代码、做财务报表了。"/><meta data-rh=true property=og:description content="你以为 AI 还停留在聊天阶段？其实 2026 年的 AI Agent 已经能帮你订机票、写代码、做财务报表了。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_1 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_1 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_1 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_1","name":"通用型 AI Agent 与对话助手——从\"能聊\"到\"能干\"的产品跃迁","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</h1></header>
+<p>你以为 AI 还停留在聊天阶段？其实 2026 年的 AI Agent 已经能帮你订机票、写代码、做财务报表了。</p>
+<p>我是怕浪猫，一个在 AI 领域深耕多年的技术人。从 2023 年 ChatGPT 横空出世，到 2026 年 Manus 被 Meta 数十亿美元收购，我亲历了 AI 产品从"能聊"到"能干"的完整跃迁。这个系列《智能体产品全景手册》会带你系统性地认识全球所有主流的智能体产品，从对话助手到具身智能，从开发框架到行业落地，一共 10 篇，每篇 1 万字以上，建议收藏后慢慢看。</p>
+<p>这一篇是系列第 1 章，我们从最基础的开始：通用型 AI Agent 和对话助手。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-从-chatgpt-到-manusai-产品进化的三个阶段>1.1 从 ChatGPT 到 Manus：AI 产品进化的三个阶段<a href=#11-从-chatgpt-到-manusai-产品进化的三个阶段 class=hash-link aria-label="1.1 从 ChatGPT 到 Manus：AI 产品进化的三个阶段的直接链接" title="1.1 从 ChatGPT 到 Manus：AI 产品进化的三个阶段的直接链接" translate=no>​</a></h2>
+<p>要理解今天 AI Agent 的格局，得先看清楚这三年的进化路径。我把 2023 到 2026 年的 AI 产品发展分成三个阶段，每个阶段的核心能力都有本质区别。</p>
+<p><strong>第一阶段：对话生成期（2023-2024 年中）</strong></p>
+<p>这个阶段的标志性产品是 ChatGPT。核心能力是"你问我答"，模型根据训练数据生成文本。它能写文章、能翻译、能写代码片段，但本质上是一个"语言模型"——它只能生成文字，不能执行操作。</p>
+<p>这个阶段的局限很明显：你问它"帮我订一张明天去上海的机票"，它能告诉你怎么订，但不能帮你订。它没有手，只有嘴。</p>
+<blockquote>
+<p>AI 产品的第一阶段，是把搜索引擎的"找答案"变成了"生成答案"，但答案还是停在屏幕上的文字。</p>
+</blockquote>
+<p><strong>第二阶段：工具调用期（2024 年中-2025 年初）</strong></p>
+<p>这个阶段的关键变化是 Function Calling（函数调用）和 Tool Use（工具使用）的普及。模型不再只是生成文字，而是能调用外部 API、执行代码、访问网络。</p>
+<p>Claude 推出了 Computer Use（计算机使用）能力，能直接操作电脑桌面。OpenAI 推出了 GPTs 和 GPT Store，让用户能给 ChatGPT 配置工具。Google 的 Gemini 开始深度集成 Google 搜索和 Workspace。</p>
+<p>这个阶段的突破在于：AI 有了"手"，能操作工具了。但每个任务都需要人一步步指挥，AI 不会自己规划。</p>
+<p><strong>第三阶段：自主执行期（2025 年初至今）</strong></p>
+<p>2025 年 1 月，OpenAI 发布 Operator。2025 年 3 月，Manus 横空出世。这标志着 AI 产品进入第三阶段：Agent 能理解你的意图，自己规划步骤，自己调用工具，自己验证结果，最后把成品交付给你。</p>
+<p>Manus 不需要你告诉它"先打开浏览器，再搜索航班，再填写表单"，你只需要说"帮我规划一个下周去东京的三天行程并预订好机票酒店"，它会在云端自主完成整个流程。</p>
+<blockquote>
+<p>从"生成式能力"到"Agent 行动力"，这是 2025 年最根本的范式转变。AI 不再是工具，而是变成了会使用工具的工人。</p>
+</blockquote>
+<p>为了更直观地理解三个阶段的差异，我用一张表格来对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>第一阶段（对话生成）<th>第二阶段（工具调用）<th>第三阶段（自主执行）<tbody><tr><td>核心能力<td>文本生成<td>单步工具调用<td>多步自主执行<tr><td>人机交互方式<td>一问一答<td>指令驱动<td>意图驱动<tr><td>任务完成度<td>给出建议<td>执行单步操作<td>端到端交付<tr><td>典型产品<td>ChatGPT 3.5<td>GPT-4 + Tools<td>Manus、Operator<tr><td>自主程度<td>无<td>低（需逐步指挥）<td>高（自主规划+验证）</table>
+<p>2026 年的行业数据也印证了这个趋势。全球 79% 的组织已启动 AI Agent 部署，市场规模达 113 亿美元，同比增长 122%。2026 Q1 全球 AI Agent 融资超 50 亿美元。这不再是概念，而是真金白银的商业化。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-通用型自主执行-agent-深度拆解>1.2 通用型自主执行 Agent 深度拆解<a href=#12-通用型自主执行-agent-深度拆解 class=hash-link aria-label="1.2 通用型自主执行 Agent 深度拆解的直接链接" title="1.2 通用型自主执行 Agent 深度拆解的直接链接" translate=no>​</a></h2>
+<p>通用型自主执行 Agent 是第三阶段的代表性产品。它们不局限于某个垂直领域，而是能处理跨领域的复杂任务。这一节我们来逐一拆解五款核心产品。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=manusmonicaim>Manus（Monica.im）<a href=#manusmonicaim class=hash-link aria-label=Manus（Monica.im）的直接链接 title=Manus（Monica.im）的直接链接 translate=no>​</a></h3>
+<p>Manus 是由中国创业团队 Monica.im 开发的全球首款通用型自主 AI Agent。创始人肖弘带领团队在 2025 年 3 月发布了这款产品，发布后立刻引爆全球科技圈。</p>
+<p>Manus 的核心架构采用多智能体协作模式，包含三个关键角色：</p>
+<p><strong>规划器（Planner）</strong>：负责理解用户的意图，将复杂任务拆解为可执行的子任务列表。比如用户说"帮我分析这份财报并生成投资建议"，规划器会拆解为：读取财报文件、提取关键财务指标、对比行业数据、生成分析报告、输出投资建议。</p>
+<p><strong>执行器（Executor）</strong>：按照规划器输出的任务列表，逐个调用工具执行。工具包括浏览器、代码沙箱、文件操作、API 调用等。</p>
+<p><strong>验证器（Verifier）</strong>：每个子任务完成后，验证器检查结果是否符合预期。如果发现问题，会反馈给规划器重新调整方案。</p>
+<p>这个架构的核心原理可以用下面的伪代码来表达：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">function manus_agent(user_intent):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    plan = planner.decompose(user_intent)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    results = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    for step in plan:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        result = executor.execute(step)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        if verifier.validate(result, step.expected):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            results.append(result)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        else:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            plan = planner.adjust(step, result, plan)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    return synthesize(results)</span><br/></div></code></pre></div></div>
+<p>Manus 的产品表现令人瞩目。在 GAIA（General AI Assistants）基准测试中，Manus 刷新了所有难度级别的 SOTA（State of the Art，当前最优）成绩。发布后邀请码一度被炒至 5 万元人民币。2025 年 12 月，Meta 以数十亿美元收购了 Manus，成为 Meta 历史上第三大收购案。</p>
+<blockquote>
+<p>Manus 证明了一件事：通用型 AI Agent 不是实验室玩具，而是可以交付真实工作成果的生产力工具。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=openai-operator>OpenAI Operator<a href=#openai-operator class=hash-link aria-label="OpenAI Operator的直接链接" title="OpenAI Operator的直接链接" translate=no>​</a></h3>
+<p>OpenAI 在 2025 年 1 月发布 Operator，标志着这家公司从对话型 AI 正式转向行动型 AI。</p>
+<p>Operator 的核心能力是自主执行浏览器操作。它结合了 GPT 模型的推理能力与浏览器自动化技术，能够完成预订旅行、电商购物、填写表单等任务。与传统的 RPA（Robotic Process Automation，机器人流程自动化）不同，Operator 不需要预先录制操作流程，它能根据自然语言指令自主决定操作步骤。</p>
+<p>OpenAI 同步推出了三档付费 Agent 服务，最高定价 2 万美元/月。这个定价策略说明 OpenAI 将 Agent 视为企业级高端服务，而非消费级工具。</p>
+<p>Operator 的技术架构基于 CUA（Computer Use Agent，计算机使用智能体）范式，核心流程是：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Operator 的核心循环</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">while task_not_complete:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    screenshot = capture_screen()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    understanding = model.analyze(screenshot, task_context)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    action = model.decide_action(understanding)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    execute(action)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    task_context.update(action_result)</span><br/></div></code></pre></div></div>
+<p>这个"截图-理解-决策-执行"的循环是所有 CUA 产品的底层逻辑，后面我们会在第 6 章详细展开。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=autoglm智谱-ai>AutoGLM（智谱 AI）<a href=#autoglm智谱-ai class=hash-link aria-label="AutoGLM（智谱 AI）的直接链接" title="AutoGLM（智谱 AI）的直接链接" translate=no>​</a></h3>
+<p>AutoGLM 是智谱 AI 推出的自主执行 Agent，它的差异化在于移动端能力和超长步骤操作。</p>
+<p>AutoGLM 能在手机端自主执行超过 50 步的长步骤操作。比如"帮我在美团上找一家三里屯附近评分 4.5 以上的火锅店，订一个今晚 6 点的四人桌，然后把预订信息发给张三"。这个任务涉及打开美团 App、搜索、筛选、预订、切换到微信发消息等多个 App 的跨应用操作。</p>
+<p>AutoGLM 的技术核心是多模态理解与 GUI（Graphical User Interface，图形用户界面）交互。它需要理解手机屏幕上的视觉元素（按钮、文本框、图片），然后生成精确的触摸操作（点击坐标、滑动方向、输入文本）。</p>
+<p>2025 年，AutoGLM 持续升级，推出了 AgentGLM-PC 版本，支持 Mac 和 Windows 桌面端。智谱 AI 同时开源了 GLM 系列模型，在学术和多语言领域建立了差异化优势。</p>
+<blockquote>
+<p>50 步的连续操作意味着什么？意味着 Agent 不是在"执行命令"，而是在"完成项目"。这是质的飞跃。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lovart>Lovart<a href=#lovart class=hash-link aria-label=Lovart的直接链接 title=Lovart的直接链接 translate=no>​</a></h3>
+<p>Lovart 是一款垂直领域的通用型 Agent，专注于创意设计工作流。2025 年 5 月发布后在 X（原 Twitter）上爆火，被称为"设计领域的 Manus"。</p>
+<p>Lovart 采用 MCoT（Multi-chain Chain of Thought，多链思维）技术。传统的 Chain of Thought（思维链）是线性的：A 推导到 B，B 推导到 C。而 MCoT 允许同时维护多条推理链，在设计过程中动态调整逻辑分支。比如设计一个品牌 Logo 时，Lovart 会同时探索"极简风格"、"几何风格"、"字体驱动"三条路线，根据用户反馈动态收敛。</p>
+<p>Lovart 实现了从需求理解到设计交付的完整闭环：用户说"帮我设计一个咖啡品牌的 Logo，风格温暖、复古"，Lovart 会分析品牌调性、生成多个方案、根据反馈迭代、最终输出可用的高分辨率设计文件。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=openhands原-opendevin>OpenHands（原 OpenDevin）<a href=#openhands原-opendevin class=hash-link aria-label="OpenHands（原 OpenDevin）的直接链接" title="OpenHands（原 OpenDevin）的直接链接" translate=no>​</a></h3>
+<p>OpenHands 是开源社区驱动的通用型 AI Agent，原名为 OpenDevin。它被视为 Manus 的开源替代方案。</p>
+<p>OpenHands 能自主完成软件开发任务，支持代码编写、调试、测试的全流程。它的架构同样采用规划器+执行器模式，但与 Manus 不同的是，OpenHands 更专注于软件开发领域，内置了代码执行沙箱、Git 操作、测试框架等开发工具。</p>
+<p>GitHub 上 OpenHands 是高星项目，拥有活跃的开源社区。它的价值在于降低了 AI Agent 的使用门槛——任何人都可以免费部署和修改。</p>
+<p>下面是五款通用型 Agent 的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品<th>开发方<th>领域<th>开源<th>核心差异<tbody><tr><td>Manus<td>Monica.im<td>通用<td>否<td>多智能体协作架构，GAIA SOTA<tr><td>Operator<td>OpenAI<td>通用<td>否<td>浏览器操作，企业级定价<tr><td>AutoGLM<td>智谱 AI<td>通用+移动<td>部分<td>50+ 步移动端操作<tr><td>Lovart<td>Lovart 团队<td>创意设计<td>否<td>MCoT 多链思维<tr><td>OpenHands<td>开源社区<td>软件开发<td>是<td>开源 Manus 替代方案</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-对话助手与大模型产品全景>1.3 对话助手与大模型产品全景<a href=#13-对话助手与大模型产品全景 class=hash-link aria-label="1.3 对话助手与大模型产品全景的直接链接" title="1.3 对话助手与大模型产品全景的直接链接" translate=no>​</a></h2>
+<p>对话助手是 AI Agent 的"大脑"基座。即使是最先进的自主执行 Agent，其核心推理能力也来自底层大语言模型。这一节我们来系统性地认识全球主流的对话助手产品。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=chatgptopenai>ChatGPT（OpenAI）<a href=#chatgptopenai class=hash-link aria-label=ChatGPT（OpenAI）的直接链接 title=ChatGPT（OpenAI）的直接链接 translate=no>​</a></h3>
+<p>ChatGPT 是全球 AI 对话产品的绝对标杆。核心模型为 GPT-4o 和 GPT-5 系列。</p>
+<p>核心功能方面，ChatGPT 支持多模态交互（文本、语音、图像、代码），拥有最丰富的插件生态，支持联网搜索、文件分析、代码执行。GPT Store 应用生态让它成为一个平台型产品。Canvas 协作编辑模式提供了实时协作体验。</p>
+<p>产品表现上，ChatGPT 全球月访问量达 57.5 亿（2026 年 5 月数据），断层式领跑全行业。每周活跃用户超过 3 亿，App Store 下载量超 1 亿次。</p>
+<blockquote>
+<p>ChatGPT 的真正护城河不是模型能力，而是它构建的生态——插件、GPT Store、开发者社区形成了一个自我强化的飞轮。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=claudeanthropic>Claude（Anthropic）<a href=#claudeanthropic class=hash-link aria-label=Claude（Anthropic）的直接链接 title=Claude（Anthropic）的直接链接 translate=no>​</a></h3>
+<p>Claude 由 Anthropic 开发，核心模型为 Claude 4 系列（包括 Sonnet 和 Opus 两个版本）。</p>
+<p>Claude 的核心优势在于超长上下文理解（200K+ tokens，约 15 万汉字）和安全性。它是 MCP（Model Context Protocol，模型上下文协议）的开创者，这个协议后来成为 Agent 与外部工具"即插即用"的行业标准。Claude 还具备 Computer Use（计算机使用）能力，能直接操作电脑桌面。Artifacts 功能支持实时预览与协作，让代码生成和文档撰写体验更佳。</p>
+<p>产品表现方面，Claude 月访问量 9.72 亿（2026 年 5 月），环比增长 15.67%，是增长最快的二线产品。在长文本理解与写作逻辑的自然度上被广泛认为是最优的，学术和科研领域使用率很高。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=geminigoogle-deepmind>Gemini（Google DeepMind）<a href=#geminigoogle-deepmind class=hash-link aria-label="Gemini（Google DeepMind）的直接链接" title="Gemini（Google DeepMind）的直接链接" translate=no>​</a></h3>
+<p>Gemini 由 Google DeepMind 开发，核心模型为 Gemini 3 Pro。</p>
+<p>Gemini 的最大优势是与 Google 生态的深度整合：Google 搜索、YouTube、Workspace、Google Finance 都被串联进来。它支持原生多模态（文本、图像、音频、视频），Deep Research 深度研究功能能 5 分钟生成 46 页学术论文，全局记忆功能让对话有连续性。</p>
+<p>月访问量 29.9 亿（2026 年 5 月），环比增长 5.13%。在性能上，Gemini Deep Research 超过 OpenAI Deep Research 40%，但价格只有后者的十分之一。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=deepseek深度求索>DeepSeek（深度求索）<a href=#deepseek深度求索 class=hash-link aria-label=DeepSeek（深度求索）的直接链接 title=DeepSeek（深度求索）的直接链接 translate=no>​</a></h3>
+<p>DeepSeek 是中国团队深度求索开发的开源大模型产品，核心模型为 DeepSeek-V3 和 R1 系列。</p>
+<p>DeepSeek 的核心特点是 MoE（Mixture of Experts，混合专家）架构。MoE 的原理是将一个大模型拆分为多个"专家"子网络，每次推理只激活其中一部分专家，从而在保持模型容量的同时大幅降低计算成本。</p>
+<p>DeepSeek 的核心架构原理可以这样理解：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># MoE 架构的核心路由机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class MoELayer:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def __init__(self, num_experts, hidden_size):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.experts = [Expert(hidden_size) for _ in range(num_experts)]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.router = Router(hidden_size, num_experts)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def forward(self, x):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 路由器决定激活哪些专家</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        gate_scores = self.router(x)  # [batch, num_experts]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        top_k_experts = select_top_k(gate_scores, k=2)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 只有被选中的专家参与计算</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        output = sum(expert(x) * gate_scores[i] </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                     for i, expert in enumerate(top_k_experts))</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return output</span><br/></div></code></pre></div></div>
+<p>这种架构让 DeepSeek 以 1/10 的训练数据量在 STEM（Science, Technology, Engineering, Mathematics，科学、技术、工程、数学）领域超越了通用模型，2025 年 1 月爆火后月访问量达 2.78 亿，引发了全球开源 AI 浪潮。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=kimi月之暗面>Kimi（月之暗面）<a href=#kimi月之暗面 class=hash-link aria-label=Kimi（月之暗面）的直接链接 title=Kimi（月之暗面）的直接链接 translate=no>​</a></h3>
+<p>Kimi 由月之暗面（Moonshot AI）开发，核心差异化是超长上下文窗口，支持 200 万字（约 300 万 tokens）的上下文。</p>
+<p>200 万字意味着什么？你可以一次性把一整本书、几十篇论文、或者几百页的财报扔给 Kimi，让它统一分析。这在知识密集型场景（法律文书审查、学术论文阅读、财务报告分析）中极为实用。</p>
+<p>Kimi+ 是其智能体平台，用户可以创建和使用特定场景的智能体。Kimi 在长文档分析和学术论文阅读场景的表现是目前国内最好的。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=豆包字节跳动>豆包（字节跳动）<a href=#豆包字节跳动 class=hash-link aria-label=豆包（字节跳动）的直接链接 title=豆包（字节跳动）的直接链接 translate=no>​</a></h3>
+<p>豆包是字节跳动推出的 AI 对话助手，核心模型为豆包大模型。</p>
+<p>豆包的策略是"免费+生态联动"。它与抖音、今日头条的生态打通，用户在抖音内就能直接使用豆包。免费使用策略让用户增长非常迅速，在国内用户规模处于第一梯队。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=通义千问阿里云>通义千问（阿里云）<a href=#通义千问阿里云 class=hash-link aria-label=通义千问（阿里云）的直接链接 title=通义千问（阿里云）的直接链接 translate=no>​</a></h3>
+<p>通义千问由阿里云开发，核心模型为 Qwen 系列。</p>
+<p>通义千问的差异化在于企业级部署支持和多语言能力。AgentStudio 提供智能体开发能力，与阿里云生态深度整合。在市场表现上，千问大模型的企业级调用量占中国市场 32.1%，排名第一。开源版本也受到开发者欢迎。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=智谱清言--glm智谱-ai>智谱清言 / GLM（智谱 AI）<a href=#智谱清言--glm智谱-ai class=hash-link aria-label="智谱清言 / GLM（智谱 AI）的直接链接" title="智谱清言 / GLM（智谱 AI）的直接链接" translate=no>​</a></h3>
+<p>智谱清言由智谱 AI 开发，核心模型为 GLM-4 系列。</p>
+<p>智谱的优势在于多语言和学术领域。AutoGLM 自主智能体已在前文介绍。智能体中心平台让用户可以创建和分享智能体。开源 GLM 系列模型在学术界有广泛影响。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=文心一言--文小言百度>文心一言 / 文小言（百度）<a href=#文心一言--文小言百度 class=hash-link aria-label="文心一言 / 文小言（百度）的直接链接" title="文心一言 / 文小言（百度）的直接链接" translate=no>​</a></h3>
+<p>文心一言由百度开发，核心模型为文心大模型 4.0。</p>
+<p>百度是国内最早推出 AI 对话产品的公司。文小言是其"新搜索"智能助手，支持模糊提问、边拍边问等功能，与手机百度深度整合。AgentBuilder 智能体平台支持企业构建定制 Agent。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=腾讯元宝>腾讯元宝<a href=#腾讯元宝 class=hash-link aria-label=腾讯元宝的直接链接 title=腾讯元宝的直接链接 translate=no>​</a></h3>
+<p>腾讯元宝由腾讯开发，核心模型为混元大模型。</p>
+<p>元宝的核心优势是与微信生态的联动。元器智能体平台支持创建和分享智能体，通过微信公众号、QQ 等渠道分发。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=minimax稀宇科技>MiniMax（稀宇科技）<a href=#minimax稀宇科技 class=hash-link aria-label=MiniMax（稀宇科技）的直接链接 title=MiniMax（稀宇科技）的直接链接 translate=no>​</a></h3>
+<p>MiniMax 由稀宇科技开发，核心模型为 abab 系列。</p>
+<p>MiniMax 在创意写作和角色扮演赛道快速崛起。星野智能体社区聚集了大量创作者。语音合成能力也是其亮点，在 AI 语音领域有差异化竞争力。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=perplexity-ai>Perplexity AI<a href=#perplexity-ai class=hash-link aria-label="Perplexity AI的直接链接" title="Perplexity AI的直接链接" translate=no>​</a></h3>
+<p>Perplexity 是 AI 搜索引擎与对话助手的融合产品。</p>
+<p>核心功能包括实时引用来源、Deep Research 深度研究、Pro Search 多步推理搜索。在专业人士和学生群体中广泛使用。Deep Research 测试得分 21.1%，超越 Gemini Thinking。</p>
+<p>下面是全球主流对话助手的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品<th>开发方<th>月访问量(亿)<th>核心优势<th>适合场景<tbody><tr><td>ChatGPT<td>OpenAI<td>57.5<td>生态最全<td>通用对话、代码<tr><td>New Bing<td>微软<td>36.6<td>搜索集成<td>信息检索<tr><td>Gemini<td>Google<td>29.9<td>多模态+生态<td>研究、创作<tr><td>DeepSeek<td>深度求索<td>2.78<td>开源+低成本<td>本地部署、STEM<tr><td>Claude<td>Anthropic<td>9.72<td>长文本+安全<td>学术、写作<tr><td>Kimi<td>月之暗面<td>-<td>超长上下文<td>长文档分析<tr><td>豆包<td>字节跳动<td>-<td>免费+抖音生态<td>日常对话<tr><td>通义千问<td>阿里云<td>-<td>企业级<td>企业部署<tr><td>Perplexity<td>Perplexity<td>-<td>AI 搜索<td>研究调研</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-核心能力对比多模态长上下文工具调用推理能力>1.4 核心能力对比：多模态、长上下文、工具调用、推理能力<a href=#14-核心能力对比多模态长上下文工具调用推理能力 class=hash-link aria-label="1.4 核心能力对比：多模态、长上下文、工具调用、推理能力的直接链接" title="1.4 核心能力对比：多模态、长上下文、工具调用、推理能力的直接链接" translate=no>​</a></h2>
+<p>上一节我们列了产品，这一节我们来对比能力。对于用户来说，选 AI 助手不是选品牌，而是选能力。四个核心维度决定了 AI 助手能做什么、做多好。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=多模态能力multimodal>多模态能力（Multimodal）<a href=#多模态能力multimodal class=hash-link aria-label=多模态能力（Multimodal）的直接链接 title=多模态能力（Multimodal）的直接链接 translate=no>​</a></h3>
+<p>多模态是指模型能同时处理文本、图像、音频、视频等多种输入形式。2026 年的主流大模型都已支持多模态，但能力深度差异很大。</p>
+<p>Gemini 在多模态方面最强。它是原生多模态架构，从训练阶段就同时处理文本、图像、音频和视频，而不是后期拼接。这意味着它能理解视频中的动作序列、音频中的情感语调、图像中的空间关系。</p>
+<p>ChatGPT 紧随其后，支持文本、语音、图像的输入，但视频理解能力相对弱。</p>
+<p>Claude 的多模态能力集中在图像理解（可分析图表、截图、照片），但不支持音频和视频的直接输入。</p>
+<p>国产产品中，豆包和通义千问支持文本和图像，但在视频和音频理解方面仍在追赶。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=长上下文窗口long-context>长上下文窗口（Long Context）<a href=#长上下文窗口long-context class=hash-link aria-label="长上下文窗口（Long Context）的直接链接" title="长上下文窗口（Long Context）的直接链接" translate=no>​</a></h3>
+<p>长上下文窗口决定了模型一次能处理多少信息。这在长文档分析、代码库理解、多轮对话记忆等场景中至关重要。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品<th>上下文窗口<th>约等于<tbody><tr><td>Kimi<td>200 万字<td>3 本长篇小说<tr><td>Claude<td>200K tokens<td>15 万汉字<tr><td>Gemini<td>1M+ tokens<td>75 万汉字<tr><td>ChatGPT<td>128K tokens<td>9.6 万汉字<tr><td>DeepSeek<td>128K tokens<td>9.6 万汉字</table>
+<p>Kimi 在上下文长度上遥遥领先，200 万字可以一次性处理整套法律法规或者一个完整代码仓库。但上下文长度不等于理解质量——在 200K tokens 以内，Claude 的理解质量被公认最好。</p>
+<blockquote>
+<p>上下文窗口就像工作台的大小。台子越大能放的东西越多，但能不能找到、能不能用好，还是看手艺。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=工具调用能力tool-use--function-calling>工具调用能力（Tool Use / Function Calling）<a href=#工具调用能力tool-use--function-calling class=hash-link aria-label="工具调用能力（Tool Use / Function Calling）的直接链接" title="工具调用能力（Tool Use / Function Calling）的直接链接" translate=no>​</a></h3>
+<p>工具调用是 AI Agent 的基础能力。模型通过 Function Calling（函数调用）机制，将自然语言指令转化为对外部 API 的调用。</p>
+<p>工具调用的核心原理是：模型接收用户的自然语言请求，判断需要调用哪些工具，生成结构化的调用参数（通常是 JSON 格式），执行调用后将结果整合到回答中。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// Function Calling 的核心流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 1. 用户发出请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">user: "北京明天天气怎么样？"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 2. 模型判断需要调用天气API，生成调用参数</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">model generates: {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  "function": "get_weather",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  "parameters": {"city": "北京", "date": "tomorrow"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 3. 系统执行API调用，返回结果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">api_result: {"temp": "32°C", "condition": "晴", "humidity": "45%"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 4. 模型整合结果生成自然语言回答</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">model: "北京明天晴天，气温32°C，湿度45%，适合出行。"</span><br/></div></code></pre></div></div>
+<p>ChatGPT 的工具调用最成熟，插件生态最丰富。Claude 通过 MCP 协议实现了工具的标准化接入。Gemini 与 Google 服务（搜索、地图、日历）深度集成。国产产品中，通义千问和智谱的工具调用能力较强。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=推理能力reasoning>推理能力（Reasoning）<a href=#推理能力reasoning class=hash-link aria-label=推理能力（Reasoning）的直接链接 title=推理能力（Reasoning）的直接链接 translate=no>​</a></h3>
+<p>推理能力是指模型在复杂逻辑、数学、科学问题上的表现。2025 年以来，推理能力成为大模型竞争的核心战场。</p>
+<p>OpenAI 的 o 系列模型（o1/o3）和 DeepSeek 的 R1 模型采用了 RL（Reinforcement Learning，强化学习）+ CoT（Chain of Thought，思维链）的训练方法，在 STEM 领域表现突出。这种方法的原理是让模型在给出答案前先"思考"——生成中间推理步骤，然后逐步推导到最终答案。</p>
+<p>Claude 在逻辑推理和代码推理方面表现优秀。Gemini 在数学和科学推理上有优势。DeepSeek R1 以低成本实现了顶尖推理性能，是开源推理模型的标杆。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-选型指南不同场景下该选哪个-ai-助手>1.5 选型指南：不同场景下该选哪个 AI 助手<a href=#15-选型指南不同场景下该选哪个-ai-助手 class=hash-link aria-label="1.5 选型指南：不同场景下该选哪个 AI 助手的直接链接" title="1.5 选型指南：不同场景下该选哪个 AI 助手的直接链接" translate=no>​</a></h2>
+<p>讲了这么多产品和能力，最后来点实用的。不同场景下到底该选哪个？我根据使用场景做了 5 个选型决策。</p>
+<p><strong>场景一：日常对话与内容创作</strong></p>
+<p>首选 ChatGPT 或 Gemini。ChatGPT 的综合能力最均衡，适合各种类型的对话和创作。Gemini 在需要联网信息和多模态理解时更有优势。如果主要用中文，豆包和通义千问也是不错的选择，免费且本地化好。</p>
+<p><strong>场景二：长文档分析与学术研究</strong></p>
+<p>首选 Claude 或 Kimi。Claude 在 200K tokens 以内的理解质量最好，写作逻辑最自然。Kimi 在超长文档（200 万字）场景无可替代。如果你需要读 50 篇论文并做综述，Kimi 是唯一能一次性处理的。如果需要深度理解单篇论文的逻辑，Claude 更好。</p>
+<p><strong>场景三：编程辅助</strong></p>
+<p>首选 Claude 或 ChatGPT。Claude 在代码逻辑理解和长代码生成方面最强。ChatGPT 的代码执行能力和工具生态更好。如果是中文编程场景，通义灵码和 CodeGeeX 是国产首选。编程 Agent 的详细对比我们会在第 4 章展开。</p>
+<p><strong>场景四：企业部署与数据安全</strong></p>
+<p>首选通义千问或 DeepSeek。两者都支持私有化部署，通义千问在中国企业级市场调用量第一。DeepSeek 开源且成本低，适合预算有限的企业。如果需要在全球范围部署，Claude 和 Gemini 的多语言能力更强。</p>
+<p><strong>场景五：自主任务执行</strong></p>
+<p>首选 Manus 或 OpenAI Operator。Manus 在通用任务执行和 GAIA 测试中表现最好。Operator 在浏览器操作和企业级场景有优势。如果需要移动端操作，AutoGLM 是唯一成熟的选择。预算有限可以尝试 OpenHands 开源方案。</p>
+<p>为了方便收藏，我把选型决策整理成一张速查表：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>使用场景<th>首选产品<th>备选产品<th>选择理由<tbody><tr><td>日常对话创作<td>ChatGPT<td>Gemini、豆包<td>综合能力最均衡<tr><td>长文档分析<td>Claude<td>Kimi<td>理解质量最高<tr><td>超长文档处理<td>Kimi<td>-<td>200万字上下文<tr><td>编程辅助<td>Claude<td>ChatGPT<td>代码逻辑最强<tr><td>企业私有部署<td>通义千问<td>DeepSeek<td>企业级支持+市场份额<tr><td>自主任务执行<td>Manus<td>Operator<td>GAIA SOTA<tr><td>移动端操作<td>AutoGLM<td>-<td>50+步跨App操作<tr><td>AI 搜索研究<td>Perplexity<td>Gemini<td>实时引用+免费DR<tr><td>开源本地部署<td>DeepSeek<td>OpenHands<td>开源+低成本<tr><td>多模态理解<td>Gemini<td>ChatGPT<td>原生多模态</table>
+<blockquote>
+<p>选 AI 工具就像选工具箱里的工具：没有万能扳手，只有最适合某个场景的那一把。</p>
+</blockquote>
+<p>最后来个本系列第 1 章的总结。这一章我们从 AI 产品的三个进化阶段讲起，拆解了 5 款通用型自主执行 Agent（Manus、Operator、AutoGLM、Lovart、OpenHands），梳理了 12 款对话助手产品（ChatGPT、Claude、Gemini、DeepSeek、Kimi、豆包、通义千问、智谱清言、文心一言、腾讯元宝、MiniMax、Perplexity），从多模态、长上下文、工具调用、推理能力四个维度做了横向对比，最后给出了 5 个场景的选型建议。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品类别<th>产品数量<th>市场格局<tbody><tr><td>通用型 Agent<td>5 款<td>Manus 领先，开源 OpenHands 补位<tr><td>国际对话助手<td>4 款<td>ChatGPT 断层第一，Gemini 紧追<tr><td>国产对话助手<td>8 款<td>百花齐放，各有差异化</table>
+<p>觉得有用？收藏起来，下次选 AI 工具直接照抄。</p>
+<p>你在用哪个 AI 助手？有没有踩过什么坑？评论区聊聊你的使用体验。</p>
+<p>关注怕浪猫，下期我们讲 AI Agent 开发平台——从 Coze 到 Dify，零代码和低代码怎么造一个智能体。系列进度 1/10，这个系列帮你从 0 到 1 读懂全球智能体生态，别忘了关注不错过后续更新。</p>
+<p>下一篇，怕浪猫会带你走进 AI Agent 开发平台的世界。你知道 Coze 和 Dify 的区别是什么吗？零代码平台真的能做出企业级 Agent 吗？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_1.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>目录</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>AI Agent 开发平台——零代码与低代码的智能体工厂</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#11-从-chatgpt-到-manusai-产品进化的三个阶段 class="table-of-contents__link toc-highlight">1.1 从 ChatGPT 到 Manus：AI 产品进化的三个阶段</a><li><a href=#12-通用型自主执行-agent-深度拆解 class="table-of-contents__link toc-highlight">1.2 通用型自主执行 Agent 深度拆解</a><ul><li><a href=#manusmonicaim class="table-of-contents__link toc-highlight">Manus（Monica.im）</a><li><a href=#openai-operator class="table-of-contents__link toc-highlight">OpenAI Operator</a><li><a href=#autoglm智谱-ai class="table-of-contents__link toc-highlight">AutoGLM（智谱 AI）</a><li><a href=#lovart class="table-of-contents__link toc-highlight">Lovart</a><li><a href=#openhands原-opendevin class="table-of-contents__link toc-highlight">OpenHands（原 OpenDevin）</a></ul><li><a href=#13-对话助手与大模型产品全景 class="table-of-contents__link toc-highlight">1.3 对话助手与大模型产品全景</a><ul><li><a href=#chatgptopenai class="table-of-contents__link toc-highlight">ChatGPT（OpenAI）</a><li><a href=#claudeanthropic class="table-of-contents__link toc-highlight">Claude（Anthropic）</a><li><a href=#geminigoogle-deepmind class="table-of-contents__link toc-highlight">Gemini（Google DeepMind）</a><li><a href=#deepseek深度求索 class="table-of-contents__link toc-highlight">DeepSeek（深度求索）</a><li><a href=#kimi月之暗面 class="table-of-contents__link toc-highlight">Kimi（月之暗面）</a><li><a href=#豆包字节跳动 class="table-of-contents__link toc-highlight">豆包（字节跳动）</a><li><a href=#通义千问阿里云 class="table-of-contents__link toc-highlight">通义千问（阿里云）</a><li><a href=#智谱清言--glm智谱-ai class="table-of-contents__link toc-highlight">智谱清言 / GLM（智谱 AI）</a><li><a href=#文心一言--文小言百度 class="table-of-contents__link toc-highlight">文心一言 / 文小言（百度）</a><li><a href=#腾讯元宝 class="table-of-contents__link toc-highlight">腾讯元宝</a><li><a href=#minimax稀宇科技 class="table-of-contents__link toc-highlight">MiniMax（稀宇科技）</a><li><a href=#perplexity-ai class="table-of-contents__link toc-highlight">Perplexity AI</a></ul><li><a href=#14-核心能力对比多模态长上下文工具调用推理能力 class="table-of-contents__link toc-highlight">1.4 核心能力对比：多模态、长上下文、工具调用、推理能力</a><ul><li><a href=#多模态能力multimodal class="table-of-contents__link toc-highlight">多模态能力（Multimodal）</a><li><a href=#长上下文窗口long-context class="table-of-contents__link toc-highlight">长上下文窗口（Long Context）</a><li><a href=#工具调用能力tool-use--function-calling class="table-of-contents__link toc-highlight">工具调用能力（Tool Use / Function Calling）</a><li><a href=#推理能力reasoning class="table-of-contents__link toc-highlight">推理能力（Reasoning）</a></ul><li><a href=#15-选型指南不同场景下该选哪个-ai-助手 class="table-of-contents__link toc-highlight">1.5 选型指南：不同场景下该选哪个 AI 助手</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

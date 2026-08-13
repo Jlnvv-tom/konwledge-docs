@@ -1,0 +1,192 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-life-encyclopedia/programmer-interview/chapter_2" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门 | 知识库"/><meta data-rh=true name=description content='我参加过几十场在线笔试，前七场挂得毫无悬念。不是不会做，而是我根本不懂笔试的规则：不知道ACM模式要自己处理输入输出，不知道切屏会被记录，不知道有的题型分值占比极小、耗时却极高。直到我搞懂了笔试的"底层机制"，通过率才真正提上来。'/><meta data-rh=true property=og:description content='我参加过几十场在线笔试，前七场挂得毫无悬念。不是不会做，而是我根本不懂笔试的规则：不知道ACM模式要自己处理输入输出，不知道切屏会被记录，不知道有的题型分值占比极小、耗时却极高。直到我搞懂了笔试的"底层机制"，通过率才真正提上来。'/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/","name":"程序员面试100问","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2","name":"程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/life-encyclopedia/><span title="📚 生活与百科" class=linkLabel_WmDU>📚 生活与百科</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/cat/><span title=猫的知识全书 class=categoryLinkLabel_W154>猫的知识全书</span></a><button aria-label="展开侧边栏分类 '猫的知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/children/><span title=育儿知识全书 class=categoryLinkLabel_W154>育儿知识全书</span></a><button aria-label="展开侧边栏分类 '育儿知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/english/><span title=英语学习 class=categoryLinkLabel_W154>英语学习</span></a><button aria-label="展开侧边栏分类 '英语学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/programmer-english/><span title=程序员英语 class=categoryLinkLabel_W154>程序员英语</span></a><button aria-label="展开侧边栏分类 '程序员英语'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/internet-future/><span title=互联网未来五年 class=categoryLinkLabel_W154>互联网未来五年</span></a><button aria-label="展开侧边栏分类 '互联网未来五年'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/konwledge-docs/docs/life-encyclopedia/skill-book/全村穿越后又穿越回去了/正文/第001章_天光异变><span title=技能之书 class=categoryLinkLabel_W154>技能之书</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/><span title=程序员面试100问 class=categoryLinkLabel_W154>程序员面试100问</span></a><button aria-label="折叠侧边栏分类 '程序员面试100问'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_1><span title=程序员面试100问·第1篇：求职准备——面试从投简历之前就开始了 class=linkLabel_WmDU>程序员面试100问·第1篇：求职准备——面试从投简历之前就开始了</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2><span title=程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门 class=linkLabel_WmDU>程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_3><span title=程序员面试100问·第3篇：简历筛选关——30秒定生死 class=linkLabel_WmDU>程序员面试100问·第3篇：简历筛选关——30秒定生死</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4><span title=程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战 class=linkLabel_WmDU>程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_5><span title=程序员面试100问·第5篇：技术二面——项目深挖与系统设计 class=linkLabel_WmDU>程序员面试100问·第5篇：技术二面——项目深挖与系统设计</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_6><span title=程序员面试100问·第6篇：技术三面——交叉面与Leader面的终极考验 class=linkLabel_WmDU>程序员面试100问·第6篇：技术三面——交叉面与Leader面的终极考验</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_7><span title=程序员面试100问·第7篇：HR面——不是走流程，是最后的守门人 class=linkLabel_WmDU>程序员面试100问·第7篇：HR面——不是走流程，是最后的守门人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_8><span title=程序员面试100问·第8篇：谈Offer——从口头到书面的最后博弈 class=linkLabel_WmDU>程序员面试100问·第8篇：谈Offer——从口头到书面的最后博弈</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_9><span title=程序员面试100问·第9篇：背调与入职——offer到手后的最后一公里 class=linkLabel_WmDU>程序员面试100问·第9篇：背调与入职——offer到手后的最后一公里</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_10><span title=程序员面试100问·第10篇：避坑与心态——收官之战 class=linkLabel_WmDU>程序员面试100问·第10篇：避坑与心态——收官之战</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/tech-pioneers/><span title=科技与互联网先驱 class=categoryLinkLabel_W154>科技与互联网先驱</span></a><button aria-label="展开侧边栏分类 '科技与互联网先驱'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/><span>程序员面试100问</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门</h1></header>
+<p>我参加过几十场在线笔试，前七场挂得毫无悬念。不是不会做，而是我根本不懂笔试的规则：不知道ACM模式要自己处理输入输出，不知道切屏会被记录，不知道有的题型分值占比极小、耗时却极高。直到我搞懂了笔试的"底层机制"，通过率才真正提上来。</p>
+<p>我是怕浪猫，八年开发经验，面过两百多场技术面试。上一篇讲了求职准备，今天进入第一个实战环节：笔试。笔试是求职路上第一道大规模淘汰闸门，很多公司的笔试淘汰率超过百分之五十，也就是说，一半以上的人连面试官的面都见不到。这一篇，我把笔试的规则、机制、套路一次讲透。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-在线笔试的完整流程与反作弊机制>2.1 在线笔试的完整流程与反作弊机制<a href=#21-在线笔试的完整流程与反作弊机制 class=hash-link aria-label="2.1 在线笔试的完整流程与反作弊机制的直接链接" title="2.1 在线笔试的完整流程与反作弊机制的直接链接" translate=no>​</a></h2>
+<p>先搞清楚在线笔试的完整流程，你才知道自己面对的是什么。以国内主流笔试平台为例，流程一般是：HR或系统发送笔试邀请邮件，邮件里有笔试链接、时间窗口和注意事项；到了约定时间，你打开链接，系统会先做环境检测（摄像头、麦克风、浏览器兼容性），然后进入答题页面；答题结束后系统自动交卷，成绩同步给招聘方。</p>
+<p>整个流程中最容易翻车的是环境检测环节。系统会检测你是否开启了摄像头，有的还会要求第二机位（手机从侧后方拍摄）。如果摄像头检测不通过，你连答题页面都进不去，直接失去这次笔试机会。所以笔试前一定要提前半小时进入系统，把所有检测流程走一遍，不要等到开考了才发现摄像头权限没开。</p>
+<p>再讲反作弊机制，这是很多人吃亏的地方。在线笔试的防作弊体系大致分三层：行为监控、内容比对、异常标记。</p>
+<p>行为监控的原理是监听浏览器事件。当你切换标签页或最小化窗口时，浏览器会触发失焦事件（blur事件），系统记录一次"切屏"。切屏次数超过阈值（通常三到五次）会触发警告，严重的直接判作弊。还有一个细节：鼠标轨迹分析。系统会记录你的鼠标移动轨迹，如果轨迹异常（比如长时间不动后突然精准点击），会被标记为可疑。</p>
+<p>内容比对的原理是代码查重。系统会用查重算法把你的代码和全网公开代码、其他考生的代码做相似度比对。相似度超过阈值（通常是百分之七十到八十）会被判定抄袭。查重算法常用的是哈希分段比对：把代码按固定长度切段，每段计算哈希值（Hash，把任意长度数据映射为固定长度值的函数），然后统计重合比例。所以抄网上的模板代码，在查重系统面前几乎是裸奔。</p>
+<p>异常标记是最后一层：系统会综合你的切屏次数、答题速度、正确率分布等特征，给出一份"异常报告"给招聘方，由人工判断是否作废。所以即使系统没当场判你作弊，异常行为也可能在事后被翻出来。</p>
+<blockquote>
+<p>笔试考的不只是你会不会，还有你懂不懂规则——规则都搞不清的人，公司凭什么相信你能搞定线上事故？</p>
+</blockquote>
+<p>你有没有在笔试时切过屏？哪怕只是看个消息，都可能被记录。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-题型分布与时间分配得分优先级>2.2 题型分布与时间分配：得分优先级<a href=#22-题型分布与时间分配得分优先级 class=hash-link aria-label="2.2 题型分布与时间分配：得分优先级的直接链接" title="2.2 题型分布与时间分配：得分优先级的直接链接" translate=no>​</a></h2>
+<p>国内笔试的题型大致分四类：单选题、多选题、编程题、问答题。不同类型的分值和耗时差异巨大，时间分配策略直接决定你的得分上限。</p>
+<p>单选题通常考察基础概念：数据结构、操作系统、计算机网络、数据库、语言特性，每题分值低（一到两分）但速度快。多选题类似，但选错倒扣分的规则需要注意——很多平台多选漏选得部分分、错选倒扣分，不确定的选项宁可不选。</p>
+<p>编程题是大头，通常两到四道，分值占比最高（一道可能占二三十分），是决定通过与否的关键。编程题又分两种：部分通过制（有多个测试用例，通过几个给几分）和全通过制（全部测试用例通过才给分）。绝大多数平台是部分通过制，这意味着"暴力解法过部分用例"也能拿分，绝对不能留空。</p>
+<p>问答题较少见，主要出现在校招笔试里，考察系统设计或场景分析，分值中等。</p>
+<p>时间分配的原则是"先易后难、先分高后分低"：开考后先用十分钟快速扫一遍全部题目，标记出会做的、半会不会的、完全不会的；然后优先做单选和多选（快速拿基础分），再做有思路的编程题，最后啃难题。编程题如果卡住超过二十分钟，果断放弃，把时间留给能拿分的题。</p>
+<p>这里有个关键认知：笔试是"得分游戏"不是"解题游戏"。目标是总分过线，不是每道题都做对。一道编程题暴力解法能过百分之六十的用例，就比死磕最优解导致后面题目没时间做要划算得多。</p>
+<blockquote>
+<p>笔试是得分游戏，不是解题游戏——你不需要每道题都做对，你需要总分过线。</p>
+</blockquote>
+<p>一个实操技巧：先把所有编程题的"输入输出框架"写出来。这样即使某道题没做出来，只要框架正确、部分逻辑正确，也能拿到基础分。留空和写了一半，得分天差地别。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-笔试挂掉的高频原因审题边界复杂度>2.3 笔试挂掉的高频原因：审题、边界、复杂度<a href=#23-笔试挂掉的高频原因审题边界复杂度 class=hash-link aria-label="2.3 笔试挂掉的高频原因：审题、边界、复杂度的直接链接" title="2.3 笔试挂掉的高频原因：审题、边界、复杂度的直接链接" translate=no>​</a></h2>
+<p>挂了七场笔试之后，我把所有失败原因做了归类，发现高频原因就三类：审题不清、边界漏判、复杂度超限。这三类问题各有各的解法。</p>
+<p>审题不清是最冤的挂法。题目要求"返回所有不重复的组合"，你写成了"返回所有组合"；题目要求"原地修改"（in-place，直接在原数组上操作，不返回新数组），你新建了数组。这类错误在本地自测时往往测不出来，因为样例数据恰好没覆盖差异点。解法是：读题时圈出关键词（不重复、原地、升序、最小、最多），把题目要求转成自己的话复述一遍再动手。</p>
+<p>边界漏判是第二高频原因。数组为空、只有一个元素、元素全相同、目标值不在范围内、整数溢出——这些边界情况是测试用例的重点，也是扣分重灾区。解法是：写代码时先想清楚边界条件再写主逻辑，写完代码后主动构造边界用例自测。一个习惯：写完代码先跑三个用例——空输入、最小输入、最大输入。</p>
+<p>复杂度超限是第三高频原因，也是最容易被忽略的。题目数据范围是十的五次方，你写了个O(n²)（平方复杂度，n为数据规模，时间复杂度随数据规模平方增长）的算法，用例全对，但超时判负。解法是：动手前先估算复杂度——看数据范围，如果n是十的五次方，O(n²)基本必挂，必须想O(n)或O(n log n)的解法。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>挂因<th>典型表现<th>根因<th>对策<tbody><tr><td>审题不清<td>输出格式不符<td>没圈关键词<td>复述题目再动手<tr><td>边界漏判<td>空数组报错<td>没构造边界用例<td>主动测空/最小/最大<tr><td>复杂度超限<td>用例对但超时<td>没估算数据范围<td>先估复杂度再写</table>
+<blockquote>
+<p>挂笔试的三座大山：审题不清是粗心，边界漏判是习惯，复杂度超限是思维——前两个能改，第三个要练。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-高频算法模板速记套路库>2.4 高频算法模板速记：套路库<a href=#24-高频算法模板速记套路库 class=hash-link aria-label="2.4 高频算法模板速记：套路库的直接链接" title="2.4 高频算法模板速记：套路库的直接链接" translate=no>​</a></h2>
+<p>笔试高频算法题集中在几大类，每一类都有固定的套路。掌握套路不是背题，而是理解每一类问题背后的核心原理，这样遇到变形题也能举一反三。</p>
+<p>双指针是解决有序数组问题的利器。核心原理：一个指针从头部开始，一个指针从尾部开始，根据当前两个指针指向元素的和与目标值的大小关系，决定移动哪个指针，时间复杂度从O(n²)降到O(n)。典型场景：有序数组两数之和。</p>
+<p>滑动窗口解决子串、子数组问题。核心原理：维护一个窗口（用两个指针表示左边界和右边界），右指针不断右移扩大窗口，当窗口内条件不满足时左指针右移缩小窗口。典型场景：无重复字符的最长子串。这个套路背后是"单调性"的利用——窗口扩大时条件的变化是单调的，所以可以线性推进。</p>
+<p>二分查找解决单调性问题。核心原理：在一个有序序列中，每次取中间元素与目标比较，根据比较结果排除一半的搜索空间。关键易错点是边界条件：左闭右闭区间和左闭右开区间的写法不同，循环条件一个用left &lt;= right，一个用left &lt; right，搞混就会死循环或漏解。</p>
+<p>深度优先搜索（DFS，Depth First Search）和广度优先搜索（BFS，Breadth First Search）解决遍历类问题。DFS的核心原理是沿着一条路径走到底再回溯，用递归或栈实现；BFS是逐层扩散，用队列实现。BFS适合求最短路径（因为逐层扩散天然保证首次到达就是最短），DFS适合枚举所有可能（全排列、组合）。这里给一个DFS的经典模板骨架：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>dfs</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">path</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> choices</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> 满足结束条件</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        记录结果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> choice </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> choices</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> choice 不合法</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token keyword" style=color:#00009f>continue</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        path</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">choice</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">   </span><span class="token comment" style=color:#999988;font-style:italic># 做选择</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        dfs</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">path</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> new_choices</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 递归</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        path</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">pop</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 撤销选择（回溯）</span><br/></div></code></pre></div></div>
+<p>这段代码的核心是三段式：做选择、递归、撤销选择。撤销选择（回溯）是DFS的灵魂——它保证了每条路径探索完能恢复现场，从而枚举所有可能性。</p>
+<p>动态规划（DP，Dynamic Programming）是笔试压轴题的最爱。核心原理：把大问题分解成重叠子问题，用数组记录子问题的解，避免重复计算。识别DP题的关键特征：求最值、有状态转移关系、子问题重叠。经典入门题是爬楼梯：走到第n级台阶的方法数等于走到第n-1级和第n-2级的方法数之和，状态转移方程是dp[n] = dp[n-1] + dp[n-2]。</p>
+<p>二分查找再给一个左闭右闭的标准写法，边界处理是它最容易出错的地方：</p>
+<div class="language-java codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-java codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">int left = 0, right = nums.length - 1;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">while (left &lt;= right) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    int mid = left + (right - left) / 2;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    if (nums[mid] == target) return mid;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    else if (nums[mid] &lt; target) left = mid + 1;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    else right = mid - 1;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<p>这里有两个关键点：循环条件用left &lt;= right（因为左闭右闭区间里left == right时区间还有一个元素）；mid用left + (right - left) / 2计算而不是(left + right) / 2，是为了防止left加right溢出整数范围。</p>
+<blockquote>
+<p>套路不是背答案，是理解原理后的条件反射——看到"有序+查找"想到二分，看到"子串"想到滑动窗口。</p>
+</blockquote>
+<p>刷题的时候不妨把每道题的"触发关键词"记下来：什么特征对应什么套路。积累够五十道，你就能建立自己的套路库。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-大厂笔试风格差异与智力题应对>2.5 大厂笔试风格差异与智力题应对<a href=#25-大厂笔试风格差异与智力题应对 class=hash-link aria-label="2.5 大厂笔试风格差异与智力题应对的直接链接" title="2.5 大厂笔试风格差异与智力题应对的直接链接" translate=no>​</a></h2>
+<p>不同公司的笔试风格差异很大，了解目标公司的出题偏好，能让你准备得更精准。</p>
+<p>字节跳动系的笔试以算法题为主，题目难度梯度明显：前一两道是基础题（链表、字符串处理），后面是中等偏难的数据结构和动态规划题。字节特别看重代码的完整性和边界处理，部分通过制的用例设计很细，审题不清基本必挂。</p>
+<p>腾讯系的笔试编程题偏工程化，有时候会出现和业务场景结合的题目，比如设计一个缓存、处理一个数据流。腾讯的单选题考察面广，计算机网络和操作系统占比高。</p>
+<p>阿里系的笔试风格偏"思维深度"，编程题少而精，但每道题都可能有多个考点叠加，比如"树+动态规划"组合。阿里也比较喜欢智力题和逻辑题，考察思维方式。</p>
+<p>美团系的笔试性价比最高，题目相对常规，高频考点是动态规划和贪心算法，难度中等，准备充分的考生通过率不错。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>公司<th>出题偏好<th>高频考点<th>难度<tbody><tr><td>字节<td>算法题为主，梯度明显<td>边界处理、动态规划<td>中高<tr><td>腾讯<td>偏工程化，单选广<td>网络、操作系统<td>中<tr><td>阿里<td>少而精，多考点叠加<td>树、逻辑题<td>高<tr><td>美团<td>常规为主<td>动态规划、贪心<td>中</table>
+<p>智力题怎么应对？核心是"结构化思考"。常见的智力题类型有：概率题、逻辑推理题、数学题、脑筋急转弯。遇到智力题不要慌，先明确题目条件，把问题拆解成小问题，用穷举或递推的方式找规律。比如经典的"100层楼两个鸡蛋"问题，核心不是鸡蛋，而是"用最少的尝试次数确定临界楼层"，本质是动态规划思想。答题时把思考过程写出来，即使答案不对，清晰的思路也能得分。</p>
+<blockquote>
+<p>大厂笔试风格各异，但底层考察的东西一样：你的算法基本功和思维习惯——投谁家，就先摸谁的题风。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=26-笔试平台与环境准备细节决定成败>2.6 笔试平台与环境准备：细节决定成败<a href=#26-笔试平台与环境准备细节决定成败 class=hash-link aria-label="2.6 笔试平台与环境准备：细节决定成败的直接链接" title="2.6 笔试平台与环境准备：细节决定成败的直接链接" translate=no>​</a></h2>
+<p>笔试环节翻车最多的不是题目，而是环境。这一节把平台规则和环境准备讲透，帮你避开最冤的挂法。</p>
+<p>先讲平台规则。国内主流笔试平台（牛客网、赛码网、智联招聘笔试、北森等）各有各的规则：有的支持本地IDE调试，有的只能用网页编辑器；有的允许复制粘贴，有的禁止；有的会记录你的粘贴行为。这些规则在笔试邀请邮件或平台公告里都有说明，考前一定要读一遍。特别提醒：很多平台禁止在答题页面使用翻译软件、禁止打开其他网页查资料——即使你不作弊，浏览器里有搜索记录也可能被标记。</p>
+<p>再讲环境准备清单。网络：提前测试网速和稳定性，用有线网络比无线更稳，准备手机热点作为备用。设备：笔记本电脑优先，屏幕够大；摄像头和麦克风提前测试，权限提前授权；充电器插好，别让电量成为隐患。软件：浏览器用平台指定的版本，关闭所有弹窗拦截和翻译插件；本地IDE提前装好、配好编译环境，多语言的同学把默认语言设置好。桌面：清理桌面文件，关闭无关应用，把手机放远一点——切屏记录不分你是看消息还是误触，一律计入。</p>
+<p>还有一个容易忽略的点：时间窗口。笔试通常有固定的开始时间和时长，迟到十五分钟以上可能无法进入。设好闹钟，提前二十分钟坐到电脑前。如果笔试是"收到链接后四十八小时内任意时间完成"的模式，千万别拖到最后一小时——万一中间网络出问题，连补救的时间都没有。</p>
+<blockquote>
+<p>笔试环境的准备清单：网络、设备、权限、桌面、时间——五项全过，才能安心答题。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=27-笔试后的复盘模板每次必填的六栏表格>2.7 笔试后的复盘模板：每次必填的六栏表格<a href=#27-笔试后的复盘模板每次必填的六栏表格 class=hash-link aria-label="2.7 笔试后的复盘模板：每次必填的六栏表格的直接链接" title="2.7 笔试后的复盘模板：每次必填的六栏表格的直接链接" translate=no>​</a></h2>
+<p>笔试后的复盘，是拉开差距的关键动作。不会复盘的人，挂十场还是同样的错；会复盘的人，挂三场就能摸清自己的问题模式。</p>
+<p>推荐一个简单的六栏复盘模板，每场笔试后趁记忆新鲜填完：第一栏，场次信息：公司、平台、日期、题型分布；第二栏，得分预估：各题型的得分情况，哪部分拿分、哪部分失分；第三栏，卡壳点：哪道题卡住了、卡在哪里（审题、思路、边界、复杂度）；第四栏，归因：卡壳的根本原因是什么（知识盲区、练习不足、紧张、时间分配）；第五栏，改进动作：针对归因写一条具体可执行的改进（如"补练滑动窗口五道题""笔试前先做平台模拟题"）；第六栏，复用经验：这场笔试有什么值得带走的经验（如"这道题用到了前缀和思想，记入套路库"）。</p>
+<p>复盘表攒够五场，就能看出规律：如果你的卡壳点集中在动态规划，说明这块需要系统补练；如果集中在审题，说明需要训练读题习惯；如果场场都是时间不够，说明需要调整做题顺序。规律的发现，就是复盘的回报。</p>
+<blockquote>
+<p>复盘不是记录，是提炼——每场笔试留一条可执行的改进动作，十场之后你就是另一个人。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=28-笔试的隐藏规则部分得分与判分逻辑>2.8 笔试的隐藏规则：部分得分与判分逻辑<a href=#28-笔试的隐藏规则部分得分与判分逻辑 class=hash-link aria-label="2.8 笔试的隐藏规则：部分得分与判分逻辑的直接链接" title="2.8 笔试的隐藏规则：部分得分与判分逻辑的直接链接" translate=no>​</a></h2>
+<p>很多人以为笔试是"全对才得分"，其实大部分平台是部分得分制，理解判分逻辑能帮你多拿分。</p>
+<p>编程题的判分逻辑通常是：题目附带了若干组测试用例，每组用例有对应的分值（用例越多，说明覆盖的场景越全），你的代码通过几组用例就得几分。这意味着：即使你的解法不是最优解、即使你的代码只通过了部分用例，也能拿到对应的分数。所以"写了一半的代码"和"空着"的差别，可能是一道题百分之六十的分数。</p>
+<p>基于这个逻辑，有三个实用的得分策略。第一，暴力解法优先：拿到题先想暴力解法，先把用例跑通拿基础分，再想优化。暴力解法能过百分之六十到八十的用例，比纠结最优解导致超时强。第二，留痕策略：即使最终没写出来，也要把思路、部分代码、甚至伪代码写上去——有的平台会看你的答题过程，有思路的痕迹可能多给几分。第三，特判得分：有些题目的部分用例很简单（比如空输入、只有一个元素），针对这些简单用例写特判代码也能拿分。</p>
+<p>单选题的判分逻辑也有讲究：大部分平台单选选错不扣分（只得零分），多选题选错可能倒扣（选错扣分、漏选得部分分）。面对多选题，不确定的选项宁可不选——漏选只丢部分分，错选可能把已有的分也倒扣掉。这个规则务必在考前确认，不同平台规则不同。</p>
+<blockquote>
+<p>笔试的得分逻辑是"拿分最大化"——暴力解、留痕、特判、保守多选，四个策略叠加，总分能上一个台阶。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本篇小结>本篇小结<a href=#本篇小结 class=hash-link aria-label=本篇小结的直接链接 title=本篇小结的直接链接 translate=no>​</a></h2>
+<p>笔试是第一道大规模淘汰闸门，但它也是最"公平"的环节——规则透明、套路固定、可以靠准备大幅提升通过率。回顾本篇要点：流程上，提前半小时做环境检测，别让摄像头和网络坑了你；机制上，理解切屏检测和代码查重的原理，别踩作弊红线；策略上，先易后难、按分值分配时间，暴力解法过部分用例也是分；能力上，建立算法套路库，审题圈关键词、主动测边界、先估复杂度。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>核心要点<th>一句话总结<tbody><tr><td>流程<td>环境检测提前走通<td>别让设备坑了你<tr><td>机制<td>切屏监控+代码查重<td>懂规则才不踩线<tr><td>策略<td>先易后难按分分配<td>总分过线才是赢<tr><td>能力<td>套路库+边界意识<td>刷题刷的是套路<tr><td>风格<td>摸清目标公司题风<td>投谁家练谁的题</table>
+<p>觉得有用？收藏起来，下次笔试前翻出来看一遍。你笔试时被切屏警告过吗？评论区讲讲，我看看有多少人栽在消息弹窗上。</p>
+<p>关注怕浪猫，这个系列持续更新，帮你把求职全流程走稳。系列进度 2/10。</p>
+<p>下一篇，我们讲简历筛选关——HR三十秒定生死。ATS系统到底怎么解析你的简历？为什么精心设计的简历模板反而会被机器"读不懂"？下篇见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/life-encyclopedia/programmer-interview/chapter_2.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_1><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>程序员面试100问·第1篇：求职准备——面试从投简历之前就开始了</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_3><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>程序员面试100问·第3篇：简历筛选关——30秒定生死</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#21-在线笔试的完整流程与反作弊机制 class="table-of-contents__link toc-highlight">2.1 在线笔试的完整流程与反作弊机制</a><li><a href=#22-题型分布与时间分配得分优先级 class="table-of-contents__link toc-highlight">2.2 题型分布与时间分配：得分优先级</a><li><a href=#23-笔试挂掉的高频原因审题边界复杂度 class="table-of-contents__link toc-highlight">2.3 笔试挂掉的高频原因：审题、边界、复杂度</a><li><a href=#24-高频算法模板速记套路库 class="table-of-contents__link toc-highlight">2.4 高频算法模板速记：套路库</a><li><a href=#25-大厂笔试风格差异与智力题应对 class="table-of-contents__link toc-highlight">2.5 大厂笔试风格差异与智力题应对</a><li><a href=#26-笔试平台与环境准备细节决定成败 class="table-of-contents__link toc-highlight">2.6 笔试平台与环境准备：细节决定成败</a><li><a href=#27-笔试后的复盘模板每次必填的六栏表格 class="table-of-contents__link toc-highlight">2.7 笔试后的复盘模板：每次必填的六栏表格</a><li><a href=#28-笔试的隐藏规则部分得分与判分逻辑 class="table-of-contents__link toc-highlight">2.8 笔试的隐藏规则：部分得分与判分逻辑</a><li><a href=#本篇小结 class="table-of-contents__link toc-highlight">本篇小结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

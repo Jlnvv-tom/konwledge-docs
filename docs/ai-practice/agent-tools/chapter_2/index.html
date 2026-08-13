@@ -1,0 +1,406 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_2" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>AI Agent 开发平台——零代码与低代码的智能体工厂 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_2 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="AI Agent 开发平台——零代码与低代码的智能体工厂 | 知识库"/><meta data-rh=true name=description content="不会写代码，但想做一个能自动回复客户、整理文档、分析数据的 AI Agent？2026 年，这件事已经不需要找开发团队了。"/><meta data-rh=true property=og:description content="不会写代码，但想做一个能自动回复客户、整理文档、分析数据的 AI Agent？2026 年，这件事已经不需要找开发团队了。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_2 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_2 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_2 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_2","name":"AI Agent 开发平台——零代码与低代码的智能体工厂","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>AI Agent 开发平台——零代码与低代码的智能体工厂</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>AI Agent 开发平台——零代码与低代码的智能体工厂</h1></header>
+<p>不会写代码，但想做一个能自动回复客户、整理文档、分析数据的 AI Agent？2026 年，这件事已经不需要找开发团队了。</p>
+<p>我是怕浪猫，这个系列《智能体产品全景手册》的第 2 篇。上一篇我们盘点了通用型 AI Agent 和对话助手，这一篇我们进入开发者视角——但不需要你是开发者。因为今天要讲的是 AI Agent 开发平台，它们就是"智能体工厂"，让你像搭积木一样造出属于自己的 Agent。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-开发平台-vs-开发框架两条路线的选择>2.1 开发平台 vs 开发框架：两条路线的选择<a href=#21-开发平台-vs-开发框架两条路线的选择 class=hash-link aria-label="2.1 开发平台 vs 开发框架：两条路线的选择的直接链接" title="2.1 开发平台 vs 开发框架：两条路线的选择的直接链接" translate=no>​</a></h2>
+<p>在开始拆解具体产品之前，先搞清楚一个根本问题：开发平台和开发框架有什么区别？你应该走哪条路？</p>
+<p><strong>开发平台（Development Platform）</strong> 提供的是一站式服务：可视化界面、拖拽式编排、内置模型、托管部署、监控分析全部打包好。你不需要写代码（或者只需要写很少的代码），只需要定义 Agent 的角色、能力、知识库，平台帮你搞定剩下的事情。</p>
+<p><strong>开发框架（Development Framework）</strong> 提供的是代码库和抽象层：你需要用 Python 或 TypeScript 写代码，调用框架提供的 API 来构建 Agent 的逻辑。框架给你更大的自由度和控制力，但门槛更高。</p>
+<p>这两条路线的核心差异可以用下面的对比来理解：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>开发平台<th>开发框架<tbody><tr><td>使用方式<td>可视化拖拽<td>编写代码<tr><td>技术门槛<td>低（产品经理可用）<td>高（需开发经验）<tr><td>灵活性<td>中等（平台能力范围内）<td>高（代码级控制）<tr><td>部署方式<td>平台托管<td>自行部署<tr><td>定制深度<td>配置层面<td>代码层面<tr><td>适合场景<td>快速验证、标准化需求<td>复杂逻辑、深度定制<tr><td>代表产品<td>Coze、Dify、百度千帆<td>LangChain、AutoGen、CrewAI</table>
+<blockquote>
+<p>开发平台是"拎包入住"的精装房，开发框架是"自己盖"的毛坯地。选哪个取决于你的预算、时间和需求复杂度。</p>
+</blockquote>
+<p>怎么选？我给你一个简单的决策规则：</p>
+<p>如果你的需求是"让 AI 根据知识库回答客户问题"、"自动分类邮件并回复"、"根据数据生成日报"这类标准化场景，选开发平台。如果你是产品经理、运营人员、或者小型团队想快速验证 AI Agent 的价值，也选开发平台。</p>
+<p>如果你的需求是"多 Agent 协作完成复杂软件开发"、"需要自定义推理逻辑和工具链"、"需要深度集成到现有技术栈"，选开发框架。如果你是开发者、技术团队、或者需要构建高度定制化的 Agent 系统，选开发框架。</p>
+<p>开发框架的内容我们在第 3 章详细展开，这一章专注于开发平台。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-零代码平台深度拆解>2.2 零代码平台深度拆解<a href=#22-零代码平台深度拆解 class=hash-link aria-label="2.2 零代码平台深度拆解的直接链接" title="2.2 零代码平台深度拆解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=coze--扣子字节跳动>Coze / 扣子（字节跳动）<a href=#coze--扣子字节跳动 class=hash-link aria-label="Coze / 扣子（字节跳动）的直接链接" title="Coze / 扣子（字节跳动）的直接链接" translate=no>​</a></h3>
+<p>Coze 是字节跳动推出的 AI Agent 开发平台，国内版叫"扣子"，国际版叫 Coze。它是目前国内用户量最大的 Agent 开发平台之一。</p>
+<p>核心功能包括：可视化工作流编排、多模型支持（豆包大模型、GPT、Claude 等）、插件市场（数百个预置插件）、知识库管理、多渠道发布（飞书、微信公众号、抖音、微信客服等）、定时任务和触发器。</p>
+<p>Coze 的工作流引擎是其核心。工作流由节点组成，每个节点执行一个操作：调用大模型、查询知识库、执行代码、调用 API、条件分支等。节点之间通过连线定义执行顺序，支持并行和循环。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Coze 工作流的核心数据结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">workflow = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    "nodes": [</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"id": "start", "type": "input", "config": {"prompt": "{{user_input}}"}},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"id": "llm_1", "type": "llm", "config": {"model": "doubao-pro", "prompt": "分析用户意图：{{start.output}}"}},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"id": "kb_1", "type": "knowledge", "config": {"query": "{{llm_1.output}}", "top_k": 5}},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"id": "llm_2", "type": "llm", "config": {"model": "doubao-pro", "prompt": "基于以下信息回答：{{kb_1.output}}"}},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"id": "end", "type": "output", "config": {"content": "{{llm_2.output}}"}}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    "edges": [</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"from": "start", "to": "llm_1"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"from": "llm_1", "to": "kb_1"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"from": "kb_1", "to": "llm_2"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {"from": "llm_2", "to": "end"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<p>产品表现方面，Coze 在国内 Agent 平台中用户量领先。2025 年字节跳动发布了"扣子空间"——一个类似 GPT Store 的 Agent 市场和运行环境，用户可以发布自己创建的 Agent，也可以使用他人创建的。扣子空间在 2026 年中科院《互联网周刊》企业级 AI TOP50 榜单中排名第一。</p>
+<p>Coze 的最大优势是生态完整。从创建到发布到分发，全链路在一个平台内完成。对于想快速把 Agent 推向市场的团队来说，这是最省事的选择。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=dify>Dify<a href=#dify class=hash-link aria-label=Dify的直接链接 title=Dify的直接链接 translate=no>​</a></h3>
+<p>Dify 是一款开源的 AI Agent 开发平台，在 GitHub 上拥有数万 Star，是开源 Agent 平台的领头羊。</p>
+<p>核心功能包括：可视化 Prompt 编排、工作流引擎、RAG（Retrieval-Augmented Generation，检索增强生成）管道、Agent 模式、模型管理（支持几十种模型）、API 服务和嵌入式部署。</p>
+<p>Dify 与 Coze 的关键区别在于：Dify 是开源的，可以私有化部署。这意味着你的数据和 Agent 逻辑完全在自己服务器上，不经过第三方。对于金融、医疗、政府等对数据安全要求高的场景，这一点至关重要。</p>
+<p>Dify 的架构分为四层：</p>
+<p><strong>应用层</strong>：提供 Web 界面和 API，用户在这里创建和管理 Agent。
+<strong>编排层</strong>：工作流引擎和 Prompt 管理器，负责将用户定义的 Agent 逻辑转化为执行计划。
+<strong>能力层</strong>：包括 RAG 引擎、工具调用器、代码执行沙箱等核心能力组件。
+<strong>模型层</strong>：模型管理器统一对接各种大模型 API，支持负载均衡和故障切换。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Dify RAG 管道的核心流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class DifyRAGPipeline:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def process_document(self, document):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 文档解析：提取文本</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        text = self.parser.extract(document)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 文本分块：将长文本切分为语义完整的片段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        chunks = self.chunker.split(text, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                    strategy="semantic",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                    max_tokens=500,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                    overlap=50)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 向量化：将文本片段转换为向量</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        embeddings = self.embedder.encode(chunks)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 存储：将向量存入向量数据库</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.vector_store.add(embeddings, chunks)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 索引：构建检索索引（支持HNSW、IVF等）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.vector_store.build_index(algorithm="hnsw")</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def retrieve(self, query, top_k=5):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 将查询向量化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        query_vec = self.embedder.encode([query])[0]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 在向量空间中检索最相似的片段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        results = self.vector_store.search(query_vec, top_k=top_k)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 重排序：用更精细的模型对结果重新排序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        reranked = self.reranker.rerank(query, results)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return reranked</span><br/></div></code></pre></div></div>
+<p>Dify 的开源策略带来了活跃的社区生态。大量开发者贡献了插件和工具，使得 Dify 的能力扩展速度远超闭源平台。但开源也意味着你需要自己维护服务器和处理运维问题。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=腾讯-adpagent-development-platform>腾讯 ADP（Agent Development Platform）<a href=#腾讯-adpagent-development-platform class=hash-link aria-label="腾讯 ADP（Agent Development Platform）的直接链接" title="腾讯 ADP（Agent Development Platform）的直接链接" translate=no>​</a></h3>
+<p>腾讯云 ADP 是腾讯推出的企业级 Agent 开发平台，2025 年升级到 3.0 版本。</p>
+<p>核心功能包括：可视化 Agent 编排、多模型接入（混元大模型及第三方模型）、企业知识库、多渠道发布（微信、企业微信、QQ 等）、权限管理和审计日志、TokenHub 用量监控。</p>
+<p>ADP 3.0 的核心差异化在于企业级治理能力。它内置了完整的 RBAC（Role-Based Access Control，基于角色的访问控制）体系，支持多团队协作和权限隔离。审计日志记录每一次 Agent 调用的详情，满足金融和政企的合规要求。</p>
+<p>腾讯还开源了 Cube（腾讯混元推理引擎），这是一个高性能的 Agent 推理引擎，支持大规模并发调用和智能调度。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=百度千帆--appbuilder--秒哒>百度千帆 / APPBuilder / 秒哒<a href=#百度千帆--appbuilder--秒哒 class=hash-link aria-label="百度千帆 / APPBuilder / 秒哒的直接链接" title="百度千帆 / APPBuilder / 秒哒的直接链接" translate=no>​</a></h3>
+<p>百度千帆平台是企业级大模型开发平台，包含三个核心产品：</p>
+<p><strong>千帆 ModelBuilder</strong>：大模型精调平台，支持 SFT（Supervised Fine-Tuning，监督微调）、LoRA（Low-Rank Adaptation，低秩适配）等微调方法，以及 RLHF（Reinforcement Learning from Human Feedback，基于人类反馈的强化学习）。</p>
+<p><strong>千帆 AppBuilder</strong>：Agent 应用开发平台，提供可视化编排、知识库管理、组件市场。支持百度文心大模型和第三方模型。</p>
+<p><strong>秒哒</strong>：面向个人和小企业的快速 Agent 创建工具，进一步降低门槛。用户通过自然语言描述需求，秒哒自动生成 Agent。</p>
+<p>百度的优势在于 NLP（Natural Language Processing，自然语言处理）技术积累深厚，文心大模型在中文理解方面有天然优势。千帆平台在国内大型企业和政府机构中有较多部署案例。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=阿里云百炼-model-studio>阿里云百炼 Model Studio<a href=#阿里云百炼-model-studio class=hash-link aria-label="阿里云百炼 Model Studio的直接链接" title="阿里云百炼 Model Studio的直接链接" translate=no>​</a></h3>
+<p>阿里云百炼是阿里推出的企业级大模型应用开发平台。</p>
+<p>核心功能包括：模型广场（通义千问系列及第三方模型）、智能体编排、数据管理和标注、模型精调、评测中心、部署服务。</p>
+<p>百炼的市场表现非常突出。通义千问大模型在中国市场的企业级 API 调用量份额达 32.1%，排名第一。这意味着国内每三个使用大模型 API 的企业中，就有一个在用百炼平台。</p>
+<p>百炼的核心架构特点是与阿里云生态的深度整合。如果你已经在用阿里云的 OSS（对象存储）、RDS（关系型数据库）、MaxCompute（大数据平台），接入百炼几乎是零成本。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 阿里云百炼的Agent创建流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class BailianAgent:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def __init__(self, config):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 选择基础模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.model = ModelHub.get(config["model"])  # e.g. "qwen-max"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 配置系统提示词</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.system_prompt = config["system_prompt"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 挂载知识库</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.knowledge_base = RAGService.mount(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            collection=config["kb_collection"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            top_k=config.get("top_k", 5)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 配置工具</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.tools = ToolRegistry.register(config["tools"])</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 设置执行参数</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.params = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "temperature": config.get("temperature", 0.7),</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "max_tokens": config.get("max_tokens", 2000),</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "enable_search": config.get("enable_search", False)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def run(self, user_input):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 构建完整的Agent执行上下文</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        context = self._build_context(user_input)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        response = self.model.chat(context, **self.params)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return response</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=betteryeah-ai>BetterYeah AI<a href=#betteryeah-ai class=hash-link aria-label="BetterYeah AI的直接链接" title="BetterYeah AI的直接链接" translate=no>​</a></h3>
+<p>BetterYeah AI 是 2026 年备受关注的国内 Agent 开发平台，主打企业级智能体解决方案。</p>
+<p>BetterYeah 的差异化在于其"行业模板"策略。平台预置了大量行业场景模板（客服、销售、HR、财务、法务等），用户选择模板后只需配置自己的知识库和业务参数，就能快速上线一个行业专属 Agent。</p>
+<p>这种策略降低了企业使用 AI Agent 的认知门槛——你不需要理解 Agent 的技术原理，只需要知道"我要解决客服问题"就够了。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=腾讯元器>腾讯元器<a href=#腾讯元器 class=hash-link aria-label=腾讯元器的直接链接 title=腾讯元器的直接链接 translate=no>​</a></h3>
+<p>腾讯元器是腾讯推出的轻量级 Agent 创建平台，面向个人和小团队。</p>
+<p>与 ADP 的企业级定位不同，元器更注重易用性和社交分享。创建的 Agent 可以直接在微信内分享和使用，与微信公众号、视频号打通。适合内容创作者和自媒体运营者快速创建互动型 Agent。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=n8n>n8n<a href=#n8n class=hash-link aria-label=n8n的直接链接 title=n8n的直接链接 translate=no>​</a></h3>
+<p>n8n 是一款开源的工作流自动化平台，2025 年后全面拥抱 AI，成为 Agent 开发平台的有力竞争者。</p>
+<p>n8n 的核心是节点式工作流编辑器。与 Coze 和 Dify 类似，用户通过拖拽节点来构建工作流。但 n8n 的独特优势在于其庞大的集成生态——它支持连接 400+ 种第三方服务和 API，从 Slack 到 Stripe 到 Salesforce，几乎覆盖了所有主流 SaaS 服务。</p>
+<p>n8n 的工作流不仅能调用 AI 模型，还能编排非 AI 的业务流程。这使它特别适合"AI + 传统自动化"的混合场景，比如"用 AI 分析邮件内容，根据分析结果更新 CRM 系统中的客户标签，然后触发 Slack 通知"。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># n8n 工作流示例：AI邮件分类与CRM更新</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">workflow = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    "nodes": [</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "type": "emailTrigger",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "config": {"mailbox": "support@company.com"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        },</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "type": "openAI",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "config": {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "model": "gpt-4o",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "prompt": "分类这封邮件：意图（投诉/咨询/建议/其他），紧急程度（1-5），提取关键信息",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "input": "={{ $json.text }}"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        },</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "type": "switch",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "config": {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "rules": [</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    {"condition": "{{ $json.intent === '投诉' }}", "output": "complaint"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    {"condition": "{{ $json.intent === '咨询' }}", "output": "inquiry"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                ]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        },</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "type": "hubspot",  # CRM更新</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "config": {"action": "update_contact", "properties": {"last_interaction": "={{ $now }}"}}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        },</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "type": "slack",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "config": {"channel": "#customer-support", "message": "新{{ $json.intent }}：{{ $json.summary }}"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>n8n 的哲学是"连接一切"。它不试图替代 AI 模型，而是做 AI 与业务系统之间的桥梁。</p>
+</blockquote>
+<p>下面是八款开发平台的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>开发方<th>开源<th>核心优势<th>适合用户<tbody><tr><td>Coze/扣子<td>字节跳动<td>否<td>生态完整、多渠道发布<td>快速验证、内容团队<tr><td>Dify<td>Dify<td>是<td>开源、私有化部署<td>技术团队、数据敏感行业<tr><td>腾讯 ADP<td>腾讯<td>部分<td>企业级治理、Cube开源<td>大型企业、政企<tr><td>百度千帆<td>百度<td>否<td>NLP积累、中文优势<td>政府、大型企业<tr><td>阿里云百炼<td>阿里云<td>否<td>云生态集成、市场第一<td>阿里云用户<tr><td>BetterYeah<td>BetterYeah<td>否<td>行业模板、低门槛<td>非技术团队<tr><td>腾讯元器<td>腾讯<td>否<td>微信生态、轻量<td>内容创作者<tr><td>n8n<td>n8n<td>是<td>400+集成、混合编排<td>自动化工程师</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-平台核心架构解析从-prompt-编排到工作流引擎>2.3 平台核心架构解析：从 Prompt 编排到工作流引擎<a href=#23-平台核心架构解析从-prompt-编排到工作流引擎 class=hash-link aria-label="2.3 平台核心架构解析：从 Prompt 编排到工作流引擎的直接链接" title="2.3 平台核心架构解析：从 Prompt 编排到工作流引擎的直接链接" translate=no>​</a></h2>
+<p>上一节我们看了产品，这一节我们深入技术原理。所有 Agent 开发平台的核心架构都有相似之处，理解了底层原理，切换平台时就能举一反三。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=prompt-编排层>Prompt 编排层<a href=#prompt-编排层 class=hash-link aria-label="Prompt 编排层的直接链接" title="Prompt 编排层的直接链接" translate=no>​</a></h3>
+<p>Prompt 编排是 Agent 平台最基础的能力。它允许用户定义 Agent 的系统提示词、角色设定、行为约束等。但简单的 Prompt 并不能支撑复杂的业务逻辑，所以平台都引入了"Prompt 模板"和"变量注入"机制。</p>
+<p>Prompt 模板的核心原理是变量替换。平台预定义一系列变量（如 <code>{{user_input}}</code>、<code>{{knowledge_base_result}}</code>、<code>{{previous_context}}</code>），用户在 Prompt 中引用这些变量，运行时由平台动态替换为实际值。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Prompt 模板变量替换机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">template = """</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你是一个{{role}}助手。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户问题：{{user_input}}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">相关知识：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">{{knowledge_base_result}}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">历史对话：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">{{conversation_history}}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">要求：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 基于以上知识回答用户问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 如果知识库中没有相关信息，明确告知用户</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 回答简洁专业</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">"""</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 运行时替换</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">rendered = template.format(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    role="客服",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    user_input="如何退款？",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    knowledge_base_result="退款政策：7天内无理由退款...",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    conversation_history="用户：我买了一件衣服\n客服：好的..."</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=工作流引擎>工作流引擎<a href=#工作流引擎 class=hash-link aria-label=工作流引擎的直接链接 title=工作流引擎的直接链接 translate=no>​</a></h3>
+<p>工作流引擎是 Agent 平台的核心。它将一个复杂的 Agent 任务拆解为多个节点的执行图（DAG，Directed Acyclic Graph，有向无环图），每个节点执行一个原子操作，节点之间通过数据流连接。</p>
+<p>工作流引擎的核心组件包括：</p>
+<p><strong>节点（Node）</strong>：执行一个操作的最小单元。常见节点类型包括：LLM 调用、知识库检索、代码执行、条件分支、HTTP 请求、数据转换。</p>
+<p><strong>边（Edge）</strong>：定义节点之间的执行顺序和数据传递。边可以带条件，实现条件分支。</p>
+<p><strong>上下文（Context）</strong>：在整个工作流中共享的数据容器。每个节点可以读取和写入上下文。</p>
+<p><strong>调度器（Scheduler）</strong>：根据节点之间的依赖关系决定执行顺序，支持并行执行无依赖的节点。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 工作流引擎的核心调度逻辑</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class WorkflowEngine:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def execute(self, workflow, initial_context):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        context = initial_context</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ready_nodes = self._get_ready_nodes(workflow, executed=set())</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        while ready_nodes:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 并行执行所有就绪节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            results = parallel_execute(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                [node.run(context) for node in ready_nodes]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 更新上下文</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            for node, result in zip(ready_nodes, results):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context[node.output_key] = result</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 找到下一批就绪节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            executed.update(ready_nodes)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            ready_nodes = self._get_ready_nodes(workflow, executed)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return context</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>工作流引擎就像一条流水线：原材料（用户输入）进来，经过一道道工序（节点），最终产出成品（回答）。好的引擎能并行处理多道工序，大幅提升效率。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=多模型管理层>多模型管理层<a href=#多模型管理层 class=hash-link aria-label=多模型管理层的直接链接 title=多模型管理层的直接链接 translate=no>​</a></h3>
+<p>Agent 平台需要对接多个大模型 API，多模型管理层负责统一管理这些模型。核心功能包括：</p>
+<p><strong>模型路由</strong>：根据任务类型、成本、延迟等因素选择最合适的模型。比如简单分类任务路由到轻量模型，复杂推理任务路由到旗舰模型。</p>
+<p><strong>负载均衡</strong>：在多个模型实例之间分配请求，避免单点过载。</p>
+<p><strong>故障切换</strong>：当某个模型 API 不可用时，自动切换到备用模型。</p>
+<p><strong>用量统计</strong>：记录每个模型的使用量、成本、响应时间，供监控和优化。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=渠道发布层>渠道发布层<a href=#渠道发布层 class=hash-link aria-label=渠道发布层的直接链接 title=渠道发布层的直接链接 translate=no>​</a></h3>
+<p>Agent 平台的最后一环是把创建好的 Agent 发布到用户能接触到的渠道。主流平台支持的渠道包括：Web 网站、App、微信公众号、飞书、钉钉、企业微信、API 接口、SDK 嵌入。</p>
+<p>Coze 在渠道覆盖上最全面，特别是抖音和微信生态的集成。腾讯系产品（ADP、元器）在微信渠道上有天然优势。Dify 和 n8n 作为开源平台，主要通过 API 和嵌入式部署。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-知识库与-rag-搭建实战对比>2.4 知识库与 RAG 搭建实战对比<a href=#24-知识库与-rag-搭建实战对比 class=hash-link aria-label="2.4 知识库与 RAG 搭建实战对比的直接链接" title="2.4 知识库与 RAG 搭建实战对比的直接链接" translate=no>​</a></h2>
+<p>RAG（Retrieval-Augmented Generation，检索增强生成）是 Agent 平台最核心的能力之一。它让 Agent 能基于你的私有知识回答问题，而不是只依赖模型训练时的知识。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=rag-的核心原理>RAG 的核心原理<a href=#rag-的核心原理 class=hash-link aria-label="RAG 的核心原理的直接链接" title="RAG 的核心原理的直接链接" translate=no>​</a></h3>
+<p>RAG 的工作流程分为两个阶段：</p>
+<p><strong>建库阶段</strong>：</p>
+<ol>
+<li class="">文档解析：将 PDF、Word、Excel、网页等格式的文档提取为纯文本。</li>
+<li class="">文本分块：将长文本切分为语义完整的片段（通常 300-500 tokens）。</li>
+<li class="">向量化：用 Embedding 模型将每个文本片段转换为一个高维向量（通常 768 或 1536 维）。</li>
+<li class="">存储：将向量和原始文本一起存入向量数据库。</li>
+</ol>
+<p><strong>检索阶段</strong>：</p>
+<ol>
+<li class="">查询向量化：将用户的问题用同一个 Embedding 模型转换为向量。</li>
+<li class="">相似度检索：在向量数据库中找到与查询向量最相似的前 K 个文本片段。</li>
+<li class="">重排序：用更精细的模型对检索结果重新排序，提升相关性。</li>
+<li class="">生成：将检索到的文本片段和用户问题一起交给大模型生成回答。</li>
+</ol>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># RAG 完整流程的简化实现</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class RAGSystem:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def __init__(self, embedder, vector_store, reranker, llm):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.embedder = embedder      # 向量化模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.vector_store = vector_store  # 向量数据库</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.reranker = reranker      # 重排序模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.llm = llm                # 大语言模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def ingest(self, documents):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """建库阶段"""</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for doc in documents:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 解析+分块</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            chunks = self._chunk_document(doc, max_tokens=500, overlap=50)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 向量化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            embeddings = [self.embedder.encode(chunk.text) for chunk in chunks]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 存储</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            for chunk, emb in zip(chunks, embeddings):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                self.vector_store.add({</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "id": chunk.id,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "text": chunk.text,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "embedding": emb,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "metadata": chunk.metadata  # 来源、页码等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                })</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def query(self, question, top_k=5):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """检索阶段"""</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 查询向量化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        query_vec = self.embedder.encode(question)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 向量检索（余弦相似度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        candidates = self.vector_store.search(query_vec, top_k=top_k * 3)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 重排序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        reranked = self.reranker.rerank(question, candidates)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        top_context = reranked[:top_k]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 构建Prompt并生成回答</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        context_text = "\n\n".join([item["text"] for item in top_context])</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        prompt = f"""基于以下参考资料回答用户问题。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">参考资料：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">{context_text}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户问题：{question}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回答要求：基于参考资料回答，如果资料中没有相关信息请说明。"""</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return self.llm.generate(prompt)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=各平台-rag-能力对比>各平台 RAG 能力对比<a href=#各平台-rag-能力对比 class=hash-link aria-label="各平台 RAG 能力对比的直接链接" title="各平台 RAG 能力对比的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>文档格式支持<th>分块策略<th>向量数据库<th>重排序<th>混合检索<tbody><tr><td>Coze<td>PDF/Word/Excel/网页<td>固定长度+语义<td>内置<td>支持<td>支持<tr><td>Dify<td>PDF/Word/Excel/HTML/Markdown<td>语义+递归<td>Weaviate/Qdrant/Milvus<td>支持<td>支持（关键词+向量）<tr><td>腾讯 ADP<td>PDF/Word/Excel/图片<td>语义分块<td>内置+腾讯云向量DB<td>支持<td>支持<tr><td>百度千帆<td>PDF/Word/Excel/网页<td>语义+段落<td>内置<td>支持<td>支持<tr><td>阿里云百炼<td>PDF/Word/Excel/HTML<td>语义+递归<td>阿里云OpenSearch<td>支持<td>支持<tr><td>n8n<td>任意（通过节点处理）<td>自定义<td>外接（Pinecone等）<td>需手动配置<td>需手动配置</table>
+<blockquote>
+<p>RAG 的质量不取决于平台，而取决于你的数据质量和分块策略。垃圾进，垃圾出——这是 RAG 的第一定律。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=rag-搭建的三个常见坑>RAG 搭建的三个常见坑<a href=#rag-搭建的三个常见坑 class=hash-link aria-label="RAG 搭建的三个常见坑的直接链接" title="RAG 搭建的三个常见坑的直接链接" translate=no>​</a></h3>
+<p><strong>坑一：分块太大或太小</strong>。分块太大，检索精度下降（一个片段包含太多信息，模型难以定位关键部分）；分块太小，上下文不完整（一个片段只有半句话，模型无法理解含义）。建议从 500 tokens 开始，overlap 设为 50-100 tokens，然后根据效果调整。</p>
+<p><strong>坑二：没有重排序</strong>。向量检索的 Top-K 结果中，往往只有 2-3 个真正相关。直接把所有结果交给模型会导致"噪音干扰"。重排序模型（如 Cohere Rerank、bge-reranker）能显著提升精度。</p>
+<p><strong>坑三：忽略了混合检索</strong>。纯向量检索对精确匹配（如产品型号、人名）效果不好。混合检索（Hybrid Search）结合关键词检索（BM25）和向量检索，能同时处理精确匹配和语义匹配。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-企业选型决策矩阵成本生态私有化扩展性>2.5 企业选型决策矩阵：成本、生态、私有化、扩展性<a href=#25-企业选型决策矩阵成本生态私有化扩展性 class=hash-link aria-label="2.5 企业选型决策矩阵：成本、生态、私有化、扩展性的直接链接" title="2.5 企业选型决策矩阵：成本、生态、私有化、扩展性的直接链接" translate=no>​</a></h2>
+<p>最后一节，把所有维度整合起来，给你一个可操作的选型框架。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=四维评估模型>四维评估模型<a href=#四维评估模型 class=hash-link aria-label=四维评估模型的直接链接 title=四维评估模型的直接链接 translate=no>​</a></h3>
+<p>我建议从四个维度评估 Agent 开发平台：</p>
+<p><strong>维度一：总拥有成本（TCO，Total Cost of Ownership）</strong></p>
+<p>成本不只是平台使用费，还包括：模型 API 调用费、数据存储费、开发和维护人力成本、培训成本、迁移成本。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>平台费用<th>模型费用<th>隐性成本<tbody><tr><td>Coze<td>免费起步<td>按量计费<td>迁移锁定风险<tr><td>Dify<td>开源免费<td>模型API费<td>服务器运维<tr><td>腾讯 ADP<td>企业版按年<td>模型API费<td>腾讯云绑定<tr><td>百度千帆<td>按量计费<td>模型API费<td>百度生态绑定<tr><td>阿里云百炼<td>按量计费<td>模型API费<td>阿里云绑定<tr><td>n8n<td>社区版免费<td>模型API费<td>自行运维</table>
+<blockquote>
+<p>免费的才是最贵的——开源省了许可费，但运维成本可能更高。算清楚 TCO 再做决定。</p>
+</blockquote>
+<p><strong>维度二：生态完整度</strong></p>
+<p>生态包括：模型支持数量、预置插件/工具数量、第三方集成、社区活跃度、文档质量。</p>
+<p>Coze 在插件数量和多渠道发布上领先。Dify 的开源社区最活跃。n8n 的第三方集成最丰富。阿里云百炼在云服务集成上最强。</p>
+<p><strong>维度三：私有化与安全</strong></p>
+<p>是否支持私有化部署、数据是否经过第三方、是否有完整的审计日志、是否满足行业合规要求（如等保、GDPR）。</p>
+<p>Dify 和 n8n 是开源自部署，数据完全自主。腾讯 ADP 和百度千帆支持私有化部署但有许可费。Coze 目前是纯 SaaS 模式，不支持私有化。</p>
+<p><strong>维度四：扩展性与定制深度</strong></p>
+<p>当平台预置能力不够时，你能多大程度地扩展？是否支持自定义节点、自定义代码、自定义模型、Webhook 等。</p>
+<p>Dify 和 n8n 在扩展性上最强——你可以编写自定义节点，实现任何逻辑。Coze 支持自定义插件但有限制。腾讯 ADP 和阿里云百炼在云服务范围内扩展性好，超出范围则受限。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=选型决策树>选型决策树<a href=#选型决策树 class=hash-link aria-label=选型决策树的直接链接 title=选型决策树的直接链接 translate=no>​</a></h3>
+<p>把四个维度组合起来，我给出一个决策树：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你的数据是否敏感（金融/医疗/政府）？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 是 → 需要私有化部署</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 技术团队强 → Dify（开源、灵活）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 技术团队弱 → 腾讯 ADP / 百度千帆（企业版私有化）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── 预算有限 → n8n 社区版</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── 否 → 可以用 SaaS 平台</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── 需要多渠道发布（微信/抖音） → Coze</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── 已有云服务生态 → 对应云平台（百炼/千帆/ADP）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── 需要大量第三方集成 → n8n</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── 非技术团队、要快速上线 → BetterYeah</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └── 个人/小团队轻量使用 → 腾讯元器</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=新手-vs-老手的选型区别>新手 vs 老手的选型区别<a href=#新手-vs-老手的选型区别 class=hash-link aria-label="新手 vs 老手的选型区别的直接链接" title="新手 vs 老手的选型区别的直接链接" translate=no>​</a></h3>
+<p>新手选平台看"能做什么"——哪个平台功能多、模板多、看起来强大就选哪个。结果经常陷入"功能很多但用不起来"的困境。</p>
+<p>老手选平台看"不能做什么"和"退出成本"——哪个平台的限制我能接受？如果将来要迁移，成本有多高？数据格式是否开放？API 是否标准？</p>
+<blockquote>
+<p>新手选平台像选手机，看参数。老手选平台像选配偶，看合不合适和能不能分手。</p>
+</blockquote>
+<p>这一章我们系统性地拆解了 8 款 Agent 开发平台（Coze、Dify、腾讯 ADP、百度千帆、阿里云百炼、BetterYeah、腾讯元器、n8n），深入解析了平台的核心架构（Prompt 编排、工作流引擎、多模型管理、渠道发布），对比了 RAG 能力，最后给出了四维选型决策模型。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台类别<th>产品数量<th>市场格局<tbody><tr><td>闭源 SaaS<td>5 款<td>Coze 用户量领先<tr><td>开源自部署<td>2 款<td>Dify 开源第一<tr><td>云厂商平台<td>3 款<td>阿里云百炼调用量第一</table>
+<p>觉得有用？收藏起来，下次选平台直接照抄决策树。</p>
+<p>你在用哪个 Agent 开发平台？有没有遇到什么坑？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲 AI Agent 开发框架——LangChain、AutoGen、CrewAI 这些代码级框架到底怎么选。系列进度 2/10，关注不错过后续更新。</p>
+<p>下一篇，怕浪猫会带你进入代码级 Agent 开发的世界。LangChain 和 AutoGen 的多 Agent 协作有什么区别？CrewAI 凭什么在短短一年内成为开发者的新宠？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_2.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>AI Agent 开发框架——代码级智能体编排</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#21-开发平台-vs-开发框架两条路线的选择 class="table-of-contents__link toc-highlight">2.1 开发平台 vs 开发框架：两条路线的选择</a><li><a href=#22-零代码平台深度拆解 class="table-of-contents__link toc-highlight">2.2 零代码平台深度拆解</a><ul><li><a href=#coze--扣子字节跳动 class="table-of-contents__link toc-highlight">Coze / 扣子（字节跳动）</a><li><a href=#dify class="table-of-contents__link toc-highlight">Dify</a><li><a href=#腾讯-adpagent-development-platform class="table-of-contents__link toc-highlight">腾讯 ADP（Agent Development Platform）</a><li><a href=#百度千帆--appbuilder--秒哒 class="table-of-contents__link toc-highlight">百度千帆 / APPBuilder / 秒哒</a><li><a href=#阿里云百炼-model-studio class="table-of-contents__link toc-highlight">阿里云百炼 Model Studio</a><li><a href=#betteryeah-ai class="table-of-contents__link toc-highlight">BetterYeah AI</a><li><a href=#腾讯元器 class="table-of-contents__link toc-highlight">腾讯元器</a><li><a href=#n8n class="table-of-contents__link toc-highlight">n8n</a></ul><li><a href=#23-平台核心架构解析从-prompt-编排到工作流引擎 class="table-of-contents__link toc-highlight">2.3 平台核心架构解析：从 Prompt 编排到工作流引擎</a><ul><li><a href=#prompt-编排层 class="table-of-contents__link toc-highlight">Prompt 编排层</a><li><a href=#工作流引擎 class="table-of-contents__link toc-highlight">工作流引擎</a><li><a href=#多模型管理层 class="table-of-contents__link toc-highlight">多模型管理层</a><li><a href=#渠道发布层 class="table-of-contents__link toc-highlight">渠道发布层</a></ul><li><a href=#24-知识库与-rag-搭建实战对比 class="table-of-contents__link toc-highlight">2.4 知识库与 RAG 搭建实战对比</a><ul><li><a href=#rag-的核心原理 class="table-of-contents__link toc-highlight">RAG 的核心原理</a><li><a href=#各平台-rag-能力对比 class="table-of-contents__link toc-highlight">各平台 RAG 能力对比</a><li><a href=#rag-搭建的三个常见坑 class="table-of-contents__link toc-highlight">RAG 搭建的三个常见坑</a></ul><li><a href=#25-企业选型决策矩阵成本生态私有化扩展性 class="table-of-contents__link toc-highlight">2.5 企业选型决策矩阵：成本、生态、私有化、扩展性</a><ul><li><a href=#四维评估模型 class="table-of-contents__link toc-highlight">四维评估模型</a><li><a href=#选型决策树 class="table-of-contents__link toc-highlight">选型决策树</a><li><a href=#新手-vs-老手的选型区别 class="table-of-contents__link toc-highlight">新手 vs 老手的选型区别</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

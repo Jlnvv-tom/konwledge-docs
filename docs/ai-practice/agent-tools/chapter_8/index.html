@@ -1,0 +1,300 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_8" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_8 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地 | 知识库"/><meta data-rh=true name=description content='金融 Agent 把 78 分钟的对账压缩到 4 分钟，医疗 Agent 开源了，制造 Agent 能预测设备故障。垂直行业的 AI Agent 不是在"尝试落地"，而是在"创造价值"。'/><meta data-rh=true property=og:description content='金融 Agent 把 78 分钟的对账压缩到 4 分钟，医疗 Agent 开源了，制造 Agent 能预测设备故障。垂直行业的 AI Agent 不是在"尝试落地"，而是在"创造价值"。'/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_8 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_8 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_8 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_8","name":"垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</h1></header>
+<p>金融 Agent 把 78 分钟的对账压缩到 4 分钟，医疗 Agent 开源了，制造 Agent 能预测设备故障。垂直行业的 AI Agent 不是在"尝试落地"，而是在"创造价值"。</p>
+<p>我是怕浪猫，《智能体产品全景手册》第 8 篇。前面几篇讲的都是通用型产品和平台，这一篇我们换个视角——垂直行业。通用 AI Agent 什么都能做，但什么都不精。真正的商业价值，往往藏在垂直行业的深度场景中。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=81-垂直行业-agent-的三大流派>8.1 垂直行业 Agent 的三大流派<a href=#81-垂直行业-agent-的三大流派 class=hash-link aria-label="8.1 垂直行业 Agent 的三大流派的直接链接" title="8.1 垂直行业 Agent 的三大流派的直接链接" translate=no>​</a></h2>
+<p>在拆解具体产品之前，先看清楚垂直行业 Agent 的三大流派。这三大流派代表了不同的切入策略。</p>
+<p><strong>流派一：通用大模型派</strong></p>
+<p>代表企业：百度、阿里、讯飞星火星辰。</p>
+<p>策略：用通用大模型能力覆盖多行业需求。百度文心 AgentBuilder、阿里云百炼、讯飞星火都能做行业 Agent，但它们的基础是通用大模型，通过微调和知识库注入来适配行业。</p>
+<p>优势：技术积累深、模型能力强、跨行业覆盖广。
+劣势：行业深度不够。通用模型不懂行业黑话、不知道行业特有的业务逻辑、缺乏行业数据的深度训练。</p>
+<p><strong>流派二：RPA 老兵派</strong></p>
+<p>代表企业：实在智能（实在 Agent）。</p>
+<p>策略：在已有的 RPA 能力上叠加 AI 大模型。RPA 负责执行，AI 负责理解和决策。</p>
+<p>优势：执行能力强。RPA 老兵已经在企业中部署了大量自动化流程，有现成的执行引擎和系统集成经验。叠加 AI 后，从"固定流程自动化"升级到"灵活流程自动化"。
+劣势：AI 推理能力依赖外部模型，自身没有大模型研发能力。</p>
+<p><strong>流派三：垂直场景派</strong></p>
+<p>代表企业：华为盘古（制造）、京东云 JoyAgent（企业通用）、京医千询（医疗开源）。</p>
+<p>策略：从零开始，针对特定行业构建专属 Agent。用行业数据训练专属模型，设计行业专属的工作流和工具。</p>
+<p>优势：行业深度最强。理解行业黑话、知道业务逻辑、有行业数据壁垒。
+劣势：覆盖面窄。一个垂直 Agent 只能服务一个行业，迁移成本高。</p>
+<blockquote>
+<p>通用派是"万金油"，RPA 派是"老师傅"，垂直派是"专科医生"。企业选型时，行业越特殊越需要垂直派，流程越标准越适合 RPA 派。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=三大流派对比>三大流派对比<a href=#三大流派对比 class=hash-link aria-label=三大流派对比的直接链接 title=三大流派对比的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>通用大模型派<th>RPA 老兵派<th>垂直场景派<tbody><tr><td>核心能力<td>大模型+微调<td>RPA+AI<td>行业专属模型<tr><td>行业深度<td>中<td>中<td>高<tr><td>覆盖行业<td>广<td>中<td>窄<tr><td>定制成本<td>中<td>低<td>高<tr><td>部署速度<td>快<td>快<td>慢<tr><td>代表产品<td>阿里云百炼<td>实在 Agent<td>华为盘古</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=82-金融行业金智维-ki-agents>8.2 金融行业：金智维 Ki-AgentS<a href=#82-金融行业金智维-ki-agents class=hash-link aria-label="8.2 金融行业：金智维 Ki-AgentS的直接链接" title="8.2 金融行业：金智维 Ki-AgentS的直接链接" translate=no>​</a></h2>
+<p>金融行业是 AI Agent 商业化最快的垂直领域之一。原因很简单：金融行业数据密集、流程标准化程度高、合规要求严格、IT 预算充足。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=金智维-ki-agents>金智维 Ki-AgentS<a href=#金智维-ki-agents class=hash-link aria-label="金智维 Ki-AgentS的直接链接" title="金智维 Ki-AgentS的直接链接" translate=no>​</a></h3>
+<p>金智维是中国金融行业 RPA 和智能自动化的领导者。Ki-AgentS 是其 AI Agent 产品，专门面向金融场景。</p>
+<p>核心场景包括：</p>
+<p><strong>智能对账</strong>：传统对账流程需要财务人员从多个系统（银行流水系统、ERP、财务系统）导出数据，手工比对，耗时 78 分钟。Ki-AgentS 通过 AI 理解对账需求，自动从各系统获取数据，智能匹配和核对，将时间压缩到 4 分钟，差错率降为 0。</p>
+<p><strong>合规审查</strong>：金融行业有大量合规审查需求——客户身份验证（KYC，Know Your Customer）、反洗钱（AML，Anti-Money Laundering）筛查、交易监控。Ki-AgentS 能自动执行这些审查流程，识别可疑交易，生成合规报告。</p>
+<p><strong>信贷审批</strong>：分析申请人提交的资料（收入证明、征信报告、资产证明），自动核验信息真实性，评估信用风险，生成审批建议。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 金智维 Ki-AgentS 的对账流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class KiAgentSReconciliation:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def reconcile(self, date_range):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 多源数据获取</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        bank_statements = self.bank_api.get_statements(date_range)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        erp_records = self.erp_api.get_transactions(date_range)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        finance_records = self.finance_api.get_entries(date_range)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. AI驱动的智能匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 传统RPA靠规则匹配（金额一致、日期一致）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # Ki-AgentS用AI理解语义，处理模糊匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        matches = self.llm.match_transactions(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            bank=bank_statements,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            erp=erp_records,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            finance=finance_records,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            rules={</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "exact_match": "金额和日期完全一致",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "fuzzy_match": "金额有小数点差异或日期相差1-2天",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "aggregated_match": "多笔小额交易合并等于一笔大额"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 异常识别</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        anomalies = self.llm.identify_anomalies(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            unmatched=matches.unmatched,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context="金融对账异常检测"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 生成对账报告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        report = self.generate_report(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            matched=matches.matched,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            unmatched=matches.unmatched,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            anomalies=anomalies</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "status": "completed",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "time_seconds": 240,  # 4分钟</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "accuracy": 1.0,      # 差错率0</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "report": report</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        }</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=金融-agent-的核心技术挑战>金融 Agent 的核心技术挑战<a href=#金融-agent-的核心技术挑战 class=hash-link aria-label="金融 Agent 的核心技术挑战的直接链接" title="金融 Agent 的核心技术挑战的直接链接" translate=no>​</a></h3>
+<p>金融场景对 AI Agent 有几个特殊要求：</p>
+<p><strong>精度要求极高</strong>。金融数据不能有错——一个零的差距就是十倍的金额差异。AI Agent 的输出必须经过严格验证，不能容忍幻觉。</p>
+<p><strong>合规审计要求</strong>。金融 Agent 的每一步操作都需要留痕，满足银保监会、证监会的审计要求。Agent 的决策过程必须是可解释的，不能用"黑盒"模型。</p>
+<p><strong>数据安全要求</strong>。金融数据属于敏感个人信息，不能发送到外部 API。Agent 必须支持私有化部署，数据不出内网。</p>
+<blockquote>
+<p>金融 Agent 的核心矛盾是：AI 越强大越不透明，监管越要求透明。解法是用"AI 做执行 + 规则做验证"的混合模式。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=83-医疗行业京医千询--ai-京医>8.3 医疗行业：京医千询 / AI 京医<a href=#83-医疗行业京医千询--ai-京医 class=hash-link aria-label="8.3 医疗行业：京医千询 / AI 京医的直接链接" title="8.3 医疗行业：京医千询 / AI 京医的直接链接" translate=no>​</a></h2>
+<p>医疗是 AI Agent 最有社会价值的垂直领域。一个能辅助医生诊断、减少误诊的 Agent，可能拯救无数生命。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=京医千询京东健康>京医千询（京东健康）<a href=#京医千询京东健康 class=hash-link aria-label=京医千询（京东健康）的直接链接 title=京医千询（京东健康）的直接链接 translate=no>​</a></h3>
+<p>京医千询是京东健康推出的医疗 AI Agent，2025 年宣布开源，是全球首个开源的医疗 Agent 系统。</p>
+<p>核心能力：</p>
+<p><strong>智能问诊</strong>：患者描述症状后，Agent 进行多轮追问，收集完整的病史信息。追问逻辑参考临床医生的问诊流程——主诉、现病史、既往史、家族史、过敏史。</p>
+<p><strong>辅助诊断</strong>：基于问诊收集的信息，Agent 生成初步诊断建议。注意是"辅助"不是"替代"——最终诊断由医生确认。Agent 的价值在于提供第二意见和减少遗漏。</p>
+<p><strong>检查建议</strong>：根据症状和初步判断，建议需要做的检查项目。避免过度检查和遗漏关键检查。</p>
+<p><strong>用药指导</strong>：根据诊断结果和患者信息（年龄、体重、过敏史、正在使用的药物），推荐用药方案，检查药物相互作用。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 京医千询的智能问诊流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class JingyiAgent:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def consult(self, patient_info, chief_complaint):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 初始化问诊上下文</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        context = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "patient": patient_info,  # 年龄、性别、既往史等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "chief_complaint": chief_complaint,  # 主诉</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "history": []  # 问诊历史</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 多轮问诊循环</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        questions_asked = 0</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        max_questions = 10  # 最多追问10轮</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        while questions_asked &lt; max_questions:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 1. 根据已有信息生成追问问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            next_question = self.llm.generate_question(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context=context,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                clinical_guidelines=self.guidelines</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 2. 判断是否信息已充分</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            if next_question == "SUFFICIENT_INFO":</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                break</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 3. 向患者提问（通过对话界面）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            answer = self.ask_patient(next_question)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context["history"].append({</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "question": next_question,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "answer": answer</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            })</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            questions_asked += 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 生成辅助诊断建议</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        differential_diagnosis = self.llm.diagnose(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context=context,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            knowledge_base=self.medical_kb,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            guidelines=self.clinical_guidelines</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # differential_diagnosis = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "primary_diagnosis": "急性上呼吸道感染",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "confidence": 0.82,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "differential": ["过敏性鼻炎", "流感"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "recommended_exams": ["血常规", "C反应蛋白"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "red_flags": ["如出现高热>39°C或呼吸困难请立即就医"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 生成结构化病历</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        medical_record = self.generate_record(context, differential_diagnosis)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "diagnosis": differential_diagnosis,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "record": medical_record,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            "disclaimer": "本结果由AI生成，仅供医生参考，不能替代医生诊断"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        }</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=开源的意义>开源的意义<a href=#开源的意义 class=hash-link aria-label=开源的意义的直接链接 title=开源的意义的直接链接 translate=no>​</a></h3>
+<p>京医千询开源是一个标志性事件。医疗 AI 领域此前主要由大公司主导（Google DeepMind 的 AlphaFold、百度的灵医智惠），开源产品很少。</p>
+<p>开源的意义在于：</p>
+<p><strong>降低门槛</strong>：中小医院和研究机构可以使用和改进系统，不需要从零开发。</p>
+<p><strong>透明度</strong>：开源让医疗 AI 的算法和逻辑可以被审查，这对于建立医患信任至关重要。闭源医疗 AI 是黑盒，医生和患者都无法知道它是怎么得出结论的。</p>
+<p><strong>生态建设</strong>：开源吸引开发者贡献医疗知识库、临床指南、药品数据库等资源，形成社区驱动的医疗 AI 生态。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=医疗-agent-的伦理边界>医疗 Agent 的伦理边界<a href=#医疗-agent-的伦理边界 class=hash-link aria-label="医疗 Agent 的伦理边界的直接链接" title="医疗 Agent 的伦理边界的直接链接" translate=no>​</a></h3>
+<p>医疗 Agent 面临的核心问题不是技术，而是伦理：</p>
+<p><strong>责任归属</strong>：如果 AI Agent 给出了错误的诊断建议，导致患者延误治疗，责任在谁？AI 开发商？医院？医生？目前法律还没有明确答案。</p>
+<p><strong>知情同意</strong>：患者是否有权知道自己的诊断是由 AI 辅助的？患者是否有权拒绝使用 AI？</p>
+<p><strong>能力边界</strong>：AI 能做到什么程度？能独立诊断吗？能开处方吗？能做手术决策吗？目前共识是：AI 只能辅助，不能替代医生。</p>
+<blockquote>
+<p>医疗 Agent 的终局不是"AI 替代医生"，而是"AI 解放医生的时间，让医生专注于真正需要人类判断的决策"。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=84-制造业华为盘古-agent>8.4 制造业：华为盘古 Agent<a href=#84-制造业华为盘古-agent class=hash-link aria-label="8.4 制造业：华为盘古 Agent的直接链接" title="8.4 制造业：华为盘古 Agent的直接链接" translate=no>​</a></h2>
+<p>制造业是 AI Agent 商业价值最高的垂直领域之一。华为盘古大模型在制造业的 Agent 应用走在了前列。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=核心场景>核心场景<a href=#核心场景 class=hash-link aria-label=核心场景的直接链接 title=核心场景的直接链接 translate=no>​</a></h3>
+<p><strong>设备预测性维护</strong>：工厂设备（数控机床、注塑机、压缩机）的故障会导致生产线停工，损失巨大。盘古 Agent 通过分析设备的传感器数据（温度、振动、电流），预测设备何时可能故障，提前安排维护。</p>
+<p>预测性维护的核心是时序数据分析和异常检测。盘古大模型在大量历史故障数据上训练，学会了识别故障前兆模式。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 华为盘古设备预测性维护</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class PanguPredictiveMaintenance:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def predict_failure(self, device_id, sensor_data):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # sensor_data = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "temperature": [72.3, 72.5, 73.1, 74.2, 75.8],  # 温度上升趋势</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "vibration": [0.12, 0.13, 0.15, 0.19, 0.25],    # 振动增大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "current": [8.2, 8.3, 8.5, 8.9, 9.4],            # 电流增大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "timestamps": ["10:00", "10:05", "10:10", "10:15", "10:20"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 时序特征提取</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        features = self.feature_extractor.extract(sensor_data)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # features = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "temp_trend": "increasing",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "temp_rate": 0.7,  # 度/分钟</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "vibration_anomaly_score": 0.82,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "current_deviation": 1.2  # 偏离基线1.2A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 故障预测</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        prediction = self.pangu_model.predict(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            features=features,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            device_type=self.device_registry.get_type(device_id),</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            historical_failures=self.failure_db.get_similar(device_id)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # prediction = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "failure_probability_7d": 0.78,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "likely_failure_type": "轴承磨损",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "estimated_failure_time": "3-5天内",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "recommended_action": "计划性停机维护，更换轴承",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "confidence": 0.85</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 生成维护计划</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        if prediction["failure_probability_7d"] > 0.7:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            maintenance_plan = self.generate_maintenance_plan(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                device_id=device_id,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                prediction=prediction,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                production_schedule=self.schedule_api.get_schedule()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            return {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "alert": "HIGH_RISK",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "prediction": prediction,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                "plan": maintenance_plan</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return {"alert": "NORMAL", "prediction": prediction}</span><br/></div></code></pre></div></div>
+<p><strong>质量检测</strong>：盘古视觉模型能检测产品表面的缺陷（划痕、凹陷、色差），精度超过传统机器视觉方案。传统方案需要为每种缺陷编写规则，盘古模型通过少量样本学习就能识别新型缺陷。</p>
+<p><strong>供应链优化</strong>：Agent 分析供应链数据（库存、需求预测、物流状态），自动优化采购计划和生产排程。当供应链出现异常（如原材料延迟到货），Agent 能快速重新规划生产计划。</p>
+<p><strong>工艺参数优化</strong>：在化工、冶金等行业，生产工艺参数（温度、压力、配比）的微小变化会影响产品质量。盘古 Agent 能学习最优参数组合，持续优化生产流程。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=华为盘古的差异化>华为盘古的差异化<a href=#华为盘古的差异化 class=hash-link aria-label=华为盘古的差异化的直接链接 title=华为盘古的差异化的直接链接 translate=no>​</a></h3>
+<p>华为盘古在制造业的差异化优势在于：</p>
+<p><strong>行业数据积累</strong>：华为在制造、能源、交通等行业有大量客户，积累了丰富的行业数据。这些数据是训练行业专属模型的基础。</p>
+<p><strong>端云协同</strong>：华为能提供从边缘设备（Atlas 系列边缘计算盒子）到云端的全栈方案。时延敏感的场景（如实时质量检测）在边缘端运行，计算密集的场景（如模型训练）在云端运行。</p>
+<p><strong>生态整合</strong>：华为的 5G + AI + 工业互联网的组合，能实现工厂数字化转型的完整方案。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=85-京东-joyagent-与其他垂直-agent>8.5 京东 JoyAgent 与其他垂直 Agent<a href=#85-京东-joyagent-与其他垂直-agent class=hash-link aria-label="8.5 京东 JoyAgent 与其他垂直 Agent的直接链接" title="8.5 京东 JoyAgent 与其他垂直 Agent的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=京东云-joyagent>京东云 JoyAgent<a href=#京东云-joyagent class=hash-link aria-label="京东云 JoyAgent的直接链接" title="京东云 JoyAgent的直接链接" translate=no>​</a></h3>
+<p>JoyAgent 是京东云推出的企业级 Agent 平台，主打"通用+垂直"的混合模式。</p>
+<p>JoyAgent 的特色是继承了京东在电商和物流领域的实践经验。在订单管理、库存优化、物流调度、智能客服等场景有深度的 Agent 解决方案。</p>
+<p>京东还推出了"京医千询"医疗 Agent（已开源）和"京慧"供应链 Agent，展示了其垂直行业拓展的能力。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=法律-agentharvey>法律 Agent：Harvey<a href=#法律-agentharvey class=hash-link aria-label="法律 Agent：Harvey的直接链接" title="法律 Agent：Harvey的直接链接" translate=no>​</a></h3>
+<p>Harvey 是法律行业的 AI Agent，由 OpenAI Startup Fund 投资。它能分析合同、起草法律文书、进行法律研究。</p>
+<p>Harvey 的核心能力是法律文本的理解和生成。法律文本有其特殊的语言模式和逻辑结构，通用大模型在处理法律文本时经常出现理解偏差。Harvey 在大量法律文本上进行了专项训练，能精确理解法律条款的含义和影响。</p>
+<p>Harvey 已被多家大型律师事务所采用，包括 Allen & Overy、PwC 等。它不是替代律师，而是将律师从重复性文书工作中解放出来，专注于需要法律判断的核心工作。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=教育-agent>教育 Agent<a href=#教育-agent class=hash-link aria-label="教育 Agent的直接链接" title="教育 Agent的直接链接" translate=no>​</a></h3>
+<p>教育领域的 AI Agent 正在快速发展。核心场景包括：</p>
+<p><strong>个性化辅导</strong>：Agent 根据学生的学习进度和知识薄弱点，生成个性化的学习计划和练习题。</p>
+<p><strong>作业批改</strong>：自动批改作业和试卷，提供详细的反馈和错误分析。</p>
+<p><strong>智能答疑</strong>：学生在学习过程中遇到问题，Agent 能即时解答，并给出相关知识点链接。</p>
+<blockquote>
+<p>教育 Agent 的核心价值不是"教得更好"，而是"让每个学生都有一个私人教师"。教育资源的公平化，才是 AI 在教育领域最大的价值。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=86-垂直行业-agent-选型指南>8.6 垂直行业 Agent 选型指南<a href=#86-垂直行业-agent-选型指南 class=hash-link aria-label="8.6 垂直行业 Agent 选型指南的直接链接" title="8.6 垂直行业 Agent 选型指南的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=选型维度>选型维度<a href=#选型维度 class=hash-link aria-label=选型维度的直接链接 title=选型维度的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>说明<th>重要性<tbody><tr><td>行业专属能力<td>是否理解行业术语和业务逻辑<td>极高<tr><td>数据安全<td>是否支持私有化部署<td>高<tr><td>集成深度<td>是否能与行业核心系统对接<td>高<tr><td>合规认证<td>是否有行业资质认证<td>中高<tr><td>扩展性<td>能否随业务增长扩展<td>中<tr><td>成本<td>TCO 是否可接受<td>中</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景化推荐>场景化推荐<a href=#场景化推荐 class=hash-link aria-label=场景化推荐的直接链接 title=场景化推荐的直接链接 translate=no>​</a></h3>
+<p><strong>金融行业</strong>：</p>
+<ul>
+<li class="">通用场景：金智维 Ki-AgentS（金融 RPA+AI 最成熟）</li>
+<li class="">大型银行私有化：IBM watsonx（AI 治理最强）+ 自研</li>
+<li class="">信贷风控：阿里云百炼 + 金融知识库</li>
+</ul>
+<p><strong>医疗行业</strong>：</p>
+<ul>
+<li class="">开源自建：京医千询（唯一开源医疗 Agent）</li>
+<li class="">商业方案：百度灵医智惠、腾讯觅影</li>
+<li class="">药物研发：Insilico Medicine（AI 药物发现）</li>
+</ul>
+<p><strong>制造业</strong>：</p>
+<ul>
+<li class="">通用场景：华为盘古（行业数据最深）</li>
+<li class="">设备维护：西门子 MindSphere + AI</li>
+<li class="">质量检测：海康威视 AI 视觉 + Agent</li>
+</ul>
+<p><strong>法律行业</strong>：</p>
+<ul>
+<li class="">大型律所：Harvey（已被顶级律所验证）</li>
+<li class="">中小团队：通义千问 + 法律知识库</li>
+</ul>
+<p><strong>教育行业</strong>：</p>
+<ul>
+<li class="">K12 辅导：学而思 AI、科大讯飞星火</li>
+<li class="">高等教育：Kimi + 学术知识库</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>行业<th>首选产品<th>备选<th>开源方案<tbody><tr><td>金融<td>金智维 Ki-AgentS<td>IBM watsonx<td>-<tr><td>医疗<td>京医千询(开源)<td>百度灵医智惠<td>京医千询<tr><td>制造<td>华为盘古<td>西门子+AI<td>-<tr><td>法律<td>Harvey<td>通义千问+KB<td>-<tr><td>教育<td>科大讯飞星火<td>Kimi+学术KB<td>-</table>
+<blockquote>
+<p>垂直行业 Agent 选型的核心原则：行业理解力 > 技术先进性。一个懂行业黑话的"笨"Agent，比一个不懂行业的"聪明"Agent 有用得多。</p>
+</blockquote>
+<p>这一章我们拆解了垂直行业 Agent 的三大流派（通用大模型派、RPA 老兵派、垂直场景派），深入分析了金融（金智维 Ki-AgentS）、医疗（京医千询开源）、制造（华为盘古）三大领域的 Agent 落地，还覆盖了法律（Harvey）和教育行业的 Agent 应用。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>行业<th>产品数量<th>核心价值<tbody><tr><td>金融<td>3 款<td>对账4分钟、合规自动化<tr><td>医疗<td>2 款<td>辅助诊断、开源生态<tr><td>制造<td>2 款<td>预测维护、质量检测<tr><td>法律/教育<td>3 款<td>文书自动化、个性化辅导</table>
+<p>觉得有用？收藏起来，下次行业选型直接照着表选。</p>
+<p>你在哪个行业？你的行业有 AI Agent 在用吗？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲 AIGC 创作工具——AI 图像、视频、音乐、数字人。Midjourney、Sora 2、Suno、ElevenLabs 这些工具到底能做出什么。系列进度 8/10，关注不错过后续更新。</p>
+<p>下一篇，怕浪猫会带你走进 AIGC 创作工具的世界。AI 能画图、能拍视频、能写歌、能做数字人了，创意工作者要失业了吗？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_8.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#81-垂直行业-agent-的三大流派 class="table-of-contents__link toc-highlight">8.1 垂直行业 Agent 的三大流派</a><ul><li><a href=#三大流派对比 class="table-of-contents__link toc-highlight">三大流派对比</a></ul><li><a href=#82-金融行业金智维-ki-agents class="table-of-contents__link toc-highlight">8.2 金融行业：金智维 Ki-AgentS</a><ul><li><a href=#金智维-ki-agents class="table-of-contents__link toc-highlight">金智维 Ki-AgentS</a><li><a href=#金融-agent-的核心技术挑战 class="table-of-contents__link toc-highlight">金融 Agent 的核心技术挑战</a></ul><li><a href=#83-医疗行业京医千询--ai-京医 class="table-of-contents__link toc-highlight">8.3 医疗行业：京医千询 / AI 京医</a><ul><li><a href=#京医千询京东健康 class="table-of-contents__link toc-highlight">京医千询（京东健康）</a><li><a href=#开源的意义 class="table-of-contents__link toc-highlight">开源的意义</a><li><a href=#医疗-agent-的伦理边界 class="table-of-contents__link toc-highlight">医疗 Agent 的伦理边界</a></ul><li><a href=#84-制造业华为盘古-agent class="table-of-contents__link toc-highlight">8.4 制造业：华为盘古 Agent</a><ul><li><a href=#核心场景 class="table-of-contents__link toc-highlight">核心场景</a><li><a href=#华为盘古的差异化 class="table-of-contents__link toc-highlight">华为盘古的差异化</a></ul><li><a href=#85-京东-joyagent-与其他垂直-agent class="table-of-contents__link toc-highlight">8.5 京东 JoyAgent 与其他垂直 Agent</a><ul><li><a href=#京东云-joyagent class="table-of-contents__link toc-highlight">京东云 JoyAgent</a><li><a href=#法律-agentharvey class="table-of-contents__link toc-highlight">法律 Agent：Harvey</a><li><a href=#教育-agent class="table-of-contents__link toc-highlight">教育 Agent</a></ul><li><a href=#86-垂直行业-agent-选型指南 class="table-of-contents__link toc-highlight">8.6 垂直行业 Agent 选型指南</a><ul><li><a href=#选型维度 class="table-of-contents__link toc-highlight">选型维度</a><li><a href=#场景化推荐 class="table-of-contents__link toc-highlight">场景化推荐</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

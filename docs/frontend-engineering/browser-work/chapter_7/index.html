@@ -1,0 +1,618 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_7" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第7章 DOM 与样式计算 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第7章 DOM 与样式计算 | 知识库"/><meta data-rh=true name=description content="你以为 document.getElementById 是一个简单的查找？在 Blink 底层，它涉及 DOM 树遍历、标识符索引、缓存策略。而 CSS 选择器匹配更是一个精心设计的算法优化故事。"/><meta data-rh=true property=og:description content="你以为 document.getElementById 是一个简单的查找？在 Blink 底层，它涉及 DOM 树遍历、标识符索引、缓存策略。而 CSS 选择器匹配更是一个精心设计的算法优化故事。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7","name":"第7章 DOM 与样式计算","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第7章 DOM 与样式计算</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第7章 DOM 与样式计算</h1></header>
+<blockquote>
+<p>你以为 document.getElementById 是一个简单的查找？在 Blink 底层，它涉及 DOM 树遍历、标识符索引、缓存策略。而 CSS 选择器匹配更是一个精心设计的算法优化故事。</p>
+</blockquote>
+<p>我是怕浪猫，上期我们看了渲染管线的全景图，今天进入第 7 章，我们拆解渲染管线的前两个阶段：DOM 树管理和样式计算。这一章会讲 DOM 的内部数据结构、CSS 选择器匹配的优化算法、ComputedStyle 的计算与缓存机制，以及样式变化如何触发不同级别的重新渲染。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=71-dom-树的内部结构>7.1 DOM 树的内部结构<a href=#71-dom-树的内部结构 class=hash-link aria-label="7.1 DOM 树的内部结构的直接链接" title="7.1 DOM 树的内部结构的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=711-node-与-element-的关系>7.1.1 Node 与 Element 的关系<a href=#711-node-与-element-的关系 class=hash-link aria-label="7.1.1 Node 与 Element 的关系的直接链接" title="7.1.1 Node 与 Element 的关系的直接链接" translate=no>​</a></h3>
+<p>在 Blink 中，DOM 树由 Node 对象组成。Node 是所有 DOM 节点的基类，Element 是 Node 的子类，表示有标签名的元素节点。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">DOM 节点继承关系</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Node（基类）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── Element</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├── HTMLElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   │   ├── HTMLDivElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   │   ├── HTMLSpanElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   │   ├── HTMLParagraphElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   │   └── ... (所有 HTML 元素类型)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├── SVGElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └── MathMLElement</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── TextNode（文本节点）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── Comment（注释节点）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── Document（文档节点）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └── DocumentType（文档类型节点）</span><br/></div></code></pre></div></div>
+<p>每种 HTML 标签在 Blink 中都有对应的 C++ 类。这种设计让 Blink 可以对不同标签做特化处理，比如 <code>&lt;img></code> 有图片加载逻辑，<code>&lt;canvas></code> 有绘图上下文，<code>&lt;form></code> 有表单验证逻辑。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>节点类型<th>说明<th>示例<tbody><tr><td>Element<td>有标签名的元素<td><code>&lt;div></code>, <code>&lt;p></code>, <code>&lt;span></code><tr><td>TextNode<td>文本内容<td><code>"Hello"</code><tr><td>Comment<td>注释<td><code>&lt;!-- comment --></code><tr><td>Document<td>文档根节点<td><code>document</code><tr><td>DocumentFragment<td>文档片段<td>轻量级 DOM 容器<tr><td>ShadowRoot<td>影子 DOM 根<td>Web Components</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=712-dom-树的内存布局>7.1.2 DOM 树的内存布局<a href=#712-dom-树的内存布局 class=hash-link aria-label="7.1.2 DOM 树的内存布局的直接链接" title="7.1.2 DOM 树的内存布局的直接链接" translate=no>​</a></h3>
+<p>每个 Node 对象在 Blink 中包含大量字段，用于存储属性、样式信息、布局信息、事件监听器等。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Node 对象的核心字段（简化版）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class Node {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 树结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Node* parent_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Node* first_child_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Node* last_child_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Node* previous_sibling_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Node* next_sibling_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 基本信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  NodeType node_type_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  AtomicString node_name_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 样式信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ComputedStyle* computed_style_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 布局信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  LayoutObject* layout_object_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 事件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  EventListenerMap event_listeners_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 标志位</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  bool is_connected_;  // 是否在文档中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  bool needs_style_recalc_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  bool needs_layout_;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div></code></pre></div></div>
+<p>DOM 树的操作（如 appendChild、removeChild、insertBefore）在 Blink 中是 O(1) 或 O(n) 的操作，其中 n 是子节点数量。Blink 通过双向链表管理兄弟节点，通过 first_child 和 last_child 管理子节点，使得插入和删除操作高效。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=713-标识符索引与快速查找>7.1.3 标识符索引与快速查找<a href=#713-标识符索引与快速查找 class=hash-link aria-label="7.1.3 标识符索引与快速查找的直接链接" title="7.1.3 标识符索引与快速查找的直接链接" translate=no>​</a></h3>
+<p>Blink 为 DOM 树维护了多种索引，加速常见的查找操作。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>索引类型<th>维护时机<th>加速的查找<tbody><tr><td>ID 索引<td>id 属性变化时<td>getElementById<tr><td>Name 索引<td>name 属性变化时<td>getElementsByName<tr><td>Class 索引<td>class 属性变化时<td>getElementsByClassName<tr><td>Tag 索引<td>标签名<td>getElementsByTagName</table>
+<p>getElementById 之所以是 O(1) 操作，是因为 Blink 维护了一个 HashMap，将 id 映射到对应的 Element 指针。当 id 属性变化时，Blink 自动更新这个 HashMap。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=714-dom-tree-的变化追踪>7.1.4 DOM Tree 的变化追踪<a href=#714-dom-tree-的变化追踪 class=hash-link aria-label="7.1.4 DOM Tree 的变化追踪的直接链接" title="7.1.4 DOM Tree 的变化追踪的直接链接" translate=no>​</a></h3>
+<p>Blink 使用一套精细的脏标记系统来追踪 DOM 树的变化。当 JavaScript 修改 DOM 时，Blink 不会立即更新渲染，而是标记变化类型，在下一次渲染帧中批量处理。</p>
+<p>这个设计的关键优势是批量处理：如果在同一帧内多次修改 DOM，Blink 只需要在帧末做一次渲染更新，而不是每次修改都触发渲染。常见的 DOM 变化类型和对应的脏标记包括：子树结构变化（ChildInvalidation）、属性变化（AttributeInvalidation）、文本内容变化（TextContentInvalidation）。每种脏标记对应不同的后续处理流程，确保只做必要的计算。</p>
+<blockquote>
+<p>你觉得 document.getElementById 很快，是因为 Blink 在背后帮你维护了一个 HashMap。如果没有这个索引，每次查找都要遍历整棵 DOM 树。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=72-css-选择器匹配>7.2 CSS 选择器匹配<a href=#72-css-选择器匹配 class=hash-link aria-label="7.2 CSS 选择器匹配的直接链接" title="7.2 CSS 选择器匹配的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=721-选择器匹配算法>7.2.1 选择器匹配算法<a href=#721-选择器匹配算法 class=hash-link aria-label="7.2.1 选择器匹配算法的直接链接" title="7.2.1 选择器匹配算法的直接链接" translate=no>​</a></h3>
+<p>CSS 选择器匹配是样式计算中最耗时的部分。Blink 使用从右到左（Right-to-Left）的匹配算法。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">从右到左匹配示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CSS 选择器：div.container > p.highlight</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTML 结构：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;div class="container"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;p class="highlight">Hello&lt;/p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;p>World&lt;/p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">匹配过程（从右到左）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">对于 &lt;p class="highlight">：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 匹配选择器最右边：.highlight → 匹配！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 向左：> p → 匹配（父元素是 p）... </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     等等，> p 表示父元素是 p？不对</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     > p 表示当前元素是 p → 匹配！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 再向左：div.container → </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     检查父元素是否是 div.container → 匹配！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 选择器全部匹配，应用样式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">对于 &lt;p>（没有 highlight class）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 匹配选择器最右边：.highlight → 不匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 立即跳过，不需要继续检查</span><br/></div></code></pre></div></div>
+<p>从右到左匹配的优势在于快速排除不匹配的元素。大多数元素在选择器的最右端就会被排除，不需要做完整的检查。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>匹配方向<th>性能特征<th>优势<tbody><tr><td>从左到右<td>需要遍历子树<td>直觉<tr><td>从右到左<td>快速排除不匹配<td>高效</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=722-选择器复杂度分析>7.2.2 选择器复杂度分析<a href=#722-选择器复杂度分析 class=hash-link aria-label="7.2.2 选择器复杂度分析的直接链接" title="7.2.2 选择器复杂度分析的直接链接" translate=no>​</a></h3>
+<p>不同类型的选择器有不同的匹配复杂度：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>选择器类型<th>CSS 示例<th>匹配复杂度<th>说明<tbody><tr><td>ID 选择器<td><code>#header</code><td>O(1)<td>HashMap 查找<tr><td>类选择器<td><code>.menu</code><td>O(n)<td>遍历 class 列表<tr><td>标签选择器<td><code>div</code><td>O(1)<td>直接比较<tr><td>属性选择器<td><code>[type="text"]</code><td>O(n)<td>遍历属性<tr><td>后代选择器<td><code>div p</code><td>O(d)<td>需要向上遍历祖先<tr><td>子选择器<td><code>div > p</code><td>O(1)<td>只检查父元素<tr><td>相邻选择器<td><code>div + p</code><td>O(1)<td>只检查前一个兄弟<tr><td>伪类<td><code>:hover</code><td>取决于实现<td>事件触发时匹配</table>
+<p>后代选择器（如 <code>div.container p.item</code>）是性能最需要注意的选择器，因为对于每个匹配 <code>p.item</code> 的元素，Blink 都需要向上遍历祖先链，检查是否有 <code>div.container</code>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=723-样式-recalrecalcstyle的触发>7.2.3 样式 recal（RecalcStyle）的触发<a href=#723-样式-recalrecalcstyle的触发 class=hash-link aria-label="7.2.3 样式 recal（RecalcStyle）的触发的直接链接" title="7.2.3 样式 recal（RecalcStyle）的触发的直接链接" translate=no>​</a></h3>
+<p>当 DOM 或 CSS 发生变化时，Blink 需要重新计算受影响元素的样式。这个过程叫做 Style Recalculation（样式重计算）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Style Recalc 触发条件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. CSS 规则变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 添加/删除样式表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 修改 CSS 规则</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   └─ 媒体查询断点变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. DOM 变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 添加/删除元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 修改 class 属性</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 修改 style 属性</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   └─ 修改 data-* 属性（如果被选择器使用）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 用户交互</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ :hover 状态变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ :focus 状态变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ :checked 状态变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   └─ :active 状态变化</span><br/></div></code></pre></div></div>
+<p>Blink 的样式重计算采用「脏标记」（Dirty Flag）策略。当变化发生时，Blink 不会立即重新计算所有元素的样式，而是标记受影响的元素为「需要样式重计算」（needs_style_recalc_）。在下一次渲染帧中，Blink 遍历 DOM 树，只重新计算被标记的元素。</p>
+<blockquote>
+<p>样式重计算不是「全量计算」，而是「增量计算」。Blink 精确追踪哪些元素需要更新，只做必要的计算。这也是为什么修改 body 的 class 会导致大量元素重计算：因为很多元素的选择器可能匹配新的 class。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=73-computedstyle-的计算与缓存>7.3 ComputedStyle 的计算与缓存<a href=#73-computedstyle-的计算与缓存 class=hash-link aria-label="7.3 ComputedStyle 的计算与缓存的直接链接" title="7.3 ComputedStyle 的计算与缓存的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=731-computedstyle-是什么>7.3.1 ComputedStyle 是什么<a href=#731-computedstyle-是什么 class=hash-link aria-label="7.3.1 ComputedStyle 是什么的直接链接" title="7.3.1 ComputedStyle 是什么的直接链接" translate=no>​</a></h3>
+<p>ComputedStyle（计算后的样式）是每个 DOM 元素的最终样式值。它不是 CSS 源代码中写的值，而是经过继承、层叠、计算后的最终值。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">样式值的转换过程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CSS 声明值（Specified Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  CSS 源代码中写的值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如：font-size: 1em; color: red;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">层叠值（Cascaded Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  经过选择器优先级排序后的胜出值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如：font-size: 1em（多个规则中优先级最高的）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">指定值（Specified Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  层叠值，如果未指定则使用继承值或初始值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">计算值（Computed Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  绝对化相对单位</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如：font-size: 16px（1em = 16px）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">使用值（Used Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  基于布局计算后的值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如：width: 800px（百分比被计算为像素）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">实际值（Actual Value）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  浏览器实际使用的值（受限于设备能力）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如：font-size: 16px（某些设备可能四舍五入）</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=732-computedstyle-的缓存策略>7.3.2 ComputedStyle 的缓存策略<a href=#732-computedstyle-的缓存策略 class=hash-link aria-label="7.3.2 ComputedStyle 的缓存策略的直接链接" title="7.3.2 ComputedStyle 的缓存策略的直接链接" translate=no>​</a></h3>
+<p>Blink 对 ComputedStyle 做了大量缓存优化，避免重复计算。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>缓存层<th>说明<th>命中条件<tbody><tr><td>共享 ComputedStyle<td>多个元素共享同一 ComputedStyle 对象<td>选择器、属性完全相同<tr><td>继承缓存<td>子元素继承父元素的继承属性<td>父元素样式未变<tr><td>差量计算<td>只计算变化的属性<td>部分属性变化</table>
+<p>ComputedStyle 共享的条件非常严格，Blink 会检查以下条件是否全部满足：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ComputedStyle 共享条件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 两个元素有相同的父元素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 两个元素没有 inline style</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 两个元素没有被 id 选择器匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 两个元素的 class 列表在相同的选择器上下文中匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 两个元素的属性列表相同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">6. 两个元素的链接状态相同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">7. 两个元素的 focus 状态相同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">8. 两个元素没有被 :hover 等动态伪类影响</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">全部满足 → 共享 ComputedStyle</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">任一不满足 → 独立计算</span><br/></div></code></pre></div></div>
+<p>这种共享机制对于列表型页面特别有效。一个有 1000 个 <code>&lt;li></code> 的列表，如果每个 li 的样式规则相同，它们可以共享同一个 ComputedStyle 对象，大幅减少内存和计算开销。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=733-样式继承的底层实现>7.3.3 样式继承的底层实现<a href=#733-样式继承的底层实现 class=hash-link aria-label="7.3.3 样式继承的底层实现的直接链接" title="7.3.3 样式继承的底层实现的直接链接" translate=no>​</a></h3>
+<p>CSS 继承在 Blink 中的实现方式是：子元素的 ComputedStyle 在创建时，先复制父元素的继承属性值，然后应用自身的规则覆盖。这个过程在样式计算阶段完成。</p>
+<p>继承属性（如 color、font-size）的值会自动从父元素流向子元素，不需要额外的查找。非继承属性（如 width、margin）如果在子元素上未指定，使用初始值（initial value）而非父元素的值。</p>
+<p>Blink 维护了一个继承属性的位图（InheritedPropertiesMask），在样式重计算时快速判断哪些属性需要从父元素继承。这个优化避免了遍历所有 CSS 属性的开销。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=734-样式优先级与层叠>7.3.4 样式优先级与层叠<a href=#734-样式优先级与层叠 class=hash-link aria-label="7.3.4 样式优先级与层叠的直接链接" title="7.3.4 样式优先级与层叠的直接链接" translate=no>​</a></h3>
+<p>CSS（Cascading Style Sheets，层叠样式表）的「层叠」是样式计算的核心机制。当多条规则匹配同一元素时，Blink 按优先级排序，选择优先级最高的规则。</p>
+<p>优先级排序规则从高到低：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优先级<th>来源<th>示例<tbody><tr><td>最高<td>!important + 内联样式<td>style="color:red !important"<tr><td>高<td>!important + 外部样式<td>.cls { color:red !important }<tr><td>中高<td>内联样式<td>style="color:red"<tr><td>中<td>ID 选择器<td>#header { color:red }<tr><td>中低<td>类/属性/伪类选择器<td>.menu { color:red }<tr><td>低<td>标签/伪元素选择器<td>div { color:red }<tr><td>最低<td>通配符/继承<td>* { color:red }</table>
+<p>Blink 的层叠计算通过比较选择器特异性（Specificity）来实现。特异性是一个三元组 (a, b, c)，分别对应 ID 数量、类/属性数量、标签数量。比较时从左到右，先比较 a，相同则比较 b，再相同则比较 c。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=74-影子-dom-与样式隔离>7.4 影子 DOM 与样式隔离<a href=#74-影子-dom-与样式隔离 class=hash-link aria-label="7.4 影子 DOM 与样式隔离的直接链接" title="7.4 影子 DOM 与样式隔离的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=741-shadow-dom-的样式边界>7.4.1 Shadow DOM 的样式边界<a href=#741-shadow-dom-的样式边界 class=hash-link aria-label="7.4.1 Shadow DOM 的样式边界的直接链接" title="7.4.1 Shadow DOM 的样式边界的直接链接" translate=no>​</a></h3>
+<p>Shadow DOM（影子 DOM）是 Web Components 的核心技术之一，它提供了 DOM 和样式的封装隔离。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Shadow DOM 结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;div id="host">  ← Shadow Host</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  #shadow-root  ← Shadow Root（影子根）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      p { color: red; }  ← 只影响 Shadow DOM 内部的 p</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;p>内部内容&lt;/p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  #end shadow-root</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;p>外部内容&lt;/p>  ← 不受 Shadow DOM 内部样式影响</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;/div></span><br/></div></code></pre></div></div>
+<p>Shadow DOM 的样式隔离规则：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>样式方向<th>是否穿透<th>说明<tbody><tr><td>外部 → 内部<td>否<td>外部 CSS 不影响 Shadow DOM 内部<tr><td>内部 → 外部<td>否<td>Shadow DOM 内部 CSS 不影响外部<tr><td>继承属性<td>是<td>color、font 等继承属性仍会穿透</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=742-css-自定义属性与-shadow-dom>7.4.2 CSS 自定义属性与 Shadow DOM<a href=#742-css-自定义属性与-shadow-dom class=hash-link aria-label="7.4.2 CSS 自定义属性与 Shadow DOM的直接链接" title="7.4.2 CSS 自定义属性与 Shadow DOM的直接链接" translate=no>​</a></h3>
+<p>CSS 自定义属性（CSS Custom Properties，也叫 CSS 变量）是可以穿透 Shadow DOM 边界的。这使得外部可以控制 Shadow DOM 内部的样式。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">/* 外部样式 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">#host {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  --theme-color: blue;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">/* Shadow DOM 内部样式 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">:host {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  color: var(--theme-color);  /* 继承自 host 的自定义属性 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=75-样式变化与渲染管线触发>7.5 样式变化与渲染管线触发<a href=#75-样式变化与渲染管线触发 class=hash-link aria-label="7.5 样式变化与渲染管线触发的直接链接" title="7.5 样式变化与渲染管线触发的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=751-样式变化到渲染的映射>7.5.1 样式变化到渲染的映射<a href=#751-样式变化到渲染的映射 class=hash-link aria-label="7.5.1 样式变化到渲染的映射的直接链接" title="7.5.1 样式变化到渲染的映射的直接链接" translate=no>​</a></h3>
+<p>不同的样式属性变化会触发不同级别的渲染管线阶段。理解这个映射关系，是前端性能优化的基础。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">样式变化 → 渲染管线触发</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修改 width/height/margin/padding</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Style Recalc → Layout → Paint → Composite</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修改 color/background/box-shadow</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Style Recalc → Paint → Composite</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修改 transform/opacity</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Style Recalc → Composite（跳过 Layout 和 Paint）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修改 visibility</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Style Recalc → Paint → Composite</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  （visibility 不影响布局，但影响绘制）</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>属性类别<th>触发的管线阶段<th>性能代价<th>典型属性<tbody><tr><td>布局属性<td>Style → Layout → Paint → Composite<td>最高<td>width, height, margin, padding<tr><td>绘制属性<td>Style → Paint → Composite<td>中等<td>color, background, border-color<tr><td>合成属性<td>Style → Composite<td>最低<td>transform, opacity, filter</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=752-will-change-属性的作用>7.5.2 will-change 属性的作用<a href=#752-will-change-属性的作用 class=hash-link aria-label="7.5.2 will-change 属性的作用的直接链接" title="7.5.2 will-change 属性的作用的直接链接" translate=no>​</a></h3>
+<p>will-change 是一个 CSS 属性，用于提前告知浏览器元素将要变化的属性，让浏览器提前做准备（通常是创建合成层）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">/* 提前告知浏览器 transform 将要变化 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">.card {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  will-change: transform;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">/* 动画完成后移除 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">.card.animating {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  will-change: auto;  /* 避免长期占用内存 */</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<p>will-change 的正确使用方式：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>使用方式<th>正确<th>说明<tbody><tr><td>动画开始前添加<td>是<td>让浏览器提前创建合成层<tr><td>动画结束后移除<td>是<td>释放合成层内存<tr><td>长期保持 will-change<td>否<td>浪费内存，可能导致层爆炸<tr><td>对大量元素使用<td>否<td>合成层数量过多</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=753-批量样式修改>7.5.3 批量样式修改<a href=#753-批量样式修改 class=hash-link aria-label="7.5.3 批量样式修改的直接链接" title="7.5.3 批量样式修改的直接链接" translate=no>​</a></h3>
+<p>Blink 对样式修改有批量优化。在同一帧内多次修改同一个元素的样式，Blink 不会每次都触发样式重计算，而是将修改累积到下一次渲染帧统一处理。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// 多次样式修改，Blink 批量处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element.style.width = '100px';    // 标记 dirty</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element.style.height = '200px';   // 标记 dirty</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element.style.color = 'red';      // 标记 dirty</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// Blink 在下一帧统一重计算，不会触发三次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 但读取布局信息会强制同步</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element.style.width = '100px';</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">console.log(element.offsetWidth); // 强制 Layout（因为 offsetWidth 需要布局信息）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element.style.height = '200px';</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">console.log(element.offsetHeight); // 再次强制 Layout</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 两次强制 Layout = 两次重排</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>样式修改本身不昂贵，昂贵的是读取布局信息（offsetWidth、getBoundingClientRect 等）。每次读取布局信息都会强制浏览器执行待处理的布局计算，导致「布局抖动」（Layout Thrashing）。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=76-css-containment>7.6 CSS Containment<a href=#76-css-containment class=hash-link aria-label="7.6 CSS Containment的直接链接" title="7.6 CSS Containment的直接链接" translate=no>​</a></h2>
+<p>CSS Containment 是一个性能优化属性，它允许开发者告诉浏览器某个元素的渲染是独立的，不会影响外部。浏览器可以据此做渲染优化。</p>
+<div class="language-css codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-css codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>/* 声明 .widget 的布局和绘制不影响外部 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.widget</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>contain</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> layout paint</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>/* 更强的隔离 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.isolated</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>contain</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> strict</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 等同于 contain: size layout paint style */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>contain 值<th>含义<th>优化效果<tbody><tr><td>layout<td>布局隔离<td>元素内部布局变化不影响外部<tr><td>paint<td>绘制隔离<td>元素不会绘制到自身边界外<tr><td>size<td>尺寸隔离<td>元素尺寸不依赖内容<tr><td>style<td>样式隔离<td>计数器和引号不受外部影响<tr><td>strict<td>size + layout + paint + style<td>最大隔离</table>
+<p>CSS Containment 的实际价值在于减少渲染管线的计算范围。如果 <code>.widget</code> 内部的样式变化只影响自身布局，浏览器不需要重计算 <code>.widget</code> 外部的布局。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=761-content-visibility-优化>7.6.1 content-visibility 优化<a href=#761-content-visibility-优化 class=hash-link aria-label="7.6.1 content-visibility 优化的直接链接" title="7.6.1 content-visibility 优化的直接链接" translate=no>​</a></h3>
+<p>content-visibility 是 CSS Containment 的扩展，它允许浏览器跳过屏幕外元素的渲染。对于长列表页面，这个属性可以显著减少渲染开销。</p>
+<div class="language-css codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-css codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>/* 屏幕外的卡片不渲染 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.card</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>content-visibility</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> auto</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>contain-intrinsic-size</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>200</span><span class="token unit">px</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>/* 预估高度，避免滚动条跳动 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>当 content-visibility 设为 auto 时，浏览器会自动判断元素是否在可视区域内。如果不在可视区域内，浏览器跳过该元素的布局和绘制，只保留预估的尺寸。当元素滚动到可视区域时，浏览器才执行完整的布局和绘制。</p>
+<p>这个属性对于有大量 DOM 节点的页面（如社交媒体的时间线、搜索结果列表）尤其有效，可以将渲染时间减少 50% 以上。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=77-css-houdini-与样式-api>7.7 CSS Houdini 与样式 API<a href=#77-css-houdini-与样式-api class=hash-link aria-label="7.7 CSS Houdini 与样式 API的直接链接" title="7.7 CSS Houdini 与样式 API的直接链接" translate=no>​</a></h2>
+<p>CSS Houdini 是一组 CSS 底层 API 的统称，它允许开发者直接介入浏览器的样式和渲染管线，实现自定义的 CSS 行为。</p>
+<p>Houdini 的核心 API 包括：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>API<th>说明<th>用途<tbody><tr><td>Paint API<td>自定义绘制<td>用 JS 实现自定义 CSS 属性的绘制<tr><td>Layout API<td>自定义布局<td>用 JS 实现自定义 CSS 布局<tr><td>Properties & Values API<td>注册自定义属性<td>为 CSS 变量添加类型<tr><td>Typed OM<td>类型化的 CSS 对象模型<td>替代字符串操作的 CSSOM</table>
+<p>Paint API 是目前支持最广泛的 Houdini API。它允许开发者通过 JavaScript 注册一个「Paint Worklet」，在 CSS 中通过 paint() 函数引用。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 注册 Paint Worklet</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>registerPaint</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'circle'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>class</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token function" style=color:#d73a49>paint</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter">ctx</span><span class="token parameter punctuation" style=color:#393A34>,</span><span class="token parameter"> size</span><span class="token parameter punctuation" style=color:#393A34>,</span><span class="token parameter"> properties</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> radius </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token known-class-name class-name">Math</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>min</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">size</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">width</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> size</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">height</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>/</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>beginPath</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>arc</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">size</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">width</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>/</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> size</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">height</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>/</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> radius</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>*</span><span class="token plain"> </span><span class="token known-class-name class-name">Math</span><span class="token punctuation" style=color:#393A34>.</span><span class="token constant" style=color:#36acaa>PI</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>fill</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<div class="language-css codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-css codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>/* 在 CSS 中使用 */</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token selector class" style=color:#00009f>.avatar</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>background</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>paint</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">circle</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>Paint Worklet 在独立的线程中执行，不会阻塞主线程，这是它比直接用 JavaScript 操作 Canvas 的一个优势。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=771-typed-om>7.7.1 Typed OM<a href=#771-typed-om class=hash-link aria-label="7.7.1 Typed OM的直接链接" title="7.7.1 Typed OM的直接链接" translate=no>​</a></h3>
+<p>Typed OM（Typed Object Model，类型化对象模型）是 CSS Houdini 提供的类型化 CSS 对象模型。传统的 CSSOM（CSS Object Model，CSS 对象模型）使用字符串操作 CSS 值，如 <code>element.style.fontSize = '16px'</code>。Typed OM 将 CSS 值表示为结构化的对象，避免了字符串解析的开销。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 传统 CSSOM（字符串操作）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">style</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">fontSize</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'16px'</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> size </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> element</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">style</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">fontSize</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// '16px'（字符串）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// Typed OM（结构化对象）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">element</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">attributeStyleMap</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>set</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'font-size'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token constant" style=color:#36acaa>CSS</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>px</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>16</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> size </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> element</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">attributeStyleMap</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>get</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'font-size'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// CSSUnitValue {value: 16, unit: 'px'}</span><br/></div></code></pre></div></div>
+<p>Typed OM 的优势在于避免了反复的字符串解析和格式化，对于频繁操作 CSS 属性的场景（如动画）有性能优势。不过 Typed OM 目前仍处于渐进推广阶段，浏览器支持度不如 Paint API。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=78-dom-树构建的完整流程>7.8 DOM 树构建的完整流程<a href=#78-dom-树构建的完整流程 class=hash-link aria-label="7.8 DOM 树构建的完整流程的直接链接" title="7.8 DOM 树构建的完整流程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=781-从字节流到-dom-树的完整路径>7.8.1 从字节流到 DOM 树的完整路径<a href=#781-从字节流到-dom-树的完整路径 class=hash-link aria-label="7.8.1 从字节流到 DOM 树的完整路径的直接链接" title="7.8.1 从字节流到 DOM 树的完整路径的直接链接" translate=no>​</a></h3>
+<p>HTML 解析是一个流式处理过程。网络数据到达一部分，解析器就处理一部分。完整的解析流程从字节流开始，经过解码、分词、建树三个阶段。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTML 解析完整流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段1: 字节流输入</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  网络层推送字节流: 3C 21 44 4F 43 54 59 50 45...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 检测 BOM (Byte Order Mark)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 读取 &lt;meta charset> 确定编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 如果没有声明，使用默认编码检测算法</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段2: 字符解码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  字节流 → 字符串 (根据编码)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3C 21 44 4F 43 54 59 50 45 → "&lt;!DOCTYPE"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段3: 分词 (Tokenization)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  字符串 → Token 序列</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  状态机驱动的词法分析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Data State → 文本内容</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Tag Open State → 标签开始</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Tag Name State → 标签名</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Attribute Name State → 属性名</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Attribute Value State → 属性值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ Comment State → 注释</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段4: 建树 (Tree Construction)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token 序列 → DOM 树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  插入模式 (Insertion Mode) 状态机驱动</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 维护开放元素栈 (Open Elements Stack)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 根据当前插入模式和 Token 类型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 决定如何创建/插入/关闭 DOM 节点</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=782-tokenizer-状态机>7.8.2 Tokenizer 状态机<a href=#782-tokenizer-状态机 class=hash-link aria-label="7.8.2 Tokenizer 状态机的直接链接" title="7.8.2 Tokenizer 状态机的直接链接" translate=no>​</a></h3>
+<p>HTML 的 Tokenizer 是一个有状态的状态机。每个输入字符都会导致状态转换，并可能输出 Token。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Tokenizer 状态转换示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入: &lt;div class="box">Hello&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">状态转换:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Data State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '&lt;' 触发 Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'd' 触发 Tag Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tag Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'i', 'v' 继续 Tag Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ' ' 触发 Before Attribute Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Before Attribute Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'c' 触发 Attribute Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Attribute Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'l', 'a', 's', 's' 继续</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '=' 触发 Before Attribute Value State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Before Attribute Value State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '"' 触发 Attribute Value (Double Quoted) State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Attribute Value State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'b', 'o', 'x' 继续</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '"' 触发 After Attribute Value (Quoted) State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After Attribute Value State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '>' 输出 StartTag Token: div, {class: "box"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   回到 Data State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Data State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'H', 'e', 'l', 'l', 'o' 输出 Character Token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '&lt;' 触发 Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '/' 触发 End Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">End Tag Open State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 'd', 'i', 'v' 继续 Tag Name State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ '>' 输出 EndTag Token: div</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   回到 Data State</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=783-html-解析器的容错机制>7.8.3 HTML 解析器的容错机制<a href=#783-html-解析器的容错机制 class=hash-link aria-label="7.8.3 HTML 解析器的容错机制的直接链接" title="7.8.3 HTML 解析器的容错机制的直接链接" translate=no>​</a></h3>
+<p>HTML 的设计哲学是「容错优先」。浏览器不会因为 HTML 语法错误而拒绝渲染页面。HTML5 规范定义了详细的错误处理算法，确保各种畸形 HTML 都能被合理解析。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTML 容错处理示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 未闭合的标签</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   &lt;p>段落1&lt;p>段落2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 解析器自动关闭第一个 &lt;p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → &lt;p>段落1&lt;/p>&lt;p>段落2&lt;/p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 错误的嵌套</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   &lt;b>粗体&lt;i>粗斜体&lt;/b>斜体&lt;/i></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 解析器重建嵌套结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → &lt;b>粗体&lt;i>粗斜体&lt;/i>&lt;/b>&lt;i>斜体&lt;/i></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 表格自动修正</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   &lt;table></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     &lt;tr>&lt;td>单元格</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 自动闭合 td, tr, table 标签</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. &lt;script> 中的特殊处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   &lt;script></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     var x = "&lt;/script>";  // 会被解析为结束标签</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   &lt;/script></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 解析器看到 &lt;/script> 就结束脚本</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 需要用 "&lt;\/script>" 转义</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=784-css-选择器匹配的-bloom-filter-优化>7.8.4 CSS 选择器匹配的 Bloom Filter 优化<a href=#784-css-选择器匹配的-bloom-filter-优化 class=hash-link aria-label="7.8.4 CSS 选择器匹配的 Bloom Filter 优化的直接链接" title="7.8.4 CSS 选择器匹配的 Bloom Filter 优化的直接链接" translate=no>​</a></h3>
+<p>当 DOM 中有数千个元素和数百条 CSS 规则时，选择器匹配的性能成为瓶颈。Blink 使用 Bloom Filter 来加速选择器匹配。</p>
+<p>Bloom Filter 是一种空间高效的概率数据结构，可以快速判断一个元素「可能匹配」或「一定不匹配」某条选择器。Blink 为每条选择器维护一个 Bloom Filter，记录选择器中涉及的标签名、类名、ID 等。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Bloom Filter 加速选择器匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">对于元素 &lt;div class="container"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">匹配规则: div.container > p.highlight</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤1: 检查 Bloom Filter</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  元素的标签: div → 在 Bloom Filter 中? 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  元素的类名: container → 在 Bloom Filter 中? 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 可能匹配，继续详细匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">步骤2: 详细匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  从右到左匹配选择器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  .highlight → div 有吗? 没有 → 不匹配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">如果 Bloom Filter 判断「一定不匹配」:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 跳过详细匹配，直接排除</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 大幅减少无效匹配计算</span><br/></div></code></pre></div></div>
+<p>Bloom Filter 的假阳率（误判为可能匹配）约为 1-3%，但假阴率为 0%（不会漏掉真正的匹配）。这意味着 Bloom Filter 可以快速排除 97% 以上不匹配的选择器-元素组合。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=785-style-sharing-cache>7.8.5 Style Sharing Cache<a href=#785-style-sharing-cache class=hash-link aria-label="7.8.5 Style Sharing Cache的直接链接" title="7.8.5 Style Sharing Cache的直接链接" translate=no>​</a></h3>
+<p>Blink 还有一个重要的样式优化：Style Sharing Cache（样式共享缓存）。如果多个元素的 ComputedStyle 完全相同，它们可以共享同一个 ComputedStyle 对象，避免重复计算。</p>
+<p>样式共享的检查条件非常严格，包括：相同的父元素、相同的标签名、相同的 class 列表、相同的内联样式（都无）、相同的属性集、相同的链接状态、相同的 hover/focus 状态等。只有所有条件都满足，才能共享。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">样式共享效果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;ul></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;li>项目1&lt;/li>   ← ComputedStyle A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;li>项目2&lt;/li>   ← 共享 ComputedStyle A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;li>项目3&lt;/li>   ← 共享 ComputedStyle A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;li class="active">项目4&lt;/li>  ← ComputedStyle B (不同 class)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;li>项目5&lt;/li>   ← 共享 ComputedStyle A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;/ul></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1000 个 &lt;li> 中如果有 990 个样式相同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ 只需计算 2 个 ComputedStyle</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ 节省 99% 的样式计算</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=786-影子-dom-样式作用域规则>7.8.6 影子 DOM 样式作用域规则<a href=#786-影子-dom-样式作用域规则 class=hash-link aria-label="7.8.6 影子 DOM 样式作用域规则的直接链接" title="7.8.6 影子 DOM 样式作用域规则的直接链接" translate=no>​</a></h3>
+<p>Shadow DOM 的样式隔离不是绝对的。有特定的机制允许样式穿透边界。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Shadow DOM 样式作用域</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;div id="host"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  #shadow-root</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      :host { color: blue; }           ← :host 选择器可以设置 host 元素样式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      p { color: red; }                 ← 只影响 Shadow DOM 内部的 p</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ::slotted(span) { color: green; } ← 影响 slot 中的 span</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/style></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;p>内部文本&lt;/p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;slot name="content"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      &lt;!-- 被宿主元素的 span 填充 --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    &lt;/slot></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  #end shadow-root</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt;span slot="content">宿主文本&lt;/span></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">&lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">样式穿透规则:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  外部 CSS → host 元素 ✓ (直接设置)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  外部 CSS → Shadow DOM 内部 ✗ (被隔离)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Shadow DOM CSS → host 元素 ✓ (:host 选择器)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Shadow DOM CSS → 外部内容 ✗ (被隔离)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Shadow DOM CSS → slot 内容 ✓ (::slotted 选择器)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  CSS 自定义属性 → 穿透所有边界 ✓</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>样式方向<th>普通选择器<th>:host<th>::slotted<th>CSS 变量<tbody><tr><td>外部 → Shadow 内部<td>不穿透<td>不适用<td>不适用<td>穿透<tr><td>Shadow 内部 → 外部<td>不穿透<td>设置 host<td>设置 slot 内容<td>穿透</table>
+<p>CSS 自定义属性（CSS 变量）可以穿透 Shadow DOM 边界，这是因为自定义属性是继承的，而继承不受 Shadow DOM 边界限制。外部设置 <code>--theme-color: blue</code> 可以在 Shadow DOM 内部通过 <code>var(--theme-color)</code> 使用。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=75-dom-树构建流程>7.5 DOM 树构建流程<a href=#75-dom-树构建流程 class=hash-link aria-label="7.5 DOM 树构建流程的直接链接" title="7.5 DOM 树构建流程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=751-html-解析器流程>7.5.1 HTML 解析器流程<a href=#751-html-解析器流程 class=hash-link aria-label="7.5.1 HTML 解析器流程的直接链接" title="7.5.1 HTML 解析器流程的直接链接" translate=no>​</a></h3>
+<p>HTML 解析器将 HTML 文本转换为 DOM 树，分为两个阶段：Tokenizer（分词器）和 Tree Builder（树构建器）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTML 解析流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">原始 HTML 文本</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tokenizer（分词器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 将文本拆分为 Token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → StartTag: &lt;div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → EndTag: &lt;/div></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Text: "Hello"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Comment: &lt;!-- ... --></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tree Builder（树构建器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 根据 Token 构建 DOM 节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 处理嵌套关系</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 自动修复错误嵌套</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">DOM 树</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=752-html-容错机制>7.5.2 HTML 容错机制<a href=#752-html-容错机制 class=hash-link aria-label="7.5.2 HTML 容错机制的直接链接" title="7.5.2 HTML 容错机制的直接链接" translate=no>​</a></h3>
+<p>HTML 解析器有强大的容错能力，能够自动修复错误嵌套的标签。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">容错示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入: &lt;table>&lt;p>Hello&lt;/p>&lt;/table></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修复: &lt;p>&lt;/p>&lt;table>&lt;/table></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">原因: &lt;p> 不能在 &lt;table> 内</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 解析器将 &lt;p> 弹出表格</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 在表格前创建 &lt;p></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入: &lt;b>&lt;i>Bold Italic&lt;/b>&lt;/i></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">修复: &lt;b>&lt;i>Bold Italic&lt;/i>&lt;/b>&lt;i>&lt;/i></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">原因: &lt;/b> 关闭 &lt;b> 时</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 自动关闭内部的 &lt;i></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 重新打开 &lt;i> 以匹配 &lt;/i></span><br/></div></code></pre></div></div>
+<blockquote>
+<p>HTML 的容错机制规范在 HTML5 标准中定义了详细的错误处理算法。这是为什么「烂 HTML」仍然能正常显示的原因。但这种容错也带来了安全隐患——XSS 过滤器可能认为输入是安全的，但经过浏览器容错处理后变成了恶意标签。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=76-css-选择器匹配优化>7.6 CSS 选择器匹配优化<a href=#76-css-选择器匹配优化 class=hash-link aria-label="7.6 CSS 选择器匹配优化的直接链接" title="7.6 CSS 选择器匹配优化的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=761-bloom-filter-加速>7.6.1 Bloom Filter 加速<a href=#761-bloom-filter-加速 class=hash-link aria-label="7.6.1 Bloom Filter 加速的直接链接" title="7.6.1 Bloom Filter 加速的直接链接" translate=no>​</a></h3>
+<p>CSS 选择器从右到左匹配，但 Chrome 使用 Bloom Filter 快速排除不可能匹配的元素。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Bloom Filter 优化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">传统匹配：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  div .item → 对每个元素检查</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 是否有 .item class？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 祖先是否是 div？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 需要遍历祖先链</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Bloom Filter：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  预计算每个元素的祖先 Bloom Filter</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 存储祖先标签名和 class 的 Hash</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 检查 div 是否在 Bloom Filter 中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果不在 → 快速跳过（100% 确定）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果在 → 可能匹配，进一步检查</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优化手段<th>原理<th>效果<tbody><tr><td>Bloom Filter<td>快速排除不匹配元素<td>减少 90%+ 遍历<tr><td>Style Sharing<td>相同样式的元素共享<td>减少计算量<tr><td>Rule Tree<td>公共选择器路径共享<td>减少匹配开销</table>
+<blockquote>
+<p>Bloom Filter 是一种空间高效的数据结构，可以快速判断一个元素「一定不在」集合中。Chrome 为每个 DOM 元素维护一个祖先 Bloom Filter，包含所有祖先的标签名和 class。匹配选择器时，先检查 Bloom Filter，如果右边界选择器不可能匹配，直接跳过，避免遍历整个祖先链。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>性能影响<tbody><tr><td>DOM 结构<td>Node 树 + 索引加速<td>getElementById 是 O(1)<tr><td>选择器匹配<td>从右到左匹配<td>后代选择器最慢<tr><td>Style Recalc<td>脏标记 + 增量计算<td>减少不必要的重计算<tr><td>ComputedStyle<td>共享 + 继承缓存<td>列表元素共享样式对象<tr><td>样式变化映射<td>合成属性 > 绘制属性 > 布局属性<td>用 transform 做动画<tr><td>CSS Containment<td>渲染隔离<td>减少渲染影响范围</table>
+<p>觉得有用？收藏起来，下次做 CSS 性能优化时直接翻出来参考。</p>
+<p>你在项目中遇到过 CSS 选择器性能问题吗？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们进入布局阶段，讲 LayoutNG 布局引擎。系列进度 7/24。</p>
+<p>下期预告：第 8 章「布局（Layout）」。我们会拆解 LayoutNG 引擎的工作原理、盒模型计算、Flexbox 和 Grid 布局算法、以及布局抖动（Layout Thrashing）的成因和解决方案。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_7.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第6章 从 HTML 到像素：渲染管线总览</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第8章 布局（Layout）</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#71-dom-树的内部结构 class="table-of-contents__link toc-highlight">7.1 DOM 树的内部结构</a><ul><li><a href=#711-node-与-element-的关系 class="table-of-contents__link toc-highlight">7.1.1 Node 与 Element 的关系</a><li><a href=#712-dom-树的内存布局 class="table-of-contents__link toc-highlight">7.1.2 DOM 树的内存布局</a><li><a href=#713-标识符索引与快速查找 class="table-of-contents__link toc-highlight">7.1.3 标识符索引与快速查找</a><li><a href=#714-dom-tree-的变化追踪 class="table-of-contents__link toc-highlight">7.1.4 DOM Tree 的变化追踪</a></ul><li><a href=#72-css-选择器匹配 class="table-of-contents__link toc-highlight">7.2 CSS 选择器匹配</a><ul><li><a href=#721-选择器匹配算法 class="table-of-contents__link toc-highlight">7.2.1 选择器匹配算法</a><li><a href=#722-选择器复杂度分析 class="table-of-contents__link toc-highlight">7.2.2 选择器复杂度分析</a><li><a href=#723-样式-recalrecalcstyle的触发 class="table-of-contents__link toc-highlight">7.2.3 样式 recal（RecalcStyle）的触发</a></ul><li><a href=#73-computedstyle-的计算与缓存 class="table-of-contents__link toc-highlight">7.3 ComputedStyle 的计算与缓存</a><ul><li><a href=#731-computedstyle-是什么 class="table-of-contents__link toc-highlight">7.3.1 ComputedStyle 是什么</a><li><a href=#732-computedstyle-的缓存策略 class="table-of-contents__link toc-highlight">7.3.2 ComputedStyle 的缓存策略</a><li><a href=#733-样式继承的底层实现 class="table-of-contents__link toc-highlight">7.3.3 样式继承的底层实现</a><li><a href=#734-样式优先级与层叠 class="table-of-contents__link toc-highlight">7.3.4 样式优先级与层叠</a></ul><li><a href=#74-影子-dom-与样式隔离 class="table-of-contents__link toc-highlight">7.4 影子 DOM 与样式隔离</a><ul><li><a href=#741-shadow-dom-的样式边界 class="table-of-contents__link toc-highlight">7.4.1 Shadow DOM 的样式边界</a><li><a href=#742-css-自定义属性与-shadow-dom class="table-of-contents__link toc-highlight">7.4.2 CSS 自定义属性与 Shadow DOM</a></ul><li><a href=#75-样式变化与渲染管线触发 class="table-of-contents__link toc-highlight">7.5 样式变化与渲染管线触发</a><ul><li><a href=#751-样式变化到渲染的映射 class="table-of-contents__link toc-highlight">7.5.1 样式变化到渲染的映射</a><li><a href=#752-will-change-属性的作用 class="table-of-contents__link toc-highlight">7.5.2 will-change 属性的作用</a><li><a href=#753-批量样式修改 class="table-of-contents__link toc-highlight">7.5.3 批量样式修改</a></ul><li><a href=#76-css-containment class="table-of-contents__link toc-highlight">7.6 CSS Containment</a><ul><li><a href=#761-content-visibility-优化 class="table-of-contents__link toc-highlight">7.6.1 content-visibility 优化</a></ul><li><a href=#77-css-houdini-与样式-api class="table-of-contents__link toc-highlight">7.7 CSS Houdini 与样式 API</a><ul><li><a href=#771-typed-om class="table-of-contents__link toc-highlight">7.7.1 Typed OM</a></ul><li><a href=#78-dom-树构建的完整流程 class="table-of-contents__link toc-highlight">7.8 DOM 树构建的完整流程</a><ul><li><a href=#781-从字节流到-dom-树的完整路径 class="table-of-contents__link toc-highlight">7.8.1 从字节流到 DOM 树的完整路径</a><li><a href=#782-tokenizer-状态机 class="table-of-contents__link toc-highlight">7.8.2 Tokenizer 状态机</a><li><a href=#783-html-解析器的容错机制 class="table-of-contents__link toc-highlight">7.8.3 HTML 解析器的容错机制</a><li><a href=#784-css-选择器匹配的-bloom-filter-优化 class="table-of-contents__link toc-highlight">7.8.4 CSS 选择器匹配的 Bloom Filter 优化</a><li><a href=#785-style-sharing-cache class="table-of-contents__link toc-highlight">7.8.5 Style Sharing Cache</a><li><a href=#786-影子-dom-样式作用域规则 class="table-of-contents__link toc-highlight">7.8.6 影子 DOM 样式作用域规则</a></ul><li><a href=#75-dom-树构建流程 class="table-of-contents__link toc-highlight">7.5 DOM 树构建流程</a><ul><li><a href=#751-html-解析器流程 class="table-of-contents__link toc-highlight">7.5.1 HTML 解析器流程</a><li><a href=#752-html-容错机制 class="table-of-contents__link toc-highlight">7.5.2 HTML 容错机制</a></ul><li><a href=#76-css-选择器匹配优化 class="table-of-contents__link toc-highlight">7.6 CSS 选择器匹配优化</a><ul><li><a href=#761-bloom-filter-加速 class="table-of-contents__link toc-highlight">7.6.1 Bloom Filter 加速</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

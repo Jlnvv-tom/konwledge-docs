@@ -1,0 +1,321 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_9" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_9 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人 | 知识库"/><meta data-rh=true name=description content="Midjourney V7 一张图收费不到 1 毛钱，Sora 2 能生成 60 秒带物理效果的视频，Suno 30 秒出一首完整歌曲。创意行业的门槛正在被 AI 打到地板上。"/><meta data-rh=true property=og:description content="Midjourney V7 一张图收费不到 1 毛钱，Sora 2 能生成 60 秒带物理效果的视频，Suno 30 秒出一首完整歌曲。创意行业的门槛正在被 AI 打到地板上。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_9 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_9 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_9 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_9","name":"AIGC 创作工具——AI 画图、拍视频、写歌、做数字人","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</h1></header>
+<p>Midjourney V7 一张图收费不到 1 毛钱，Sora 2 能生成 60 秒带物理效果的视频，Suno 30 秒出一首完整歌曲。创意行业的门槛正在被 AI 打到地板上。</p>
+<p>我是怕浪猫，《智能体产品全景手册》第 9 篇。这一篇我们讲 AIGC（AI-Generated Content，人工智能生成内容）创作工具。前面的章节讲的是"AI 帮你干活"，这一篇讲的是"AI 帮你创作"。图像、视频、音乐、数字人——四大创作赛道，AI 正在重新定义"创造力"的边界。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=91-ai-图像生成midjourneydall-estable-diffusion>9.1 AI 图像生成：Midjourney、DALL-E、Stable Diffusion<a href=#91-ai-图像生成midjourneydall-estable-diffusion class=hash-link aria-label="9.1 AI 图像生成：Midjourney、DALL-E、Stable Diffusion的直接链接" title="9.1 AI 图像生成：Midjourney、DALL-E、Stable Diffusion的直接链接" translate=no>​</a></h2>
+<p>AI 图像生成是 AIGC 最早爆发的赛道。2022 年 Midjourney 和 Stable Diffusion 的出现，让"AI 画图"从小众技术变成大众工具。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=midjourney-v7>Midjourney V7<a href=#midjourney-v7 class=hash-link aria-label="Midjourney V7的直接链接" title="Midjourney V7的直接链接" translate=no>​</a></h3>
+<p>Midjourney 是 AI 图像生成的标杆产品。2025 年发布的 V7 版本在以下方面有显著提升：</p>
+<p><strong>提示词理解</strong>：V7 对复杂提示词的理解更精确。以前需要"咒语"（精心构造的 prompt）才能出好图，现在用自然语言描述就能得到高质量结果。</p>
+<p><strong>一致性控制</strong>：V7 引入了角色一致性（Character Reference）和风格一致性（Style Reference）功能。你可以让 AI 保持同一个角色在不同场景中的外观一致，或者保持同一风格在多张图中的统一。这对于做连续故事、品牌视觉非常重要。</p>
+<p><strong>细节精度</strong>：手部、面部、文字渲染的准确性大幅提升。早期版本画手经常出现六指、扭曲等问题，V7 基本解决了这些"AI 画图的经典翻车点"。</p>
+<p>Midjourney 的商业模式是订阅制，基础版 $10/月。按一张图约 0.07 元人民币计算，比请设计师画一张图的成本低几个数量级。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Midjourney 图像生成的核心流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class MidjourneyPipeline:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def generate(self, prompt, **params):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 提示词理解与增强</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        enhanced_prompt = self.prompt_engineer.enhance(prompt)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 用户: "一只猫坐在窗台上，阳光照射，写实风格"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 增强: "a cat sitting on a windowsill, warm sunlight </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #        streaming through glass, photorealistic, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #        8K, shallow depth of field, natural lighting"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 文本编码（CLIP/T5）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        text_embeddings = self.text_encoder.encode(enhanced_prompt)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 潜空间扩散（Latent Diffusion）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 从纯噪声开始，逐步去噪</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        latent = torch.randn(1, 4, 64, 64)  # 初始噪声</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for step in range(self.num_steps):  # 通常30-50步</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 预测噪声</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            noise_pred = self.unet(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                latent, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                timestep=step,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context=text_embeddings</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 去噪</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            latent = self.scheduler.step(noise_pred, step, latent)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 解码为像素图像</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        image = self.vae_decoder.decode(latent)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 64x64潜空间 → 512x512或1024x1024像素</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 后处理与超分辨率</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        image = self.upscaler.upscale(image, factor=2)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return image</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=dall-e-3openai>DALL-E 3（OpenAI）<a href=#dall-e-3openai class=hash-link aria-label="DALL-E 3（OpenAI）的直接链接" title="DALL-E 3（OpenAI）的直接链接" translate=no>​</a></h3>
+<p>DALL-E 3 集成在 ChatGPT 中，核心优势是"对话式生成"。你不需要写 prompt，用自然语言和 ChatGPT 聊天描述你想要的图就行。ChatGPT 会自动帮你优化 prompt 并调用 DALL-E 3 生成图像。</p>
+<p>DALL-E 3 的另一个优势是文字渲染。在图像中准确渲染文字一直是 AI 画图的难题。DALL-E 3 在这方面表现不错，能生成包含准确文字的图像（如海报、Logo）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=stable-diffusion-35stability-ai>Stable Diffusion 3.5（Stability AI）<a href=#stable-diffusion-35stability-ai class=hash-link aria-label="Stable Diffusion 3.5（Stability AI）的直接链接" title="Stable Diffusion 3.5（Stability AI）的直接链接" translate=no>​</a></h3>
+<p>Stable Diffusion 是最流行的开源 AI 图像生成模型。SD 3.5 是 2025 年发布的最新版本。</p>
+<p>开源的意义在于<strong>可控性</strong>和<strong>免费</strong>。你可以本地部署 SD，不依赖任何 API，数据不出本机。你可以用 LoRA（Low-Rank Adaptation）微调模型，让它在特定风格（如你的品牌风格）上生成图像。你可以用 ControlNet 精确控制构图、姿势、边缘。</p>
+<p>Stable Diffusion 的生态系统是最丰富的。成千上万的 LoRA 模型、ControlNet 模型、插件和工具形成了一个庞大的创作者社区。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=三款图像生成工具对比>三款图像生成工具对比<a href=#三款图像生成工具对比 class=hash-link aria-label=三款图像生成工具对比的直接链接 title=三款图像生成工具对比的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>Midjourney V7<th>DALL-E 3<th>Stable Diffusion 3.5<tbody><tr><td>开发方<td>Midjourney<td>OpenAI<td>Stability AI<tr><td>开源<td>否<td>否<td>是<tr><td>价格<td>$10/月起<td>ChatGPT Plus $20/月<td>免费（本地部署）<tr><td>易用性<td>高（Discord/API）<td>最高（对话式）<td>中（需技术基础）<tr><td>图像质量<td>最优<td>优<td>优（依赖配置）<tr><td>一致性控制<td>强<td>弱<td>最强（ControlNet）<tr><td>文字渲染<td>中<td>强<td>中<tr><td>本地部署<td>不支持<td>不支持<td>支持<tr><td>适合用户<td>设计师/创作者<td>普通用户<td>开发者/技术型创作者</table>
+<blockquote>
+<p>选 Midjourney 要质量，选 DALL-E 要省事，选 Stable Diffusion 要控制力。三者不矛盾，很多创作者同时用。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=92-ai-视频生成sora-2kling可灵>9.2 AI 视频生成：Sora 2、Kling（可灵）<a href=#92-ai-视频生成sora-2kling可灵 class=hash-link aria-label="9.2 AI 视频生成：Sora 2、Kling（可灵）的直接链接" title="9.2 AI 视频生成：Sora 2、Kling（可灵）的直接链接" translate=no>​</a></h2>
+<p>如果说 AI 图像生成已经"够用了"，AI 视频生成还在"快速追赶"的阶段。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=sora-2openai>Sora 2（OpenAI）<a href=#sora-2openai class=hash-link aria-label="Sora 2（OpenAI）的直接链接" title="Sora 2（OpenAI）的直接链接" translate=no>​</a></h3>
+<p>Sora 2 是 OpenAI 在 2025 年发布的视频生成模型，是 Sora 1 的重大升级。</p>
+<p>核心能力：</p>
+<p><strong>60 秒长视频</strong>：Sora 2 能生成最长 60 秒的视频，远超竞品的 5-10 秒。长视频生成的难度在于保持时序一致性——角色不能在第 10 秒突然换衣服，场景不能在第 30 秒无故变化。</p>
+<p><strong>物理效果模拟</strong>：Sora 2 对物理世界有一定理解。液体流动、物体碰撞、重力影响等物理效果比第一代更真实。这不是完美的物理模拟，但已经不像早期 AI 视频那样"反直觉"。</p>
+<p><strong>多镜头叙事</strong>：Sora 2 能在一个视频中切换多个镜头角度。远景→近景→特写，像真正的电影剪辑。</p>
+<p><strong>音频同步</strong>：Sora 2 能为视频生成匹配的背景音效和音乐。雨声、脚步声、音乐节奏都能与画面同步。</p>
+<p>Sora 2 的技术核心是 Diffusion Transformer（DiT）架构。与传统的 U-Net 架构不同，DiT 用 Transformer 结构做扩散模型，能更好地处理长时序依赖。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=kling可灵快手>Kling（可灵，快手）<a href=#kling可灵快手 class=hash-link aria-label=Kling（可灵，快手）的直接链接 title=Kling（可灵，快手）的直接链接 translate=no>​</a></h3>
+<p>Kling 是快手推出的 AI 视频生成工具，在国产 AI 视频产品中表现最好。</p>
+<p>核心特色：</p>
+<p><strong>中文场景优化</strong>：在生成包含中文文字、中国元素的场景时表现优于国际产品。比如生成一个带有中文招牌的街景，Kling 的文字渲染明显比 Sora 更准确。</p>
+<p><strong>人物动态</strong>：Kling 在人物动作生成上有优势，特别是面部表情和肢体动作的自然度。这得益于快手在短视频领域的大量训练数据。</p>
+<p><strong>免费额度</strong>：Kling 提供免费试用额度，降低了用户尝试的门槛。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># AI 视频生成的核心技术架构对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">video_generation_architectures = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    "Sora 2": {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "架构": "Diffusion Transformer (DiT)",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "原理": """</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            1. 视频压缩到潜空间（3D VAE）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            2. 在潜空间用Transformer做扩散</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            3. Transformer处理时空联合token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            4. 解码回像素空间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "优势": "长视频、物理效果、多镜头",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "劣势": "计算成本极高"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    },</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    "Kling": {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "架构": "3D U-Net + Diffusion",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "原理": """</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            1. 视频帧序列压缩</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            2. 3D卷积处理时空信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            3. 扩散去噪生成视频</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            4. 时序注意力保持一致性</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "优势": "人物动态、中文场景、免费试用",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        "劣势": "视频长度较短（10-15秒）"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-视频生成的应用场景>AI 视频生成的应用场景<a href=#ai-视频生成的应用场景 class=hash-link aria-label="AI 视频生成的应用场景的直接链接" title="AI 视频生成的应用场景的直接链接" translate=no>​</a></h3>
+<p>AI 视频生成已经在这几个场景中实现商业化：</p>
+<p><strong>广告素材</strong>：电商商品视频、信息流广告素材。传统拍一条产品视频需要摄像师+剪辑师，AI 生成只要几分钟。</p>
+<p><strong>短视频创作</strong>：抖音、快手中的创意视频。AI 视频 + AI 音乐 + AI 剧本，一个人就能做一条完整的短视频。</p>
+<p><strong>影视预可视化</strong>：导演可以用 AI 快速生成场景概念视频，用于前期沟通和方案验证。比画分镜更直观。</p>
+<p><strong>教育培训</strong>：生成教学演示视频。比如"细胞分裂过程""太阳系运行"等抽象概念的视频化。</p>
+<blockquote>
+<p>AI 视频生成的终局不是替代影视行业，而是让每个人都能"拍"视频。就像手机摄像头没有替代专业摄影，但让每个人都能拍照。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=93-ai-音乐生成sunoudio>9.3 AI 音乐生成：Suno、Udio<a href=#93-ai-音乐生成sunoudio class=hash-link aria-label="9.3 AI 音乐生成：Suno、Udio的直接链接" title="9.3 AI 音乐生成：Suno、Udio的直接链接" translate=no>​</a></h2>
+<p>AI 音乐生成在 2025 年迎来了"iPhone 时刻"——Suno V4 能在 30 秒内生成一首包含人声、编曲、混音的完整歌曲。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=suno-v4>Suno V4<a href=#suno-v4 class=hash-link aria-label="Suno V4的直接链接" title="Suno V4的直接链接" translate=no>​</a></h3>
+<p>Suno 是目前最流行的 AI 音乐生成工具。V4 版本的核心能力：</p>
+<p><strong>完整歌曲生成</strong>：输入一段文字描述（"一首关于夏天的流行歌，轻快风格，女声"），Suno 在 30 秒内生成一首包含前奏、主歌、副歌、桥段、尾奏的完整歌曲，带人声演唱和完整编曲。</p>
+<p><strong>风格控制</strong>：支持指定音乐风格（流行、摇滚、爵士、古典、电子、说唱、民谣等）、乐器配器、节奏快慢、情感基调。</p>
+<p><strong>多语言演唱</strong>：支持英语、中文、日语、韩语、西班牙语等多种语言的歌词演唱。中文发音的自然度在 V4 中有显著提升。</p>
+<p><strong>歌词生成</strong>：你可以自己写歌词，也可以让 AI 根据主题自动生成歌词。AI 生成的歌词会自动匹配旋律和节奏。</p>
+<p>Suno 的定价：免费版每天 10 首，Pro 版 <span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mn>8</mn><mi mathvariant=normal>/</mi><mtext>月（</mtext><mn>500</mn><mtext>首），</mtext><mi>P</mi><mi>r</mi><mi>e</mi><mi>m</mi><mi>i</mi><mi>e</mi><mi>r</mi><mtext>版</mtext></mrow><annotation encoding=application/x-tex>8/月（500 首），Premier 版 </annotation></semantics></math></span><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-0.25em></span><span class=mord>8/</span><span class="mord cjk_fallback">月（</span><span class=mord>500</span><span class="mord cjk_fallback">首），</span><span class="mord mathnormal" style=margin-right:0.1389em>P</span><span class="mord mathnormal" style=margin-right:0.0278em>r</span><span class="mord mathnormal">e</span><span class="mord mathnormal">mi</span><span class="mord mathnormal" style=margin-right:0.0278em>er</span><span class="mord cjk_fallback">版</span></span></span></span>24/月（2000 首）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Suno V4 的音乐生成流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class SunoV4:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def generate_song(self, description, lyrics=None):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 音乐风格解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        style = self.parse_style(description)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # style = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "genre": "pop",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "mood": "upbeat, cheerful",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "instruments": ["acoustic_guitar", "drums", "bass", "synth"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "vocal": "female",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "tempo": 120,  # BPM</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "key": "C_major"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 歌词生成（如果未提供）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        if lyrics is None:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            lyrics = self.lyric_generator.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                theme=description,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                style=style,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                structure=["verse1", "chorus", "verse2", "chorus", "bridge", "chorus"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 旋律生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        melody = self.melody_generator.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            style=style,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            lyrics=lyrics</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 编曲生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        arrangement = self.arranger.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            melody=melody,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            style=style,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            instruments=style["instruments"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 人声合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        vocals = self.vocal_synth.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            lyrics=lyrics,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            melody=melody,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            voice_type=style["vocal"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 6. 混音</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        final_song = self.mixer.mix(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            vocals=vocals,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            arrangement=arrangement,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            style=style</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return final_song  # 完整歌曲</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=udio>Udio<a href=#udio class=hash-link aria-label=Udio的直接链接 title=Udio的直接链接 translate=no>​</a></h3>
+<p>Udio 是 Suno 的主要竞争对手，由前 Google DeepMind 研究人员创立。</p>
+<p>Udio 的差异化在于音频质量。Udio 生成的音乐在音质、混音专业度上略优于 Suno，特别在古典音乐和爵士乐等对音质要求高的类型上。</p>
+<p>Udio 还提供了更细粒度的控制：你可以分别生成和编辑歌曲的不同部分（前奏、主歌、副歌），然后拼接成完整歌曲。这给专业音乐人提供了更大的创作控制空间。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-音乐的商业化挑战>AI 音乐的商业化挑战<a href=#ai-音乐的商业化挑战 class=hash-link aria-label="AI 音乐的商业化挑战的直接链接" title="AI 音乐的商业化挑战的直接链接" translate=no>​</a></h3>
+<p>AI 音乐生成面临一个独特的挑战：版权。AI 生成的音乐是否侵犯了训练数据中音乐的版权？如果 AI 生成的一首歌听起来很像某位歌手的风格，这算不算侵权？</p>
+<p>2025 年，多家唱片公司起诉了 Suno 和 Udio，指控它们未经授权使用版权音乐训练模型。这个法律争议至今未完全解决，是 AI 音乐行业最大的不确定性。</p>
+<blockquote>
+<p>AI 音乐的版权问题不是技术问题，是利益分配问题。解法可能是"训练数据授权制"——AI 公司向音乐版权方付费获取训练数据，类似 Spotify 向唱片公司付费获取播放权。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=94-ai-语音合成与数字人elevenlabsheygen>9.4 AI 语音合成与数字人：ElevenLabs、HeyGen<a href=#94-ai-语音合成与数字人elevenlabsheygen class=hash-link aria-label="9.4 AI 语音合成与数字人：ElevenLabs、HeyGen的直接链接" title="9.4 AI 语音合成与数字人：ElevenLabs、HeyGen的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=elevenlabs>ElevenLabs<a href=#elevenlabs class=hash-link aria-label=ElevenLabs的直接链接 title=ElevenLabs的直接链接 translate=no>​</a></h3>
+<p>ElevenLabs 是 AI 语音合成领域的领导者。它的技术能做到什么？克隆一个人的声音只需要 30 秒的样本音频。</p>
+<p>核心产品：</p>
+<p><strong>Voice Cloning（声音克隆）</strong>：上传 30 秒-5 分钟的某人的语音样本，ElevenLabs 能克隆出一个高度相似的声音。用这个克隆的声音可以朗读任何文字。ElevenLabs 的克隆质量是业界最好的，情感、语调、停顿都高度还原。</p>
+<p><strong>Voice Library（声音库）</strong>：ElevenLabs 有一个社区声音库，用户可以分享和使用彼此创建的声音。目前有数千种不同风格的声音可供选择。</p>
+<p><strong>多语言 TTS（Text-to-Speech）</strong>：ElevenLabs 支持近 30 种语言的文字转语音，包括中文。同一段文字可以用不同语言朗读，甚至可以做实时翻译配音。</p>
+<p><strong>实时语音对话</strong>：ElevenLabs 提供实时语音 API，延迟低至 400ms。这让构建语音对话 Agent 成为可能——用户说话，AI 听懂并语音回答，像打电话一样自然。</p>
+<p>ElevenLabs 的定价：免费版每月 10000 字符，付费版从 $5/月起。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=heygen>HeyGen<a href=#heygen class=hash-link aria-label=HeyGen的直接链接 title=HeyGen的直接链接 translate=no>​</a></h3>
+<p>HeyGen 专注于 AI 数字人——用 AI 生成会说话的数字人视频。</p>
+<p>核心能力：</p>
+<p><strong>数字人视频生成</strong>：输入一段文字和一张照片，HeyGen 生成一段数字人说这段话的视频。口型同步、面部表情、头部动作都由 AI 自动生成。</p>
+<p><strong>多语言视频本地化</strong>：这是 HeyGen 最受欢迎的功能。你上传一段中文讲解视频，HeyGen 能自动翻译成英语、日语、西班牙语等，并用原说话者的声音和面部生成目标语言的视频。口型会自动适配新语言。</p>
+<p><strong>数字人模板</strong>：HeyGen 提供多种数字人形象模板，用户也可以上传自己的照片创建专属数字人。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># HeyGen 数字人视频生成的流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class HeyGen:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def create_avatar_video(self, text, avatar_image, language="zh"):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 文本分析和情感标注</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        annotated = self.text_analyzer.analyze(text)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 标注每个句子的情感、语调、重音</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 语音合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        audio = self.tts.synthesize(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            text=annotated,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            voice=self.clone_voice(avatar_image),</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            language=language</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 面部动画生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        facial_animation = self.face_animator.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            audio=audio,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            emotion=annotated.emotions,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            base_image=avatar_image</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 生成每帧的面部关键点变化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 口型同步</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        lip_sync = self.lip_sync_model.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            audio=audio,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            face_frames=facial_animation</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 视频合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        video = self.renderer.render(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            face_animation=lip_sync,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            audio=audio,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            background="transparent"  # 支持透明背景</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return video</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-语音与数字人的应用场景>AI 语音与数字人的应用场景<a href=#ai-语音与数字人的应用场景 class=hash-link aria-label="AI 语音与数字人的应用场景的直接链接" title="AI 语音与数字人的应用场景的直接链接" translate=no>​</a></h3>
+<p><strong>内容创作</strong>：YouTuber、B 站 UP 主用 AI 语音做配音，不需要自己录音。数字人出镜不需要化妆和拍摄。</p>
+<p><strong>教育培训</strong>：企业培训视频用数字人讲解，可以快速制作多语言版本。一个培训课程可以同时生成中英日韩等多种语言版本。</p>
+<p><strong>客服与营销</strong>：数字人客服 24 小时在线，用自然语言与客户交流。数字人直播带货已经在电商中广泛应用。</p>
+<p><strong>无障碍辅助</strong>：为失声者克隆声音，让他们能用自己的声音"说话"。为视障人士提供高质量的语音朗读服务。</p>
+<blockquote>
+<p>AI 语音和数字人的伦理边界需要警惕。声音克隆和 Deepfake（深度伪造）技术是一把双刃剑——用于创作是工具，用于欺诈是武器。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=95-lovartai-设计-agent>9.5 Lovart：AI 设计 Agent<a href=#95-lovartai-设计-agent class=hash-link aria-label="9.5 Lovart：AI 设计 Agent的直接链接" title="9.5 Lovart：AI 设计 Agent的直接链接" translate=no>​</a></h2>
+<p>Lovart 是一个特别的 AIGC 产品——它不是单一的内容生成工具，而是一个 AI 设计 Agent，能理解设计需求并自主完成设计任务。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lovart-的核心能力>Lovart 的核心能力<a href=#lovart-的核心能力 class=hash-link aria-label="Lovart 的核心能力的直接链接" title="Lovart 的核心能力的直接链接" translate=no>​</a></h3>
+<p><strong>设计理解</strong>：Lovart 能理解设计需求描述（"帮我设计一个咖啡品牌的 Logo，简约风格，棕色系"），并自主完成设计。</p>
+<p><strong>多模态输出</strong>：不只是生成图片，而是生成完整的设计方案——Logo、配色方案、字体选择、应用场景效果图。</p>
+<p><strong>迭代修改</strong>：你可以说"颜色再深一点""字体换成无衬线的"，Lovart 理解修改意图并调整设计。</p>
+<p><strong>批量生成</strong>：一次生成多个设计方案供选择，每个方案有不同风格和方向。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lovart-vs-传统-ai-图像生成>Lovart vs 传统 AI 图像生成<a href=#lovart-vs-传统-ai-图像生成 class=hash-link aria-label="Lovart vs 传统 AI 图像生成的直接链接" title="Lovart vs 传统 AI 图像生成的直接链接" translate=no>​</a></h3>
+<p>传统 AI 图像生成工具（Midjourney 等）是"你给 prompt，我给图"的单次交互模式。Lovart 是"你给需求，我给方案"的 Agent 模式。区别在于 Lovart 有理解需求、规划方案、迭代修改的能力。</p>
+<p>这使得 Lovart 更接近"设计师"而非"画图工具"。当然，在创意深度和专业度上，AI 设计 Agent 还远不能替代人类设计师。但对于简单的设计需求（社交媒体配图、简单 Logo、海报模板），Lovart 已经够用。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=96-aigc-工具全景对比与选型>9.6 AIGC 工具全景对比与选型<a href=#96-aigc-工具全景对比与选型 class=hash-link aria-label="9.6 AIGC 工具全景对比与选型的直接链接" title="9.6 AIGC 工具全景对比与选型的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=全景对比>全景对比<a href=#全景对比 class=hash-link aria-label=全景对比的直接链接 title=全景对比的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>赛道<th>产品<th>核心能力<th>价格<th>开源替代<tbody><tr><td>图像生成<td>Midjourney V7<td>最高图像质量<td>$10/月<td>Stable Diffusion<tr><td>图像生成<td>DALL-E 3<td>对话式生成<td>$20/月<td>-<tr><td>图像生成<td>SD 3.5<td>最强控制力<td>免费<td>自身即开源<tr><td>视频生成<td>Sora 2<td>60秒长视频<td>ChatGPT Pro<td>-<tr><td>视频生成<td>Kling<td>中文场景优化<td>免费+付费<td>-<tr><td>音乐生成<td>Suno V4<td>完整歌曲30秒<td>$8/月<td>-<tr><td>音乐生成<td>Udio<td>更高音质<td>$10/月<td>-<tr><td>语音合成<td>ElevenLabs<td>声音克隆<td>$5/月<td>Bark/TTS<tr><td>数字人<td>HeyGen<td>多语言视频<td>$29/月<td>SadTalker<tr><td>设计Agent<td>Lovart<td>AI设计方案<td>订阅制<td>-</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=选型建议>选型建议<a href=#选型建议 class=hash-link aria-label=选型建议的直接链接 title=选型建议的直接链接 translate=no>​</a></h3>
+<p><strong>图像生成</strong>：</p>
+<ul>
+<li class="">专业设计师：Midjourney V7（质量最优）+ Stable Diffusion（本地控制）</li>
+<li class="">普通用户：DALL-E 3（对话式最简单）</li>
+<li class="">开发者：Stable Diffusion 3.5（开源可控）</li>
+</ul>
+<p><strong>视频生成</strong>：</p>
+<ul>
+<li class="">专业视频制作：Sora 2（60秒长视频）</li>
+<li class="">短视频创作：Kling（中文优化+免费额度）</li>
+<li class="">广告素材：两者都行，看具体需求</li>
+</ul>
+<p><strong>音乐生成</strong>：</p>
+<ul>
+<li class="">流行音乐：Suno V4（完整歌曲生成）</li>
+<li class="">古典/爵士：Udio（音质更好）</li>
+<li class="">背景音乐：Suno 免费版够用</li>
+</ul>
+<p><strong>语音与数字人</strong>：</p>
+<ul>
+<li class="">语音克隆：ElevenLabs（质量最好）</li>
+<li class="">数字人视频：HeyGen（多语言本地化）</li>
+<li class="">实时语音 Agent：ElevenLabs Realtime API</li>
+</ul>
+<blockquote>
+<p>AIGC 工具的选择逻辑很简单：先确定你需要什么类型的内容（图/视频/音乐/语音），再根据专业度和预算选产品。先用免费版试用，满意了再付费。</p>
+</blockquote>
+<p>这一章我们拆解了 AIGC 创作的四大赛道：AI 图像生成（Midjourney V7、DALL-E 3、Stable Diffusion 3.5）、AI 视频生成（Sora 2、Kling）、AI 音乐生成（Suno V4、Udio）、AI 语音与数字人（ElevenLabs、HeyGen），还介绍了 AI 设计 Agent Lovart。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>赛道<th>产品数量<th>市场格局<tbody><tr><td>图像生成<td>3 款<td>Midjourney 质量领先<tr><td>视频生成<td>2 款<td>Sora 2 技术领先<tr><td>音乐生成<td>2 款<td>Suno 用户量第一<tr><td>语音/数字人<td>2 款<td>ElevenLabs 标杆</table>
+<p>觉得有用？收藏起来，下次选 AIGC 工具直接照着表选。</p>
+<p>你用过哪些 AIGC 工具？AI 生成的作品质量怎么样？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲具身智能与 Agent 协议——AI 有了身体会怎样？MCP 和 A2A 协议为什么重要？这是系列最后一篇，大结局不容错过。系列进度 9/10，关注不错过。</p>
+<p>下一篇是系列收官之作，怕浪猫会带你走进具身智能（Embodied AI）和 Agent 协议的世界。Tesla Optimus 能做家务了？Figure AI 的机器人能替代工厂工人吗？MCP（Model Context Protocol）协议为什么被称为"AI 的 USB 接口"？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_9.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>具身智能与 Agent 协议——AI 的身体与语言</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#91-ai-图像生成midjourneydall-estable-diffusion class="table-of-contents__link toc-highlight">9.1 AI 图像生成：Midjourney、DALL-E、Stable Diffusion</a><ul><li><a href=#midjourney-v7 class="table-of-contents__link toc-highlight">Midjourney V7</a><li><a href=#dall-e-3openai class="table-of-contents__link toc-highlight">DALL-E 3（OpenAI）</a><li><a href=#stable-diffusion-35stability-ai class="table-of-contents__link toc-highlight">Stable Diffusion 3.5（Stability AI）</a><li><a href=#三款图像生成工具对比 class="table-of-contents__link toc-highlight">三款图像生成工具对比</a></ul><li><a href=#92-ai-视频生成sora-2kling可灵 class="table-of-contents__link toc-highlight">9.2 AI 视频生成：Sora 2、Kling（可灵）</a><ul><li><a href=#sora-2openai class="table-of-contents__link toc-highlight">Sora 2（OpenAI）</a><li><a href=#kling可灵快手 class="table-of-contents__link toc-highlight">Kling（可灵，快手）</a><li><a href=#ai-视频生成的应用场景 class="table-of-contents__link toc-highlight">AI 视频生成的应用场景</a></ul><li><a href=#93-ai-音乐生成sunoudio class="table-of-contents__link toc-highlight">9.3 AI 音乐生成：Suno、Udio</a><ul><li><a href=#suno-v4 class="table-of-contents__link toc-highlight">Suno V4</a><li><a href=#udio class="table-of-contents__link toc-highlight">Udio</a><li><a href=#ai-音乐的商业化挑战 class="table-of-contents__link toc-highlight">AI 音乐的商业化挑战</a></ul><li><a href=#94-ai-语音合成与数字人elevenlabsheygen class="table-of-contents__link toc-highlight">9.4 AI 语音合成与数字人：ElevenLabs、HeyGen</a><ul><li><a href=#elevenlabs class="table-of-contents__link toc-highlight">ElevenLabs</a><li><a href=#heygen class="table-of-contents__link toc-highlight">HeyGen</a><li><a href=#ai-语音与数字人的应用场景 class="table-of-contents__link toc-highlight">AI 语音与数字人的应用场景</a></ul><li><a href=#95-lovartai-设计-agent class="table-of-contents__link toc-highlight">9.5 Lovart：AI 设计 Agent</a><ul><li><a href=#lovart-的核心能力 class="table-of-contents__link toc-highlight">Lovart 的核心能力</a><li><a href=#lovart-vs-传统-ai-图像生成 class="table-of-contents__link toc-highlight">Lovart vs 传统 AI 图像生成</a></ul><li><a href=#96-aigc-工具全景对比与选型 class="table-of-contents__link toc-highlight">9.6 AIGC 工具全景对比与选型</a><ul><li><a href=#全景对比 class="table-of-contents__link toc-highlight">全景对比</a><li><a href=#选型建议 class="table-of-contents__link toc-highlight">选型建议</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

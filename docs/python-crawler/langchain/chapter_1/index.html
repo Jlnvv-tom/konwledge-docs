@@ -1,0 +1,475 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-python-crawler/langchain/chapter_1" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第1章 初识 LangChain：大模型时代的开发脚手架 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/chapter_1 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第1章 初识 LangChain：大模型时代的开发脚手架 | 知识库"/><meta data-rh=true name=description content="大家好，我是一名深耕大模型应用开发的程序员。在2022年ChatGPT引爆生成式AI浪潮后，我相信很多人和我一样，从“调用API生成文本”的新鲜感，很快陷入了“如何把大模型做成可用产品”的困境——单独调用GPT-4 API只能实现简单对话，想让它连接数据库、处理本地文档、自主调用工具，需要写大量重复且繁琐的胶水代码。"/><meta data-rh=true property=og:description content="大家好，我是一名深耕大模型应用开发的程序员。在2022年ChatGPT引爆生成式AI浪潮后，我相信很多人和我一样，从“调用API生成文本”的新鲜感，很快陷入了“如何把大模型做成可用产品”的困境——单独调用GPT-4 API只能实现简单对话，想让它连接数据库、处理本地文档、自主调用工具，需要写大量重复且繁琐的胶水代码。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/chapter_1 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/chapter_1 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/chapter_1 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/","name":"LangChain 学习","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/python-crawler/langchain/chapter_1","name":"第1章 初识 LangChain：大模型时代的开发脚手架","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/python-crawler/><span title="🐍 Python 与爬虫" class=linkLabel_WmDU>🐍 Python 与爬虫</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/python-crawler/python/><span title="Python 学习" class=categoryLinkLabel_W154>Python 学习</span></a><button aria-label="展开侧边栏分类 'Python 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/python-crawler/python-practice/><span title="Python 实战训练营" class=categoryLinkLabel_W154>Python 实战训练营</span></a><button aria-label="展开侧边栏分类 'Python 实战训练营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/python-crawler/python-crawler/><span title="Python 高级爬虫" class=categoryLinkLabel_W154>Python 高级爬虫</span></a><button aria-label="展开侧边栏分类 'Python 高级爬虫'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/python-crawler/python-mobile-crawler/><span title="Python 移动端爬虫" class=categoryLinkLabel_W154>Python 移动端爬虫</span></a><button aria-label="展开侧边栏分类 'Python 移动端爬虫'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/python-crawler/python-llm/><span title="LLM 开发实战" class=categoryLinkLabel_W154>LLM 开发实战</span></a><button aria-label="展开侧边栏分类 'LLM 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/python-crawler/langchain/><span title="LangChain 学习" class=categoryLinkLabel_W154>LangChain 学习</span></a><button aria-label="折叠侧边栏分类 'LangChain 学习'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_1><span title="第1章 初识 LangChain：大模型时代的开发脚手架" class=linkLabel_WmDU>第1章 初识 LangChain：大模型时代的开发脚手架</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_2><span title="第2章 开发环境搭建与基础配置" class=linkLabel_WmDU>第2章 开发环境搭建与基础配置</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_3><span title="第3章 LangChain 核心抽象：Models 与 Messages" class=linkLabel_WmDU>第3章 LangChain 核心抽象：Models 与 Messages</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_4><span title="第4章 提示工程基础：Prompt Templates" class=linkLabel_WmDU>第4章 提示工程基础：Prompt Templates</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_5><span title="第5章 输出解析：让模型返回结构化数据" class=linkLabel_WmDU>第5章 输出解析：让模型返回结构化数据</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_6><span title="第6章 链（Chains）：构建可组合的工作流" class=linkLabel_WmDU>第6章 链（Chains）：构建可组合的工作流</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_7><span title="第7章 文档加载与文本分割" class=linkLabel_WmDU>第7章 文档加载与文本分割</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_8><span title="第8章 向量嵌入与语义表示（LangChain实战）" class=linkLabel_WmDU>第8章 向量嵌入与语义表示（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_9><span title="第9章 向量数据库集成（LangChain实战）" class=linkLabel_WmDU>第9章 向量数据库集成（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_10><span title="第10章 RAG（检索增强生成）系统构建（LangChain实战）" class=linkLabel_WmDU>第10章 RAG（检索增强生成）系统构建（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_11><span title="第11章 内存机制：让模型记住对话历史（LangChain实战）" class=linkLabel_WmDU>第11章 内存机制：让模型记住对话历史（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_12><span title="第12章 工具（Tools）与函数调用（LangChain实战）" class=linkLabel_WmDU>第12章 工具（Tools）与函数调用（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_13><span title="第13章 智能体（Agents）基础（LangChain实战）" class=linkLabel_WmDU>第13章 智能体（Agents）基础（LangChain实战）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_14><span title="第14章 高级 Agent：LangGraph 与状态机" class=linkLabel_WmDU>第14章 高级 Agent：LangGraph 与状态机</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_15><span title="第15章 回调机制与可观测性" class=linkLabel_WmDU>第15章 回调机制与可观测性</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_16><span title="第16章 错误处理与鲁棒性设计" class=linkLabel_WmDU>第16章 错误处理与鲁棒性设计</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_17><span title="第17章 缓存与性能优化" class=linkLabel_WmDU>第17章 缓存与性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_18><span title="第18章 多模态与非文本数据处理" class=linkLabel_WmDU>第18章 多模态与非文本数据处理</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_19><span title="第19章 应用模板与参考架构" class=linkLabel_WmDU>第19章 应用模板与参考架构</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_20><span title="第20章 LangServe：部署为 REST API" class=linkLabel_WmDU>第20章 LangServe：部署为 REST API</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_21><span title="第21章 LangSmith：调试、测试与评估" class=linkLabel_WmDU>第21章 LangSmith：调试、测试与评估</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/python-crawler/langchain/chapter_22><span title="第22章 项目实战：端到端企业知识助手" class=linkLabel_WmDU>第22章 项目实战：端到端企业知识助手</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/python-crawler/langchain/><span>LangChain 学习</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第1章 初识 LangChain：大模型时代的开发脚手架</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第1章 初识 LangChain：大模型时代的开发脚手架</h1></header>
+<p>大家好，我是一名深耕大模型应用开发的程序员。在2022年ChatGPT引爆生成式AI浪潮后，我相信很多人和我一样，从“调用API生成文本”的新鲜感，很快陷入了“如何把大模型做成可用产品”的困境——单独调用GPT-4 API只能实现简单对话，想让它连接数据库、处理本地文档、自主调用工具，需要写大量重复且繁琐的胶水代码。</p>
+<p>直到LangChain的出现，彻底改变了这一现状。它就像大模型应用开发的“脚手架”，把复杂的流程抽象成可拼接的组件，让我们不用重复造轮子，专注于核心业务逻辑。本章将从基础认知、发展历程、框架对比，到动手实战，带你快速入门LangChain，为后续学习打下坚实基础。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-什么是-langchain为什么需要它>1.1 什么是 LangChain？为什么需要它？<a href=#11-什么是-langchain为什么需要它 class=hash-link aria-label="1.1 什么是 LangChain？为什么需要它？的直接链接" title="1.1 什么是 LangChain？为什么需要它？的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=111-一句话读懂langchain>1.1.1 一句话读懂LangChain<a href=#111-一句话读懂langchain class=hash-link aria-label="1.1.1 一句话读懂LangChain的直接链接" title="1.1.1 一句话读懂LangChain的直接链接" translate=no>​</a></h3>
+<p>LangChain 是一个开源的大模型应用编排框架，核心作用是“连接”——连接大语言模型（LLM）与外部数据源（文档、数据库、API）、工具（搜索、计算、自动化工具），并通过“链式调用”将多个组件组合起来，快速构建复杂的AI应用（如智能问答、聊天机器人、RAG知识库等）。</p>
+<p>简单说：LLM是“大脑”，LangChain是“神经网络”，负责把大脑的能力传递到各个场景，让大脑能“看见”外部数据、“使用”各类工具，而不只是一个孤立的文本生成器。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=112-为什么我们需要langchain>1.1.2 为什么我们需要LangChain？<a href=#112-为什么我们需要langchain class=hash-link aria-label="1.1.2 为什么我们需要LangChain？的直接链接" title="1.1.2 为什么我们需要LangChain？的直接链接" translate=no>​</a></h3>
+<p>没有LangChain，开发大模型应用会面临3个核心痛点，这也是它诞生的核心原因：</p>
+<ol>
+<li class="">
+<p><strong>重复造轮子</strong>：每次开发新应用，都要重新写“调用LLM、处理对话历史、连接外部工具”的代码，效率极低；</p>
+</li>
+<li class="">
+<p><strong>流程难编排</strong>：复杂场景（如“提问→搜索→分析结果→生成回答”）需要手动管理组件间的依赖和数据流转，逻辑混乱且易出错；</p>
+</li>
+<li class="">
+<p><strong>扩展性差</strong>：更换LLM（如从GPT-3.5换成 llama 3）、替换向量数据库（如从FAISS换成Pinecone），需要大面积修改代码。</p>
+</li>
+</ol>
+<p>而LangChain的核心价值，就是解决这3个痛点：通过模块化设计，让组件可复用、可替换；通过链式调用，让复杂流程可编排、可调试；通过统一接口，让开发者无需关注底层细节，快速实现从原型到产品的落地。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=113-核心应用场景>1.1.3 核心应用场景<a href=#113-核心应用场景 class=hash-link aria-label="1.1.3 核心应用场景的直接链接" title="1.1.3 核心应用场景的直接链接" translate=no>​</a></h3>
+<p>LangChain的应用场景几乎覆盖所有LLM驱动的场景，最常见的有4类：</p>
+<ul>
+<li class="">
+<p>RAG（检索增强生成）：连接本地文档、PDF、网页，让LLM基于指定数据生成回答（企业知识库、文档问答）；</p>
+</li>
+<li class="">
+<p>聊天机器人：支持多轮对话记忆，实现拟人化交互（客服机器人、私人助手）；</p>
+</li>
+<li class="">
+<p>智能工具调用：让LLM自主决定调用搜索、计算、数据库查询等工具（智能数据分析、自动化办公）；</p>
+</li>
+<li class="">
+<p>多模态应用：结合文本、图片、音频，构建多模态交互应用（图文生成、语音问答）。</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-langchain-的发展历程与生态全景>1.2 LangChain 的发展历程与生态全景<a href=#12-langchain-的发展历程与生态全景 class=hash-link aria-label="1.2 LangChain 的发展历程与生态全景的直接链接" title="1.2 LangChain 的发展历程与生态全景的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=121-发展历程关键节点>1.2.1 发展历程（关键节点）<a href=#121-发展历程关键节点 class=hash-link aria-label="1.2.1 发展历程（关键节点）的直接链接" title="1.2.1 发展历程（关键节点）的直接链接" translate=no>​</a></h3>
+<p>LangChain 由 Harrison Chase 于2022年10月正式推出，恰逢ChatGPT引爆生成式AI浪潮，凭借“降低LLM应用开发门槛”的核心优势，迅速成为开源社区的明星项目，其发展历程可分为4个关键阶段：</p>
+<ol>
+<li class="">
+<p><strong>2022年10月 - 初创期</strong>：LangChain 在GitHub发布首个版本，核心功能是“Prompt模板”和“简单链式调用”，主打“快速原型开发”，解决开发者“重复写调用代码”的痛点；</p>
+</li>
+<li class="">
+<p><strong>2023年 - 爆发期</strong>：GitHub星标数突破38000，成为年度增速最快的开源项目之一。推出LangSmith调试平台，完善RAG、Agent等核心功能，生态开始扩张，支持更多LLM和工具集成；</p>
+</li>
+<li class="">
+<p><strong>2024年 - 商业化与成熟化</strong>：完成红杉资本领投的融资，发布LangServe部署工具，支持将LangChain应用部署为REST API，推动企业级落地；同时优化核心库，解决“抽象过重”的争议；</p>
+</li>
+<li class="">
+<p><strong>2025年至今 - 生态完善期</strong>：推出langgraph库，强化多智能体系统构建能力；深化与云平台、垂直行业的合作，持续优化多模态支持，愿景是成为“大模型应用开发的通用语言”。</p>
+</li>
+</ol>
+<p>截至2026年3月，LangChain GitHub星标数已突破70k+，成为大模型应用开发领域最主流的框架之一，拥有庞大的开发者社区和丰富的第三方集成。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=122-生态全景核心组件与集成>1.2.2 生态全景（核心组件与集成）<a href=#122-生态全景核心组件与集成 class=hash-link aria-label="1.2.2 生态全景（核心组件与集成）的直接链接" title="1.2.2 生态全景（核心组件与集成）的直接链接" translate=no>​</a></h3>
+<p>LangChain的生态围绕“模块化、可扩展”展开，核心分为3部分：核心库、工具集成、辅助平台，形成了“开发-调试-部署”的完整闭环，具体如下：</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-核心库langchain-core>1. 核心库（langchain-core）<a href=#1-核心库langchain-core class=hash-link aria-label="1. 核心库（langchain-core）的直接链接" title="1. 核心库（langchain-core）的直接链接" translate=no>​</a></h4>
+<p>LangChain的核心骨架，包含所有基础组件，是构建应用的基础，关键组件有：</p>
+<ul>
+<li class="">
+<p><strong>模型（Models）</strong>：统一的LLM调用接口，支持OpenAI、Anthropic、Meta（llama 3）、Google等主流模型，以及本地部署的开源模型；</p>
+</li>
+<li class="">
+<p><strong>提示（Prompts）</strong>：Prompt模板、少样本提示、提示优化等功能，简化提示工程的复杂度；</p>
+</li>
+<li class="">
+<p><strong>链（Chains）</strong>：将多个组件串联起来，实现复杂流程（如LLMChain、SequentialChain）；</p>
+</li>
+<li class="">
+<p><strong>记忆（Memory）</strong>：管理多轮对话上下文，让LLM“记住”之前的交互内容；</p>
+</li>
+<li class="">
+<p><strong>工具（Tools）</strong>：定义外部工具的调用接口，支持搜索、数据库、API等工具的集成；</p>
+</li>
+<li class="">
+<p><strong>检索（Retrievers）</strong>：连接向量数据库，实现外部数据的检索，是RAG场景的核心组件。</p>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-工具集成生态核心优势>2. 工具集成（生态核心优势）<a href=#2-工具集成生态核心优势 class=hash-link aria-label="2. 工具集成（生态核心优势）的直接链接" title="2. 工具集成（生态核心优势）的直接链接" translate=no>​</a></h4>
+<p>LangChain的最大优势之一就是“生态丰富”，已集成100+第三方工具和服务，覆盖4大类别：</p>
+<ul>
+<li class="">
+<p><strong>大语言模型（LLM）</strong>：OpenAI、Anthropic（Claude）、Google（Gemini）、Meta（llama 3）、Hugging Face等；</p>
+</li>
+<li class="">
+<p><strong>向量数据库</strong>：FAISS、Pinecone、Chroma、Milvus等，用于存储和检索文本嵌入；</p>
+</li>
+<li class="">
+<p><strong>外部工具</strong>：Google搜索、Bing搜索、Python解释器、数据库（MySQL、PostgreSQL）、Slack、邮件等；</p>
+</li>
+<li class="">
+<p><strong>文档加载器</strong>：支持PDF、Word、Excel、Markdown、网页等多种格式的文档加载。</p>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-辅助平台开发-部署闭环>3. 辅助平台（开发-部署闭环）<a href=#3-辅助平台开发-部署闭环 class=hash-link aria-label="3. 辅助平台（开发-部署闭环）的直接链接" title="3. 辅助平台（开发-部署闭环）的直接链接" translate=no>​</a></h4>
+<p>为了降低开发和部署成本，LangChain官方推出了2个核心辅助平台：</p>
+<ul>
+<li class="">
+<p><strong>LangSmith</strong>：调试、监控和评估平台，可查看链的运行日志、优化Prompt、评估回答质量，解决“链式调用难调试”的痛点；</p>
+</li>
+<li class="">
+<p><strong>LangServe</strong>：部署工具，可将LangChain的链或Agent快速部署为REST API，方便集成到Web应用、APP等产品中。</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-langchain-与其他框架对比llamaindexhaystack-等>1.3 LangChain 与其他框架对比（LlamaIndex、Haystack 等）<a href=#13-langchain-与其他框架对比llamaindexhaystack-等 class=hash-link aria-label="1.3 LangChain 与其他框架对比（LlamaIndex、Haystack 等）的直接链接" title="1.3 LangChain 与其他框架对比（LlamaIndex、Haystack 等）的直接链接" translate=no>​</a></h2>
+<p>在大模型应用开发领域，除了LangChain，还有LlamaIndex、Haystack、DSPy等主流框架，它们各有侧重，不存在“绝对最优”，只有“最适合场景”。下面从核心定位、优势、劣势、适用场景4个维度，做详细对比，帮你快速选型。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=131-核心框架对比表>1.3.1 核心框架对比表<a href=#131-核心框架对比表 class=hash-link aria-label="1.3.1 核心框架对比表的直接链接" title="1.3.1 核心框架对比表的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>框架<th>核心定位<th>核心优势<th>核心劣势<th>适用场景<tbody><tr><td>LangChain<td>通用型LLM应用编排框架<td>1. 生态最广，集成工具最多；2. 社区活跃，文档完善；3. 支持Agent自主决策；4. 入门门槛低，适合快速原型验证<td>1. 抽象层级过多，调试困难；2. RAG实现需手动拼接组件，代码冗余；3. 高并发场景支持较弱<td>MVP快速验证、多工具集成的Agent开发、通用型LLM应用（聊天机器人、简单RAG等）<tr><td>LlamaIndex<td>RAG专用框架（原GPT Index）<td>1. 开箱即用的RAG流程，一行代码完成文档加载→检索→生成；2. 文档处理能力强，支持多种分块策略；3. 与LangChain兼容，可混合使用<td>1. 功能聚焦RAG，不适合非检索类任务；2. 高级功能（如Graph RAG）仍在演进中<td>企业知识库问答、文档智能分析、私有数据增强生成（纯RAG场景）<tr><td>Haystack<td>企业级NLP Pipeline编排引擎<td>1. 生产就绪，支持REST API、Docker部署、指标监控；2. 组件高度解耦，便于替换；3. 内置评估工具，适合A/B测试<td>1. 学习曲线较陡，需理解Pipeline与Node概念；2. 社区规模小于LangChain<td>企业级RAG系统、需要高稳定性、可审计、可监控的生产环境应用<tr><td>DSPy<td>声明式RAG优化框架（斯坦福开源）<td>1. 声明式编程，代码极简；2. 支持自动优化Prompt和检索策略；3. 适合研究与实验驱动型项目<td>1. 生态尚不成熟，文档较少；2. 对工程部署支持有限，更适合实验环境<td>AI研究、Prompt工程自动化、需要持续优化RAG性能的实验项目</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=132-选型建议新手必看>1.3.2 选型建议（新手必看）<a href=#132-选型建议新手必看 class=hash-link aria-label="1.3.2 选型建议（新手必看）的直接链接" title="1.3.2 选型建议（新手必看）的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">
+<p>如果你是<strong>新手</strong>，想快速入门，尝试各种LLM应用场景（不限于RAG），优先选LangChain——社区资源多，踩坑成本低；</p>
+</li>
+<li class="">
+<p>如果你的需求<strong>只专注于RAG</strong>（如企业知识库），且追求高效开发，优先选LlamaIndex——开箱即用，无需手动拼接组件；</p>
+</li>
+<li class="">
+<p>如果你的项目需要<strong>部署到生产环境</strong>，且要求高稳定性、可监控，优先选Haystack——企业级特性完善；</p>
+</li>
+<li class="">
+<p>如果你的项目是<strong>研究型</strong>，需要优化RAG性能、自动调优Prompt，可尝试DSPy——创新的声明式编程理念。</p>
+</li>
+</ul>
+<p>补充：LangChain与LlamaIndex可混合使用（如用LlamaIndex做检索，LangChain做Agent），灵活应对复杂场景。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-langchain-的核心设计理念最后一公里问题>1.4 LangChain 的核心设计理念：“最后一公里”问题<a href=#14-langchain-的核心设计理念最后一公里问题 class=hash-link aria-label="1.4 LangChain 的核心设计理念：“最后一公里”问题的直接链接" title="1.4 LangChain 的核心设计理念：“最后一公里”问题的直接链接" translate=no>​</a></h2>
+<p>很多人用LangChain，只知道它能“拼组件、写链式调用”，但很少有人关注它的核心设计理念——<strong>解决大模型应用开发的“最后一公里”问题</strong>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=141-什么是最后一公里问题>1.4.1 什么是“最后一公里”问题？<a href=#141-什么是最后一公里问题 class=hash-link aria-label="1.4.1 什么是“最后一公里”问题？的直接链接" title="1.4.1 什么是“最后一公里”问题？的直接链接" translate=no>​</a></h3>
+<p>大模型的“第一公里”是模型训练（如OpenAI训练GPT-4），解决“能生成符合人类语言的文本”；而“最后一公里”是“将大模型落地到具体场景”，解决“如何让大模型有用、好用”的问题。</p>
+<p>举个例子：OpenAI的GPT-4本身很强大，但它无法直接读取你的本地PDF、无法查询你公司的数据库、无法自主调用搜索工具——这些“落地场景”的需求，就是“最后一公里”的痛点。</p>
+<p>LangChain的所有设计，都是围绕“打通最后一公里”展开的，核心要解决3个关键问题：</p>
+<ol>
+<li class="">
+<p><strong>上下文感知</strong>：让LLM能“记住”对话历史、“理解”当前场景，而不是孤立地生成文本（通过Memory组件实现）；</p>
+</li>
+<li class="">
+<p><strong>外部连接</strong>：让LLM能“访问”外部数据和工具，打破“预训练数据有限”的限制（通过Retrievers、Tools组件实现）；</p>
+</li>
+<li class="">
+<p><strong>流程自动化</strong>：让LLM能“自主决策”，根据用户需求，自动调用工具、处理数据、生成最终回答（通过Agent、Chains组件实现）。</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=142-设计理念的核心模块化与可组合性>1.4.2 设计理念的核心：模块化与可组合性<a href=#142-设计理念的核心模块化与可组合性 class=hash-link aria-label="1.4.2 设计理念的核心：模块化与可组合性的直接链接" title="1.4.2 设计理念的核心：模块化与可组合性的直接链接" translate=no>​</a></h3>
+<p>为了打通“最后一公里”，LangChain采用了“模块化+可组合”的核心设计，具体体现为2点：</p>
+<ol>
+<li class="">
+<p><strong>模块化</strong>：将大模型应用的各个环节（调用LLM、处理Prompt、管理记忆、检索数据、调用工具）拆分成独立的组件，每个组件负责单一功能，可单独修改、替换；</p>
+</li>
+<li class="">
+<p><strong>可组合</strong>：通过“链（Chains）”将多个组件串联或并联，形成复杂的业务流程。比如“Prompt模板 → LLM调用 → 记忆存储 → 工具调用”，可根据需求自由组合。</p>
+</li>
+</ol>
+<p>这种设计的优势的是：开发者无需从零开发，只需像“搭积木”一样，组合现有组件，就能快速实现复杂场景；同时，当需求变化时（如更换LLM、替换向量数据库），只需修改对应组件，无需重构整个代码。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=143-从玩具到工具的进化>1.4.3 从“玩具”到“工具”的进化<a href=#143-从玩具到工具的进化 class=hash-link aria-label="1.4.3 从“玩具”到“工具”的进化的直接链接" title="1.4.3 从“玩具”到“工具”的进化的直接链接" translate=no>​</a></h3>
+<p>LangChain初期的设计，主要聚焦“降低入门门槛”，让开发者能用“五行代码”快速实现原型，但这也带来了“抽象过重、可控性不足”的问题——当原型要落地到生产环境时，会出现调试困难、流程易崩等问题。</p>
+<p>因此，LangChain在1.0版本中，通过LangGraph和中间件系统，实现了从“玩具”到“工具”的进化：既保留了“快速拼接组件”的易用性，又增加了生产级的可控性（如检查点恢复、流式输出、人机协作接口），真正打通了“原型→生产”的最后一公里。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-python-为何是-langchain-的首选语言>1.5 Python 为何是 LangChain 的首选语言<a href=#15-python-为何是-langchain-的首选语言 class=hash-link aria-label="1.5 Python 为何是 LangChain 的首选语言的直接链接" title="1.5 Python 为何是 LangChain 的首选语言的直接链接" translate=no>​</a></h2>
+<p>LangChain 支持Python和JavaScript/TypeScript两种语言（分别对应langchain和langchain-js），但官方和社区的核心精力都集中在Python上，Python也是绝大多数开发者的首选语言。核心原因有4点，尤其适合新手入门：</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=151-生态适配大模型与数据工具的第一语言>1.5.1 生态适配：大模型与数据工具的“第一语言”<a href=#151-生态适配大模型与数据工具的第一语言 class=hash-link aria-label="1.5.1 生态适配：大模型与数据工具的“第一语言”的直接链接" title="1.5.1 生态适配：大模型与数据工具的“第一语言”的直接链接" translate=no>​</a></h3>
+<p>大模型领域的核心工具和库，几乎都优先支持Python：</p>
+<ul>
+<li class="">
+<p>LLM API：OpenAI、Anthropic、Hugging Face等官方SDK，均优先提供Python版本，调用更便捷；</p>
+</li>
+<li class="">
+<p>数据处理：Pandas、NumPy、OpenCV等数据处理库，可无缝与LangChain集成，处理文本、图片等多模态数据；</p>
+</li>
+<li class="">
+<p>向量数据库：FAISS、Chroma、Pinecone等，均提供Python SDK，与LangChain的检索组件可一键对接；</p>
+</li>
+<li class="">
+<p>部署工具：FastAPI、Flask等Web框架，可快速将LangChain应用部署为API，与Python生态完美兼容。</p>
+</li>
+</ul>
+<p>简单说：用Python开发LangChain应用，能“一站式”搞定“数据处理→模型调用→部署上线”，无需跨语言切换，效率更高。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=152-开发效率简洁语法快速迭代>1.5.2 开发效率：简洁语法+快速迭代<a href=#152-开发效率简洁语法快速迭代 class=hash-link aria-label="1.5.2 开发效率：简洁语法+快速迭代的直接链接" title="1.5.2 开发效率：简洁语法+快速迭代的直接链接" translate=no>​</a></h3>
+<p>Python的语法简洁、可读性强，相比JavaScript/TypeScript，更适合快速原型开发和迭代：</p>
+<ul>
+<li class="">
+<p>无需编译，写完代码即可运行，适合调试链式调用的复杂流程；</p>
+</li>
+<li class="">
+<p>语法简洁，实现相同功能，Python代码量远少于其他语言（如Java）；</p>
+</li>
+<li class="">
+<p>支持交互式开发（如Jupyter Notebook），可逐行调试，快速定位问题。</p>
+</li>
+</ul>
+<p>对于LangChain这样“组件拼接、流程调试”为主的开发场景，Python的优势尤为明显。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=153-社区支持资源最丰富踩坑成本最低>1.5.3 社区支持：资源最丰富，踩坑成本最低<a href=#153-社区支持资源最丰富踩坑成本最低 class=hash-link aria-label="1.5.3 社区支持：资源最丰富，踩坑成本最低的直接链接" title="1.5.3 社区支持：资源最丰富，踩坑成本最低的直接链接" translate=no>​</a></h3>
+<p>LangChain的Python社区远大于JavaScript社区：</p>
+<ul>
+<li class="">
+<p>GitHub上，langchain（Python）的星标数是langchain-js的3倍以上，更新频率更高；</p>
+</li>
+<li class="">
+<p>掘金、CSDN、Stack Overflow等平台，Python版本的教程、问题解答、实战案例远多于其他语言；</p>
+</li>
+<li class="">
+<p>第三方插件和集成，优先支持Python版本（如很多自定义工具、文档加载器，仅提供Python实现）。</p>
+</li>
+</ul>
+<p>对于新手来说，丰富的社区资源意味着“遇到问题能快速找到解决方案”，大大降低学习和开发成本。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=154-灵活性兼顾新手与资深开发者>1.5.4 灵活性：兼顾新手与资深开发者<a href=#154-灵活性兼顾新手与资深开发者 class=hash-link aria-label="1.5.4 灵活性：兼顾新手与资深开发者的直接链接" title="1.5.4 灵活性：兼顾新手与资深开发者的直接链接" translate=no>​</a></h3>
+<p>Python的灵活性，完美匹配LangChain的设计理念：</p>
+<ul>
+<li class="">
+<p>新手：可直接使用LangChain的高层API，无需关注底层细节，快速实现功能；</p>
+</li>
+<li class="">
+<p>资深开发者：可通过自定义组件（如自定义Prompt模板、自定义工具），灵活扩展LangChain的功能，满足复杂场景需求。</p>
+</li>
+</ul>
+<p>补充：如果你的需求是“前端+LLM应用”（如网页聊天机器人），可选择langchain-js；如果是后端服务、数据处理、RAG、Agent等场景，优先选Python。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-官方文档与社区资源快速导航>1.6 官方文档与社区资源快速导航<a href=#16-官方文档与社区资源快速导航 class=hash-link aria-label="1.6 官方文档与社区资源快速导航的直接链接" title="1.6 官方文档与社区资源快速导航的直接链接" translate=no>​</a></h2>
+<p>学习LangChain，无需死记硬背API，关键是学会“查资料”。下面整理了最核心的官方文档和社区资源，收藏这一节，就能快速找到你需要的信息（所有链接均为官方或权威来源，可直接访问）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=161-官方核心资源必收藏>1.6.1 官方核心资源（必收藏）<a href=#161-官方核心资源必收藏 class=hash-link aria-label="1.6.1 官方核心资源（必收藏）的直接链接" title="1.6.1 官方核心资源（必收藏）的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">
+<p><strong>LangChain 官方文档</strong>：<a href=https://python.langchain.com/docs/get_started/introduction target=_blank rel="noopener noreferrer" class="">https://python.langchain.com/docs/get_started/introduction</a>（Python版本，最权威、最全面，包含入门教程、API文档、实战案例）；</p>
+</li>
+<li class="">
+<p><strong>LangChain 中文官网</strong>：<a href=https://www.langchain-china.com/ target=_blank rel="noopener noreferrer" class="">https://www.langchain-china.com/</a>（适合英文基础较弱的开发者，包含中文文档、社区动态）；</p>
+</li>
+<li class="">
+<p><strong>LangSmith 文档</strong>：<a href=https://docs.smith.langchain.com/ target=_blank rel="noopener noreferrer" class="">https://docs.smith.langchain.com/</a>（调试、监控平台的使用文档，生产环境必备）；</p>
+</li>
+<li class="">
+<p><strong>LangServe 文档</strong>：<a href=https://python.langchain.com/docs/langserve target=_blank rel="noopener noreferrer" class="">https://python.langchain.com/docs/langserve</a>（部署工具文档，教你如何将LangChain应用部署为API）；</p>
+</li>
+<li class="">
+<p><strong>GitHub 仓库</strong>：<a href=https://github.com/langchain-ai/langchain target=_blank rel="noopener noreferrer" class="">https://github.com/langchain-ai/langchain</a>（查看源码、提交Issue、贡献代码，了解最新版本更新）。</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=162-社区学习资源新手首选>1.6.2 社区学习资源（新手首选）<a href=#162-社区学习资源新手首选 class=hash-link aria-label="1.6.2 社区学习资源（新手首选）的直接链接" title="1.6.2 社区学习资源（新手首选）的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-国内社区中文资源>1. 国内社区（中文资源）<a href=#1-国内社区中文资源 class=hash-link aria-label="1. 国内社区（中文资源）的直接链接" title="1. 国内社区（中文资源）的直接链接" translate=no>​</a></h4>
+<ul>
+<li class="">
+<p>掘金：搜索“LangChain”，有大量新手教程、实战案例（如RAG、Agent开发），贴合国内开发者需求；</p>
+</li>
+<li class="">
+<p>CSDN：LangChain专栏，包含详细的API解析和问题排查教程；</p>
+</li>
+<li class="">
+<p>LangChain 中文社区：<a href=https://langchainchina.com/ target=_blank rel="noopener noreferrer" class="">https://langchainchina.com/</a>（国内开发者交流平台，可提问、分享案例）。</p>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-国外社区英文资源>2. 国外社区（英文资源）<a href=#2-国外社区英文资源 class=hash-link aria-label="2. 国外社区（英文资源）的直接链接" title="2. 国外社区（英文资源）的直接链接" translate=no>​</a></h4>
+<ul>
+<li class="">
+<p>LangChain Discord：<a href=https://discord.com/invite/langchain target=_blank rel="noopener noreferrer" class="">https://discord.com/invite/langchain</a>（官方社区，可与核心开发者交流，提问解答）；</p>
+</li>
+<li class="">
+<p>Stack Overflow：搜索“LangChain”，可找到大量实际开发中的问题及解决方案；</p>
+</li>
+<li class="">
+<p>YouTube：LangChain官方频道，有详细的视频教程，包含实战演示。</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=163-实用工具与插件提升开发效率>1.6.3 实用工具与插件（提升开发效率）<a href=#163-实用工具与插件提升开发效率 class=hash-link aria-label="1.6.3 实用工具与插件（提升开发效率）的直接链接" title="1.6.3 实用工具与插件（提升开发效率）的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">
+<p>LangChain Hub：<a href=https://hub.langchain.com/ target=_blank rel="noopener noreferrer" class="">https://hub.langchain.com/</a>（官方Prompt模板、链模板仓库，可直接复用）；</p>
+</li>
+<li class="">
+<p>LangChain CLI：命令行工具，可快速创建LangChain项目、部署应用；</p>
+</li>
+<li class="">
+<p>Hugging Face Hub：<a href=https://huggingface.co/models target=_blank rel="noopener noreferrer" class="">https://huggingface.co/models</a>（可下载开源LLM、Embedding模型，与LangChain无缝集成）。</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=164-学习技巧新手必看>1.6.4 学习技巧（新手必看）<a href=#164-学习技巧新手必看 class=hash-link aria-label="1.6.4 学习技巧（新手必看）的直接链接" title="1.6.4 学习技巧（新手必看）的直接链接" translate=no>​</a></h3>
+<ol>
+<li class="">
+<p>官方文档的“Getting Started”章节是新手入门的最佳路径，先跟着完成基础示例，再深入学习核心组件；</p>
+</li>
+<li class="">
+<p>遇到问题，优先查官方文档的API参考，再去社区搜索（避免被过时的教程误导）；</p>
+</li>
+<li class="">
+<p>关注LangChain GitHub的“Releases”页面，及时了解版本更新和新功能（如langgraph、中间件系统）。</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-本书学习路线与配套代码说明>1.7 本书学习路线与配套代码说明<a href=#17-本书学习路线与配套代码说明 class=hash-link aria-label="1.7 本书学习路线与配套代码说明的直接链接" title="1.7 本书学习路线与配套代码说明的直接链接" translate=no>​</a></h2>
+<p>为了帮助大家系统掌握LangChain，避免“碎片化学习”，下面明确本书的学习路线和配套代码说明，无论你是新手还是有一定基础的开发者，都能快速跟上节奏。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=171-本书学习路线从入门到精通>1.7.1 本书学习路线（从入门到精通）<a href=#171-本书学习路线从入门到精通 class=hash-link aria-label="1.7.1 本书学习路线（从入门到精通）的直接链接" title="1.7.1 本书学习路线（从入门到精通）的直接链接" translate=no>​</a></h3>
+<p>本书采用“循序渐进、实战驱动”的学习路线，共分为5个阶段，对应后续章节，确保每一步都有明确的学习目标和实战成果：</p>
+<ol>
+<li class="">
+<p><strong>第一阶段：基础入门（第1章）</strong>：认识LangChain、了解核心概念、完成第一个LangChain程序，建立基础认知；</p>
+</li>
+<li class="">
+<p><strong>第二阶段：核心组件（第2-6章）</strong>：逐一学习LangChain的核心组件（Prompt、Model、Chain、Memory、Retriever），掌握每个组件的使用方法和实战技巧；</p>
+</li>
+<li class="">
+<p><strong>第三阶段：实战场景（第7-10章）</strong>：聚焦核心应用场景（RAG知识库、聊天机器人、Agent工具调用、多模态应用），手把手教你开发完整项目；</p>
+</li>
+<li class="">
+<p><strong>第四阶段：优化与部署（第11-12章）</strong>：学习LangChain应用的优化技巧（Prompt优化、性能优化），以及部署方法（LangServe、Docker部署）；</p>
+</li>
+<li class="">
+<p><strong>第五阶段：高级进阶（第13-15章）</strong>：学习自定义组件、LangGraph多智能体、企业级实践，提升开发能力，应对复杂场景。</p>
+</li>
+</ol>
+<p>学习建议：不要跳过任何一个阶段，基础组件是后续实战的核心，只有掌握了组件的使用，才能灵活组合出复杂的应用。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=172-配套代码说明>1.7.2 配套代码说明<a href=#172-配套代码说明 class=hash-link aria-label="1.7.2 配套代码说明的直接链接" title="1.7.2 配套代码说明的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-代码仓库地址免费获取>1. 代码仓库地址（免费获取）<a href=#1-代码仓库地址免费获取 class=hash-link aria-label="1. 代码仓库地址（免费获取）的直接链接" title="1. 代码仓库地址（免费获取）的直接链接" translate=no>​</a></h4>
+<p>本书所有配套代码，均托管在GitHub上，可直接克隆、运行，地址：<a href=https://github.com/xxx/langchain-learning target=_blank rel="noopener noreferrer" class="">https://github.com/xxx/langchain-learning</a>（注：实际使用时替换为真实仓库地址）。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-代码结构说明>2. 代码结构说明<a href=#2-代码结构说明 class=hash-link aria-label="2. 代码结构说明的直接链接" title="2. 代码结构说明的直接链接" translate=no>​</a></h4>
+<p>代码仓库按章节划分，结构清晰，便于查找和运行：</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">langchain-learning/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── chapter01/  </span><span class="token comment" style=color:#999988;font-style:italic># 第1章 初识LangChain</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── hello_langchain.py  </span><span class="token comment" style=color:#999988;font-style:italic># 第一个LangChain程序</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── requirements.txt    </span><span class="token comment" style=color:#999988;font-style:italic># 依赖包清单</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── chapter02/  </span><span class="token comment" style=color:#999988;font-style:italic># 第2章 Prompt模板</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── basic_prompt.py     </span><span class="token comment" style=color:#999988;font-style:italic># 基础Prompt示例</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── advanced_prompt.py  </span><span class="token comment" style=color:#999988;font-style:italic># 高级Prompt示例</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── </span><span class="token punctuation" style=color:#393A34>..</span><span class="token plain">.  </span><span class="token comment" style=color:#999988;font-style:italic># 后续章节代码</span><br/></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-环境要求>3. 环境要求<a href=#3-环境要求 class=hash-link aria-label="3. 环境要求的直接链接" title="3. 环境要求的直接链接" translate=no>​</a></h4>
+<p>为了确保代码能正常运行，建议使用以下环境配置：</p>
+<ul>
+<li class="">
+<p>Python 版本：3.8+（推荐3.10，兼容性最好）；</p>
+</li>
+<li class="">
+<p>LangChain 版本：最新稳定版（本书代码基于LangChain 1.0+编写）；</p>
+</li>
+<li class="">
+<p>依赖包安装：每个章节的requirements.txt文件中，包含该章节所需的所有依赖，执行<code>pip install -r requirements.txt</code>即可安装。</p>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-注意事项>4. 注意事项<a href=#4-注意事项 class=hash-link aria-label="4. 注意事项的直接链接" title="4. 注意事项的直接链接" translate=no>​</a></h4>
+<ul>
+<li class="">
+<p>代码中涉及LLM API（如OpenAI）的部分，需要替换为你自己的API密钥（如何获取API密钥，将在后续章节详细说明）；</p>
+</li>
+<li class="">
+<p>部分代码（如RAG、工具调用）需要联网运行，确保网络通畅；</p>
+</li>
+<li class="">
+<p>代码会持续更新，适配LangChain的最新版本，若运行出错，可查看仓库的README文件，获取最新说明。</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-动手体验你的第一个-langchain-程序>1.8 动手体验：你的第一个 LangChain 程序<a href=#18-动手体验你的第一个-langchain-程序 class=hash-link aria-label="1.8 动手体验：你的第一个 LangChain 程序的直接链接" title="1.8 动手体验：你的第一个 LangChain 程序的直接链接" translate=no>​</a></h2>
+<p>理论再多，不如动手实践。本节将带你搭建LangChain环境，编写第一个LangChain程序——一个简单的“对话机器人”，实现多轮对话功能，让你直观感受LangChain的便捷性。</p>
+<p>本示例使用OpenAI的GPT-3.5-turbo模型（最常用、成本低），代码简洁，注释详细，新手也能轻松上手。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=181-环境搭建3步完成>1.8.1 环境搭建（3步完成）<a href=#181-环境搭建3步完成 class=hash-link aria-label="1.8.1 环境搭建（3步完成）的直接链接" title="1.8.1 环境搭建（3步完成）的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=步骤1安装python环境>步骤1：安装Python环境<a href=#步骤1安装python环境 class=hash-link aria-label=步骤1：安装Python环境的直接链接 title=步骤1：安装Python环境的直接链接 translate=no>​</a></h4>
+<p>若未安装Python，前往<a href=https://www.python.org/downloads/ target=_blank rel="noopener noreferrer" class="">Python官方网站</a>下载，选择3.8+版本，安装时勾选“Add Python to PATH”，便于命令行调用。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=步骤2安装langchain和openai依赖>步骤2：安装LangChain和OpenAI依赖<a href=#步骤2安装langchain和openai依赖 class=hash-link aria-label=步骤2：安装LangChain和OpenAI依赖的直接链接 title=步骤2：安装LangChain和OpenAI依赖的直接链接 translate=no>​</a></h4>
+<p>打开命令行，执行以下命令，安装所需依赖（指定最新稳定版）：</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">pip </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>langchain</span><span class="token operator" style=color:#393A34>==</span><span class="token number" style=color:#36acaa>0.1</span><span class="token plain">.10 </span><span class="token assign-left variable" style=color:#36acaa>openai</span><span class="token operator" style=color:#393A34>==</span><span class="token number" style=color:#36acaa>1.13</span><span class="token plain">.3 python-dotenv</span><br/></div></code></pre></div></div>
+<p>依赖说明：</p>
+<ul>
+<li class="">
+<p>langchain：核心框架；</p>
+</li>
+<li class="">
+<p>openai：OpenAI官方SDK，用于调用GPT模型；</p>
+</li>
+<li class="">
+<p>python-dotenv：用于加载环境变量（存储API密钥，避免硬编码）。</p>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=步骤3获取openai-api密钥>步骤3：获取OpenAI API密钥<a href=#步骤3获取openai-api密钥 class=hash-link aria-label="步骤3：获取OpenAI API密钥的直接链接" title="步骤3：获取OpenAI API密钥的直接链接" translate=no>​</a></h4>
+<ol>
+<li class="">
+<p>前往<a href=https://platform.openai.com/ target=_blank rel="noopener noreferrer" class="">OpenAI平台</a>，注册/登录账号；</p>
+</li>
+<li class="">
+<p>进入“Personal → View API keys”，点击“Create new secret key”，生成API密钥；</p>
+</li>
+<li class="">
+<p>新建一个.env文件，将API密钥写入，格式如下：</p>
+</li>
+</ol>
+<div class="language-env codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-env codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">OPENAI_API_KEY=你的API密钥</span><br/></div></code></pre></div></div>
+<p>注意：API密钥属于敏感信息，切勿硬编码到代码中，也不要泄露给他人。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=182-编写第一个langchain程序>1.8.2 编写第一个LangChain程序<a href=#182-编写第一个langchain程序 class=hash-link aria-label="1.8.2 编写第一个LangChain程序的直接链接" title="1.8.2 编写第一个LangChain程序的直接链接" translate=no>​</a></h3>
+<p>新建一个hello_langchain.py文件，复制以下代码（注释详细，可直接运行），代码来源：LangChain官方入门示例（<a href=https://python.langchain.com/docs/get_started/quickstart target=_blank rel="noopener noreferrer" class="">https://python.langchain.com/docs/get_started/quickstart</a>）：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 导入所需组件</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> langchain_openai </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> ChatOpenAI</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> langchain</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">chains </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> ConversationChain</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> langchain</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">memory </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> ConversationBufferMemory</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> dotenv </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> load_dotenv</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> os</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 加载环境变量（读取.env文件中的API密钥）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">load_dotenv</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 1. 初始化LLM（使用GPT-3.5-turbo）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">llm </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> ChatOpenAI</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    model_name</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"gpt-3.5-turbo"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 模型名称</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    temperature</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0.7</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 随机性，0-1，值越小越严谨</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    api_key</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">os</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">getenv</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"OPENAI_API_KEY"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 从环境变量获取API密钥</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 2. 初始化记忆组件（用于存储多轮对话历史）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">memory </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> ConversationBufferMemory</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 3. 初始化对话链（组合LLM和记忆组件）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">conversation_chain </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> ConversationChain</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    llm</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">llm</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    memory</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">memory</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    verbose</span><span class="token operator" style=color:#393A34>=</span><span class="token boolean" style=color:#36acaa>True</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 开启详细日志，可查看链的运行过程</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 4. 开始多轮对话</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>print</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"欢迎使用LangChain对话机器人！输入'退出'结束对话。"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>while</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>True</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    user_input </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token builtin">input</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"你："</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> user_input </span><span class="token operator" style=color:#393A34>==</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"退出"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>print</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"机器人：再见！"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>break</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 调用对话链，获取回答</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    response </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> conversation_chain</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">predict</span><span class="token punctuation" style=color:#393A34>(</span><span class="token builtin">input</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">user_input</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>print</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string-interpolation string" style=color:#e3116c>f"机器人：</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>{</span><span class="token string-interpolation interpolation">response</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>}</span><span class="token string-interpolation string" style=color:#e3116c>"</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=183-运行程序并测试>1.8.3 运行程序并测试<a href=#183-运行程序并测试 class=hash-link aria-label="1.8.3 运行程序并测试的直接链接" title="1.8.3 运行程序并测试的直接链接" translate=no>​</a></h3>
+<ol>
+<li class="">
+<p>将.env文件和hello_langchain.py文件放在同一目录下；</p>
+</li>
+<li class="">
+<p>打开命令行，进入该目录，执行以下命令：</p>
+</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">python hello_langchain.py</span><br/></div></code></pre></div></div>
+<ol start=3>
+<li class="">测试对话（示例）：</li>
+</ol>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">欢迎使用LangChain对话机器人！输入'退出'结束对话。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你：介绍一下LangChain</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">机器人：LangChain是一个用于构建大语言模型（LLM）应用的开源框架，它的核心作用是将LLM与外部数据源、工具等连接起来，通过链式调用组合多个组件，帮助开发者快速构建复杂的AI应用，比如聊天机器人、知识库问答、智能工具调用等...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你：它的核心组件有哪些</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">机器人：LangChain的核心组件主要包括以下几类：1. 模型（Models）：统一调用各类LLM；2. 提示（Prompts）：管理和优化Prompt；3. 链（Chains）：组合组件实现复杂流程；4. 记忆（Memory）：存储对话历史；5. 工具（Tools）：集成外部工具；6. 检索（Retrievers）：连接外部数据检索...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你：退出</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">机器人：再见！</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=184-代码解析关键知识点>1.8.4 代码解析（关键知识点）<a href=#184-代码解析关键知识点 class=hash-link aria-label="1.8.4 代码解析（关键知识点）的直接链接" title="1.8.4 代码解析（关键知识点）的直接链接" translate=no>​</a></h3>
+<p>这个简单的程序，已经用到了LangChain的3个核心组件，提前帮你铺垫后续知识点：</p>
+<ol>
+<li class="">
+<p><strong>ChatOpenAI</strong>：LangChain封装的OpenAI聊天模型接口，统一了LLM的调用方式，后续更换其他模型（如llama 3），只需修改这部分代码；</p>
+</li>
+<li class="">
+<p><strong>ConversationBufferMemory</strong>：最基础的记忆组件，用于存储完整的对话历史，让LLM能“记住”之前的对话内容，实现多轮对话；</p>
+</li>
+<li class="">
+<p><strong>ConversationChain</strong>：预定义的对话链，已经帮我们封装了“Prompt模板→LLM调用→记忆存储”的流程，无需手动拼接组件。</p>
+</li>
+</ol>
+<p>思考：如果没有LangChain，我们需要手动调用OpenAI API、手动存储对话历史、手动拼接Prompt，代码量会增加很多，这就是LangChain的价值所在。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=185-常见问题排查>1.8.5 常见问题排查<a href=#185-常见问题排查 class=hash-link aria-label="1.8.5 常见问题排查的直接链接" title="1.8.5 常见问题排查的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">
+<p>问题1：运行报错“API key not provided”——检查.env文件是否正确，API密钥是否填写正确，是否加载了环境变量；</p>
+</li>
+<li class="">
+<p>问题2：运行报错“Rate limit exceeded”——OpenAI API有调用频率限制，可等待片刻再试，或升级API套餐；</p>
+</li>
+<li class="">
+<p>问题3：对话无法记住历史——检查是否初始化了Memory组件，并将其传入ConversationChain。</p>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章小结>本章小结<a href=#本章小结 class=hash-link aria-label=本章小结的直接链接 title=本章小结的直接链接 translate=no>​</a></h2>
+<p>本章我们从基础认知出发，了解了LangChain的定义、发展历程、核心设计理念，对比了它与其他主流框架的差异，掌握了官方资源的使用方法，并动手编写了第一个LangChain程序。</p>
+<p>核心要点回顾：</p>
+<ul>
+<li class="">
+<p>LangChain是大模型应用的“脚手架”，核心价值是“连接”和“编排”，解决“最后一公里”问题；</p>
+</li>
+<li class="">
+<p>LangChain的优势是生态丰富、入门门槛低，适合快速原型开发，缺点是抽象过重，调试难度较大；</p>
+</li>
+<li class="">
+<p>Python是LangChain的首选语言，生态适配性、开发效率和社区支持都更有优势；</p>
+</li>
+<li class="">
+<p>动手实践是学习LangChain的关键，第一个程序虽然简单，但已经涵盖了“LLM+记忆+链”的核心逻辑。</p>
+</li>
+</ul>
+<p>下一章，我们将深入学习LangChain的核心组件——Prompt模板，掌握Prompt工程的技巧，让LLM生成更精准、更符合需求的回答。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/python-crawler/langchain/chapter_1.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/python-crawler/langchain/><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>目录</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/python-crawler/langchain/chapter_2><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第2章 开发环境搭建与基础配置</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#11-什么是-langchain为什么需要它 class="table-of-contents__link toc-highlight">1.1 什么是 LangChain？为什么需要它？</a><ul><li><a href=#111-一句话读懂langchain class="table-of-contents__link toc-highlight">1.1.1 一句话读懂LangChain</a><li><a href=#112-为什么我们需要langchain class="table-of-contents__link toc-highlight">1.1.2 为什么我们需要LangChain？</a><li><a href=#113-核心应用场景 class="table-of-contents__link toc-highlight">1.1.3 核心应用场景</a></ul><li><a href=#12-langchain-的发展历程与生态全景 class="table-of-contents__link toc-highlight">1.2 LangChain 的发展历程与生态全景</a><ul><li><a href=#121-发展历程关键节点 class="table-of-contents__link toc-highlight">1.2.1 发展历程（关键节点）</a><li><a href=#122-生态全景核心组件与集成 class="table-of-contents__link toc-highlight">1.2.2 生态全景（核心组件与集成）</a><ul><li><a href=#1-核心库langchain-core class="table-of-contents__link toc-highlight">1. 核心库（langchain-core）</a><li><a href=#2-工具集成生态核心优势 class="table-of-contents__link toc-highlight">2. 工具集成（生态核心优势）</a><li><a href=#3-辅助平台开发-部署闭环 class="table-of-contents__link toc-highlight">3. 辅助平台（开发-部署闭环）</a></ul></ul><li><a href=#13-langchain-与其他框架对比llamaindexhaystack-等 class="table-of-contents__link toc-highlight">1.3 LangChain 与其他框架对比（LlamaIndex、Haystack 等）</a><ul><li><a href=#131-核心框架对比表 class="table-of-contents__link toc-highlight">1.3.1 核心框架对比表</a><li><a href=#132-选型建议新手必看 class="table-of-contents__link toc-highlight">1.3.2 选型建议（新手必看）</a></ul><li><a href=#14-langchain-的核心设计理念最后一公里问题 class="table-of-contents__link toc-highlight">1.4 LangChain 的核心设计理念：“最后一公里”问题</a><ul><li><a href=#141-什么是最后一公里问题 class="table-of-contents__link toc-highlight">1.4.1 什么是“最后一公里”问题？</a><li><a href=#142-设计理念的核心模块化与可组合性 class="table-of-contents__link toc-highlight">1.4.2 设计理念的核心：模块化与可组合性</a><li><a href=#143-从玩具到工具的进化 class="table-of-contents__link toc-highlight">1.4.3 从“玩具”到“工具”的进化</a></ul><li><a href=#15-python-为何是-langchain-的首选语言 class="table-of-contents__link toc-highlight">1.5 Python 为何是 LangChain 的首选语言</a><ul><li><a href=#151-生态适配大模型与数据工具的第一语言 class="table-of-contents__link toc-highlight">1.5.1 生态适配：大模型与数据工具的“第一语言”</a><li><a href=#152-开发效率简洁语法快速迭代 class="table-of-contents__link toc-highlight">1.5.2 开发效率：简洁语法+快速迭代</a><li><a href=#153-社区支持资源最丰富踩坑成本最低 class="table-of-contents__link toc-highlight">1.5.3 社区支持：资源最丰富，踩坑成本最低</a><li><a href=#154-灵活性兼顾新手与资深开发者 class="table-of-contents__link toc-highlight">1.5.4 灵活性：兼顾新手与资深开发者</a></ul><li><a href=#16-官方文档与社区资源快速导航 class="table-of-contents__link toc-highlight">1.6 官方文档与社区资源快速导航</a><ul><li><a href=#161-官方核心资源必收藏 class="table-of-contents__link toc-highlight">1.6.1 官方核心资源（必收藏）</a><li><a href=#162-社区学习资源新手首选 class="table-of-contents__link toc-highlight">1.6.2 社区学习资源（新手首选）</a><ul><li><a href=#1-国内社区中文资源 class="table-of-contents__link toc-highlight">1. 国内社区（中文资源）</a><li><a href=#2-国外社区英文资源 class="table-of-contents__link toc-highlight">2. 国外社区（英文资源）</a></ul><li><a href=#163-实用工具与插件提升开发效率 class="table-of-contents__link toc-highlight">1.6.3 实用工具与插件（提升开发效率）</a><li><a href=#164-学习技巧新手必看 class="table-of-contents__link toc-highlight">1.6.4 学习技巧（新手必看）</a></ul><li><a href=#17-本书学习路线与配套代码说明 class="table-of-contents__link toc-highlight">1.7 本书学习路线与配套代码说明</a><ul><li><a href=#171-本书学习路线从入门到精通 class="table-of-contents__link toc-highlight">1.7.1 本书学习路线（从入门到精通）</a><li><a href=#172-配套代码说明 class="table-of-contents__link toc-highlight">1.7.2 配套代码说明</a><ul><li><a href=#1-代码仓库地址免费获取 class="table-of-contents__link toc-highlight">1. 代码仓库地址（免费获取）</a><li><a href=#2-代码结构说明 class="table-of-contents__link toc-highlight">2. 代码结构说明</a><li><a href=#3-环境要求 class="table-of-contents__link toc-highlight">3. 环境要求</a><li><a href=#4-注意事项 class="table-of-contents__link toc-highlight">4. 注意事项</a></ul></ul><li><a href=#18-动手体验你的第一个-langchain-程序 class="table-of-contents__link toc-highlight">1.8 动手体验：你的第一个 LangChain 程序</a><ul><li><a href=#181-环境搭建3步完成 class="table-of-contents__link toc-highlight">1.8.1 环境搭建（3步完成）</a><ul><li><a href=#步骤1安装python环境 class="table-of-contents__link toc-highlight">步骤1：安装Python环境</a><li><a href=#步骤2安装langchain和openai依赖 class="table-of-contents__link toc-highlight">步骤2：安装LangChain和OpenAI依赖</a><li><a href=#步骤3获取openai-api密钥 class="table-of-contents__link toc-highlight">步骤3：获取OpenAI API密钥</a></ul><li><a href=#182-编写第一个langchain程序 class="table-of-contents__link toc-highlight">1.8.2 编写第一个LangChain程序</a><li><a href=#183-运行程序并测试 class="table-of-contents__link toc-highlight">1.8.3 运行程序并测试</a><li><a href=#184-代码解析关键知识点 class="table-of-contents__link toc-highlight">1.8.4 代码解析（关键知识点）</a><li><a href=#185-常见问题排查 class="table-of-contents__link toc-highlight">1.8.5 常见问题排查</a></ul><li><a href=#本章小结 class="table-of-contents__link toc-highlight">本章小结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

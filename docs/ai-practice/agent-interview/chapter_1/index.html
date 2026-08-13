@@ -1,0 +1,427 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-interview/chapter_1" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第一章：Agent 基础概念与架构 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/chapter_1 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第一章：Agent 基础概念与架构 | 知识库"/><meta data-rh=true name=description content="1.1 什么是 AI Agent：从概念定义到本质特征"/><meta data-rh=true property=og:description content="1.1 什么是 AI Agent：从概念定义到本质特征"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/chapter_1 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/chapter_1 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/chapter_1 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/","name":"Agent 面试题","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-interview/chapter_1","name":"第一章：Agent 基础概念与架构","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="折叠侧边栏分类 'Agent 面试题'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_1><span title="第一章：Agent 基础概念与架构" class=linkLabel_WmDU>第一章：Agent 基础概念与架构</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_2><span title=第二章：大语言模型（LLM）基础 class=linkLabel_WmDU>第二章：大语言模型（LLM）基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_3><span title="第三章：Prompt Engineering 与推理范式" class=linkLabel_WmDU>第三章：Prompt Engineering 与推理范式</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_4><span title="第四章：Tool Use 与函数调用" class=linkLabel_WmDU>第四章：Tool Use 与函数调用</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_5><span title="第五章：RAG 与知识增强" class=linkLabel_WmDU>第五章：RAG 与知识增强</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_6><span title="第六章：Agent 规划与决策" class=linkLabel_WmDU>第六章：Agent 规划与决策</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_7><span title="第七章：多 Agent 系统与协作" class=linkLabel_WmDU>第七章：多 Agent 系统与协作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_8><span title="第八章：Agent 记忆与状态管理" class=linkLabel_WmDU>第八章：Agent 记忆与状态管理</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_9><span title="第九章：Agent 工程化与部署" class=linkLabel_WmDU>第九章：Agent 工程化与部署</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_10><span title="第十章：Agent 安全、评测与产品落地" class=linkLabel_WmDU>第十章：Agent 安全、评测与产品落地</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-interview/><span>Agent 面试题</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第一章：Agent 基础概念与架构</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第一章：Agent 基础概念与架构</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-什么是-ai-agent从概念定义到本质特征>1.1 什么是 AI Agent：从概念定义到本质特征<a href=#11-什么是-ai-agent从概念定义到本质特征 class=hash-link aria-label="1.1 什么是 AI Agent：从概念定义到本质特征的直接链接" title="1.1 什么是 AI Agent：从概念定义到本质特征的直接链接" translate=no>​</a></h2>
+<p>AI Agent（人工智能代理）是当前大模型应用领域最受关注的技术范式之一。要准确理解它，首先需要回到这个概念的本质。</p>
+<p>在学术语境中，Agent 的概念最早来源于分布式人工智能领域。斯坦福大学教授 Yoav Shoham 在 1993 年的经典论文中给出了一个被广泛引用的定义：Agent 是一个能够感知环境、自主行动并对其行为负责的计算实体。这个定义虽然朴素，但奠定了后续几十年 Agent 研究的基本框架。</p>
+<p>进入大模型时代后，Agent 的内涵发生了显著变化。Lilian Weng 在她广为传播的文章 "LLM Powered Autonomous Agents" 中给出了一个更贴合当前技术栈的定义：以 LLM（Large Language Model，大语言模型）为核心控制器，能够通过规划、记忆和工具使用来完成复杂任务的智能体。这个定义的关键在于把 LLM 定位为 Agent 的"大脑"，而非全部。</p>
+<p>从工程视角看，一个真正的 AI Agent 需要具备以下几个本质特征。</p>
+<p>第一是自主性（Autonomy）。Agent 应当能够在没有人类持续干预的情况下，独立完成任务分解、决策和执行。这与传统的聊天机器人有本质区别——聊天机器人只是对单条输入产生单条输出，而 Agent 能够自主决定下一步做什么。</p>
+<p>第二是目标导向性（Goal-oriented）。Agent 的行为不是为了生成一条"看起来正确"的回复，而是为了达成某个具体目标。比如"帮我分析这份财报并给出投资建议"是一个目标，Agent 需要拆解为读取文件、提取数据、计算指标、对比历史数据、生成报告等多个步骤。</p>
+<p>第三是环境交互性（Environment Interaction）。Agent 必须能够感知外部环境的状态，并通过行动改变环境。这里的"环境"可以是文件系统、数据库、API 接口、浏览器，甚至是物理世界（在机器人场景中）。</p>
+<p>第四是持续运行性（Persistence）。Agent 通常不是一次性的问答过程，而是一个持续运行的循环。它会在多个时间步中不断感知、决策、行动，直到任务完成或被终止。</p>
+<p>下面用一个简化的 Python 伪代码来展示 Agent 的核心结构：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>class</span><span class="token plain"> </span><span class="token class-name">Agent</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>__init__</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">self</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> llm</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> memory</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">llm </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> llm          </span><span class="token comment" style=color:#999988;font-style:italic># 大模型作为大脑</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">tools </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> tools      </span><span class="token comment" style=color:#999988;font-style:italic># 可调用的工具集</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">memory </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> memory    </span><span class="token comment" style=color:#999988;font-style:italic># 记忆系统</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>run</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">self</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>while</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>not</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">is_done</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">task</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 感知当前状态</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            observation </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">observe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 规划下一步行动</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            action </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">llm</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">plan</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">task</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> observation</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">memory</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 执行行动</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            result </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">execute</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">action</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 更新记忆</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">memory</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">update</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">action</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> result</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">get_result</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p>这段伪代码揭示了 Agent 的核心运行逻辑：感知、规划、执行、更新的循环。不同类型的 Agent 在这个基本框架上会有不同的实现细节，但底层结构高度一致。</p>
+<p>值得一提的是，业界对 Agent 的定义仍然存在分歧。一派认为只有具备完全自主决策能力的系统才算 Agent，另一派则认为只要 LLM 能够调用工具就算 Agent。这种分歧在实际工程中并不关键，但在技术选型时会影响架构设计。理解这个光谱而非执着于某个定义，更有助于实际工作。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-agent-系统核心架构感知记忆规划执行反思>1.2 Agent 系统核心架构：感知、记忆、规划、执行、反思<a href=#12-agent-系统核心架构感知记忆规划执行反思 class=hash-link aria-label="1.2 Agent 系统核心架构：感知、记忆、规划、执行、反思的直接链接" title="1.2 Agent 系统核心架构：感知、记忆、规划、执行、反思的直接链接" translate=no>​</a></h2>
+<p>一个完整的 Agent 系统由五个核心模块构成。这五个模块协同工作，构成了 Agent 的认知架构。</p>
+<p>感知模块（Perception）是 Agent 与外部世界的接口。它的职责是将环境中的原始信息转化为 Agent 可以理解的格式。在文本场景中，感知模块可能就是简单的输入解析器；在多模态场景中，它需要处理图像、音频、视频等非结构化数据。感知模块的设计直接影响 Agent 对环境的理解精度。</p>
+<p>记忆模块（Memory）是 Agent 的信息存储中心。它通常分为短期记忆和长期记忆两部分。短期记忆保存当前任务的上下文信息，类似于人类的工作记忆。长期记忆则存储历史经验、用户偏好等持久化信息。在工程实现中，短期记忆通常用对话历史列表或滑动窗口来管理，长期记忆则依赖向量数据库或知识图谱。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">┌──────────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                Agent 系统架构                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├──────────┬──────────┬──────────┬──────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  感知模块  │  记忆模块  │  规划模块  │   执行模块    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Perception│  Memory  │ Planning │  Execution   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├──────────┴──────────┴──────────┴──────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                  反思模块                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                 Reflection                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├──────────────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│           LLM (大语言模型) 核心                 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>规划模块（Planning）是 Agent 的决策中心。它接收感知模块传来的环境信息和记忆模块中的历史数据，决定 Agent 接下来应该做什么。规划可以是即时的一步决策，也可以是多步骤的长程规划。复杂的规划模块还会使用思维链（Chain-of-Thought, CoT）、思维树（Tree of Thoughts, ToT）等推理技术来提升决策质量。</p>
+<p>执行模块（Execution）负责将规划模块的决策转化为具体行动。这通常意味着调用外部工具或 API。执行模块需要处理工具调用的参数构造、错误处理、结果解析等工程细节。一个设计良好的执行模块应当具备重试机制、超时控制和并发执行能力。</p>
+<p>反思模块（Reflection）是区分初级 Agent 和高级 Agent 的关键。它允许 Agent 从执行结果中学习，评估自己的决策是否正确，并在必要时调整策略。反思模块的实现方式包括自我评估、错误分析和策略调整。AutoGPT 和 Reflexion 等框架都把反思作为核心机制。</p>
+<p>五个模块之间的协作流程可以概括为以下循环：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>步骤<th>模块<th>输入<th>输出<tbody><tr><td>1<td>感知<td>环境状态<td>结构化观察数据<tr><td>2<td>记忆<td>观察数据 + 历史记忆<td>检索到的相关上下文<tr><td>3<td>规划<td>任务目标 + 观察 + 上下文<td>行动计划<tr><td>4<td>执行<td>行动计划<td>执行结果<tr><td>5<td>反思<td>执行结果 + 预期目标<td>评估和调整策略</table>
+<p>这五个模块并非总是全部存在。一些轻量级 Agent 可能只有感知、规划和执行，没有显式的记忆和反思。但随着任务复杂度的提升，缺少记忆和反思的 Agent 往往会在长程任务中表现不佳。</p>
+<p>在实际工程中，模块之间的边界并不总是清晰的。比如规划模块可能内嵌记忆检索逻辑，执行模块可能包含简单的反思能力。重要的不是模块的物理划分，而是这些功能是否被完整覆盖。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-agent-核心范式从-pra-循环到-react-模式>1.3 Agent 核心范式：从 PRA 循环到 ReAct 模式<a href=#13-agent-核心范式从-pra-循环到-react-模式 class=hash-link aria-label="1.3 Agent 核心范式：从 PRA 循环到 ReAct 模式的直接链接" title="1.3 Agent 核心范式：从 PRA 循环到 ReAct 模式的直接链接" translate=no>​</a></h2>
+<p>Agent 的运行模式经历了从简单到复杂的演进过程。理解这些范式的演进，有助于在不同场景下选择合适的架构。</p>
+<p>最基础的范式是 PRA 循环（Perception-Reasoning-Action），即"感知-推理-行动"循环。这是 Agent 的最简形式：感知环境状态，进行推理决策，执行行动，然后进入下一轮循环。PRA 循环的概念来源于经典的感知-行动循环（Sense-Act Cycle），在机器人控制领域有悠久历史。</p>
+<p>PRA 循环的问题在于它过于简化了推理过程。在实际任务中，Agent 往往需要在推理和行动之间交替进行：先思考一下，执行一个动作，根据结果再思考下一步。这就是 ReAct（Reasoning and Acting）模式的由来。</p>
+<p>ReAct 模式由 Yao 等人在 2022 年提出，核心思想是让 LLM 在推理（Reasoning）和行动（Acting）之间交替进行。在每一步中，模型先生成一个推理过程（Thought），然后决定一个行动（Action），执行行动后获得观察结果（Observation），再进入下一轮推理。</p>
+<p>一个典型的 ReAct 流程如下：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Thought 1: 我需要查找北京今天的天气</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Action 1: search_weather("北京")</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Observation 1: 北京今天晴，最高温度35度</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Thought 2: 用户可能需要防暑建议，我应该给出高温提醒</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Action 2: generate_response("北京今天晴，最高35度，注意防暑")</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Observation 2: 回复已发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Thought 3: 任务已完成</span><br/></div></code></pre></div></div>
+<p>ReAct 模式的优势在于将推理过程显式化，使 Agent 的决策过程可追溯、可调试。相比纯推理模式（如 CoT），ReAct 能通过行动获取外部信息，克服 LLM 知识截止日期的限制。相比纯行动模式，ReAct 的推理步骤能提升决策质量。</p>
+<p>以下是一个 ReAct 模式的简化实现：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>react_loop</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">llm</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> max_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>10</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    messages </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>{</span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"user"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> task</span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> step </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> </span><span class="token builtin">range</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">max_steps</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># LLM 生成 Thought + Action</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        response </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> llm</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">chat</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">messages</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">tools</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">is_final</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">content</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># 执行工具调用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        tool_result </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> execute_tool</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">tool_call</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># 将观察结果加入上下文</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        messages</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"assistant"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">thought</span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        messages</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"tool"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> tool_result</span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"达到最大步数限制"</span><br/></div></code></pre></div></div>
+<p>除了 ReAct 之外，还有几种值得关注的 Agent 范式。</p>
+<p>Plan-and-Execute 模式将任务分为两个阶段：先一次性生成完整的执行计划，再逐步执行。这种方式适合步骤明确、不易变化的任务，但在动态环境中可能不够灵活。</p>
+<p>Reflexion 模式在 ReAct 的基础上增加了自我反思机制。当 Agent 执行完一个行动后，它会评估结果是否符合预期，如果不符合则生成反思并调整后续策略。这种范式在代码生成、数学推理等需要迭代改进的场景中表现优异。</p>
+<p>LATS（Language Agent Tree Search）模式则更进一步，使用树搜索策略来探索多条可能的行动路径，并通过自我评估来选择最优路径。这种方式计算成本较高，但在复杂决策任务中效果更好。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>范式<th>核心思想<th>优势<th>适用场景<tbody><tr><td>PRA 循环<td>感知-推理-行动<td>结构简单<td>基础任务<tr><td>ReAct<td>推理与行动交替<td>可追溯、可调试<td>通用任务<tr><td>Plan-and-Execute<td>先规划后执行<td>步骤明确<td>流程固定任务<tr><td>Reflexion<td>带自我反思<td>迭代改进<td>代码生成、推理<tr><td>LATS<td>树搜索策略<td>全局最优<td>复杂决策任务</table>
+<p>在实际项目中选择 Agent 范式时，应当在任务复杂度和计算成本之间取得平衡。ReAct 是目前最常用的通用范式，多数 Agent 框架（如 LangChain、LlamaIndex）都将其作为默认模式。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-agent-与-workflow-的边界自主性与确定性之争>1.4 Agent 与 Workflow 的边界：自主性与确定性之争<a href=#14-agent-与-workflow-的边界自主性与确定性之争 class=hash-link aria-label="1.4 Agent 与 Workflow 的边界：自主性与确定性之争的直接链接" title="1.4 Agent 与 Workflow 的边界：自主性与确定性之争的直接链接" translate=no>​</a></h2>
+<p>在 Agent 技术落地的过程中，一个反复出现的争论是：Agent 和 Workflow（工作流）的边界在哪里？这个问题不仅关乎概念辨析，更直接影响架构选型。</p>
+<p>Workflow 是一种预定义流程的执行框架。在 Workflow 中，每一步做什么、下一步走哪个分支，都是在运行前就确定好的。LLM 在 Workflow 中通常被用作某个节点的处理工具，比如文本摘要、情感分析、数据提取等。流程的控制权在编排系统手中。</p>
+<p>Agent 则不同。Agent 拥有对流程的控制权，它可以根据当前状态自主决定下一步做什么、是否需要调用工具、是否已经完成任务。LLM 在 Agent 中不仅是处理工具，更是决策中心。</p>
+<p>Anthropic 在其技术文章中给出了一个清晰的对比例子。假设要实现一个"客户需求处理"系统：</p>
+<p>Workflow 方式：先将需求分类（LLM 节点），然后根据分类结果路由到不同处理流程（固定分支），每个流程中有预定义的步骤序列。整个流程的可视化图在运行前就完全确定。</p>
+<p>Agent 方式：把需求交给 Agent，Agent 自主判断需要哪些信息，决定是否查询数据库、是否需要调用分类模型、是否需要人工介入。运行路径在运行时才确定。</p>
+<p>两者各有优劣。Workflow 的优势在于确定性和可预测性——每次执行的路径可控，便于调试和审计。Agent 的优势在于灵活性和适应性——面对意料之外的情况，Agent 可以自主调整策略。</p>
+<p>在实际工程中，纯 Agent 和纯 Workflow 都不多见。大多数生产系统采用的是混合架构：在关键路径上使用 Workflow 保证确定性，在需要灵活决策的环节引入 Agent 的自主能力。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">确定性 ──────────────────────────── 自主性</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Workflow                              Hybrid Agent</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (全预定义)                           (部分自主)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                        Pure Agent</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                        (全自主)</span><br/></div></code></pre></div></div>
+<p>判断一个系统应该用 Workflow 还是 Agent，可以参考以下决策矩阵：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>偏向 Workflow<th>偏向 Agent<tbody><tr><td>任务路径<td>步骤固定且已知<td>路径不确定，需动态探索<tr><td>错误代价<td>错误成本高，需严格管控<td>错误可容忍，允许试错<tr><td>环境变化<td>环境稳定，规则明确<td>环境多变，需要适应<tr><td>调试需求<td>需要完整审计追踪<td>结果正确即可，过程不关键<tr><td>延迟要求<td>严格延迟限制<td>可接受较长执行时间</table>
+<p>一个常见的误区是把 Agent 视为 Workflow 的"升级版"。实际上，它们是互补关系而非替代关系。在许多企业场景中，Workflow 仍然是更可靠的选择，尤其是涉及资金交易、合规审批等高风险流程。Agent 的价值在于处理那些无法预先穷举所有分支的复杂场景。</p>
+<p>值得一提的是，一些现代 Agent 框架已经支持在 Agent 内部嵌入 Workflow。比如 Agent 可以在规划阶段生成一个类似 Workflow 的执行计划，然后在执行阶段按照计划逐步执行。这种"Agent 规划 + Workflow 执行"的混合模式，兼顾了灵活性和确定性。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-agentic-ai-的自主性等级与认知架构>1.5 Agentic AI 的自主性等级与认知架构<a href=#15-agentic-ai-的自主性等级与认知架构 class=hash-link aria-label="1.5 Agentic AI 的自主性等级与认知架构的直接链接" title="1.5 Agentic AI 的自主性等级与认知架构的直接链接" translate=no>​</a></h2>
+<p>Agentic AI（智能体化的人工智能）是近年来从学术研究走向工程实践的重要概念。不同 Agent 系统的自主性程度差异巨大，有必要建立一个等级框架来进行区分。</p>
+<p>参照自动驾驶的 SAE（Society of Automotive Engineers，国际汽车工程师学会）等级体系，可以为 AI Agent 定义类似的自主性等级。</p>
+<p>Level 0：无自主性。系统完全由人类控制，LLM 仅作为响应工具。典型代表是传统的聊天机器人，每次交互都是独立的请求-响应对。</p>
+<p>Level 1：辅助型自主。系统能在人类指导下完成单一任务步骤。比如 LLM 调用一个工具（如搜索）后返回结果，由人类决定下一步。工具调用是自动的，但流程控制权在人类。</p>
+<p>Level 2：有限自主。系统能在特定任务范围内自主完成多步骤操作，但需要人类在关键节点进行确认。比如一个数据分析 Agent 可以自主读取数据、清洗、分析，但在生成最终报告前需要人类审核中间结果。</p>
+<p>Level 3：条件自主。系统在大多数情况下能自主完成任务，仅在遇到边界情况时请求人类介入。这类 Agent 具备基本的自我评估能力，能识别自己何时需要帮助。</p>
+<p>Level 4：高度自主。系统能在广泛任务范围内自主完成全流程，包括错误恢复和策略调整。人类主要提供任务描述和最终验收，中间过程无需干预。</p>
+<p>Level 5：完全自主。系统能自主理解任务目标、规划执行策略、处理异常情况，并在任务完成后自我评估和学习改进。这是目前的技术天花板，尚无系统能稳定达到。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>等级<th>名称<th>人类参与度<th>典型特征<tbody><tr><td>L0<td>无自主性<td>全程参与<td>单轮问答<tr><td>L1<td>辅助型<td>高<td>单工具调用<tr><td>L2<td>有限自主<td>中<td>多步骤，关键节点确认<tr><td>L3<td>条件自主<td>低<td>自主完成，遇阻求助<tr><td>L4<td>高度自主<td>极低<td>自主全流程，自纠错<tr><td>L5<td>完全自主<td>无<td>自主学习与进化</table>
+<p>认知架构是支撑自主性的底层结构。一个 Agent 的认知架构决定了它如何处理信息、做出决策和积累经验。</p>
+<p>当前主流的 Agent 认知架构主要有三种类型。</p>
+<p>反应式架构（Reactive Architecture）不维护内部状态，直接根据当前感知做出反应。这种架构响应速度快，但缺乏规划能力，适合简单、确定的环境。</p>
+<p>deliberative 架构（Deliberative Architecture）维护完整的内部世界模型，通过符号推理来做出决策。这种架构规划能力强，但计算开销大，适合复杂但变化缓慢的环境。</p>
+<p>混合架构（Hybrid Architecture）结合了两者的优点，在需要快速反应时使用反应式策略，在需要深度思考时切换到 deliberative 模式。多数现代 Agent 系统采用混合架构。</p>
+<p>理解自主性等级的实际意义在于工程选型。并非所有场景都需要 L4 或 L5 的自主性。在许多企业应用中，L2 到 L3 的自主性已经足够，而且更容易落地、更易于审计。盲目追求高自主性反而会增加系统复杂度和不可控风险。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-llm-作为-agent-大脑角色定位与能力边界>1.6 LLM 作为 Agent 大脑：角色定位与能力边界<a href=#16-llm-作为-agent-大脑角色定位与能力边界 class=hash-link aria-label="1.6 LLM 作为 Agent 大脑：角色定位与能力边界的直接链接" title="1.6 LLM 作为 Agent 大脑：角色定位与能力边界的直接链接" translate=no>​</a></h2>
+<p>在 Agent 系统中，LLM 扮演着"大脑"的角色。它负责理解任务目标、分析环境信息、制定执行计划、生成工具调用指令。但 LLM 的能力边界在哪里？它能做什么、不能做什么？这是设计 Agent 系统时必须厘清的问题。</p>
+<p>LLM 在 Agent 中的核心职责可以归纳为四个方面。</p>
+<p>第一是任务理解。LLM 需要准确理解用户给出的任务描述，包括显式要求和隐含期望。这要求 LLM 具备较强的自然语言理解能力和常识推理能力。对于领域特定任务，LLM 还需要理解领域术语和专业概念。</p>
+<p>第二是策略规划。LLM 需要根据任务目标和当前环境状态，制定执行策略。这包括决定需要哪些信息、调用哪些工具、以什么顺序执行。规划质量直接决定 Agent 的整体表现。</p>
+<p>第三是工具选择与调用。LLM 需要从可用工具集中选择合适的工具，并生成正确的调用参数。这要求 LLM 理解每个工具的功能、输入输出格式和使用约束。当前主流 LLM 通过 function calling（函数调用）接口来实现这一能力。</p>
+<p>第四是结果解读。工具执行后返回的结果需要 LLM 进行解读，判断是否满足任务需求。如果结果不符合预期，LLM 还需要分析原因并调整策略。</p>
+<p>以下是一个 LLM 作为 Agent 大脑的提示词框架示例：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">SYSTEM_PROMPT </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token triple-quoted-string string" style=color:#e3116c>"""你是一个任务执行 Agent。</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>当前任务：{task}</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>可用工具：{tools_description}</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>当前状态：{current_state}</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>历史记录：{history}</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=display:inline-block;color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>请按以下格式输出：</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>Thought: 推理过程</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>Action: 工具调用（JSON格式）</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>或</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>Thought: 任务已完成</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>Final Answer: 最终回复</span><br/></div><div class=token-line style=color:#393A34><span class="token triple-quoted-string string" style=color:#e3116c>"""</span><br/></div></code></pre></div></div>
+<p>然而，LLM 作为 Agent 大脑也存在明确的能力边界。</p>
+<p>首先是上下文窗口限制。LLM 的上下文长度是有限的，当对话历史和工具输出累积到一定量时，早期信息会被截断或压缩。这导致 Agent 在长程任务中可能遗忘关键信息。虽然上下文窗口在不断扩大（从 4K 到 128K 甚至更长），但信息利用效率并不随窗口大小线性增长。</p>
+<p>其次是幻觉问题。LLM 可能生成不存在的工具名称、错误的参数格式或虚构的事实。在 Agent 场景中，幻觉比纯文本对话更危险，因为 Agent 可能基于幻觉信息执行实际操作。工具调用的结构化输出能在一定程度上缓解这个问题，但不能完全消除。</p>
+<p>第三是推理深度不足。面对需要多步逻辑推理的复杂问题，LLM 的推理链条可能在中途断裂或偏离正确方向。思维链技术能改善这个问题，但无法根本解决。</p>
+<p>第四是实时信息缺失。LLM 的知识有截止日期，对于训练后发生的事件一无所知。Agent 需要通过工具调用来获取实时信息，但这增加了执行复杂度和延迟。</p>
+<p>针对这些局限，工程上通常采用以下补偿策略：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>局限性<th>补偿策略<th>实现方式<tbody><tr><td>上下文限制<td>记忆管理<td>摘要压缩、向量检索<tr><td>幻觉问题<td>输出约束<td>结构化输出、校验层<tr><td>推理深度<td>推理增强<td>CoT、ToT、多轮反思<tr><td>实时信息<td>工具集成<td>搜索API、数据库查询</table>
+<p>需要强调的是，LLM 在 Agent 架构中虽然重要，但不是全部。一个成熟的 Agent 系统还需要大量的"非 LLM"工程：确定性逻辑处理、错误恢复机制、并发控制、状态管理等。把 LLM 视为万能解决方案是 Agent 工程中最常见的陷阱之一。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-observation-机制闭环反馈的关键环节>1.7 Observation 机制：闭环反馈的关键环节<a href=#17-observation-机制闭环反馈的关键环节 class=hash-link aria-label="1.7 Observation 机制：闭环反馈的关键环节的直接链接" title="1.7 Observation 机制：闭环反馈的关键环节的直接链接" translate=no>​</a></h2>
+<p>Observation（观察）是 Agent 闭环架构中最容易被忽视、但对系统可靠性影响最大的环节。它指的是 Agent 在执行行动后，获取环境反馈信息的机制。</p>
+<p>在 ReAct 模式中，Observation 是 Thought-Action-Observation 三元组的第三元素。Action 改变环境，Observation 感知这种改变，下一个 Thought 基于 Observation 做出新的推理。如果 Observation 机制设计不当，整个闭环就会断裂。</p>
+<p>Observation 机制的实现看似简单——不就是获取工具的返回值吗？但在实际工程中，它面临多个挑战。</p>
+<p>第一个挑战是信息过载。工具返回的信息量可能远超 LLM 能有效处理的范围。一个数据库查询可能返回上千行数据，一个网页抓取可能产生数万字内容。如果直接把原始结果塞进 LLM 的上下文，不仅浪费 token，还会干扰决策。</p>
+<p>第二个挑战是信息缺失。有些工具的返回值并不能完整反映环境的真实状态。比如调用一个发送邮件的 API，返回值可能只是一个"成功"标志，但邮件是否真的到达了收件箱、是否被标记为垃圾邮件，这些信息是缺失的。</p>
+<p>第三个挑战是信息噪声。工具返回的数据可能包含大量无关信息。比如搜索 API 返回的页面中可能有广告、导航栏、页脚等与任务无关的内容。Agent 需要从中提取有价值的部分。</p>
+<p>针对这些挑战，一个设计良好的 Observation 机制应当包含以下处理层：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>process_observation</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">raw_result</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task_context</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 1. 格式标准化：统一不同工具的输出格式</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    normalized </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> normalize_output</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">raw_result</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 2. 信息过滤：去除噪声，保留与任务相关的内容</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    filtered </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> filter_relevant</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">normalized</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task_context</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 3. 摘要压缩：对过长内容进行摘要</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> </span><span class="token builtin">len</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">filtered</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>></span><span class="token plain"> MAX_LENGTH</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        filtered </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> summarize</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">filtered</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task_context</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic># 4. 结构化：转化为 LLM 易于理解的格式</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    structured </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> structure_output</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">filtered</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> structured</span><br/></div></code></pre></div></div>
+<p>Observation 的质量直接影响 Agent 的决策质量。一个好的 Observation 应当具备以下特征：准确性（忠实反映环境状态）、相关性（与当前任务相关）、简洁性（不含冗余信息）、及时性（反映最新状态）。</p>
+<p>不同类型的工具需要不同的 Observation 处理策略：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具类型<th>原始输出特征<th>Observation 处理策略<tbody><tr><td>搜索引擎<td>大量网页摘要<td>提取Top3结果的关键信息<tr><td>数据库查询<td>结构化数据行<td>转为自然语言描述或表格<tr><td>代码执行<td>控制台输出+错误信息<td>截取关键输出，突出错误<tr><td>文件读取<td>长文本内容<td>摘要或分段返回<tr><td>API调用<td>JSON响应<td>提取关键字段，去除元数据</table>
+<p>Observation 机制的另一个重要方面是错误观察。当工具执行失败时，Agent 需要获得足够的信息来诊断问题并调整策略。一个常见的错误是只返回"执行失败"而不提供任何细节。好的做法是返回错误类型、错误消息以及可能的修复建议。</p>
+<p>在设计 Observation 机制时，还需要考虑多模态信息。如果 Agent 调用了图像分析工具，返回的可能不是文本而是图像描述。如何将多模态的观察结果统一融入 Agent 的推理链，是一个活跃的研究方向。</p>
+<p>Observation 机制虽然在概念上不起眼，但它是 Agent 与环境之间的桥梁。在 Agent 系统的调试和优化过程中，改善 Observation 质量往往能带来最显著的性能提升。许多看起来是 LLM 推理能力不足的问题，实际上根源在于 Observation 机制没有给 LLM 提供足够好的信息。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-agent-架构的演进趋势从单体到分布式>1.8 Agent 架构的演进趋势：从单体到分布式<a href=#18-agent-架构的演进趋势从单体到分布式 class=hash-link aria-label="1.8 Agent 架构的演进趋势：从单体到分布式的直接链接" title="1.8 Agent 架构的演进趋势：从单体到分布式的直接链接" translate=no>​</a></h2>
+<p>Agent 架构正在经历从单体到分布式的演进。这一趋势与软件工程领域从单体应用到微服务架构的演进路径高度相似，但增加了智能体协作这一独特维度。</p>
+<p>第一代 Agent 架构是单体式的。一个 LLM 实例承担所有职责：理解任务、规划策略、选择工具、解读结果。AutoGPT 是单体架构的典型代表——一个循环中 LLM 反复生成 Thought 和 Action，直到任务完成。</p>
+<p>单体架构的优势在于实现简单、上下文完整。所有信息都在一个 LLM 实例的上下文中，不存在信息传递损耗。但它的劣势也很明显：单一 LLM 的能力上限决定了整个系统的天花板，而且随着任务复杂度增加，上下文会迅速膨胀。</p>
+<p>第二代架构引入了角色分工。不同 LLM 实例扮演不同角色——一个负责任务分解，一个负责执行，一个负责审核。这种分工可以通过 prompt 设计来实现（在同一个 LLM 中切换角色），也可以通过多个 LLM 实例来实现。ChatDev 和 MetaGPT 是这种思路的代表，它们模拟了软件开发团队中的不同角色协作。</p>
+<p>第三代架构是 Multi-Agent System（多智能体系统）。多个 Agent 各自拥有独立的记忆、工具集和目标，通过通信协议进行协作。每个 Agent 可以是不同模型驱动的，拥有不同的专业能力。这种架构的灵活性最高，但也面临协调难度大、通信开销高等挑战。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">第一代：单体 Agent          第二代：角色分工          第三代：多 Agent 系统</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────┐              ┌───────────┐          ┌───┐  ┌───┐  ┌───┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  LLM    │              │ Planner   │          │ A1│←→│ A2│←→│ A3│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Agent  │              │ Executor  │          └───┘  └───┘  └───┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────┘              │ Reviewer  │              ↕     ↕</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                         └───────────┘            协作通信层</span><br/></div></code></pre></div></div>
+<p>Multi-Agent 系统的核心挑战是协作机制设计。当前主要的协作模式有以下几种。</p>
+<p>中心化协作模式中，有一个"管理者" Agent 负责任务分配和结果汇总，其他 Agent 作为执行者。这种模式结构清晰，但管理者可能成为瓶颈。</p>
+<p>去中心化协作模式中，Agent 之间直接通信，通过共识机制或市场机制来协调行动。这种模式扩展性好，但协调成本高。</p>
+<p>层级化协作模式结合了两者的特点：在同一层级内采用去中心化协作，在层级之间采用中心化管理。这种模式在大型组织中很常见，也被证明适用于 Agent 系统。</p>
+<p>以下是一个简单的 Multi-Agent 协作示例：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>class</span><span class="token plain"> </span><span class="token class-name">MultiAgentSystem</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>__init__</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">self</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">coordinator </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> Agent</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">role</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"coordinator"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> llm</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">gpt4</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">researcher </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> Agent</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">role</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"researcher"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> llm</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">gpt4</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token operator" style=color:#393A34>=</span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">search</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">writer </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> Agent</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">role</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"writer"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> llm</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">claude</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> tools</span><span class="token operator" style=color:#393A34>=</span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">write_file</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>run</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">self</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> task</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># 协调者分解任务</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        subtasks </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">coordinator</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">plan</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">task</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        results </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> subtask </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> subtasks</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># 根据子任务类型分派给对应 Agent</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token keyword" style=color:#00009f>if</span><span class="token plain"> subtask</span><span class="token punctuation" style=color:#393A34>.</span><span class="token builtin">type</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>==</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"research"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                results</span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">subtask</span><span class="token punctuation" style=color:#393A34>.</span><span class="token builtin">id</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">researcher</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">execute</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">subtask</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token keyword" style=color:#00009f>elif</span><span class="token plain"> subtask</span><span class="token punctuation" style=color:#393A34>.</span><span class="token builtin">type</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>==</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"writing"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                results</span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">subtask</span><span class="token punctuation" style=color:#393A34>.</span><span class="token builtin">id</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">writer</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">execute</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">subtask</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># 协调者汇总结果</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> self</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">coordinator</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">synthesize</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">results</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p>除了协作模式，Agent 架构的演进还体现在以下几个趋势上。</p>
+<p>记忆系统的外置化。越来越多的 Agent 框架将记忆系统从 LLM 上下文中剥离出来，使用独立的外部存储（向量数据库、知识图谱）。这使得记忆可以跨会话、跨 Agent 共享，也解决了上下文窗口限制的问题。</p>
+<p>工具系统的动态化。传统 Agent 的工具集是预定义的，而新一代框架支持 Agent 动态发现和加载工具。Agent 可以根据任务需要从工具库中搜索合适的工具，甚至自己编写并执行代码来创建新工具。</p>
+<p>执行环境的沙箱化。为了安全地执行代码和操作，越来越多的 Agent 系统使用沙箱环境（如 Docker 容器、WebAssembly 运行时）来隔离执行过程。这在保证安全性的同时，允许 Agent 更大胆地尝试和探索。</p>
+<p>模型组合的多样化。不同任务阶段可以使用不同的 LLM——规划阶段用推理能力强的大模型，执行阶段用速度快的小模型，审核阶段用另一个模型提供独立视角。这种"模型路由"策略在性能和成本之间取得了更好的平衡。</p>
+<p>Agent 架构仍在快速演进中。从单体到分布式、从单一模型到多模型协作、从静态工具到动态工具，这些趋势指向一个方向：未来的 Agent 系统将更像一个组织而非单个智能体。理解这些演进趋势，有助于在当前的技术选型中做出更有前瞻性的决策。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章知识点总结>本章知识点总结<a href=#本章知识点总结 class=hash-link aria-label=本章知识点总结的直接链接 title=本章知识点总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识点<th>核心内容<th>关键概念<tbody><tr><td>AI Agent 定义<td>以 LLM 为核心的自主智能体<td>自主性、目标导向、环境交互、持续运行<tr><td>五大核心模块<td>感知、记忆、规划、执行、反思<td>Perception、Memory、Planning、Execution、Reflection<tr><td>PRA 循环<td>感知-推理-行动基础范式<td>最简 Agent 闭环<tr><td>ReAct 模式<td>推理与行动交替进行<td>Thought-Action-Observation 三元组<tr><td>Agent 范式演进<td>从 PRA 到 LATS 的复杂度递增<td>Plan-and-Execute、Reflexion、LATS<tr><td>Agent vs Workflow<td>自主性与确定性的权衡<td>混合架构为实际主流<tr><td>自主性等级<td>L0-L5 六级分类体系<td>多数生产系统处于 L2-L3<tr><td>认知架构类型<td>反应式、Deliberative、混合<td>混合架构为主流选择<tr><td>LLM 角色<td>任务理解、规划、工具调用、结果解读<td>能力边界：上下文、幻觉、推理、实时性<tr><td>Observation 机制<td>闭环反馈的信息处理<td>过滤、压缩、结构化、错误观察<tr><td>架构演进趋势<td>单体到分布式<td>Multi-Agent、记忆外置、工具动态化、沙箱化<tr><td>Multi-Agent 协作<td>中心化、去中心化、层级化<td>模型路由与角色分工</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-interview/chapter_1.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-interview/><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>目录</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-interview/chapter_2><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第二章：大语言模型（LLM）基础</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#11-什么是-ai-agent从概念定义到本质特征 class="table-of-contents__link toc-highlight">1.1 什么是 AI Agent：从概念定义到本质特征</a><li><a href=#12-agent-系统核心架构感知记忆规划执行反思 class="table-of-contents__link toc-highlight">1.2 Agent 系统核心架构：感知、记忆、规划、执行、反思</a><li><a href=#13-agent-核心范式从-pra-循环到-react-模式 class="table-of-contents__link toc-highlight">1.3 Agent 核心范式：从 PRA 循环到 ReAct 模式</a><li><a href=#14-agent-与-workflow-的边界自主性与确定性之争 class="table-of-contents__link toc-highlight">1.4 Agent 与 Workflow 的边界：自主性与确定性之争</a><li><a href=#15-agentic-ai-的自主性等级与认知架构 class="table-of-contents__link toc-highlight">1.5 Agentic AI 的自主性等级与认知架构</a><li><a href=#16-llm-作为-agent-大脑角色定位与能力边界 class="table-of-contents__link toc-highlight">1.6 LLM 作为 Agent 大脑：角色定位与能力边界</a><li><a href=#17-observation-机制闭环反馈的关键环节 class="table-of-contents__link toc-highlight">1.7 Observation 机制：闭环反馈的关键环节</a><li><a href=#18-agent-架构的演进趋势从单体到分布式 class="table-of-contents__link toc-highlight">1.8 Agent 架构的演进趋势：从单体到分布式</a><li><a href=#本章知识点总结 class="table-of-contents__link toc-highlight">本章知识点总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

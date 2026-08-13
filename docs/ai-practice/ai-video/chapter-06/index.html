@@ -1,0 +1,772 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-video/chapter-06" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>chapter-06 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-06 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="chapter-06 | 知识库"/><meta data-rh=true name=description content="第六章 视频生视频（Video-to-Video, V2V）"/><meta data-rh=true property=og:description content="第六章 视频生视频（Video-to-Video, V2V）"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-06 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-06 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-06 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/","name":"AI 视频生成","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-06","name":"chapter-06","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="折叠侧边栏分类 'AI 视频生成'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-01><span title=chapter-01 class=linkLabel_WmDU>chapter-01</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-02><span title=chapter-02 class=linkLabel_WmDU>chapter-02</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-03><span title=chapter-03 class=linkLabel_WmDU>chapter-03</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-04><span title=chapter-04 class=linkLabel_WmDU>chapter-04</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-05><span title=chapter-05 class=linkLabel_WmDU>chapter-05</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-06><span title=chapter-06 class=linkLabel_WmDU>chapter-06</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-07><span title=chapter-07 class=linkLabel_WmDU>chapter-07</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-08><span title=chapter-08 class=linkLabel_WmDU>chapter-08</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-09><span title=chapter-09 class=linkLabel_WmDU>chapter-09</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-10><span title=chapter-10 class=linkLabel_WmDU>chapter-10</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-11><span title=chapter-11 class=linkLabel_WmDU>chapter-11</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-12><span title=chapter-12 class=linkLabel_WmDU>chapter-12</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-13><span title=chapter-13 class=linkLabel_WmDU>chapter-13</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-video/><span>AI 视频生成</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>chapter-06</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>chapter-06</h1></header><h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=第六章-视频生视频video-to-video-v2v>第六章 视频生视频（Video-to-Video, V2V）<a href=#第六章-视频生视频video-to-video-v2v class=hash-link aria-label="第六章 视频生视频（Video-to-Video, V2V）的直接链接" title="第六章 视频生视频（Video-to-Video, V2V）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=一视频生视频的基本原理与形式化定义>一、视频生视频的基本原理与形式化定义<a href=#一视频生视频的基本原理与形式化定义 class=hash-link aria-label=一、视频生视频的基本原理与形式化定义的直接链接 title=一、视频生视频的基本原理与形式化定义的直接链接 translate=no>​</a></h3>
+<p>视频生视频（Video-to-Video, V2V）是指利用深度学习模型将一段源视频按照给定条件转换为目标视频的技术。与图像到图像（Image-to-Image, I2I）转换不同，V2V的核心挑战在于保持时序一致性——即不仅每一帧要满足转换条件，相邻帧之间还要保持自然的过渡关系，避免闪烁和抖动。</p>
+<p>从数学角度看，V2V可以形式化定义为一个映射函数 G。给定源视频 X = {x_1, x_2, ..., x_T}（由T帧组成）和条件 c，目标是学习映射函数 G: (X, c) → Y，其中 Y = {y_1, y_2, ..., y_T} 为生成的目标视频。这里的条件 c 可以是风格图像、语义分割图序列、文本描述、深度图序列等多种形式。</p>
+<p>与图像生成不同，视频生视频的映射函数G需要额外满足时序一致性约束。具体来说，对于任意相邻帧 x_t 和 x_{t+1}，生成的 y_t 和 y_{t+1} 之间的变化模式应当与源视频中 x_t 到 x_{t+1} 的变化模式保持一致。这意味着如果源视频中某个区域静止不动，生成视频中对应区域也不应出现闪烁；如果源视频中某物体向左移动，生成视频中对应物体也应呈现相似的运动轨迹。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比维度<th>图像生图像（I2I）<th>视频生视频（V2V）<tbody><tr><td>输入<td>单张图像<td>视频帧序列<tr><td>核心约束<td>空间一致性<td>空间一致性 + 时序一致性<tr><td>主要挑战<td>内容保真度<td>帧间闪烁、抖动<tr><td>计算复杂度<td>O(1) per image<td>O(T) per video<tr><td>典型方法<td>pix2pix, CycleGAN<td>vid2vid, ControlNet视频</table>
+<p>上述表格概括了I2I与V2V的关键区别。可以看到，V2V在I2I的基础上增加了时间维度的建模需求，这使得问题复杂度显著提升。后续各节将围绕如何解决这些挑战展开详细讨论。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=二基于gan的v2v路线详解>二、基于GAN的V2V路线详解<a href=#二基于gan的v2v路线详解 class=hash-link aria-label=二、基于GAN的V2V路线详解的直接链接 title=二、基于GAN的V2V路线详解的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-gan基础回顾>2.1 GAN基础回顾<a href=#21-gan基础回顾 class=hash-link aria-label="2.1 GAN基础回顾的直接链接" title="2.1 GAN基础回顾的直接链接" translate=no>​</a></h4>
+<p>GAN（Generative Adversarial Network，生成对抗网络）由Goodfellow等人于2014年提出，其核心思想是通过生成器G和判别器D的对抗训练来学习数据分布。生成器的目标是将随机噪声或条件输入映射为逼真的输出，判别器则试图区分真实样本和生成样本。两者在博弈中共同进步，最终生成器能够产出以假乱真的结果。</p>
+<p>在图像翻译领域，Isola等人提出的pix2pix将GAN引入了条件图像生成，通过U-Net结构的生成器和PatchGAN判别器实现了高质量的图像到图像转换。此后，Wang等人提出的vid2vid将这一思想扩展到视频域，成为基于GAN的V2V方法的里程碑工作。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-nvidia-vid2vid完整架构>2.2 NVIDIA vid2vid完整架构<a href=#22-nvidia-vid2vid完整架构 class=hash-link aria-label="2.2 NVIDIA vid2vid完整架构的直接链接" title="2.2 NVIDIA vid2vid完整架构的直接链接" translate=no>​</a></h4>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=221-整体架构概览>2.2.1 整体架构概览<a href=#221-整体架构概览 class=hash-link aria-label="2.2.1 整体架构概览的直接链接" title="2.2.1 整体架构概览的直接链接" translate=no>​</a></h5>
+<p>vid2vid（Video-to-Video Synthesis）是NVIDIA研究院于2018年提出的一种基于GAN的视频到视频翻译框架。它是pix2pix的视频版本扩展，核心思路是在pix2pix的图像级对抗训练基础上，引入光流约束和时序判别器来保证视频的时序一致性。</p>
+<p>vid2vid的整体架构包含三个核心组件：生成器G负责将语义分割图序列转换为逼真视频帧；图像判别器D_I负责判断单帧图像的真实性；视频判别器D_V负责判断连续多帧之间的时序一致性。此外，光流估计模块用于在训练阶段提供像素级的运动约束。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>组件<th>功能<th>输入<th>输出<tbody><tr><td>生成器G<td>生成目标视频帧<td>语义分割图 + 前L帧生成结果<td>逼真视频帧<tr><td>图像判别器D_I<td>单帧质量评估<td>单张真实/生成图像<td>真实性分数<tr><td>视频判别器D_V<td>时序一致性评估<td>连续多帧真实/生成片段<td>时序真实性分数<tr><td>光流估计模块<td>像素级运动约束<td>相邻帧对<td>光流场</table>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=222-生成器分层编码-解码结构>2.2.2 生成器：分层编码-解码结构<a href=#222-生成器分层编码-解码结构 class=hash-link aria-label="2.2.2 生成器：分层编码-解码结构的直接链接" title="2.2.2 生成器：分层编码-解码结构的直接链接" translate=no>​</a></h5>
+<p>vid2vid的生成器采用分层编码-解码（Hierarchical Encoder-Decoder）架构。与pix2pix使用简单的U-Net不同，vid2vid的生成器需要同时处理当前帧的语义信息和历史帧的时序信息，因此设计了两条并行的编码路径。</p>
+<p>第一条路径是图像编码器，负责处理当前帧的语义分割图。它采用与pix2pix类似的编码-解码结构，通过逐步下采样提取高层语义特征，再通过上采样恢复空间分辨率。跳跃连接（skip connection）保留了低层细节信息。</p>
+<p>第二条路径是时序编码器，负责处理前L帧的生成结果。这条路径通过3D卷积或光流扭曲（optical flow warping）来建模时序关系。具体而言，生成器利用前L帧的光流信息将历史帧扭曲到当前帧的位置，然后与当前帧的特征进行融合。这种设计使生成器能够"看到"之前的生成结果，从而避免帧间闪烁。</p>
+<p>两条路径的特征在解码器中进行融合。融合方式是将扭曲后的历史帧特征与当前帧特征在通道维度上拼接，然后通过卷积层进行特征融合。这种机制确保了当前帧的生成既满足语义条件，又与历史帧保持一致。</p>
+<p>生成器的分层结构还体现在前景与背景的分离建模上。vid2vid将视频分解为前景层和背景层分别处理：前景层包含运动物体，需要精确的时序建模；背景层通常是静态的，可以用简单的图像生成方法处理。这种分离策略降低了模型的学习难度，提高了生成质量。</p>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=223-双判别器设计>2.2.3 双判别器设计<a href=#223-双判别器设计 class=hash-link aria-label="2.2.3 双判别器设计的直接链接" title="2.2.3 双判别器设计的直接链接" translate=no>​</a></h5>
+<p>vid2vid的核心创新之一是双判别器设计，包括图像判别器D_I和视频判别器D_V，分别从空间和时间两个维度约束生成质量。</p>
+<p>图像判别器D_I的作用与pix2pix中的判别器类似。它独立地评估每一帧生成图像的质量，判断单张图像是否逼真。D_I采用PatchGAN结构，不是输出单个标量判断整张图像的真假，而是在图像的每个局部区域（patch）输出一个真实性分数。这种设计使D_I能够关注图像的局部纹理和细节质量。</p>
+<p>视频判别器D_V是vid2vid的关键创新。D_V的输入不是单帧图像，而是连续的多帧序列（通常为2-3帧）。它通过3D卷积同时在空间和时间维度上提取特征，从而能够捕捉帧间的不一致性。如果生成器在两帧之间产生了不合理的跳变，D_V能够检测到这种时序异常并给予低分。</p>
+<p>两个判别器协同工作：D_I确保每一帧都看起来逼真，D_V确保帧与帧之间的过渡自然。这种双重视约束能有效避免"每帧都很真实但拼在一起闪烁严重"的问题。训练时，D_I和D_V交替更新，生成器则同时接受两者的梯度信号。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>判别器<th>输入<th>卷积类型<th>关注维度<th>约束目标<tbody><tr><td>D_I（图像）<td>单帧<td>2D卷积<td>空间<td>单帧逼真度<tr><td>D_V（视频）<td>多帧序列<td>3D卷积<td>空间+时间<td>时序一致性</table>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=224-光流约束的数学原理>2.2.4 光流约束的数学原理<a href=#224-光流约束的数学原理 class=hash-link aria-label="2.2.4 光流约束的数学原理的直接链接" title="2.2.4 光流约束的数学原理的直接链接" translate=no>​</a></h5>
+<p>光流（Optical Flow）是描述相邻帧之间像素运动场的重要工具。在vid2vid中，光流约束是实现时序一致性的核心技术手段。</p>
+<p>设 I_t 和 I_{t+1} 为相邻两帧，光流 W = (u, v) 定义了从 I_t 到 I_{t+1} 的像素级位移场，其中 u 和 v 分别是水平和垂直方向的位移分量。对于I_t中的每个像素 (i, j)，其在 I_{t+1} 中的对应位置为 (i + u(i,j), j + v(i,j))。</p>
+<p>在vid2vid中，光流约束的核心思想是：如果源视频中相邻帧之间的光流为 W_src，那么生成视频中对应帧之间的光流 W_gen 应当与 W_src 一致。数学上，这个约束可以表示为最小化以下损失：</p>
+<p>L_flow = || W_gen - W_src ||_1</p>
+<p>其中 || · ||_1 表示L1范数。通过最小化这个损失，生成器被迫在生成目标帧时遵循源视频的运动模式，从而保持时序一致性。</p>
+<p>此外，vid2vid还引入了光流扭曲损失（Flow Warping Loss）。具体做法是利用源视频的光流 W_src 将生成的前一帧 y_hat_t 扭曲到当前帧位置，得到扭曲帧，然后要求当前生成帧 y_hat_{t+1} 与扭曲帧之间的差异最小化：</p>
+<p>L_warp = || y_hat_{t+1} - Warp(y_hat_t, W_src) ||_1</p>
+<p>这个损失直接约束生成帧在像素级别上遵循源视频的运动轨迹。当源视频中某区域静止时（光流为零），扭曲帧等于前一帧，因此生成帧在该区域也应保持不变，有效避免了静态区域的闪烁。</p>
+<p>需要注意的是，光流约束在某些情况下可能不完全可靠，例如在遮挡（occlusion）区域或运动边界处。vid2vid通过引入可学习的光流权重图来处理这些问题，使模型能够自适应地降低不可靠区域的光流约束权重。</p>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=225-马尔可夫假设>2.2.5 马尔可夫假设<a href=#225-马尔可夫假设 class=hash-link aria-label="2.2.5 马尔可夫假设的直接链接" title="2.2.5 马尔可夫假设的直接链接" translate=no>​</a></h5>
+<p>vid2vid在建模时序依赖关系时采用了马尔可夫假设（Markov Assumption），具体来说是一阶马尔可夫假设的扩展形式。该假设认为，当前帧的生成只需要依赖前L帧的信息，而不需要回溯整个历史序列。在vid2vid的原始实现中，L=2，即当前帧的生成仅依赖前2帧。</p>
+<p>这个假设的数学表述为：P(y_t | y_1, y_2, ..., y_{t-1}, x_t) 近似等于 P(y_t | y_{t-L}, ..., y_{t-1}, x_t)，其中 y_t 是第t帧的生成结果，x_t 是第t帧的源数据。</p>
+<p>马尔可夫假设带来了几个重要优势。首先是计算效率的大幅提升。如果考虑完整历史序列，计算复杂度为O(T^2)（T为视频长度）；而采用L=2的马尔可夫假设后，每帧的计算复杂度变为常数级，总体复杂度降为O(T)，使长视频生成成为可能。</p>
+<p>其次是降低了优化难度。完整的历史依赖会导致梯度在时间维度上长期传播，容易产生梯度消失或爆炸问题。有限窗口的依赖使梯度传播路径较短，训练更加稳定。</p>
+<p>当然，马尔可夫假设也有局限性。当视频中存在长距离依赖（如一个物体在前几秒出现后消失，后续重新出现时需要保持外观一致）时，仅依赖前2帧可能不足以维持长时序一致性。后续的一些工作通过引入循环神经网络（RNN）或注意力机制（Attention）来缓解这一问题。</p>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=226-前景背景分离建模>2.2.6 前景背景分离建模<a href=#226-前景背景分离建模 class=hash-link aria-label="2.2.6 前景背景分离建模的直接链接" title="2.2.6 前景背景分离建模的直接链接" translate=no>​</a></h5>
+<p>vid2vid的另一个重要设计是前景与背景的分离建模。在自然视频中，前景物体通常在运动，而背景相对静止或仅有缓慢变化。将两者分开处理可以降低模型的学习难度。</p>
+<p>具体实现上，生成器首先根据语义分割图区分前景和背景区域。对于背景区域，生成器采用较简单的模型——通常只需生成一张静态背景图像，然后根据相机的运动（通过光流捕获）对背景进行变换即可。对于前景区域，生成器使用完整的时序模型，结合光流约束和前L帧信息生成每一帧。</p>
+<p>这种分离策略的优势在于：背景生成不需要处理复杂的时序依赖，减少了计算量；前景生成可以集中模型容量处理运动物体的细节，提高生成质量。在实际应用中，特别是在语义分割图到逼真视频的转换任务中，前景背景分离建模显著提升了生成视频的整体质量。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>前景层<th>背景层<tbody><tr><td>运动模式<td>复杂运动<td>静止或缓慢移动<tr><td>时序建模<td>完整时序模型 + 光流约束<td>简单变换或静态生成<tr><td>模型容量<td>较大<td>较小<tr><td>计算量<td>较高<td>较低<tr><td>典型对象<td>人、车辆、动物<td>天空、地面、建筑</table>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=227-spade空间自适应归一化增强条件控制>2.2.7 SPADE空间自适应归一化增强条件控制<a href=#227-spade空间自适应归一化增强条件控制 class=hash-link aria-label="2.2.7 SPADE空间自适应归一化增强条件控制的直接链接" title="2.2.7 SPADE空间自适应归一化增强条件控制的直接链接" translate=no>​</a></h5>
+<p>SPADE（Spatially-Adaptive Normalization，空间自适应归一化）是NVIDIA提出的一种条件归一化方法，最初用于图像生成，后来被整合到视频生成框架中以增强条件控制能力。</p>
+<p>传统批归一化（Batch Normalization, BN）对每个特征通道进行全局的均值和方差归一化，这会丢失输入条件中的空间信息。对于语义分割图到逼真图像的转换任务，空间信息至关重要——不同的语义类别对应不同的纹理和颜色，全局归一化会模糊这些差异。</p>
+<p>SPADE的核心创新在于使用输入条件（如语义分割图）来为每个空间位置生成独立的归一化参数。具体而言，给定输入特征 F 和条件分割图 M，SPADE首先通过一个卷积网络从M中生成空间相关的缩放参数 gamma(M) 和偏移参数 beta(M)，然后对F进行逐位置的归一化。公式为：SPADE(F, M) = gamma(M) 乘以 (F - mu) / sigma + beta(M)，其中 mu 和 sigma 是特征F在空间维度上的均值和标准差。</p>
+<p>在视频生成中，SPADE的作用尤为关键。由于视频的每一帧都有对应的语义分割图，SPADE能够确保每一帧的生成都严格遵循该帧的语义条件。同时，由于归一化参数是空间相关的，不同语义区域的边界能够保持清晰，避免了不同类别之间的颜色和纹理混淆。</p>
+<p>在vid2vid的后续版本中，SPADE被集成到生成器的多个层级中，形成了所谓的SPADE-ResBlock结构。每一层都通过SPADE接收条件信息，使条件信号能够深度参与生成过程的每个阶段，而非仅作为输入。这种设计显著提升了生成视频与源条件的一致性。</p>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=228-多尺度判别器>2.2.8 多尺度判别器<a href=#228-多尺度判别器 class=hash-link aria-label="2.2.8 多尺度判别器的直接链接" title="2.2.8 多尺度判别器的直接链接" translate=no>​</a></h5>
+<p>vid2vid还采用了多尺度判别器（Multi-Scale Discriminator）设计。具体做法是使用多个结构相同但输入分辨率不同的判别器，分别在原始分辨率和降采样分辨率上评估生成结果。</p>
+<p>多尺度设计的动机在于不同视觉特征需要在不同空间尺度上评估。高分辨率判别器关注细粒度纹理（如皮肤质感、头发细节），低分辨率判别器关注全局结构和颜色分布。单一尺度的判别器往往难以同时兼顾这两个层面。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>判别器尺度<th>输入分辨率<th>关注特征<th>典型问题<tbody><tr><td>原始尺度<td>256x256<td>纹理细节、边缘锐度<td>模糊、伪影<tr><td>1/2尺度<td>128x128<td>局部结构、颜色一致性<td>颜色偏差、结构错误<tr><td>1/4尺度<td>64x64<td>全局布局、语义一致性<td>语义错误、布局异常</table>
+<p>训练时，各尺度判别器的损失函数取平均。生成器同时接受所有尺度的梯度，被迫在各个分辨率上都生成高质量的结果。这种机制有效提升了生成视频的整体质量。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-fs-vid2vid少样本学习的突破>2.3 fs-vid2vid：少样本学习的突破<a href=#23-fs-vid2vid少样本学习的突破 class=hash-link aria-label="2.3 fs-vid2vid：少样本学习的突破的直接链接" title="2.3 fs-vid2vid：少样本学习的突破的直接链接" translate=no>​</a></h4>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=231-少样本v2v的挑战>2.3.1 少样本V2V的挑战<a href=#231-少样本v2v的挑战 class=hash-link aria-label="2.3.1 少样本V2V的挑战的直接链接" title="2.3.1 少样本V2V的挑战的直接链接" translate=no>​</a></h5>
+<p>vid2vid虽然取得了优异的效果，但它需要大量成对的训练数据（语义分割图-真实视频对），这在实际应用中往往难以获取。例如，如果要做一个将真人视频转换为特定动漫风格视频的应用，可能只有几张该动漫风格的参考图片可用。这就是fs-vid2vid（Few-Shot vid2vid）要解决的问题。</p>
+<p>少样本V2V的核心挑战在于：模型需要在仅见到少量目标域样本的情况下，快速适应新的生成任务，同时保持时序一致性。传统的GAN方法在数据有限时容易过拟合，生成质量显著下降。</p>
+<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id=232-fs-vid2vid的架构创新>2.3.2 fs-vid2vid的架构创新<a href=#232-fs-vid2vid的架构创新 class=hash-link aria-label="2.3.2 fs-vid2vid的架构创新的直接链接" title="2.3.2 fs-vid2vid的架构创新的直接链接" translate=no>​</a></h5>
+<p>fs-vid2vid由NVIDIA于2019年提出，它在vid2vid的基础上引入了两项关键创新：基于Transformer的特征聚合和自监督预训练。</p>
+<p>Transformer架构的引入使模型能够更好地利用少样本参考图像中的信息。具体而言，fs-vid2vid将少量目标域的参考图像通过一个编码器提取特征，然后使用注意力机制（Attention）将这些参考特征与当前帧的特征进行融合。注意力机制能够自动确定参考图像中哪些部分与当前生成任务最相关，从而实现精准的特征迁移。</p>
+<p>这种设计的优势在于，不同的参考图像可能提供不同方面的信息。例如，在人脸生成中，一张参考图可能提供了正脸的细节，另一张可能提供了侧脸的信息。注意力机制能够根据当前帧的姿态和内容，自适应地从不同参考图中提取最相关的特征。</p>
+<p>自监督预训练是fs-vid2vid的另一项关键创新。在少样本微调之前，模型首先在大规模的无标注视频数据上进行自监督训练。预训练任务包括光流预测、帧排序预测、视频帧修复等。通过这些任务，模型学到了视频的通用时空特征表示，为后续的少样本微调提供了良好的初始化。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>预训练任务<th>学习目标<th>对V2V的帮助<tbody><tr><td>光流预测<td>估计相邻帧间运动<td>增强时序建模能力<tr><td>帧排序预测<td>判断帧的时间顺序<td>理解时序关系<tr><td>视频帧修复<td>补全被遮挡区域<td>学习视频先验</table>
+<p>微调阶段，模型仅需少量目标域样本即可快速适应新任务。实验表明，fs-vid2vid在使用少至8张目标域图像的情况下，就能生成高质量且时序一致的视频，大幅降低了V2V任务的数据需求。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=三基于扩散模型的v2v路线>三、基于扩散模型的V2V路线<a href=#三基于扩散模型的v2v路线 class=hash-link aria-label=三、基于扩散模型的V2V路线的直接链接 title=三、基于扩散模型的V2V路线的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=31-从gan到扩散模型>3.1 从GAN到扩散模型<a href=#31-从gan到扩散模型 class=hash-link aria-label="3.1 从GAN到扩散模型的直接链接" title="3.1 从GAN到扩散模型的直接链接" translate=no>​</a></h4>
+<p>随着扩散模型（Diffusion Model）在图像生成领域取得突破性进展，研究界开始将扩散模型引入视频生成领域。与GAN相比，扩散模型具有训练稳定、生成多样性好、覆盖模式全面等优势，但也面临计算开销大、推理速度慢等挑战。</p>
+<p>扩散模型的基本原理包括前向过程和反向过程。前向过程逐步向数据添加高斯噪声，经过T步后数据变为纯噪声。反向过程则学习从噪声中逐步恢复数据。在条件生成场景中，反向过程还需要接收条件信号（如源视频帧、文本描述等）作为引导。</p>
+<p>将图像扩散模型扩展到视频域的核心挑战在于如何在去噪过程中保持时序一致性。直接对每帧独立应用图像扩散模型会导致严重的帧间闪烁。以下几节将介绍几种主要的技术方案。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=32-视频风格转换>3.2 视频风格转换<a href=#32-视频风格转换 class=hash-link aria-label="3.2 视频风格转换的直接链接" title="3.2 视频风格转换的直接链接" translate=no>​</a></h4>
+<p>视频风格转换是扩散模型在V2V领域的一个重要应用方向。其目标是将源视频的内容保持不变，同时将视觉风格转换为目标风格（如将真人视频转换为油画风格、水彩风格等）。</p>
+<p>一种主流方案是基于文本到视频扩散模型（Text-to-Video Diffusion Model）的零样本风格转换。这类方法利用预训练的文本到视频模型（如ModelScope、AnimateDiff等），通过修改文本提示词来控制输出风格。例如，将提示词从"一个行走的人"修改为"一个行走的油画风格的人"，即可实现风格转换。</p>
+<p>然而，直接修改提示词往往无法精确保持源视频的内容结构。为此，研究者提出了多种保持内容一致性的策略。</p>
+<p>第一种策略是基于DDIM（Denoising Diffusion Implicit Models）的反演方法。DDIM Inversion首先将源视频通过DDIM的反演过程映射到噪声空间中的初始编码，然后从这个编码出发，用修改后的条件进行去噪生成。由于反演过程保留了源视频的结构信息，生成结果能够在保持内容的同时改变风格。</p>
+<p>第二种策略是引入自注意力机制共享。在扩散模型的U-Net架构中，自注意力层负责建模空间内部的全局依赖关系。通过在生成过程中将源视频的自注意力特征注入到目标风格生成过程中，可以有效保持源视频的空间结构。这种方法的代表工作包括MasaCtrl和PnP（Plug-and-Play）扩散特征注入。</p>
+<p>第三种策略是使用ControlNet式的条件控制，将在后续章节详细讨论。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>策略<th>原理<th>优势<th>劣势<tbody><tr><td>DDIM反演<td>将源视频编码到噪声空间<td>保持全局结构<td>反演过程有信息损失<tr><td>自注意力共享<td>注入源视频注意力特征<td>局部结构保持好<td>需要调整注入强度<tr><td>ControlNet<td>使用结构条件引导<td>控制精度高<td>需要额外条件提取</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=33-视频重绘video-inpainting>3.3 视频重绘（Video Inpainting）<a href=#33-视频重绘video-inpainting class=hash-link aria-label="3.3 视频重绘（Video Inpainting）的直接链接" title="3.3 视频重绘（Video Inpainting）的直接链接" translate=no>​</a></h4>
+<p>视频重绘（Video Inpainting）是指修复视频中缺失或被遮挡的区域，使其在视觉上自然且时序一致。这是V2V的一个重要子任务，广泛应用于视频编辑、物体移除、水印去除等场景。</p>
+<p>视频重绘的核心挑战是时序一致性保持。当需要修复的区域跨越多帧时（如移除一个穿过画面的行人），修复结果不仅要在每一帧看起来自然，还要在帧间保持一致。如果每帧独立修复，同一区域在不同帧中可能生成不同的内容，导致严重的闪烁。</p>
+<p>基于扩散模型的视频重绘方法主要通过以下机制保持时序一致性。</p>
+<p>首先是时序注意力机制。在扩散模型的U-Net中引入时序自注意力层，使模型能够在去噪过程中参考其他帧的信息。具体而言，对于当前帧t的去噪过程，时序注意力层会计算当前帧特征与其他帧特征之间的注意力权重，然后根据这些权重聚合其他帧的信息。这使得模型在修复当前帧的缺失区域时，能够利用其他帧中该区域的可见信息，从而保证修复内容的一致性。</p>
+<p>其次是光流引导的修复。通过估计相邻帧之间的光流，模型可以将已知区域的信息传播到缺失区域。例如，如果某物体在帧t中被遮挡，但在帧t-1中可见，通过光流可以将t-1帧中该物体的像素扭曲到t帧，用于指导修复。基于扩散模型的方法将光流信息作为条件输入，引导模型沿着正确的运动轨迹进行修复。</p>
+<p>第三是掩码感知的去噪策略。在反向去噪过程中，模型仅对需要修复的区域进行去噪，已知区域保持原始值。这种策略通过在每一步去噪后将已知区域的值重置为源视频的原始值（加上对应步骤的噪声），确保修复区域与已知区域的边界自然过渡。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>技术手段<th>作用机制<th>适用场景<tbody><tr><td>时序注意力<td>跨帧信息聚合<td>静态或缓慢运动区域<tr><td>光流引导<td>像素级运动传播<td>有明确运动轨迹的场景<tr><td>掩码感知去噪<td>保护已知区域<td>所有重绘任务</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=34-视频编辑文本引导的视频编辑>3.4 视频编辑：文本引导的视频编辑<a href=#34-视频编辑文本引导的视频编辑 class=hash-link aria-label="3.4 视频编辑：文本引导的视频编辑的直接链接" title="3.4 视频编辑：文本引导的视频编辑的直接链接" translate=no>​</a></h4>
+<p>文本引导的视频编辑是扩散模型在V2V领域的另一个重要应用。与风格转换不同，视频编辑不仅改变视觉风格，还可能修改视频内容（如将行人从走路改为跑步，或改变服装颜色）。</p>
+<p>文本引导视频编辑的核心是利用CLIP（Contrastive Language-Image Pre-training）模型将文本描述映射到视觉特征空间，然后通过该特征引导扩散模型的生成过程。具体实现上，有几种主要方法。</p>
+<p>第一种是基于源视频DDIM反演的编辑方法。首先将源视频通过DDIM反演得到噪声空间中的表示，然后在去噪过程中修改文本提示词，使生成结果同时满足源视频的结构约束和新文本的内容要求。为了平衡内容保持和编辑程度，通常引入内容保持损失，约束编辑后的视频与源视频在结构上的相似度。</p>
+<p>第二种方法基于注意力图编辑。在扩散模型的自注意力层中，交叉注意力图（cross-attention map）描述了文本token与图像空间位置之间的对应关系。通过编辑源视频生成过程中的注意力图（如保留与"背景"相关的注意力模式，仅修改与"人物服装"相关的部分），可以实现对视频中特定区域的精准编辑。</p>
+<p>第三种方法利用ControlNet引入结构控制。通过从源视频中提取深度图、姿态图或分割图作为ControlNet的输入，扩散模型可以在保持源视频空间结构的前提下，根据文本提示词修改内容。这种方法在编辑精度和鲁棒性方面表现优异。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>编辑方法<th>控制机制<th>编辑粒度<th>对源视频要求<tbody><tr><td>DDIM反演编辑<td>噪声空间初始化<td>全局风格<td>无特殊要求<tr><td>注意力图编辑<td>交叉注意力修改<td>局部区域<td>需要精确的注意力图<tr><td>ControlNet编辑<td>结构条件引导<td>区域+属性<td>需要提取条件图</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=四基于controlnet的视频控制>四、基于ControlNet的视频控制<a href=#四基于controlnet的视频控制 class=hash-link aria-label=四、基于ControlNet的视频控制的直接链接 title=四、基于ControlNet的视频控制的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-controlnet基本原理>4.1 ControlNet基本原理<a href=#41-controlnet基本原理 class=hash-link aria-label="4.1 ControlNet基本原理的直接链接" title="4.1 ControlNet基本原理的直接链接" translate=no>​</a></h4>
+<p>ControlNet是Zhang等人于2023年提出的一种条件控制框架，用于增强扩散模型的生成可控性。其核心思想是将扩散模型（如Stable Diffusion）的U-Net编码器复制一份作为"可训练副本"，通过零卷积层与原始U-Net连接。训练时冻结原始U-Net参数，仅更新可训练副本和零卷积层的参数。</p>
+<p>零卷积（Zero Convolution）是ControlNet的关键设计。它是一个权重和偏置都初始化为零的卷积层，在训练初始阶段不向原始U-Net注入任何信号，保证预训练模型的生成能力不受破坏。随着训练进行，零卷积逐渐学习到条件信号与生成结果之间的映射关系。</p>
+<p>将ControlNet从图像扩展到视频域时，需要解决时序一致性问题。主要方法包括：对视频的每一帧独立应用图像ControlNet并在帧间共享噪声（Shared Noise Strategy）；引入时序注意力层建模帧间关系；使用视频扩散模型作为基础模型而非图像扩散模型。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-深度图引导depth-guided>4.2 深度图引导（Depth-guided）<a href=#42-深度图引导depth-guided class=hash-link aria-label="4.2 深度图引导（Depth-guided）的直接链接" title="4.2 深度图引导（Depth-guided）的直接链接" translate=no>​</a></h4>
+<p>深度图引导利用源视频的深度信息来控制生成过程。深度图可以通过单目深度估计模型（如MiDaS、Depth Anything）从RGB视频帧中提取，也可以通过深度相机直接获取。</p>
+<p>在V2V场景中，深度图引导的原理是将源视频每一帧的深度图作为ControlNet的输入条件。深度图描述了场景中每个像素到相机的距离，包含了丰富的空间结构信息。扩散模型在深度图的引导下，能够生成与源视频具有相同空间结构但外观不同的目标视频。</p>
+<p>深度图引导的典型应用场景包括风格转换（真人转动漫，深度图保持场景空间结构）、场景替换（室内转室外，深度图保持相机运动轨迹）、视觉特效（实拍转特效，深度图指导粒子效果布局）以及数据增强（白天转夜晚，深度图保持场景几何）。</p>
+<p>深度图引导的优势在于对场景结构的精确控制。由于深度图直接编码了场景的几何信息，生成结果的空间结构与源视频高度一致。此外，深度图对纹理和颜色变化不敏感，不会过度约束生成内容的外观，给扩散模型留有足够的创作空间。</p>
+<p>但深度图引导也有局限。对于平坦场景（如白墙前的人物），深度图几乎没有梯度，无法提供有效的结构引导。此外，深度估计模型在透明物体、反光表面等区域的估计往往不准确，可能误导生成过程。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-姿态引导pose-guided>4.3 姿态引导（Pose-guided）<a href=#43-姿态引导pose-guided class=hash-link aria-label="4.3 姿态引导（Pose-guided）的直接链接" title="4.3 姿态引导（Pose-guided）的直接链接" translate=no>​</a></h4>
+<p>姿态引导使用人体姿态关键点（如OpenPose、MediaPipe提取的2D或3D姿态）作为ControlNet的条件输入。这种方法专注于控制视频中人物的动作和姿态，是虚拟试衣、舞蹈迁移等应用的核心技术。</p>
+<p>姿态引导的工作流程如下：首先，使用姿态估计模型从源视频的每一帧中提取人体关键点（如头、肩、肘、腕、髋、膝、踝等），生成姿态图序列；然后，将这些姿态图作为ControlNet的条件输入，引导扩散模型生成包含相同姿态但不同外观的目标视频。</p>
+<p>姿态引导的一个重要优势是跨主体的动作迁移。由于姿态关键点是抽象的动作表示，不包含外观信息（如肤色、服装），因此可以将一个人的动作精确地迁移到另一个完全不同的人物上。这在影视特效、虚拟主播、运动教学等领域有广泛应用。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>2D姿态引导<th>3D姿态引导<tbody><tr><td>条件输入<td>2D关键点坐标<td>3D关键点坐标<tr><td>深度信息<td>无<td>有<tr><td>多人处理<td>较好<td>较差<tr><td>计算开销<td>低<td>中等<tr><td>适用场景<td>正面/侧面<td>复杂姿态</table>
+<p>在实际应用中，姿态引导常与文本提示词结合使用。例如，提示词"a woman in red dress doing ballet"配合姿态图，可以生成穿着红裙做芭蕾动作的女性视频。姿态图控制动作，文本控制外观，两者协同实现了精细的视频生成控制。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=44-分割图引导segmentation-guided>4.4 分割图引导（Segmentation-guided）<a href=#44-分割图引导segmentation-guided class=hash-link aria-label="4.4 分割图引导（Segmentation-guided）的直接链接" title="4.4 分割图引导（Segmentation-guided）的直接链接" translate=no>​</a></h4>
+<p>分割图引导使用语义分割图（Semantic Segmentation Map）作为ControlNet的条件输入。分割图为每个像素分配一个类别标签（如天空、道路、建筑、行人等），描述了场景的语义布局。</p>
+<p>分割图引导的原理与vid2vid中的语义分割图输入类似，但实现机制不同。vid2vid使用GAN的生成器直接从分割图生成视频，而ControlNet-based的方法将分割图作为扩散模型的条件输入，利用扩散模型强大的生成能力产出更高质量的视频。</p>
+<p>在V2V任务中，分割图引导的工作流程是：首先使用分割模型（如SAM, Segment Anything Model）从源视频帧中提取分割图序列；然后将这些分割图作为ControlNet条件，配合文本提示词引导扩散模型生成目标视频。</p>
+<p>分割图引导的独特优势在于语义级别的控制。与深度图提供几何信息、姿态图提供动作信息不同，分割图直接告诉模型"这个区域是天空，那个区域是建筑"，模型可以根据这个语义布局生成完全不同的外观但语义一致的场景。例如，将白天的城市街景转换为赛博朋克风格的夜景，分割图确保建筑还是建筑、道路还是道路，但外观风格完全改变。</p>
+<p>三种引导方式各有优势，在实际应用中常常组合使用。例如，同时使用深度图和分割图可以同时控制场景的几何结构和语义布局；同时使用姿态图和分割图可以控制人物动作和场景布局。多条件组合通过多ControlNet叠加实现，每个ControlNet独立处理一种条件信号，然后将控制信号叠加注入到扩散模型中。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>引导方式<th>信息类型<th>控制粒度<th>主要适用场景<tbody><tr><td>深度图<td>几何结构<td>像素级<td>场景替换、风格转换<tr><td>姿态图<td>动作信息<td>关键点级<td>人物动作迁移、虚拟试衣<tr><td>分割图<td>语义布局<td>区域级<td>场景风格转换、数据增强</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=五视频超分辨率技术>五、视频超分辨率技术<a href=#五视频超分辨率技术 class=hash-link aria-label=五、视频超分辨率技术的直接链接 title=五、视频超分辨率技术的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=51-问题定义与挑战>5.1 问题定义与挑战<a href=#51-问题定义与挑战 class=hash-link aria-label="5.1 问题定义与挑战的直接链接" title="5.1 问题定义与挑战的直接链接" translate=no>​</a></h4>
+<p>视频超分辨率（Video Super-Resolution, VSR）是V2V的一个特殊形式，其目标是将低分辨率视频转换为高分辨率视频。形式化地，给定低分辨率视频 X_LR，目标是生成高分辨率视频 Y_HR = G(X_LR)，使 Y_HR 在视觉质量上尽可能接近真实的高分辨率视频。</p>
+<p>视频超分辨率与图像超分辨率（Image Super-Resolution, ISR）的关键区别在于时序信息的利用。ISR只能利用单帧内的空间信息进行超分辨，而VSR还可以利用相邻帧的互补信息。当运动使得目标物体在不同帧中的位置不同时，多帧信息的融合可以有效恢复单帧中丢失的高频细节。</p>
+<p>然而，VSR也面临独特挑战：帧间运动估计（光流）本身在低分辨率视频上就不准确；大运动场景下多帧对齐困难；时序不一致会导致生成的高分辨率视频出现闪烁。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=52-基于扩散模型的视频超分辨率>5.2 基于扩散模型的视频超分辨率<a href=#52-基于扩散模型的视频超分辨率 class=hash-link aria-label="5.2 基于扩散模型的视频超分辨率的直接链接" title="5.2 基于扩散模型的视频超分辨率的直接链接" translate=no>​</a></h4>
+<p>近年来，基于扩散模型的视频超分辨率方法取得了显著进展。这些方法通常以预训练的图像超分辨率扩散模型为基础，通过以下方式扩展到视频域。</p>
+<p>首先是引入时序层。在图像超分扩散模型的U-Net架构中插入时序自注意力层或3D卷积层，使模型能够在去噪过程中参考相邻帧的信息。时序层的参数在视频数据上微调获得，而空间层的参数保持预训练值不变。这种设计既利用了图像超分模型强大的空间恢复能力，又获得了时序建模能力。</p>
+<p>其次是使用光流引导的对齐策略。在超分处理当前帧时，首先利用光流将相邻帧扭曲到当前帧坐标系下，然后将扭曲后的相邻帧作为条件输入提供给扩散模型。模型可以参考这些对齐后的帧恢复当前帧的高频细节。为了处理光流估计不准确的情况，通常会引入可学习的置信度权重图，降低不可靠区域的影响。</p>
+<p>第三是时间一致性约束。通过在去噪过程中施加帧间一致性损失，约束相邻帧在超分结果上的时序平滑性。具体可以计算相邻生成帧之间的光流残差，要求其与输入低分辨率视频的光流一致，类似于vid2vid中的光流约束。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>技术要素<th>作用<th>实现方式<tbody><tr><td>时序层<td>跨帧信息聚合<td>时序自注意力/3D卷积<tr><td>光流对齐<td>帧间像素级对齐<td>光流扭曲 + 置信度权重<tr><td>一致性约束<td>防止帧间闪烁<td>光流残差损失</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=53-时空重建策略>5.3 时空重建策略<a href=#53-时空重建策略 class=hash-link aria-label="5.3 时空重建策略的直接链接" title="5.3 时空重建策略的直接链接" translate=no>​</a></h4>
+<p>视频超分辨率的本质是一个时空重建问题。在空间维度上，需要从低分辨率像素恢复高频纹理细节；在时间维度上，需要保证恢复的细节在帧间保持一致。这两者是相互制约的——空间上恢复的细节越丰富，时序上保持一致就越困难。</p>
+<p>一种有效的策略是先空间后时序的两阶段方法。第一阶段，使用图像超分辨率模型对每一帧独立进行超分，获得高分辨率但可能存在时序闪烁的中间结果。第二阶段，使用时序一致性模块对中间结果进行平滑处理，消除帧间不一致性。这种分阶段策略降低了联合优化的难度，同时获得了较好的空间质量和时序一致性。</p>
+<p>另一种策略是端到端的联合优化。模型同时接收多帧低分辨率输入，通过3D卷积和时序注意力机制同时建模空间和时间关系，直接输出时序一致的高分辨率视频。这种方法的代表包括BasicVSR++和基于Transformer的VSR模型。虽然端到端方法的潜力更大，但训练难度也更高，需要大量视频数据和时间。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>策略<th>优势<th>劣势<th>代表方法<tbody><tr><td>两阶段<td>训练简单，模块解耦<td>信息传递有损失<td>图像超分 + 时序平滑<tr><td>端到端<td>联合优化，上限高<td>训练困难，数据需求大<td>BasicVSR++, 扩散VSR</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=六v2v时空一致性保持方案>六、V2V时空一致性保持方案<a href=#六v2v时空一致性保持方案 class=hash-link aria-label=六、V2V时空一致性保持方案的直接链接 title=六、V2V时空一致性保持方案的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=61-时序一致性问题的本质>6.1 时序一致性问题的本质<a href=#61-时序一致性问题的本质 class=hash-link aria-label="6.1 时序一致性问题的本质的直接链接" title="6.1 时序一致性问题的本质的直接链接" translate=no>​</a></h4>
+<p>时序一致性是V2V技术区别于I2I技术的核心挑战。时序不一致的表现形式包括：静态区域闪烁（同一静止背景在不同帧中呈现不同颜色或纹理）、运动不自然（物体的运动轨迹与源视频不匹配）、纹理抖动（物体表面的纹理在帧间随机变化）等。</p>
+<p>导致时序不一致的根本原因在于许多V2V方法在生成每一帧时缺乏对相邻帧的显式约束。当模型独立处理每一帧时，由于生成过程的随机性（如扩散模型中的噪声采样）或判别器评价的局部性（如GAN中D_I仅关注单帧质量），不同帧的生成结果之间没有直接联系，自然难以保持一致。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=62-光流约束方案>6.2 光流约束方案<a href=#62-光流约束方案 class=hash-link aria-label="6.2 光流约束方案的直接链接" title="6.2 光流约束方案的直接链接" translate=no>​</a></h4>
+<p>光流约束是最经典的时序一致性保持方案，在vid2vid及许多后续工作中被广泛使用。其核心思想已在2.2.4节中详细阐述，这里从方案设计角度做补充讨论。</p>
+<p>光流约束的有效性取决于两个因素：光流估计的准确性和约束的施加方式。在准确性方面，现代光流估计方法（如RAFT、GMFlow）已经能够在大多数场景下提供可靠的光流估计，但在遮挡区域、大运动区域仍然存在误差。在约束施加方面，直接的全局光流约束可能过度限制生成结果的多样性，因此需要根据区域的可靠性自适应调整约束强度。</p>
+<p>一种改进方案是将光流约束与置信度图结合。置信度图通过分析光流估计的可靠性（如基于遮挡检测、前向-后向光流一致性等），为每个像素赋予一个置信度权重。在高置信度区域施加强约束，在低置信度区域放松约束，从而在一致性和灵活性之间取得平衡。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=63-时间层注入方案>6.3 时间层注入方案<a href=#63-时间层注入方案 class=hash-link aria-label="6.3 时间层注入方案的直接链接" title="6.3 时间层注入方案的直接链接" translate=no>​</a></h4>
+<p>时间层注入（Temporal Layer Injection）是扩散模型时代常用的时序一致性方案。其做法是在预训练的图像扩散模型中插入额外的时序建模层，使模型获得跨帧建模能力。</p>
+<p>具体实现上，时间层通常插入在U-Net的每个分辨率级别的自注意力层之后。时间层可以是时序自注意力（Temporal Self-Attention）或3D卷积。时序自注意力通过计算不同帧在同一空间位置的特征之间的注意力权重，实现全局的跨帧信息聚合。3D卷积则通过局部时空窗口的卷积操作捕捉短距离的时序关系。</p>
+<p>训练策略通常采用"冻结空间层、训练时间层"的方式。预训练图像扩散模型的参数被冻结，仅更新新插入的时间层参数。这种策略确保了时间层的引入不会破坏预训练模型强大的空间生成能力，同时使时间层能够专注于学习时序关系。AnimateDiff和TokenFlow等方法采用了这种策略。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方案<th>原理<th>优势<th>局限<tbody><tr><td>时序自注意力<td>全局跨帧注意力<td>长距离依赖建模好<td>计算开销大<tr><td>3D卷积<td>局部时空卷积<td>计算效率高，短距离时序好<td>长距离依赖弱<tr><td>混合方案<td>两者结合<td>兼顾长短期依赖<td>参数量较大</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=64-循环一致性cycle-consistency>6.4 循环一致性（Cycle Consistency）<a href=#64-循环一致性cycle-consistency class=hash-link aria-label="6.4 循环一致性（Cycle Consistency）的直接链接" title="6.4 循环一致性（Cycle Consistency）的直接链接" translate=no>​</a></h4>
+<p>循环一致性约束借鉴自CycleGAN的思想，在V2V中用于增强源域和目标域之间的映射稳定性。</p>
+<p>在V2V场景中，循环一致性的基本思路是：将源视频A通过映射G转换为目标域视频B，然后再通过反向映射F将B转换回源域A'。如果G和F学到的是正确的映射，那么A'应当与A尽可能接近，即满足循环一致性约束：||F(G(A)) - A||_1 趋向于0。</p>
+<p>这个约束的作用机制是：如果G在转换过程中引入了时序不一致（如随机闪烁），那么F在将不一致的视频转换回去时将面临困难，难以恢复原始的源视频。因此，循环一致性约束间接地迫使G生成时序一致的结果。</p>
+<p>在实际应用中，循环一致性约束通常与光流约束和时间层注入结合使用，形成多重时序保障。三种方案各有侧重：光流约束提供像素级的精确运动约束，时间层注入提供特征级的跨帧信息聚合，循环一致性提供映射级的全局一致性约束。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方案<th>约束层级<th>粒度<th>主要贡献者/方法<tbody><tr><td>光流约束<td>像素级<td>精确运动<td>vid2vid, RAFT<tr><td>时间层注入<td>特征级<td>语义一致性<td>AnimateDiff, TokenFlow<tr><td>循环一致性<td>映射级<td>全局一致性<td>CycleGAN, RecycleGAN</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=七v2v典型应用场景详解>七、V2V典型应用场景详解<a href=#七v2v典型应用场景详解 class=hash-link aria-label=七、V2V典型应用场景详解的直接链接 title=七、V2V典型应用场景详解的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=71-风格转换真人转动漫>7.1 风格转换：真人转动漫<a href=#71-风格转换真人转动漫 class=hash-link aria-label="7.1 风格转换：真人转动漫的直接链接" title="7.1 风格转换：真人转动漫的直接链接" translate=no>​</a></h4>
+<p>风格转换是V2V最直观也最受欢迎的应用场景之一。其中，真人视频转动漫风格视频是最具代表性的任务。在这个场景中，源视频是真人拍摄的视频，目标是生成保持人物动作和场景结构但具有动漫风格的目标视频。</p>
+<p>基于GAN的方法（如vid2vid）需要收集大量成对的真人-动漫视频数据进行训练。这在实践中成本极高，因为需要专业画师逐帧绘制对应的动漫画面。相比之下，基于扩散模型的方法可以利用预训练的动漫风格图像模型，通过ControlNet引入源视频的结构信息（如姿态图、分割图），无需成对数据即可实现高质量的风格转换。</p>
+<p>一个典型的真人转动漫流程包括：首先从源真人视频中提取人体姿态图和场景分割图；然后将这些条件图输入到ControlNet中，配合动漫风格的文本提示词；最后扩散模型在结构条件的引导下生成动漫风格的目标视频。光流约束或时间层注入确保生成的动漫视频帧间一致。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方法<th>数据需求<th>风格一致性<th>时序一致性<th>生成质量<tbody><tr><td>vid2vid (GAN)<td>大量成对数据<td>中等<td>较好<td>中等<tr><td>DDIM反演+扩散<td>无需成对数据<td>较好<td>一般<td>较好<tr><td>ControlNet+扩散<td>无需成对数据<td>好<td>较好<td>好</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=72-虚拟试衣>7.2 虚拟试衣<a href=#72-虚拟试衣 class=hash-link aria-label="7.2 虚拟试衣的直接链接" title="7.2 虚拟试衣的直接链接" translate=no>​</a></h4>
+<p>虚拟试衣是V2V在电商和时尚领域的重要应用。用户上传一段自己的视频，系统将指定服装"穿"到用户身上，生成自然的试穿效果视频。</p>
+<p>虚拟试衣的技术流程通常包括以下步骤。首先，使用姿态估计模型从用户视频中提取每帧的人体姿态关键点。同时，使用人体解析模型提取服装区域的分割图。然后，将目标服装的图像特征与用户姿态、分割图一起作为条件输入到生成模型中。生成模型根据这些条件合成用户穿着目标服装的视频。</p>
+<p>关键技术挑战包括：服装的褶皱和形变需要随人体运动自然变化；不同帧间的服装纹理需要保持一致；遮挡区域（如手臂遮挡躯干）需要正确处理。基于扩散模型的方法通过时序注意力机制和光流引导可以有效解决这些问题。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=73-视频换背景>7.3 视频换背景<a href=#73-视频换背景 class=hash-link aria-label="7.3 视频换背景的直接链接" title="7.3 视频换背景的直接链接" translate=no>​</a></h4>
+<p>视频换背景是指将视频中的人物保持不变，将背景替换为新的场景。这是视频会议、短视频制作等场景中的常见需求。</p>
+<p>传统的视频换背景方法基于绿幕技术或简单的图像分割，难以处理头发等复杂边界。基于V2V的方法通过语义分割图引导的方式，可以精确地将人物与背景分离，并在保持人物外观的同时生成全新的背景。</p>
+<p>基于扩散模型的视频换背景流程：首先使用分割模型（如SAM）提取每帧的人物mask；然后将人物区域保持不变，背景区域用文本提示词引导扩散模型生成新场景；最后通过时序一致性约束确保新背景在帧间自然过渡。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=74-老视频修复>7.4 老视频修复<a href=#74-老视频修复 class=hash-link aria-label="7.4 老视频修复的直接链接" title="7.4 老视频修复的直接链接" translate=no>​</a></h4>
+<p>老视频修复是V2V技术的重要文化应用。老电影、老录像带常面临分辨率低、噪声严重、色彩褪化、画面划痕等问题。V2V技术可以对这些损伤进行自动修复。</p>
+<p>老视频修复涉及多个子任务。超分辨率将低分辨率画面提升到高分辨率，恢复丢失的细节。去噪去除胶片颗粒和数字噪声。去划痕检测并修复画面上的物理损伤。色彩修复将褪化的色彩恢复到自然状态。</p>
+<p>基于扩散模型的方法可以联合处理这些任务。将老视频帧作为条件输入，配合"高清、干净、鲜艳色彩"等文本描述，扩散模型能够一次性完成多种修复。时序一致性约束确保修复后的视频不会引入新的闪烁。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>修复任务<th>技术手段<th>效果<tbody><tr><td>超分辨率<td>扩散模型 + 时序层<td>恢复高频细节<tr><td>去噪<td>扩散模型条件去噪<td>去除颗粒和噪声<tr><td>去划痕<td>视频重绘 + 掩码感知<td>填补物理损伤<tr><td>色彩修复<td>文本引导色彩生成<td>恢复自然色彩</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=75-视频分辨率提升>7.5 视频分辨率提升<a href=#75-视频分辨率提升 class=hash-link aria-label="7.5 视频分辨率提升的直接链接" title="7.5 视频分辨率提升的直接链接" translate=no>​</a></h4>
+<p>视频分辨率提升是V2V超分辨率技术的直接应用。与老视频修复不同，分辨率提升的目标不是修复损伤，而是在视频原本质量尚可的基础上进一步提升清晰度。</p>
+<p>常见的应用场景包括：将标清视频提升到高清，将高清视频提升到4K，将监控视频提升到可用于识别的分辨率等。不同场景对质量和速度的要求不同——影视修复追求极致质量，监控增强则更看重实时性。</p>
+<p>基于扩散模型的视频超分辨率在质量上具有优势，但推理速度较慢。对于实时性要求高的场景，可以采用GAN-based方法或轻量级扩散模型。对于离线处理场景（如影视后期），可以使用完整的扩散模型获得最佳质量。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=八v2v技术路线综合对比>八、V2V技术路线综合对比<a href=#八v2v技术路线综合对比 class=hash-link aria-label=八、V2V技术路线综合对比的直接链接 title=八、V2V技术路线综合对比的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=81-不同技术路线特点对比>8.1 不同技术路线特点对比<a href=#81-不同技术路线特点对比 class=hash-link aria-label="8.1 不同技术路线特点对比的直接链接" title="8.1 不同技术路线特点对比的直接链接" translate=no>​</a></h4>
+<p>经过前述各章的详细讨论，本节对不同的V2V技术路线进行综合对比，帮助读者根据具体应用场景选择合适的技术方案。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比维度<th>GAN路线 (vid2vid)<th>扩散模型路线<th>ControlNet路线<tbody><tr><td>核心思想<td>对抗训练学习映射<td>迭代去噪生成<td>条件控制注入扩散模型<tr><td>生成质量<td>中等偏上<td>优秀<td>优秀<tr><td>时序一致性<td>较好（光流+D_V）<td>较好（时间层）<td>较好（共享噪声）<tr><td>训练稳定性<td>较差（模式崩溃）<td>好<td>好<tr><td>数据需求<td>大量成对数据<td>可零样本<td>可零样本<tr><td>推理速度<td>快（单次前向）<td>慢（多步迭代）<td>慢（多步迭代）<tr><td>可控性<td>中等<td>中等<td>优秀<tr><td>少样本能力<td>弱（需fs-vid2vid）<td>较强<td>强<tr><td>典型代表<td>vid2vid, fs-vid2vid<td>AnimateDiff, Text2Video<td>ControlNet Video</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=82-技术路线选择建议>8.2 技术路线选择建议<a href=#82-技术路线选择建议 class=hash-link aria-label="8.2 技术路线选择建议的直接链接" title="8.2 技术路线选择建议的直接链接" translate=no>​</a></h4>
+<p>根据不同的应用需求，技术路线选择建议如下。</p>
+<p>对于需要实时或近实时处理的应用（如视频会议背景替换、直播特效），GAN路线仍是首选。其单次前向传播的推理速度远快于扩散模型的多步迭代，在GPU加速下可以达到实时帧率。</p>
+<p>对于追求最高生成质量且不要求实时的应用（如影视后期、广告制作），扩散模型或ControlNet路线更为合适。扩散模型的生成质量和多样性显著优于GAN，虽然推理速度慢，但在离线场景中可以接受。</p>
+<p>对于需要精确控制生成结果的应用（如虚拟试衣、特定风格转换），ControlNet路线是最佳选择。其多条件组合能力可以实现精细的生成控制。</p>
+<p>对于数据有限的场景（如特定风格转换但缺乏训练数据），扩散模型路线的零样本或少样本能力具有显著优势，无需大量成对训练数据即可获得不错的效果。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=83-未来发展趋势>8.3 未来发展趋势<a href=#83-未来发展趋势 class=hash-link aria-label="8.3 未来发展趋势的直接链接" title="8.3 未来发展趋势的直接链接" translate=no>​</a></h4>
+<p>V2V技术仍在快速发展中，以下几个方向值得关注。</p>
+<p>首先是扩散模型加速。当前扩散模型的主要瓶颈是推理速度慢，多种加速方案（如一致性模型Consistency Model、蒸馏加速、潜在扩散Latent Diffusion）正在快速发展。一旦推理速度问题得到解决，扩散模型路线将能在更多实时场景中替代GAN。</p>
+<p>其次是长视频生成。当前V2V方法在处理长视频时仍面临时序一致性退化的问题。基于长序列注意力机制（如Transformer-XL、状态空间模型State Space Model）的方案有望突破这一限制。</p>
+<p>第三是多模态条件融合。未来的V2V系统将能够同时接受文本、图像、音频、姿态等多种条件信号，生成更加丰富和可控的视频内容。多模态条件融合技术是实现这一目标的关键。</p>
+<p>第四是3D感知的V2V。将3D几何信息（如NeRF、3D Gaussian Splatting）引入V2V，可以解决2D方法在复杂相机运动和遮挡场景下的局限，实现更加稳定和准确的视频转换。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=九总结>九、总结<a href=#九总结 class=hash-link aria-label=九、总结的直接链接 title=九、总结的直接链接 translate=no>​</a></h3>
+<p>本章系统介绍了视频生视频（V2V）技术的基本原理、主要技术路线和典型应用场景。V2V的核心是学习从源视频到目标视频的映射函数G: (X, c) → Y，其关键挑战在于保持时序一致性。</p>
+<p>基于GAN的路线以vid2vid为代表，通过双判别器（图像判别器D_I和视频判别器D_V）、光流约束、马尔可夫假设、前景背景分离建模、SPADE条件控制和多尺度判别器等技术创新，实现了高质量的视频到视频翻译。fs-vid2vid进一步通过Transformer特征聚合和自监督预训练，将数据需求降低到少样本级别。</p>
+<p>基于扩散模型的路线利用扩散模型强大的生成能力，通过DDIM反演、自注意力共享、时序注意力层、光流引导等机制实现视频风格转换、视频重绘和文本引导的视频编辑。ControlNet路线通过零卷积和条件注入，实现了深度图、姿态图、分割图等多种条件信号的精确控制。</p>
+<p>视频超分辨率作为V2V的特殊形式，通过时序层注入、光流对齐和时间一致性约束，实现了从低分辨率到高分辨率的时空重建。光流约束、时间层注入和循环一致性构成了V2V时空一致性保持的三大核心方案。</p>
+<p>在实际应用中，V2V技术已广泛应用于风格转换、虚拟试衣、视频换背景、老视频修复和视频分辨率提升等场景。不同技术路线各有优势，需要根据具体应用需求（生成质量、推理速度、可控性、数据量）进行选择。随着扩散模型加速、长视频生成、多模态条件融合和3D感知等技术的发展，V2V技术将在更多领域发挥重要作用。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-video/chapter-06.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-05><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>chapter-05</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-07><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>chapter-07</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#第六章-视频生视频video-to-video-v2v class="table-of-contents__link toc-highlight">第六章 视频生视频（Video-to-Video, V2V）</a><ul><li><a href=#一视频生视频的基本原理与形式化定义 class="table-of-contents__link toc-highlight">一、视频生视频的基本原理与形式化定义</a><li><a href=#二基于gan的v2v路线详解 class="table-of-contents__link toc-highlight">二、基于GAN的V2V路线详解</a><ul><li><a href=#21-gan基础回顾 class="table-of-contents__link toc-highlight">2.1 GAN基础回顾</a><li><a href=#22-nvidia-vid2vid完整架构 class="table-of-contents__link toc-highlight">2.2 NVIDIA vid2vid完整架构</a><li><a href=#23-fs-vid2vid少样本学习的突破 class="table-of-contents__link toc-highlight">2.3 fs-vid2vid：少样本学习的突破</a></ul><li><a href=#三基于扩散模型的v2v路线 class="table-of-contents__link toc-highlight">三、基于扩散模型的V2V路线</a><ul><li><a href=#31-从gan到扩散模型 class="table-of-contents__link toc-highlight">3.1 从GAN到扩散模型</a><li><a href=#32-视频风格转换 class="table-of-contents__link toc-highlight">3.2 视频风格转换</a><li><a href=#33-视频重绘video-inpainting class="table-of-contents__link toc-highlight">3.3 视频重绘（Video Inpainting）</a><li><a href=#34-视频编辑文本引导的视频编辑 class="table-of-contents__link toc-highlight">3.4 视频编辑：文本引导的视频编辑</a></ul><li><a href=#四基于controlnet的视频控制 class="table-of-contents__link toc-highlight">四、基于ControlNet的视频控制</a><ul><li><a href=#41-controlnet基本原理 class="table-of-contents__link toc-highlight">4.1 ControlNet基本原理</a><li><a href=#42-深度图引导depth-guided class="table-of-contents__link toc-highlight">4.2 深度图引导（Depth-guided）</a><li><a href=#43-姿态引导pose-guided class="table-of-contents__link toc-highlight">4.3 姿态引导（Pose-guided）</a><li><a href=#44-分割图引导segmentation-guided class="table-of-contents__link toc-highlight">4.4 分割图引导（Segmentation-guided）</a></ul><li><a href=#五视频超分辨率技术 class="table-of-contents__link toc-highlight">五、视频超分辨率技术</a><ul><li><a href=#51-问题定义与挑战 class="table-of-contents__link toc-highlight">5.1 问题定义与挑战</a><li><a href=#52-基于扩散模型的视频超分辨率 class="table-of-contents__link toc-highlight">5.2 基于扩散模型的视频超分辨率</a><li><a href=#53-时空重建策略 class="table-of-contents__link toc-highlight">5.3 时空重建策略</a></ul><li><a href=#六v2v时空一致性保持方案 class="table-of-contents__link toc-highlight">六、V2V时空一致性保持方案</a><ul><li><a href=#61-时序一致性问题的本质 class="table-of-contents__link toc-highlight">6.1 时序一致性问题的本质</a><li><a href=#62-光流约束方案 class="table-of-contents__link toc-highlight">6.2 光流约束方案</a><li><a href=#63-时间层注入方案 class="table-of-contents__link toc-highlight">6.3 时间层注入方案</a><li><a href=#64-循环一致性cycle-consistency class="table-of-contents__link toc-highlight">6.4 循环一致性（Cycle Consistency）</a></ul><li><a href=#七v2v典型应用场景详解 class="table-of-contents__link toc-highlight">七、V2V典型应用场景详解</a><ul><li><a href=#71-风格转换真人转动漫 class="table-of-contents__link toc-highlight">7.1 风格转换：真人转动漫</a><li><a href=#72-虚拟试衣 class="table-of-contents__link toc-highlight">7.2 虚拟试衣</a><li><a href=#73-视频换背景 class="table-of-contents__link toc-highlight">7.3 视频换背景</a><li><a href=#74-老视频修复 class="table-of-contents__link toc-highlight">7.4 老视频修复</a><li><a href=#75-视频分辨率提升 class="table-of-contents__link toc-highlight">7.5 视频分辨率提升</a></ul><li><a href=#八v2v技术路线综合对比 class="table-of-contents__link toc-highlight">八、V2V技术路线综合对比</a><ul><li><a href=#81-不同技术路线特点对比 class="table-of-contents__link toc-highlight">8.1 不同技术路线特点对比</a><li><a href=#82-技术路线选择建议 class="table-of-contents__link toc-highlight">8.2 技术路线选择建议</a><li><a href=#83-未来发展趋势 class="table-of-contents__link toc-highlight">8.3 未来发展趋势</a></ul><li><a href=#九总结 class="table-of-contents__link toc-highlight">九、总结</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

@@ -1,0 +1,319 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_4" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>编程智能体——AI 写代码的全景拆解 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_4 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="编程智能体——AI 写代码的全景拆解 | 知识库"/><meta data-rh=true name=description content="GitHub Copilot 有 2000 万开发者在用，但 2026 年最火的编程工具已经不是它了。"/><meta data-rh=true property=og:description content="GitHub Copilot 有 2000 万开发者在用，但 2026 年最火的编程工具已经不是它了。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_4 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_4 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_4 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_4","name":"编程智能体——AI 写代码的全景拆解","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>编程智能体——AI 写代码的全景拆解</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>编程智能体——AI 写代码的全景拆解</h1></header>
+<p>GitHub Copilot 有 2000 万开发者在用，但 2026 年最火的编程工具已经不是它了。</p>
+<p>我是怕浪猫，《智能体产品全景手册》第 4 篇。前两篇讲了开发平台和框架，这一篇我们聚焦一个最成熟的 AI Agent 垂直赛道：编程。AI 写代码不是未来时，而是现在进行时——但"AI 辅助写代码"和"AI 独立写代码"之间，隔着一条巨大的鸿沟。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-从-copilot-到-devin编程-agent-的三级进化>4.1 从 Copilot 到 Devin：编程 Agent 的三级进化<a href=#41-从-copilot-到-devin编程-agent-的三级进化 class=hash-link aria-label="4.1 从 Copilot 到 Devin：编程 Agent 的三级进化的直接链接" title="4.1 从 Copilot 到 Devin：编程 Agent 的三级进化的直接链接" translate=no>​</a></h2>
+<p>编程智能体的进化路径和通用 Agent 类似，也经历了三个阶段。但编程领域的阶段划分更清晰，因为每个阶段都有标志性的产品。</p>
+<p><strong>第一级：代码补全（Code Completion）</strong></p>
+<p>代表性产品：GitHub Copilot（2021 年发布）、Tabnine、Amazon CodeWhisperer。</p>
+<p>核心能力是根据上下文预测接下来的代码。你写了一行 <code>def fibonacci(n):</code>，它自动补全函数体。本质上是一个高级的"自动联想"——从"预测下一个词"升级到"预测下一行代码"。</p>
+<p>技术原理是基于 LLM 的代码生成。模型在海量开源代码上训练，学会了代码的模式和惯例。当你在编辑器中输入代码时，模型根据已有的上下文（当前文件、相邻文件、光标位置）生成候选代码。</p>
+<p>这个级别的局限是：AI 只能看到"眼前"，不能理解整个项目的架构。它生成的代码在局部是对的，但放在全局可能是错的。</p>
+<p><strong>第二级：对话式编程（Chat-based Coding）</strong></p>
+<p>代表性产品：GitHub Copilot Chat、Cursor Chat、ChatGPT Code Interpreter。</p>
+<p>核心能力是开发者用自然语言描述需求，AI 生成完整的代码块或函数。不再局限于补全光标位置的代码，而是可以根据"写一个二分查找函数"这样的指令生成完整实现。</p>
+<p>这个级别还引入了"上下文感知"——AI 能读取整个项目文件、理解代码结构、参考多个文件的依赖关系。Cursor 在这一级做得最好，它的 Codebase Indexing（代码库索引）功能让 AI 能理解整个项目的上下文。</p>
+<p><strong>第三级：自主软件工程（Autonomous Software Engineering）</strong></p>
+<p>代表性产品：Devin（Cognition Labs）、OpenHands、Replit Agent。</p>
+<p>核心能力是给定一个高阶任务描述（比如"帮我做一个待办事项 Web 应用，支持用户注册登录"），AI 自主完成：需求分析、技术选型、项目搭建、代码编写、测试调试、部署上线。</p>
+<p>这是真正的"AI 程序员"——不是辅助你写代码，而是自己写代码。Devin 在 SWE-bench（Software Engineering Benchmark）上的表现是这一级的标杆。</p>
+<blockquote>
+<p>三级进化的本质是"人的参与度递减"：第一级人写 AI 补、第二级人说 AI 写、第三级人验收 AI 做。</p>
+</blockquote>
+<p>下面是三级进化对比表：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>第一级：补全<th>第二级：对话<th>第三级：自主<tbody><tr><td>人的角色<td>主力，AI 辅助<td>指挥，AI 执行<td>验收，AI 全程<tr><td>任务粒度<td>一行/一块<td>一个函数/模块<td>一个完整项目<tr><td>上下文理解<td>当前文件<td>整个项目<td>项目+环境+部署<tr><td>典型产品<td>Copilot 补全<td>Cursor Chat<td>Devin<tr><td>人效提升<td>30-50%<td>2-3 倍<td>5-10 倍（理论上）</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-ai-原生编辑器对决cursor-vs-windsurf-vs-trae>4.2 AI 原生编辑器对决：Cursor vs Windsurf vs Trae<a href=#42-ai-原生编辑器对决cursor-vs-windsurf-vs-trae class=hash-link aria-label="4.2 AI 原生编辑器对决：Cursor vs Windsurf vs Trae的直接链接" title="4.2 AI 原生编辑器对决：Cursor vs Windsurf vs Trae的直接链接" translate=no>​</a></h2>
+<p>2025-2026 年，编程工具赛道最激烈的竞争不在"Agent"层面，而在"编辑器"层面。一批 AI 原生编辑器正在挑战 VS Code + Copilot 的统治地位。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=cursor>Cursor<a href=#cursor class=hash-link aria-label=Cursor的直接链接 title=Cursor的直接链接 translate=no>​</a></h3>
+<p>Cursor 是 Anysphere 开发的 AI 原生代码编辑器，基于 VS Code 分叉。2025 年估值达数十亿美元，是编程工具赛道增长最快的产品。</p>
+<p>Cursor 的核心特色：</p>
+<p><strong>Codebase Indexing（代码库索引）</strong>：Cursor 会索引你的整个项目代码库，构建向量索引。当你提问时，AI 不只看当前文件，而是理解整个项目的上下文。这意味着它生成的代码能正确引用项目中的其他模块、遵循项目的编码风格、避免命名冲突。</p>
+<p><strong>Cmd+K 内联编辑</strong>：选中一段代码，按 Cmd+K，用自然语言描述你想要的修改，Cursor 直接在编辑器中修改代码。比"把这段循环改成列表推导式"更自然的方式。</p>
+<p><strong>Composer（组合器）</strong>：Cursor 的高级功能，能跨多个文件进行修改。你描述一个需求（比如"添加用户头像上传功能"），Composer 会同时修改前端组件、后端 API、数据库 Schema、路由配置等多个文件。</p>
+<p><strong>Cursor Tab</strong>：增强版代码补全。不只是补全当前光标位置的代码，还能预测你接下来要做的多处修改。比如你修改变量名后，它能预测你在其他文件中也需要同步修改。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Cursor Composer 的工作原理（简化）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class CursorComposer:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def __init__(self, codebase_index, llm):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.index = codebase_index  # 全项目向量索引</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.llm = llm</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def compose(self, instruction, current_file):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 检索相关文件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        relevant_files = self.index.search(instruction, top_k=10)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 构建修改计划</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        plan = self.llm.plan(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            instruction=instruction,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            current_file=current_file,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context_files=relevant_files</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # plan = [</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #   {"file": "frontend/UserProfile.tsx", "action": "add_avatar_component"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #   {"file": "backend/api/upload.ts", "action": "add_upload_endpoint"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #   {"file": "backend/db/schema.ts", "action": "add_avatar_column"},</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #   {"file": "backend/routes.ts", "action": "register_route"}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # ]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 逐文件生成修改</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        changes = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for step in plan:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            modified_content = self.llm.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                file_content=read_file(step["file"]),</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                instruction=step["action"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context=relevant_files</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            changes.append({"file": step["file"], "content": modified_content})</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return changes</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=windsurf>Windsurf<a href=#windsurf class=hash-link aria-label=Windsurf的直接链接 title=Windsurf的直接链接 translate=no>​</a></h3>
+<p>Windsurf 是 Codeium 推出的 AI 原生编辑器，同样基于 VS Code 分叉。它的核心差异化是"Cascade（级联）"功能。</p>
+<p>Cascade 是 Windsurf 的多步编辑引擎。与 Cursor 的 Composer 类似，Cascade 能跨文件修改。但 Cascade 的独特之处在于它能"边写边跑"——生成代码后自动运行测试，根据测试结果迭代修改。</p>
+<p>Windsurf 还引入了"Supercomplete"功能，这是一种更智能的代码补全。它不只补全当前光标位置，还会根据你的意图预测接下来 2-3 步的代码修改。比如你开始写一个错误处理块，它会预测你还需要在调用方添加对应的错误处理，并提前给出建议。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=trae>Trae<a href=#trae class=hash-link aria-label=Trae的直接链接 title=Trae的直接链接 translate=no>​</a></h3>
+<p>Trae 是字节跳动推出的 AI 原生编辑器，2025 年发布后以"免费"策略快速获取用户。</p>
+<p>Trae 的核心卖点是免费使用 Claude 3.5 Sonnet 和 GPT-4o 等顶级模型。在 Cursor 收费的情况下，Trae 的免费策略极具吸引力。据报告，Trae 的代码生成准确率达到 98%，在多个基准测试中超越 Cursor 和 Windsurf。</p>
+<p>Trae 还有一个差异化功能：AI Schedule（AI 排期）。它能根据你的项目结构和待办事项，自动生成开发计划并按优先级执行。这让它从"编辑器"向"项目管理工具"的方向延伸。</p>
+<p>下面是三款 AI 原生编辑器的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>Cursor<th>Windsurf<th>Trae<tbody><tr><td>开发方<td>Anysphere<td>Codeium<td>字节跳动<tr><td>价格<td>$20/月起<td>$15/月起<td>免费<tr><td>模型支持<td>GPT-4o/Claude/Sonnet<td>GPT-4o/Claude<td>GPT-4o/Claude<tr><td>代码库索引<td>强<td>强<td>强<tr><td>多文件编辑<td>Composer<td>Cascade<td>AI Schedule<tr><td>补全能力<td>Cursor Tab<td>Supercomplete<td>智能补全<tr><td>测试集成<td>弱<td>强（边写边跑）<td>中<tr><td>生态<td>VS Code 插件兼容<td>VS Code 插件兼容<td>VS Code 插件兼容</table>
+<blockquote>
+<p>AI 原生编辑器的竞争焦点已经从"谁补全得准"变成了"谁能跨文件修改"。下一步的竞争焦点是"谁能自主完成整个功能模块"。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-自主软件工程师-agentdevinreplit-agentopenhands>4.3 自主软件工程师 Agent：Devin、Replit Agent、OpenHands<a href=#43-自主软件工程师-agentdevinreplit-agentopenhands class=hash-link aria-label="4.3 自主软件工程师 Agent：Devin、Replit Agent、OpenHands的直接链接" title="4.3 自主软件工程师 Agent：Devin、Replit Agent、OpenHands的直接链接" translate=no>​</a></h2>
+<p>这一节我们进入编程 Agent 的最高级别：自主软件工程师。这些产品不再需要你一行行写代码，你只需要描述需求，Agent 自己完成全部开发工作。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=devincognition-labs>Devin（Cognition Labs）<a href=#devincognition-labs class=hash-link aria-label="Devin（Cognition Labs）的直接链接" title="Devin（Cognition Labs）的直接链接" translate=no>​</a></h3>
+<p>Devin 由 Cognition Labs 在 2024 年 3 月发布，被称为"世界上第一个 AI 软件工程师"。</p>
+<p>Devin 的核心能力：</p>
+<p><strong>自主规划</strong>：给定一个任务描述，Devin 会先生成执行计划，列出需要完成的步骤。</p>
+<p><strong>代码编写与执行</strong>：Devin 有自己的代码编辑器、终端和浏览器。它能写代码、运行代码、查看报错、修改代码。</p>
+<p><strong>调试能力</strong>：当代码出错时，Devin 能阅读错误信息、定位问题、修复 Bug。</p>
+<p><strong>部署能力</strong>：Devin 能将完成的项目部署到生产环境。</p>
+<p>Devin 在 SWE-bench 上的表现是其核心卖点。SWE-bench 是一个软件工程基准测试，包含真实的 GitHub Issue，要求 AI 理解 Issue 描述、定位相关代码、编写修复补丁。Devin 的通过率约为 13.86%，虽然看起来不高，但这是端到端自主完成的，没有人类干预。</p>
+<p>Devin 的商业模式是订阅制，起价 500 美元/月，面向工程团队。2025 年 Cognition 估值达数十亿美元。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=replit-agent>Replit Agent<a href=#replit-agent class=hash-link aria-label="Replit Agent的直接链接" title="Replit Agent的直接链接" translate=no>​</a></h3>
+<p>Replit Agent 是在线编程平台 Replit 推出的 AI 开发 Agent。与 Devin 不同，Replit Agent 专注于"从零到一"的项目创建。</p>
+<p>你用自然语言描述一个想法（比如"做一个天气查询应用，输入城市名显示当前天气"），Replit Agent 会自动搭建项目、编写代码、配置环境、运行应用。整个过程在 Replit 的云 IDE 中完成，不需要本地环境。</p>
+<p>Replit Agent 的核心流程：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Replit Agent 的工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class ReplitAgent:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def build_app(self, idea):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 需求理解</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        spec = self.llm.analyze(idea)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # spec = {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "type": "web_app",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "features": ["城市搜索", "天气显示", "单位切换"],</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #     "tech_stack": "React + Express + OpenWeather API"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 项目初始化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.workspace.init(spec["tech_stack"])</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.workspace.install_dependencies(["react", "express", "axios"])</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 代码生成（分模块）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for module in spec["features"]:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            code = self.llm.generate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                feature=module,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                project_context=self.workspace.get_context()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            self.workspace.write_file(module["path"], code)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 运行与调试</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        result = self.workspace.run()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        if result.has_errors:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            self._debug_and_fix(result.errors)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 部署</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return self.workspace.deploy()</span><br/></div></code></pre></div></div>
+<p>Replit Agent 的优势是"即时可用"——不需要安装任何东西，在浏览器中就能完成从想法到上线的全过程。特别适合快速原型验证和编程教学。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=openhands原-opendevin>OpenHands（原 OpenDevin）<a href=#openhands原-opendevin class=hash-link aria-label="OpenHands（原 OpenDevin）的直接链接" title="OpenHands（原 OpenDevin）的直接链接" translate=no>​</a></h3>
+<p>OpenHands 是 Devin 的开源替代方案，在 GitHub 上有数万 Star。</p>
+<p>OpenHands 复刻了 Devin 的核心架构：代码编辑器 + 终端 + 浏览器三件套。Agent 能在这三个环境中自主操作。与 Devin 的闭源商业模式不同，OpenHands 完全开源，任何人都可以免费使用和修改。</p>
+<p>OpenHands 也参加了 SWE-bench 测试，通过率约为 12%，接近 Devin 的水平。这证明了开源社区有能力复刻闭源商业 Agent 的核心能力。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=44-github-copilot-全家桶从补全到-agenthq>4.4 GitHub Copilot 全家桶：从补全到 AgentHQ<a href=#44-github-copilot-全家桶从补全到-agenthq class=hash-link aria-label="4.4 GitHub Copilot 全家桶：从补全到 AgentHQ的直接链接" title="4.4 GitHub Copilot 全家桶：从补全到 AgentHQ的直接链接" translate=no>​</a></h2>
+<p>GitHub Copilot 是编程 AI 的开创者，也是用户量最大的产品。2026 年，GitHub Copilot 已不再只是一个代码补全工具，而是发展成了一个"全家桶"产品线。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=github-copilot-补全>GitHub Copilot 补全<a href=#github-copilot-补全 class=hash-link aria-label="GitHub Copilot 补全的直接链接" title="GitHub Copilot 补全的直接链接" translate=no>​</a></h3>
+<p>最基础的功能，2021 年发布。在编辑器中实时补全代码。核心模型基于 OpenAI 的 Codex（GPT-3 的代码专用版本），后来升级到 GPT-4 系列。</p>
+<p>用户量：2000 万+ 开发者。定价：<span class=katex><span class=katex-mathml><math xmlns=http://www.w3.org/1998/Math/MathML><semantics><mrow><mn>10</mn><mi mathvariant=normal>/</mi><mtext>月（个人版），</mtext></mrow><annotation encoding=application/x-tex>10/月（个人版），</annotation></semantics></math></span><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-0.25em></span><span class=mord>10/</span><span class="mord cjk_fallback">月（个人版），</span></span></span></span>19/月（企业版）。2026 年 6 月开始转按 Token 计费。</p>
+<blockquote>
+<p>从固定月费转按 Token 计费，这个变化说明一件事：AI 编程的使用量已经大到固定定价模型无法覆盖成本了。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=github-copilot-chat>GitHub Copilot Chat<a href=#github-copilot-chat class=hash-link aria-label="GitHub Copilot Chat的直接链接" title="GitHub Copilot Chat的直接链接" translate=no>​</a></h3>
+<p>2023 年发布的对话式编程功能。开发者可以在 VS Code 中直接与 AI 对话，提问代码相关问题、请求代码解释、生成代码片段。</p>
+<p>Copilot Chat 的核心价值是"上下文感知"——它能理解当前打开的文件、选中的代码、项目结构。这意味着你问"这个函数是做什么的"时，它知道"这个函数"指的是哪个。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=github-copilot-workspace>GitHub Copilot Workspace<a href=#github-copilot-workspace class=hash-link aria-label="GitHub Copilot Workspace的直接链接" title="GitHub Copilot Workspace的直接链接" translate=no>​</a></h3>
+<p>2024 年发布的更高阶功能。Workspace 能理解整个 GitHub 仓库的上下文，支持跨文件代码修改。你可以给 Copilot 一个 Issue（比如"修复登录页面的样式错位"），Workspace 会分析代码库、定位相关文件、提出修改方案、生成代码。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=github-agenthq>GitHub AgentHQ<a href=#github-agenthq class=hash-link aria-label="GitHub AgentHQ的直接链接" title="GitHub AgentHQ的直接链接" translate=no>​</a></h3>
+<p>2025 年底发布的最新功能，标志着 GitHub 正式进入"自主 Agent"赛道。AgentHQ 能自主处理 GitHub Issue——从理解 Issue 描述开始，到分析代码库、编写修复代码、运行测试、提交 Pull Request。</p>
+<p>AgentHQ 的核心工作流：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># AgentHQ 处理 Issue 的流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class AgentHQ:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def handle_issue(self, issue):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 理解 Issue</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        analysis = self.llm.analyze_issue(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            title=issue.title,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            description=issue.body,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            labels=issue.labels</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 定位相关代码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        relevant_files = self.codebase_search(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            query=analysis.keywords,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            repo=issue.repo</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 生成修复方案</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        fix_plan = self.llm.plan_fix(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            issue=analysis,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context=relevant_files</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 编写修复代码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for change in fix_plan.changes:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            new_code = self.llm.generate_code(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                file=change.file,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                instruction=change.instruction,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context=change.surrounding_code</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            self.write_file(change.file, new_code)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 运行测试</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        test_result = self.run_tests()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        if test_result.failed:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            self._fix_failing_tests(test_result.failures)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 6. 提交 PR</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        self.create_pull_request(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            title=f"Fix: {issue.title}",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            body=f"Resolves #{issue.number}\n\n{fix_plan.summary}"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div></code></pre></div></div>
+<p>AgentHQ 的定位是"AI 团队成员"——它不是你的工具，而是你的同事。你给它分配 Issue，它自己完成后提交 PR，你来 Review 和 Merge。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=45-国产编程-agent通义灵码codegeex-的差异化路线>4.5 国产编程 Agent：通义灵码、CodeGeeX 的差异化路线<a href=#45-国产编程-agent通义灵码codegeex-的差异化路线 class=hash-link aria-label="4.5 国产编程 Agent：通义灵码、CodeGeeX 的差异化路线的直接链接" title="4.5 国产编程 Agent：通义灵码、CodeGeeX 的差异化路线的直接链接" translate=no>​</a></h2>
+<p>国产编程 Agent 在 2025-2026 年快速崛起，走出了与国际产品不同的路线。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=通义灵码阿里云>通义灵码（阿里云）<a href=#通义灵码阿里云 class=hash-link aria-label=通义灵码（阿里云）的直接链接 title=通义灵码（阿里云）的直接链接 translate=no>​</a></h3>
+<p>通义灵码是阿里云推出的 AI 编程助手，基于通义千问代码模型。</p>
+<p>核心差异化：</p>
+<p><strong>中文理解优势</strong>：在注释生成、文档编写、中文需求理解方面优于国际产品。对于中文团队的代码注释和文档生成，通义灵码更自然。</p>
+<p><strong>企业级私有化</strong>：支持企业私有化部署，满足数据安全要求。与阿里云百炼平台集成，企业可以在自己的云上构建编程 Agent。</p>
+<p><strong>多语言支持</strong>：在 Java、Python、Go、JavaScript、TypeScript 等主流语言上表现优秀，特别在 Java 生态（Spring Cloud、MyBatis 等框架）上有深度优化。</p>
+<p>通义灵码对个人开发者免费，企业版按需定价。在阿里系技术团队中有较高采用率。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=codegeex智谱-ai>CodeGeeX（智谱 AI）<a href=#codegeex智谱-ai class=hash-link aria-label="CodeGeeX（智谱 AI）的直接链接" title="CodeGeeX（智谱 AI）的直接链接" translate=no>​</a></h3>
+<p>CodeGeeX 是智谱 AI 推出的开源编程助手，基于 GLM 代码模型。</p>
+<p>核心差异化：</p>
+<p><strong>开源免费</strong>：CodeGeeX 模型开源，任何人可以本地部署。这对于不能使用云端 API 的场景（如军工、金融核心系统）至关重要。</p>
+<p><strong>多语言代码生成</strong>：CodeGeeX 在 20+ 编程语言上进行了训练，特别在小众语言（Rust、Scala、Haskell）上表现优于预期。</p>
+<p><strong>IDE 集成</strong>：支持 VS Code、JetBrains IDE、Vim 等主流编辑器，插件体验与国际产品一致。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=国产-vs-国际的差异化路线>国产 vs 国际的差异化路线<a href=#国产-vs-国际的差异化路线 class=hash-link aria-label="国产 vs 国际的差异化路线的直接链接" title="国产 vs 国际的差异化路线的直接链接" translate=no>​</a></h3>
+<p>国产编程 Agent 走出了三个差异化方向：</p>
+<p><strong>方向一：中文场景优化</strong>。代码注释、技术文档、需求文档的中文理解和生成。国际产品在中文注释生成上经常出现语法不自然或用词不当的问题。</p>
+<p><strong>方向二：私有化部署</strong>。金融、政府、军工等行业的代码不能上云，必须私有化部署。国产 Agent 在这方面有天然的合规优势。</p>
+<p><strong>方向三：国产技术栈适配</strong>。对国产数据库（OceanBase、TiDB）、国产中间件（Apollo、Nacos）、国产框架（Spring Cloud Alibaba）的深度理解。</p>
+<blockquote>
+<p>国产编程 Agent 的机会不在"比 Copilot 更强"，而在"比 Copilot 更懂中国开发者的工作环境"。</p>
+</blockquote>
+<p>下面是主要编程 Agent 产品的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品<th>类型<th>价格<th>核心能力<th>适合用户<tbody><tr><td>GitHub Copilot<td>补全+对话<td>$10/月→Token计费<td>生态最大<td>国际开发者<tr><td>Cursor<td>AI编辑器<td>$20/月<td>Composer跨文件<td>全栈开发者<tr><td>Windsurf<td>AI编辑器<td>$15/月<td>Cascade边写边跑<td>注重测试的团队<tr><td>Trae<td>AI编辑器<td>免费<td>免费+98%准确率<td>预算敏感开发者<tr><td>Devin<td>自主Agent<td>$500/月起<td>SWE-bench最优<td>工程团队<tr><td>Replit Agent<td>自主Agent<td>订阅制<td>浏览器端全流程<td>快速原型<tr><td>OpenHands<td>自主Agent<td>开源免费<td>Devin开源替代<td>开源社区<tr><td>通义灵码<td>补全+对话<td>免费<td>中文+私有化<td>中文技术团队<tr><td>CodeGeeX<td>补全<td>开源免费<td>开源+多语言<td>数据敏感场景</table>
+<p>这一章我们完整拆解了编程 Agent 的三级进化（补全→对话→自主），对比了 3 款 AI 原生编辑器（Cursor、Windsurf、Trae），深入分析了 3 款自主软件工程师 Agent（Devin、Replit Agent、OpenHands），梳理了 GitHub Copilot 全家桶的进化路径，最后对比了国产编程 Agent 的差异化路线。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品类别<th>产品数量<th>市场格局<tbody><tr><td>AI 编辑器<td>3 款<td>Cursor 领先，Trae 免费追赶<tr><td>自主 Agent<td>3 款<td>Devin 标杆，OpenHands 开源<tr><td>补全工具<td>3 款<td>Copilot 用户量第一</table>
+<p>觉得有用？收藏起来，下次选编程工具直接照抄。</p>
+<p>你在用哪个编程 AI？Cursor 还是 Copilot？有没有被 AI 写的代码坑过？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲深度研究智能体与 AI 搜索——OpenAI Deep Research、Gemini Deep Research、Perplexity Deep Research 到底谁做的调研报告最靠谱。系列进度 4/10，关注不错过后续更新。</p>
+<p>下一篇，怕浪猫会带你走进 AI 研究助手的世界。5 分钟生成 46 页论文的 Gemini Deep Research 是怎么做到的？GPT Researcher 每次只花 0.4 美元的开源方案值不值得用？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_4.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>AI Agent 开发框架——代码级智能体编排</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>深度研究智能体与 AI 搜索——让 AI 替你做调研</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#41-从-copilot-到-devin编程-agent-的三级进化 class="table-of-contents__link toc-highlight">4.1 从 Copilot 到 Devin：编程 Agent 的三级进化</a><li><a href=#42-ai-原生编辑器对决cursor-vs-windsurf-vs-trae class="table-of-contents__link toc-highlight">4.2 AI 原生编辑器对决：Cursor vs Windsurf vs Trae</a><ul><li><a href=#cursor class="table-of-contents__link toc-highlight">Cursor</a><li><a href=#windsurf class="table-of-contents__link toc-highlight">Windsurf</a><li><a href=#trae class="table-of-contents__link toc-highlight">Trae</a></ul><li><a href=#43-自主软件工程师-agentdevinreplit-agentopenhands class="table-of-contents__link toc-highlight">4.3 自主软件工程师 Agent：Devin、Replit Agent、OpenHands</a><ul><li><a href=#devincognition-labs class="table-of-contents__link toc-highlight">Devin（Cognition Labs）</a><li><a href=#replit-agent class="table-of-contents__link toc-highlight">Replit Agent</a><li><a href=#openhands原-opendevin class="table-of-contents__link toc-highlight">OpenHands（原 OpenDevin）</a></ul><li><a href=#44-github-copilot-全家桶从补全到-agenthq class="table-of-contents__link toc-highlight">4.4 GitHub Copilot 全家桶：从补全到 AgentHQ</a><ul><li><a href=#github-copilot-补全 class="table-of-contents__link toc-highlight">GitHub Copilot 补全</a><li><a href=#github-copilot-chat class="table-of-contents__link toc-highlight">GitHub Copilot Chat</a><li><a href=#github-copilot-workspace class="table-of-contents__link toc-highlight">GitHub Copilot Workspace</a><li><a href=#github-agenthq class="table-of-contents__link toc-highlight">GitHub AgentHQ</a></ul><li><a href=#45-国产编程-agent通义灵码codegeex-的差异化路线 class="table-of-contents__link toc-highlight">4.5 国产编程 Agent：通义灵码、CodeGeeX 的差异化路线</a><ul><li><a href=#通义灵码阿里云 class="table-of-contents__link toc-highlight">通义灵码（阿里云）</a><li><a href=#codegeex智谱-ai class="table-of-contents__link toc-highlight">CodeGeeX（智谱 AI）</a><li><a href=#国产-vs-国际的差异化路线 class="table-of-contents__link toc-highlight">国产 vs 国际的差异化路线</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

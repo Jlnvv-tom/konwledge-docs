@@ -1,0 +1,781 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_15" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第15章 浏览器沙箱与站点隔离 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第15章 浏览器沙箱与站点隔离 | 知识库"/><meta data-rh=true name=description content="浏览器是用户接触恶意代码的第一线。沙箱让即使渲染进程被攻破，恶意代码也无法逃逸到操作系统。站点隔离则让不同网站的数据互不可见，即使 Spectre 漏洞也无法偷取。"/><meta data-rh=true property=og:description content="浏览器是用户接触恶意代码的第一线。沙箱让即使渲染进程被攻破，恶意代码也无法逃逸到操作系统。站点隔离则让不同网站的数据互不可见，即使 Spectre 漏洞也无法偷取。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15","name":"第15章 浏览器沙箱与站点隔离","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第15章 浏览器沙箱与站点隔离</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第15章 浏览器沙箱与站点隔离</h1></header>
+<blockquote>
+<p>浏览器是用户接触恶意代码的第一线。沙箱让即使渲染进程被攻破，恶意代码也无法逃逸到操作系统。站点隔离则让不同网站的数据互不可见，即使 Spectre 漏洞也无法偷取。</p>
+</blockquote>
+<p>我是怕浪猫，上期讲了同源策略和 CORS，今天进入第 15 章：浏览器沙箱与站点隔离。这一章拆解 Chrome 的多进程沙箱架构、站点隔离（Site Isolation）的实现原理，以及 Spectre/Meltdown 漏洞如何改变了浏览器安全设计。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=151-沙箱模型>15.1 沙箱模型<a href=#151-沙箱模型 class=hash-link aria-label="15.1 沙箱模型的直接链接" title="15.1 沙箱模型的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1511-为什么需要沙箱>15.1.1 为什么需要沙箱<a href=#1511-为什么需要沙箱 class=hash-link aria-label="15.1.1 为什么需要沙箱的直接链接" title="15.1.1 为什么需要沙箱的直接链接" translate=no>​</a></h3>
+<p>浏览器是一个巨大的攻击面。它每天解析和执行来自互联网的 HTML、CSS、JavaScript、WebAssembly 等内容。如果这些内容的解析器有漏洞，攻击者可能通过恶意网页执行任意代码。</p>
+<p>沙箱（Sandbox）的核心思想是：即使渲染进程被攻破，攻击者也无法直接访问操作系统资源。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">沙箱防御模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">攻击者目标：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  恶意网页 → 利用渲染引擎漏洞 → 控制渲染进程 → 攻破操作系统</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">沙箱防御：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  恶意网页 → 利用渲染引擎漏洞 → 控制渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    沙箱限制：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ✗ 不能读写文件系统</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ✗ 不能执行系统命令</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ✗ 不能访问网络（除受限 HTTP）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ✗ 不能访问其他进程内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ✗ 不能访问硬件设备</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    攻击者需要再利用一个沙箱逃逸漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    才能接触到操作系统</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1512-沙箱的实现机制>15.1.2 沙箱的实现机制<a href=#1512-沙箱的实现机制 class=hash-link aria-label="15.1.2 沙箱的实现机制的直接链接" title="15.1.2 沙箱的实现机制的直接链接" translate=no>​</a></h3>
+<p>Chrome 在不同操作系统上使用不同的沙箱实现机制，但核心原理相同：限制进程权限。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>操作系统<th>沙箱机制<th>说明<tbody><tr><td>Windows<td>Restricted Token + Job Object<td>降低进程权限令牌<tr><td>macOS<td>Seatbelt（sandbox-exec）<td>内核级 MAC（Mandatory Access Control）<tr><td>Linux<td>Seccomp-BPF + Namespaces<td>系统调用过滤 + 命名空间隔离<tr><td>Android<td>Isolated Process<td>进程隔离（UID 不同）</table>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Linux Seccomp-BPF 示例（简化）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程允许的系统调用：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  read()    ✓ 读文件描述符</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  write()   ✓ 写文件描述符</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  mmap()    ✓ 内存映射</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  futex()   ✓ 线程同步</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程禁止的系统调用：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  open()    ✗ 不能打开新文件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  socket()  ✗ 不能创建网络套接字</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  execve()  ✗ 不能执行新程序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  fork()    ✗ 不能创建新进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  clone()   ✗ 不能创建新线程（受限）</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Seccomp-BPF 是 Linux 沙箱的核心。它通过 BPF（Berkeley Packet Filter，伯克利包过滤器）字节码过滤系统调用，渲染进程只能调用白名单中的系统调用。即使攻击者控制了渲染进程，也无法调用 open() 读取用户文件或调用 execve() 执行恶意程序。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1513-沙箱的权限最小化>15.1.3 沙箱的权限最小化<a href=#1513-沙箱的权限最小化 class=hash-link aria-label="15.1.3 沙箱的权限最小化的直接链接" title="15.1.3 沙箱的权限最小化的直接链接" translate=no>​</a></h3>
+<p>Chrome 遵循最小权限原则（Principle of Least Privilege），每个进程只拥有完成任务所需的最小权限。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>进程类型<th>权限<th>说明<tbody><tr><td>浏览器进程<td>完全权限<td>管理所有资源，唯一不受沙箱限制<tr><td>渲染进程<td>最低权限<td>只能渲染页面，不能访问文件/网络<tr><td>GPU 进程<td>受限权限<td>可访问 GPU 驱动，不能访问文件系统<tr><td>网络服务进程<td>受限权限<td>可访问网络，不能访问文件系统<tr><td>插件进程<td>受限权限<td>运行扩展，受限的网络访问</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1514-沙箱的局限性与逃逸>15.1.4 沙箱的局限性与逃逸<a href=#1514-沙箱的局限性与逃逸 class=hash-link aria-label="15.1.4 沙箱的局限性与逃逸的直接链接" title="15.1.4 沙箱的局限性与逃逸的直接链接" translate=no>​</a></h3>
+<p>沙箱并非完美无缺。沙箱逃逸（Sandbox Escape）是安全研究的重要领域。常见的沙箱逃逸路径包括：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>逃逸路径<th>原理<th>防护<tbody><tr><td>内核漏洞<td>利用内核漏洞获取权限<td>及时更新内核<tr><td>IPC 漏洞<td>利用进程间通信漏洞<td>IPC 消息验证<tr><td>文件描述符泄漏<td>从父进程继承的 FD<td>FD 限制<tr><td>GPU 驱动漏洞<td>利用 GPU 进程的更高权限<td>GPU 命令验证</table>
+<p>Chrome 通过持续的安全审计、漏洞悬赏计划和快速补丁发布来降低沙箱逃逸风险。Pwn2Own 等安全竞赛中，Chrome 沙箱逃逸的奖金通常在数十万美元。</p>
+<blockquote>
+<p>沙箱不是银弹。沙箱的安全依赖于操作系统内核的完整性。如果内核有漏洞，沙箱也可能被逃逸。但沙箱大幅提高了攻击成本——攻击者需要同时利用渲染引擎漏洞和沙箱逃逸漏洞才能触及操作系统。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=152-站点隔离site-isolation>15.2 站点隔离（Site Isolation）<a href=#152-站点隔离site-isolation class=hash-link aria-label="15.2 站点隔离（Site Isolation）的直接链接" title="15.2 站点隔离（Site Isolation）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1521-为什么需要站点隔离>15.2.1 为什么需要站点隔离<a href=#1521-为什么需要站点隔离 class=hash-link aria-label="15.2.1 为什么需要站点隔离的直接链接" title="15.2.1 为什么需要站点隔离的直接链接" translate=no>​</a></h3>
+<p>同源策略在 JavaScript 层面限制了跨域访问，但在进程层面，Chrome 2018 年之前所有同标签页的跨域页面共享一个渲染进程。这意味着如果存在 Spectre 等侧信道攻击，恶意页面可以绕过同源策略读取同进程内其他域名的数据。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">站点隔离前（2018年前）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页: https://example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 主框架: example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ iframe: https://evil.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ iframe: https://bank.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">三个域名共享一个渲染进程！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">如果 evil.com 利用 Spectre 侧信道攻击：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 可以读取同进程内 bank.com 的内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 绕过同源策略</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1522-站点隔离的实现>15.2.2 站点隔离的实现<a href=#1522-站点隔离的实现 class=hash-link aria-label="15.2.2 站点隔离的实现的直接链接" title="15.2.2 站点隔离的实现的直接链接" translate=no>​</a></h3>
+<p>站点隔离确保不同站点（Site）的页面在不同渲染进程中运行。站点的定义是：注册域名（eTLD+1）加上协议。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">站点隔离后</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页: https://example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 主框架: example.com → 渲染进程 A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ iframe: https://evil.com → 渲染进程 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ iframe: https://bank.com → 渲染进程 C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">三个域名在三个独立进程中！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">evil.com 无法通过侧信道读取 bank.com 的内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程间内存隔离由操作系统保证</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>概念<th>定义<th>示例<tbody><tr><td>Origin<td>协议+主机+端口<td><a href=https://example.com:443 target=_blank rel="noopener noreferrer" class="">https://example.com:443</a><tr><td>Site<td>协议+eTLD+1<td><a href=https://example.com target=_blank rel="noopener noreferrer" class="">https://example.com</a><tr><td>eTLD<td>有效顶级域名<td>com, co.uk, github.io<tr><td>eTLD+1<td>eTLD + 下一级<td>example.com, example.co.uk</table>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">eTLD+1 计算示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">https://www.example.com/page    → Site: example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">https://api.example.com/data    → Site: example.com（同 Site）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">https://example.co.uk/          → Site: example.co.uk</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">https://foo.github.io/          → Site: foo.github.io</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">https://bar.github.io/          → Site: bar.github.io（不同 Site）</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1523-跨进程-iframe>15.2.3 跨进程 iframe<a href=#1523-跨进程-iframe class=hash-link aria-label="15.2.3 跨进程 iframe的直接链接" title="15.2.3 跨进程 iframe的直接链接" translate=no>​</a></h3>
+<p>站点隔离引入了跨进程 iframe（Out-of-Process iframe，OOPIF）。一个 iframe 可能运行在另一个渲染进程中，但用户看到的仍然是统一的页面。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">跨进程 iframe 架构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">浏览器进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 渲染进程 A（example.com）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ DOM 树: &lt;html>...&lt;iframe src="evil.com">...&lt;/html></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 样式计算、布局、绘制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ iframe 占位区域 → 指向进程 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 渲染进程 B（evil.com）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ DOM 树: &lt;html>...evil.com content...&lt;/html></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 独立的样式计算、布局、绘制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 绘制结果 → 传回进程 A 合成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 合成器线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      └─ 合并进程 A 和 B 的绘制结果</span><br/></div></code></pre></div></div>
+<p>跨进程 iframe 的通信通过浏览器进程中转，确保进程间的数据隔离。浏览器进程负责协调两个渲染进程的布局和绘制，确保 iframe 的尺寸和位置正确。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>操作<th>非站点隔离<th>站点隔离<tbody><tr><td>iframe 布局<td>直接在进程内计算<td>浏览器进程中转协调<tr><td>iframe 绘制<td>直接在同一画布绘制<td>独立绘制后合成<tr><td>iframe 事件<td>直接分发<td>通过浏览器进程中转<tr><td>内存访问<td>共享内存<td>进程隔离</table>
+<blockquote>
+<p>站点隔离的代价是内存：每个渲染进程至少几十 MB。Chrome 的站点隔离让内存占用增加了约 10-20%。但这是值得的——它让 Spectre 类型的侧信道攻击在实践中不可行。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1524-站点隔离的进程模型细节>15.2.4 站点隔离的进程模型细节<a href=#1524-站点隔离的进程模型细节 class=hash-link aria-label="15.2.4 站点隔离的进程模型细节的直接链接" title="15.2.4 站点隔离的进程模型细节的直接链接" translate=no>​</a></h3>
+<p>站点隔离不是简单地「每个域名一个进程」。Chrome 使用「站点实例」（Site Instance）概念来管理进程分配。一个站点实例是同一站点在同一浏览上下文中的页面集合。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">站点实例与进程分配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页 A: https://example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → example.com 站点实例 → 进程 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页 B: https://example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → example.com 站点实例 → 进程 1（共享）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页 A 中的 iframe: https://evil.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → evil.com 站点实例 → 进程 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">标签页 C: https://evil.com（独立标签页）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → evil.com 站点实例 → 进程 2（共享）</span><br/></div></code></pre></div></div>
+<p>共享进程的条件：同一站点 + 同一浏览上下文。不同标签页的同一站点也会共享进程，但 iframe 中的跨站点内容一定在独立进程中。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>是否共享进程<th>原因<tbody><tr><td>两个标签页同一站点<td>可能共享<td>同站点同上下文<tr><td>同标签页不同站点 iframe<td>不共享<td>站点隔离<tr><td>同标签页同站点 iframe<td>共享<td>同站点<tr><td>沙箱 iframe<td>不共享<td>sandbox 属性创建新上下文</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=153-spectre-与-meltdown-的影响>15.3 Spectre 与 Meltdown 的影响<a href=#153-spectre-与-meltdown-的影响 class=hash-link aria-label="15.3 Spectre 与 Meltdown 的影响的直接链接" title="15.3 Spectre 与 Meltdown 的影响的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1531-spectre-攻击原理>15.3.1 Spectre 攻击原理<a href=#1531-spectre-攻击原理 class=hash-link aria-label="15.3.1 Spectre 攻击原理的直接链接" title="15.3.1 Spectre 攻击原理的直接链接" translate=no>​</a></h3>
+<p>Spectre 是 2018 年披露的 CPU 侧信道漏洞。它利用 CPU 的推测执行（Speculative Execution）机制，通过缓存侧信道读取本不应该被访问的内存。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Spectre 攻击简化流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. CPU 推测执行：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   if (x &lt; array_size) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     y = array[array2[x] * 4096];  // 推测执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   x 的值经过边界检查，正常情况下不会越界</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 训练分支预测器：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   多次正常执行，让 CPU 预测分支为「true」</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 越界读取：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   提供恶意 x 值（超出数组边界）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   CPU 推测执行 → 读取 array2[x] 的值（越界）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 用值作为索引访问 array → 加载到缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 分支回滚：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   CPU 发现边界检查失败 → 回滚执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   但缓存中的数据仍然存在！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 缓存侧信道：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   测量访问 array 各位置的延迟</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   延续低的位置 = 被缓存 = 推测执行访问过</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 推断出 array2[x] 的值（越界数据）</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1532-浏览器的-spectre-缓解措施>15.3.2 浏览器的 Spectre 缓解措施<a href=#1532-浏览器的-spectre-缓解措施 class=hash-link aria-label="15.3.2 浏览器的 Spectre 缓解措施的直接链接" title="15.3.2 浏览器的 Spectre 缓解措施的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>缓解措施<th>原理<th>效果<tbody><tr><td>站点隔离<td>不同站点在不同进程<td>限制可读取范围<tr><td>SharedArrayBuffer 限制<td>禁用高精度计时<td>增加侧信道难度<tr><td>Performance API 降精度<td>降低时间戳精度<td>增加计时难度<tr><td>Site Isolation + COEP/COOP<td>跨域隔离<td>全面防护</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1533-coop-和-coep>15.3.3 COOP 和 COEP<a href=#1533-coop-和-coep class=hash-link aria-label="15.3.3 COOP 和 COEP的直接链接" title="15.3.3 COOP 和 COEP的直接链接" translate=no>​</a></h3>
+<p>为了安全地重新启用 SharedArrayBuffer 等高精度计时功能，Chrome 引入了跨域隔离（Cross-Origin Isolation）。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># COOP（Cross-Origin Opener Policy）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 隔离窗口上下文，防止其他页面引用本窗口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Cross-Origin-Opener-Policy: same-origin</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># COEP（Cross-Origin Embedder Policy）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 限制页面加载跨域资源（需要 CORS）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Cross-Origin-Embedder-Policy: require-corp</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 启用后可以安全使用：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># - SharedArrayBuffer</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># - 高精度 Performance API</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>头部<th>作用<th>效果<tbody><tr><td>COOP: same-origin<td>隔离窗口<td>其他域名的 window.opener 为 null<tr><td>COEP: require-corp<td>限制资源加载<td>跨域资源需要 CORP 或 CORS<tr><td>CORP<td>资源策略<td>Cross-Origin-Resource-Policy: same-origin</table>
+<blockquote>
+<p>COOP + COEP 构成跨域隔离环境。启用后浏览器认为页面是安全的，可以重新使用 SharedArrayBuffer 等功能。但 COEP 要求所有跨域资源都支持 CORS 或 CORP，迁移成本较高。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1534-spectre-v2-与分支目标注入>15.3.4 Spectre V2 与分支目标注入<a href=#1534-spectre-v2-与分支目标注入 class=hash-link aria-label="15.3.4 Spectre V2 与分支目标注入的直接链接" title="15.3.4 Spectre V2 与分支目标注入的直接链接" translate=no>​</a></h3>
+<p>Spectre 有多个变体。Spectre V1（边界检查绕过）通过站点隔离缓解。Spectre V2（分支目标注入）更难缓解，它攻击 CPU 的间接分支预测器。</p>
+<p>Chrome 对 Spectre V2 的缓解包括：Reptiline（在编译时重写间接分支为条件分支）、Retpoline（将间接分支替换为 RET 指令的技巧），以及利用 CPU 微码更新提供的 IBRS（Indirect Branch Restricted Speculation）。</p>
+<p>这些缓解措施有性能开销。Reptoline 和 Retpoline 会降低间接分支的执行速度，影响 JavaScript JIT 编译的代码性能。这是安全与性能的权衡。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=154-进程模型与资源管理>15.4 进程模型与资源管理<a href=#154-进程模型与资源管理 class=hash-link aria-label="15.4 进程模型与资源管理的直接链接" title="15.4 进程模型与资源管理的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1541-chrome-的进程上限>15.4.1 Chrome 的进程上限<a href=#1541-chrome-的进程上限 class=hash-link aria-label="15.4.1 Chrome 的进程上限的直接链接" title="15.4.1 Chrome 的进程上限的直接链接" translate=no>​</a></h3>
+<p>站点隔离增加了渲染进程数量，但系统资源有限。Chrome 设置了进程上限，当超过限制时，多个站点可能共享一个进程。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>设备内存<th>进程上限<th>说明<tbody><tr><td>&lt; 2GB<td>约 10<td>低端设备<tr><td>2-4GB<td>约 20<td>中等设备<tr><td>4-8GB<td>约 40<td>标准设备<tr><td>> 8GB<td>约 80<td>高端设备</table>
+<p>当达到进程上限时，Chrome 使用「进程共享」策略：同一标签页中相似站点可能共享进程，但不同标签页的同一站点也会共享进程。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1542-进程生命周期>15.4.2 进程生命周期<a href=#1542-进程生命周期 class=hash-link aria-label="15.4.2 进程生命周期的直接链接" title="15.4.2 进程生命周期的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">渲染进程生命周期</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">创建：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户打开新标签页或导航到新站点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 浏览器进程创建新渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">运行：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  渲染页面、执行 JavaScript、处理用户交互</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">隐藏（Tab 切换到后台）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 降低优先级</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 可能冻结（Freeze）非活跃标签页</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 释放部分内存（如解码图片缓存）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">丢弃（Discard，内存紧张时）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 丢弃整个渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 保留 URL 和导航历史</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 用户切换回时重新加载</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">销毁：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  关闭标签页或导航到不同站点</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>状态<th>内存占用<th>响应速度<th>说明<tbody><tr><td>活跃<td>正常<td>即时<td>当前可见标签页<tr><td>隐藏<td>降级<td>即时<td>后台标签页<tr><td>冻结<td>更低<td>需解冻<td>5 分钟后自动冻结<tr><td>丢弃<td>最低（仅 URL）<td>需重新加载<td>内存紧张时</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=155-安全边界总结>15.5 安全边界总结<a href=#155-安全边界总结 class=hash-link aria-label="15.5 安全边界总结的直接链接" title="15.5 安全边界总结的直接链接" translate=no>​</a></h2>
+<p>Chrome 的安全架构是多层防御（Defense in Depth），每一层独立工作，一层被攻破不会导致全面沦陷。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Chrome 安全层级</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第1层：同源策略（JavaScript 层）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  限制脚本跨域访问 DOM 和数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓ 被绕过（如 Spectre）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第2层：站点隔离（进程层）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  不同站点在不同进程，内存隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓ 被攻破（需要沙箱逃逸）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第3层：沙箱（操作系统层）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  渲染进程无文件/网络/系统调用权限</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓ 被攻破（需要内核漏洞）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第4层：操作系统权限</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  浏览器进程本身权限有限</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 攻击者需要多个漏洞才能完全控制</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层级<th>防护目标<th>实现机制<tbody><tr><td>同源策略<td>脚本跨域访问<td>DOM 规范<tr><td>站点隔离<td>侧信道攻击<td>进程隔离<tr><td>沙箱<td>渲染进程逃逸<td>Seccomp/MAC<tr><td>OS 权限<td>系统级操作<td>用户权限</table>
+<blockquote>
+<p>多层防御是安全架构的核心理念。没有任何单一安全机制是完美的，但多层叠加让攻击者需要同时利用多个不同类型的漏洞，大幅提高了攻击成本。Chrome 的安全设计是「不信任任何单一防线」。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=156-windowsmacoslinux-沙箱实现的技术细节对比>15.6 Windows/macOS/Linux 沙箱实现的技术细节对比<a href=#156-windowsmacoslinux-沙箱实现的技术细节对比 class=hash-link aria-label="15.6 Windows/macOS/Linux 沙箱实现的技术细节对比的直接链接" title="15.6 Windows/macOS/Linux 沙箱实现的技术细节对比的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1561-windows-沙箱-restricted-token--job-object>15.6.1 Windows 沙箱: Restricted Token + Job Object<a href=#1561-windows-沙箱-restricted-token--job-object class=hash-link aria-label="15.6.1 Windows 沙箱: Restricted Token + Job Object的直接链接" title="15.6.1 Windows 沙箱: Restricted Token + Job Object的直接链接" translate=no>​</a></h3>
+<p>Windows 平台的 Chrome 沙箱使用两个核心机制：受限令牌（Restricted Token）和作业对象（Job Object）。</p>
+<p>受限令牌是通过 Windows API <code>CreateRestrictedToken</code> 创建的。它从进程的访问令牌中移除特定的权限，包括：移除管理员组 SID（即使以管理员身份运行，渲染进程也没有管理员权限）、移除高完整性级别（Integrity Level）到 Low（低完整性）、添加拒绝访问的 ACE（Access Control Entry），阻止渲染进程访问敏感系统资源。</p>
+<p>作业对象通过 <code>CreateJobObject</code> 创建，进一步限制进程的行为：限制可分配的内存上限、限制 CPU 时间、限制可创建的子进程数、阻止修改系统全局设置（如壁纸、系统时间）。如果渲染进程被攻破，攻击者也无法修改系统设置。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Windows 沙箱权限对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">正常进程权限:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 完整性级别: Medium/High</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可访问文件系统: 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可创建进程: 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可修改注册表: 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 可访问网络: 是</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程权限 (沙箱内):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 完整性级别: Low (无法写入 Medium+ 区域)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可访问文件系统: 仅临时目录</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可创建进程: 否 (Job Object 限制)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 可修改注册表: 否</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 可访问网络: 否 (通过 IPC 代理)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1562-macos-沙箱-seatbelt-sandbox-exec>15.6.2 macOS 沙箱: Seatbelt (sandbox-exec)<a href=#1562-macos-沙箱-seatbelt-sandbox-exec class=hash-link aria-label="15.6.2 macOS 沙箱: Seatbelt (sandbox-exec)的直接链接" title="15.6.2 macOS 沙箱: Seatbelt (sandbox-exec)的直接链接" translate=no>​</a></h3>
+<p>macOS 使用名为 Seatbelt 的内核级 MAC（Mandatory Access Control，强制访问控制）机制。Chrome 通过编写 Seatbelt 策略文件来限制渲染进程的权限。</p>
+<p>Seatbelt 策略使用类似 Scheme 的语法描述允许和拒绝的操作。Chrome 的渲染进程策略包括：允许读写特定目录（如缓存目录）、允许特定的 IPC 操作、拒绝直接文件系统访问、拒绝创建网络套接字、拒绝执行新程序。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">macOS Seatbelt 策略示例 (简化)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">;; 允许的文件系统访问</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow file-write* (subpath "/Users/.../Library/Caches/Chrome"))</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow file-read* (subpath "/Users/.../Library/Application Support/Chrome"))</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">;; 拒绝的操作系统</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny file-write*)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny process-exec*)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny network*)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny sysctl*)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">;; 允许的 IPC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow mach-lookup (global-name "com.apple.system.notification_center"))</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1563-linux-沙箱-seccomp-bpf--namespaces>15.6.3 Linux 沙箱: Seccomp-BPF + Namespaces<a href=#1563-linux-沙箱-seccomp-bpf--namespaces class=hash-link aria-label="15.6.3 Linux 沙箱: Seccomp-BPF + Namespaces的直接链接" title="15.6.3 Linux 沙箱: Seccomp-BPF + Namespaces的直接链接" translate=no>​</a></h3>
+<p>Linux 平台使用两层沙箱：Seccomp-BPF 系统调用过滤和用户命名空间（User Namespace）。</p>
+<p>Seccomp-BPF 通过 BPF 字节码过滤系统调用。Chrome 在渲染进程启动前安装 Seccomp 过滤器，限制可调用的系统调用白名单。白名单只包含渲染需要的系统调用（如 read, write, mmap, futex），排除了所有危险的系统调用（如 open, execve, fork, socket）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Linux Seccomp-BPF 过滤逻辑</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">允许的系统调用 (白名单):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  read()       ✓ 读取已打开的文件描述符</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  write()      ✓ 写入已打开的文件描述符</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  mmap()       ✓ 内存映射</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  mprotect()   ✓ 修改内存保护</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  futex()      ✓ 线程同步</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  epoll_*()    ✓ 事件循环</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  clock_gettime() ✓ 获取时间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">禁止的系统调用 (默认拒绝):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  open()       ✗ 打开新文件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  openat()     ✗ 相对路径打开文件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  socket()     ✗ 创建网络套接字</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  connect()    ✗ 连接网络</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  execve()     ✗ 执行新程序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  fork()       ✗ 创建新进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  clone()      ✗ 创建新线程 (受限)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ptrace()     ✗ 调试其他进程</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>核心机制<th>限制层级<th>逃逸难度<tbody><tr><td>Windows<td>Restricted Token + Job Object<td>用户态 + 内核态<td>中<tr><td>macOS<td>Seatbelt (MAC)<td>内核态<td>中-高<tr><td>Linux<td>Seccomp-BPF + Namespace<td>内核态<td>高<tr><td>Android<td>Isolated Process<td>内核态 (UID 隔离)<td>中</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1564-站点隔离的内存开销数据>15.6.4 站点隔离的内存开销数据<a href=#1564-站点隔离的内存开销数据 class=hash-link aria-label="15.6.4 站点隔离的内存开销数据的直接链接" title="15.6.4 站点隔离的内存开销数据的直接链接" translate=no>​</a></h3>
+<p>站点隔离带来了显著的安全收益，但代价是内存开销增加。Chrome 团队公布的实测数据显示了具体的内存影响。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>无站点隔离<th>有站点隔离<th>增量<tbody><tr><td>10 个同站点标签页<td>1.2 GB<td>1.3 GB<td>+8%<tr><td>10 个不同站点标签页<td>1.5 GB<td>1.8 GB<td>+20%<tr><td>1 个含 3 个跨站 iframe 的页面<td>300 MB<td>450 MB<td>+50%<tr><td>移动端 (Android)<td>400 MB<td>480 MB<td>+20%</table>
+<p>内存开销的主要来源：每个渲染进程的基础开销（V8 实例约 20-30MB、Blink 渲染引擎约 10-20MB、进程基础设施约 5-10MB）。进程数越多，这些固定开销的累积越大。</p>
+<p>Chrome 的优化措施包括：共享只读内存段（V8 的内置代码快照在进程间共享）、内存压力下的进程合并（低内存设备）、延迟创建 V8 实例（直到页面真正需要 JavaScript）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1565-进程模型演变>15.6.5 进程模型演变<a href=#1565-进程模型演变 class=hash-link aria-label="15.6.5 进程模型演变的直接链接" title="15.6.5 进程模型演变的直接链接" translate=no>​</a></h3>
+<p>Chrome 的进程模型经历了多次演变。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">进程模型演变时间线</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2008: process-per-site-instance (初始)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 每个标签页的每个站点实例一个进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 最强隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 内存开销最大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2011: process-per-site (低内存设备)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 同一站点所有实例共享进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 减少进程数</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 牺牲部分隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2018: + Site Isolation</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 跨站点 iframe 独立进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 即使在同一标签页内</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 安全隔离与性能隔离结合</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2020: + Process Sharing</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 达到进程上限时共享</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 相似站点可共享进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 动态调整</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1566-站点隔离对扩展的影响>15.6.6 站点隔离对扩展的影响<a href=#1566-站点隔离对扩展的影响 class=hash-link aria-label="15.6.6 站点隔离对扩展的影响的直接链接" title="15.6.6 站点隔离对扩展的影响的直接链接" translate=no>​</a></h3>
+<p>浏览器扩展（Extensions）运行在扩展进程中，与渲染进程交互。站点隔离改变了扩展与网页的交互方式。</p>
+<p>扩展通过 <code>chrome.scripting.executeScript</code> 或 content scripts 注入到网页中的代码，需要与网页的渲染进程关联。在站点隔离之前，一个标签页的所有 content scripts 都在同一个渲染进程中。站点隔离后，跨站点的 iframe 在不同进程中，扩展的 content scripts 也需要分发到不同的渲染进程中。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1567-spectre-v1v2v3-缓解>15.6.7 Spectre V1/V2/V3 缓解<a href=#1567-spectre-v1v2v3-缓解 class=hash-link aria-label="15.6.7 Spectre V1/V2/V3 缓解的直接链接" title="15.6.7 Spectre V1/V2/V3 缓解的直接链接" translate=no>​</a></h3>
+<p>Spectre 和 Meltdown 漏洞家族有三个主要变体，每个变体需要不同的缓解措施。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Spectre/Meltdown 变体与缓解</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">V1: Spectre (Bounds Check Bypass)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 原理: 训练分支预测器绕过边界检查</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 影响: 可读取同进程内任意内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 缓解: 站点隔离 (不同站点在不同进程)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     + 推测执行屏障 (LFENCE 指令)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">V2: Spectre (Branch Target Injection)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 原理: 污染间接分支预测器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 影响: 可读取同进程或跨进程内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 缓解: Retpoline (替换间接分支)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     + Reptiline (编译时重写)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     + IBRS (CPU 微码更新)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">V3: Meltdown (Rogue Data Cache Load)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 原理: 利用乱序执行读取内核内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 影响: 可读取操作系统内核数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 缓解: KPTI (内核页表隔离)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     + PCID (进程上下文标识)</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>变体<th>攻击目标<th>浏览器缓解<th>OS 缓解<th>硬件缓解<tbody><tr><td>V1 (Spectre)<td>同进程内存<td>站点隔离<td>—<td>推测屏障<tr><td>V2 (Spectre)<td>跨进程内存<td>Retpoline<td>—<td>IBRS 微码<tr><td>V3 (Meltdown)<td>内核内存<td>—<td>KPTI<td>硬件修复</table>
+<p>Chrome 对 Spectre V1 的主要缓解是站点隔离。通过将不同站点放在不同进程中，V1 攻击只能读取同一进程内的数据，即同一站点的数据。对于攻击者来说，读取自己站点的数据没有意义。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=155-各平台沙箱实现对比>15.5 各平台沙箱实现对比<a href=#155-各平台沙箱实现对比 class=hash-link aria-label="15.5 各平台沙箱实现对比的直接链接" title="15.5 各平台沙箱实现对比的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1551-windows-沙箱>15.5.1 Windows 沙箱<a href=#1551-windows-沙箱 class=hash-link aria-label="15.5.1 Windows 沙箱的直接链接" title="15.5.1 Windows 沙箱的直接链接" translate=no>​</a></h3>
+<p>Windows 上 Chrome 使用 Job Object + Restricted Token 实现沙箱。Job Object 限制进程的资源使用（内存、CPU、句柄数），Restricted Token 限制进程的权限（不能创建全局对象、不能访问其他进程）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Windows 沙箱机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. Job Object（作业对象）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 限制进程组资源</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 内存上限、CPU 时间、IO 带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 防止资源耗尽攻击</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. Restricted Token（受限令牌）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 移除权限 SID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不能访问系统资源</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不能创建全局对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不能打开其他进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. Desktop隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 进程在不同 Desktop</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不能发送窗口消息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 防止 UI 攻击</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1552-macos-沙箱>15.5.2 macOS 沙箱<a href=#1552-macos-沙箱 class=hash-link aria-label="15.5.2 macOS 沙箱的直接链接" title="15.5.2 macOS 沙箱的直接链接" translate=no>​</a></h3>
+<p>macOS 使用 seatbelt（sandboxd）实现沙箱。seatbelt 是基于 TrustedBSD MAC 框架的强制访问控制系统。</p>
+<div class="language-scheme codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-scheme codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">;; macOS 沙箱配置示例（简化）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny default)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow process-fork)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow signal (target self))</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(allow file-read* (subpath "/usr/lib"))</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">(deny file-write* (subpath "/etc"))</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1553-linux-沙箱>15.5.3 Linux 沙箱<a href=#1553-linux-沙箱 class=hash-link aria-label="15.5.3 Linux 沙箱的直接链接" title="15.5.3 Linux 沙箱的直接链接" translate=no>​</a></h3>
+<p>Linux 使用 seccomp-bpf + namespaces 实现沙箱。seccomp-bpf 过滤系统调用，namespaces 隔离进程视图。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Linux 沙箱机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. seccomp-bpf</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 过滤系统调用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 只允许 read/write/epoll 等安全调用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 阻止 fork/exec/open 等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. namespaces</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → PID namespace: 进程隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Network namespace: 网络隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Mount namespace: 文件系统隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → User namespace: 用户隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 结合使用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → seccomp 限制系统调用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → namespaces 隔离资源视图</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>机制<th>特点<tbody><tr><td>Windows<td>Job Object + Restricted Token<td>句柄限制 + 权限限制<tr><td>macOS<td>seatbelt (sandboxd)<td>声明式配置<tr><td>Linux<td>seccomp-bpf + namespaces<td>系统调用过滤 + 资源隔离</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=156-站点隔离的内存开销>15.6 站点隔离的内存开销<a href=#156-站点隔离的内存开销 class=hash-link aria-label="15.6 站点隔离的内存开销的直接链接" title="15.6 站点隔离的内存开销的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1561-进程数与内存消耗>15.6.1 进程数与内存消耗<a href=#1561-进程数与内存消耗 class=hash-link aria-label="15.6.1 进程数与内存消耗的直接链接" title="15.6.1 进程数与内存消耗的直接链接" translate=no>​</a></h3>
+<p>站点隔离的代价是内存。每个渲染进程都需要独立的 V8 堆、Blink 对象、GPU 上下文等，基础开销约 30-50MB。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">无站点隔离（旧模式）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  10 个标签页 → 1-4 个渲染进程 → 基础内存: 120-200MB</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">有站点隔离（当前模式）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  10 个标签页 → 10-15 个渲染进程 → 基础内存: 300-750MB</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">内存开销增加: 2-4 倍</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>进程数<th>内存开销<tbody><tr><td>单站点<td>1-2<td>30-80MB<tr><td>5 个站点<td>5-8<td>150-400MB<tr><td>10 个站点<td>10-15<td>300-750MB<tr><td>Android（内存限制）<td>部分隔离<td>减半</table>
+<blockquote>
+<p>Android 上由于内存限制（通常 2-4GB），Chrome 不会完全启用站点隔离。Android Chrome 使用「大页面隔离」策略——只有顶级框架跨站时才隔离，嵌入的 iframe 可能与顶级页面共享进程。这是安全与资源的权衡。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=157-spectre-缓解措施>15.7 Spectre 缓解措施<a href=#157-spectre-缓解措施 class=hash-link aria-label="15.7 Spectre 缓解措施的直接链接" title="15.7 Spectre 缓解措施的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1571-spectre-变体与缓解>15.7.1 Spectre 变体与缓解<a href=#1571-spectre-变体与缓解 class=hash-link aria-label="15.7.1 Spectre 变体与缓解的直接链接" title="15.7.1 Spectre 变体与缓解的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>变体<th>攻击方式<th>Chrome 缓解<tbody><tr><td>V1 (Bounds Check Bypass)<td>训练分支预测器<td>站点隔离 + Speculative Load Hardening<tr><td>V2 (Branch Target Injection)<td>污染 BTB<td>Retpoline 编译<tr><td>V3 (Meltdown)<td>利用异常处理<td>操作系统级 KPTI<tr><td>V3a (Lazy FP)<td>延迟 FPU 切换<td>禁用延迟切换</table>
+<blockquote>
+<p>Spectre 缓解是多层的。硬件层有 Retpoline（间接分支预测隔离），操作系统层有 KPTI（内核页表隔离），浏览器层有站点隔离和跨源读屏蔽。站点隔离是最重要的浏览器级缓解——即使 Spectre 攻击成功，也只能读取同站数据。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=157-沙箱逃逸防护>15.7 沙箱逃逸防护<a href=#157-沙箱逃逸防护 class=hash-link aria-label="15.7 沙箱逃逸防护的直接链接" title="15.7 沙箱逃逸防护的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1571-沙箱逃逸路径>15.7.1 沙箱逃逸路径<a href=#1571-沙箱逃逸路径 class=hash-link aria-label="15.7.1 沙箱逃逸路径的直接链接" title="15.7.1 沙箱逃逸路径的直接链接" translate=no>​</a></h3>
+<p>沙箱是浏览器的最后一道防线。即使渲染进程被攻破，沙箱也能阻止攻击者访问操作系统。但沙箱本身也可能存在漏洞。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">沙箱逃逸常见路径</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 系统调用漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → seccomp-bpf 过滤器缺陷</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 新增系统调用未纳入过滤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 利用允许的系统调用组合攻击</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. IPC 漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 渲染进程向浏览器进程发送恶意 IPC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 浏览器进程解析时触发漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 绕过沙箱获得浏览器进程权限</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. GPU 进程漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 渲染进程通过 GPU 命令攻击 GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → GPU 进程不在沙箱中（或沙箱较弱）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 通过 GPU 进程逃逸</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 文件描述符泄漏</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 沙箱启动时未关闭的文件描述符</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 攻击者利用泄漏的 fd 访问外部资源</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>逃逸路径<th>难度<th>影响<tbody><tr><td>系统调用<td>高<td>完全控制<tr><td>IPC 漏洞<td>中<td>浏览器进程<tr><td>GPU 进程<td>中<td>系统级<tr><td>FD 泄漏<td>低<td>有限访问</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1572-chrome-的漏洞奖励计划>15.7.2 Chrome 的漏洞奖励计划<a href=#1572-chrome-的漏洞奖励计划 class=hash-link aria-label="15.7.2 Chrome 的漏洞奖励计划的直接链接" title="15.7.2 Chrome 的漏洞奖励计划的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Chrome 漏洞奖励（2024 年）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">沙箱逃逸:    $20,000 - $100,000</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 RCE: $10,000 - $50,000</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">浏览器进程 RCE: $20,000 - $80,000</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">沙箱绕过:     $10,000 - $30,000</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">报告流程:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 发现漏洞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 提交报告（chromereporting.com）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. Chrome 团队验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 修复并发布补丁</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  5. 发布漏洞详情（90 天后）</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Chrome 的漏洞奖励计划是沙箱安全的重要保障。高额奖励鼓励安全研究员寻找漏洞并负责任地报告，而不是将漏洞出售给攻击者。Chrome 团队通常在 24 小时内响应报告，并在 90 天内发布修复。这种快速响应机制是 Chrome 安全性的关键。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=158-跨平台沙箱对比>15.8 跨平台沙箱对比<a href=#158-跨平台沙箱对比 class=hash-link aria-label="15.8 跨平台沙箱对比的直接链接" title="15.8 跨平台沙箱对比的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1581-windowsmacoslinux-沙箱技术>15.8.1 Windows/macOS/Linux 沙箱技术<a href=#1581-windowsmacoslinux-沙箱技术 class=hash-link aria-label="15.8.1 Windows/macOS/Linux 沙箱技术的直接链接" title="15.8.1 Windows/macOS/Linux 沙箱技术的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">跨平台沙箱对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Windows 沙箱:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  技术: Integrity Level + Job Object</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Low Integrity: 不能写入 Medium+ 路径</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Job Object: 限制 CPU/内存/进程创建</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → AppContainer: 更严格的隔离</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">macOS 沙箱:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  技术: Seatbelt（sandbox-exec）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 基于 BSD 的 Mandatory Access Control</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 配置文件定义允许/拒绝的操作</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 比传统 Unix 权限更精细</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Linux 沙箱:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  技术: seccomp-bpf + Namespaces + PID</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → seccomp-bpf: 过滤系统调用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Namespaces: 隔离进程/网络/文件系统视图</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → PID: 限制进程间访问</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Chrome 统一抽象:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → sandbox/ 目录封装跨平台 API</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 各平台实现不同但接口一致</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 渲染进程启动时统一进入沙箱</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>核心技术<th>限制强度<tbody><tr><td>Windows<td>Integrity + Job<td>强<tr><td>macOS<td>Seatbelt<td>强<tr><td>Linux<td>seccomp + NS<td>中</table>
+<blockquote>
+<p>Linux 沙箱相对较弱，因为 Linux 内核攻击面较大。Chrome 在 Linux 上使用 seccomp-bpf 过滤系统调用，配合 PID/Network Namespace 隔离。但 Linux 内核漏洞可能导致 Namespace 逃逸。Windows 的 AppContainer 和 macOS 的 Seatbelt 提供了更强的内核级保护。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>安全意义<tbody><tr><td>沙箱<td>限制渲染进程权限<td>防止渲染漏洞逃逸<tr><td>Seccomp-BPF<td>系统调用过滤<td>内核级防护<tr><td>站点隔离<td>不同站点不同进程<td>防 Spectre 侧信道<tr><td>跨进程 iframe<td>OOPIF<td>进程间数据隔离<tr><td>COOP/COEP<td>跨域隔离环境<td>安全启用高精度计时<tr><td>多层防御<td>4 层独立防护<td>纵深防御</table>
+<p>觉得有用？收藏起来，这是理解浏览器安全架构最系统的一篇。</p>
+<p>你对浏览器安全架构有什么疑问？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲 Cookie 安全与隐私保护。系列进度 15/24。</p>
+<p>下期预告：第 16 章「Cookie 安全与隐私保护」。我们会拆解 Cookie 的安全属性（Secure、HttpOnly、SameSite）、第三方 Cookie 的消亡路线图、以及 Privacy Sandbox 的替代方案。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_15.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第14章 同源策略与 CORS</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第16章 Cookie 安全与隐私保护</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#151-沙箱模型 class="table-of-contents__link toc-highlight">15.1 沙箱模型</a><ul><li><a href=#1511-为什么需要沙箱 class="table-of-contents__link toc-highlight">15.1.1 为什么需要沙箱</a><li><a href=#1512-沙箱的实现机制 class="table-of-contents__link toc-highlight">15.1.2 沙箱的实现机制</a><li><a href=#1513-沙箱的权限最小化 class="table-of-contents__link toc-highlight">15.1.3 沙箱的权限最小化</a><li><a href=#1514-沙箱的局限性与逃逸 class="table-of-contents__link toc-highlight">15.1.4 沙箱的局限性与逃逸</a></ul><li><a href=#152-站点隔离site-isolation class="table-of-contents__link toc-highlight">15.2 站点隔离（Site Isolation）</a><ul><li><a href=#1521-为什么需要站点隔离 class="table-of-contents__link toc-highlight">15.2.1 为什么需要站点隔离</a><li><a href=#1522-站点隔离的实现 class="table-of-contents__link toc-highlight">15.2.2 站点隔离的实现</a><li><a href=#1523-跨进程-iframe class="table-of-contents__link toc-highlight">15.2.3 跨进程 iframe</a><li><a href=#1524-站点隔离的进程模型细节 class="table-of-contents__link toc-highlight">15.2.4 站点隔离的进程模型细节</a></ul><li><a href=#153-spectre-与-meltdown-的影响 class="table-of-contents__link toc-highlight">15.3 Spectre 与 Meltdown 的影响</a><ul><li><a href=#1531-spectre-攻击原理 class="table-of-contents__link toc-highlight">15.3.1 Spectre 攻击原理</a><li><a href=#1532-浏览器的-spectre-缓解措施 class="table-of-contents__link toc-highlight">15.3.2 浏览器的 Spectre 缓解措施</a><li><a href=#1533-coop-和-coep class="table-of-contents__link toc-highlight">15.3.3 COOP 和 COEP</a><li><a href=#1534-spectre-v2-与分支目标注入 class="table-of-contents__link toc-highlight">15.3.4 Spectre V2 与分支目标注入</a></ul><li><a href=#154-进程模型与资源管理 class="table-of-contents__link toc-highlight">15.4 进程模型与资源管理</a><ul><li><a href=#1541-chrome-的进程上限 class="table-of-contents__link toc-highlight">15.4.1 Chrome 的进程上限</a><li><a href=#1542-进程生命周期 class="table-of-contents__link toc-highlight">15.4.2 进程生命周期</a></ul><li><a href=#155-安全边界总结 class="table-of-contents__link toc-highlight">15.5 安全边界总结</a><li><a href=#156-windowsmacoslinux-沙箱实现的技术细节对比 class="table-of-contents__link toc-highlight">15.6 Windows/macOS/Linux 沙箱实现的技术细节对比</a><ul><li><a href=#1561-windows-沙箱-restricted-token--job-object class="table-of-contents__link toc-highlight">15.6.1 Windows 沙箱: Restricted Token + Job Object</a><li><a href=#1562-macos-沙箱-seatbelt-sandbox-exec class="table-of-contents__link toc-highlight">15.6.2 macOS 沙箱: Seatbelt (sandbox-exec)</a><li><a href=#1563-linux-沙箱-seccomp-bpf--namespaces class="table-of-contents__link toc-highlight">15.6.3 Linux 沙箱: Seccomp-BPF + Namespaces</a><li><a href=#1564-站点隔离的内存开销数据 class="table-of-contents__link toc-highlight">15.6.4 站点隔离的内存开销数据</a><li><a href=#1565-进程模型演变 class="table-of-contents__link toc-highlight">15.6.5 进程模型演变</a><li><a href=#1566-站点隔离对扩展的影响 class="table-of-contents__link toc-highlight">15.6.6 站点隔离对扩展的影响</a><li><a href=#1567-spectre-v1v2v3-缓解 class="table-of-contents__link toc-highlight">15.6.7 Spectre V1/V2/V3 缓解</a></ul><li><a href=#155-各平台沙箱实现对比 class="table-of-contents__link toc-highlight">15.5 各平台沙箱实现对比</a><ul><li><a href=#1551-windows-沙箱 class="table-of-contents__link toc-highlight">15.5.1 Windows 沙箱</a><li><a href=#1552-macos-沙箱 class="table-of-contents__link toc-highlight">15.5.2 macOS 沙箱</a><li><a href=#1553-linux-沙箱 class="table-of-contents__link toc-highlight">15.5.3 Linux 沙箱</a></ul><li><a href=#156-站点隔离的内存开销 class="table-of-contents__link toc-highlight">15.6 站点隔离的内存开销</a><ul><li><a href=#1561-进程数与内存消耗 class="table-of-contents__link toc-highlight">15.6.1 进程数与内存消耗</a></ul><li><a href=#157-spectre-缓解措施 class="table-of-contents__link toc-highlight">15.7 Spectre 缓解措施</a><ul><li><a href=#1571-spectre-变体与缓解 class="table-of-contents__link toc-highlight">15.7.1 Spectre 变体与缓解</a></ul><li><a href=#157-沙箱逃逸防护 class="table-of-contents__link toc-highlight">15.7 沙箱逃逸防护</a><ul><li><a href=#1571-沙箱逃逸路径 class="table-of-contents__link toc-highlight">15.7.1 沙箱逃逸路径</a><li><a href=#1572-chrome-的漏洞奖励计划 class="table-of-contents__link toc-highlight">15.7.2 Chrome 的漏洞奖励计划</a></ul><li><a href=#158-跨平台沙箱对比 class="table-of-contents__link toc-highlight">15.8 跨平台沙箱对比</a><ul><li><a href=#1581-windowsmacoslinux-沙箱技术 class="table-of-contents__link toc-highlight">15.8.1 Windows/macOS/Linux 沙箱技术</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

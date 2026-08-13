@@ -1,0 +1,631 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-video/chapter-10" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>chapter-10 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-10 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="chapter-10 | 知识库"/><meta data-rh=true name=description content="第十章 主流视频生成模型详解"/><meta data-rh=true property=og:description content="第十章 主流视频生成模型详解"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-10 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-10 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-10 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/","name":"AI 视频生成","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-video/chapter-10","name":"chapter-10","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="折叠侧边栏分类 'AI 视频生成'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-01><span title=chapter-01 class=linkLabel_WmDU>chapter-01</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-02><span title=chapter-02 class=linkLabel_WmDU>chapter-02</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-03><span title=chapter-03 class=linkLabel_WmDU>chapter-03</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-04><span title=chapter-04 class=linkLabel_WmDU>chapter-04</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-05><span title=chapter-05 class=linkLabel_WmDU>chapter-05</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-06><span title=chapter-06 class=linkLabel_WmDU>chapter-06</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-07><span title=chapter-07 class=linkLabel_WmDU>chapter-07</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-08><span title=chapter-08 class=linkLabel_WmDU>chapter-08</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-09><span title=chapter-09 class=linkLabel_WmDU>chapter-09</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-10><span title=chapter-10 class=linkLabel_WmDU>chapter-10</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-11><span title=chapter-11 class=linkLabel_WmDU>chapter-11</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-12><span title=chapter-12 class=linkLabel_WmDU>chapter-12</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-video/chapter-13><span title=chapter-13 class=linkLabel_WmDU>chapter-13</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-video/><span>AI 视频生成</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>chapter-10</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>chapter-10</h1></header><h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=第十章-主流视频生成模型详解>第十章 主流视频生成模型详解<a href=#第十章-主流视频生成模型详解 class=hash-link aria-label="第十章 主流视频生成模型详解的直接链接" title="第十章 主流视频生成模型详解的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=引言视频生成模型的爆发年代>引言：视频生成模型的爆发年代<a href=#引言视频生成模型的爆发年代 class=hash-link aria-label=引言：视频生成模型的爆发年代的直接链接 title=引言：视频生成模型的爆发年代的直接链接 translate=no>​</a></h3>
+<p>2024年至2025年，视频生成领域经历了一场前所未有的技术爆发。从OpenAI Sora的惊艳亮相到阿里万相、快手可灵的持续迭代，视频生成模型已经从实验室原型迅速走向实用化阶段。这些模型在架构设计、训练策略和工程优化方面呈现出截然不同的技术路线，共同推动着整个领域向前发展。</p>
+<p>本章将逐一深入分析当前最具代表性的七款视频生成模型，探讨它们的架构设计、技术特点、训练方法和性能表现，并通过横向对比揭示各模型的技术路线差异和优势领域。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=openai-sora重新定义视频生成的天花板>OpenAI Sora：重新定义视频生成的天花板<a href=#openai-sora重新定义视频生成的天花板 class=hash-link aria-label="OpenAI Sora：重新定义视频生成的天花板的直接链接" title="OpenAI Sora：重新定义视频生成的天花板的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=架构核心时空patch与dit>架构核心：时空Patch与DiT<a href=#架构核心时空patch与dit class=hash-link aria-label=架构核心：时空Patch与DiT的直接链接 title=架构核心：时空Patch与DiT的直接链接 translate=no>​</a></h4>
+<p>Sora的技术架构建立在两个核心创新之上：时空Patch（Spacetime Patches）和DiT（Diffusion Transformer，扩散Transformer）架构。时空Patch是Sora最基础的数据表示创新。传统的视频生成模型通常将视频转换为一系列帧级别的Token或空间块，而Sora则将视频压缩到一个低维的潜在空间中，然后将其分解为时空Patch。这种表示方式将视频的时间和空间维度统一处理，使模型能够自然地学习到时空联合的动态规律。</p>
+<p>具体而言，Sora首先使用一个视频压缩网络（Video Compression Network）将输入视频压缩到潜在空间。这个网络接收原始视频输入，输出一个在时间和空间维度上都经过压缩的潜在表示。随后，这个潜在表示被分解为一系列时空Patch，每个Patch可以理解为视频在某个特定时空位置的一个局部特征向量。这种分解方式使得模型能够处理任意分辨率、任意时长的视频输入，因为无论原始视频的尺寸如何，最终都会被统一映射为相同维度的Patch序列。</p>
+<p>DiT架构是Sora的生成引擎。与传统的U-Net架构不同，DiT使用Transformer作为扩散模型的主干网络。Transformer的自注意力机制使得模型能够捕捉长距离的时空依赖关系，这对于生成具有复杂运动和场景变化的视频至关重要。DiT架构的另一个优势是其出色的缩放特性，随着模型参数量和训练数据量的增加，生成质量能够持续提升。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=re-captioning高质量训练数据的关键>Re-captioning：高质量训练数据的关键<a href=#re-captioning高质量训练数据的关键 class=hash-link aria-label=Re-captioning：高质量训练数据的关键的直接链接 title=Re-captioning：高质量训练数据的关键的直接链接 translate=no>​</a></h4>
+<p>Sora的另一个重要创新是其Re-captioning（重新标注）策略。视频生成模型的训练高度依赖高质量的文本-视频配对数据，而互联网上现有的视频描述往往质量低下、信息稀疏。为了解决这个问题，OpenAI采用了一个巧妙的级联标注方案。</p>
+<p>首先，他们训练了一个能够生成高质量详细描述的图像标注模型。这个模型基于DALL-E 3（OpenAI的图像生成模型）的技术积累，能够为图像生成极其详细的描述文本。然后，他们将这个图像标注模型应用于视频的关键帧，为每一帧生成详细描述。接着，利用GPT-4（OpenAI的大语言模型）将这些帧级别的描述整合为一段完整、连贯的视频描述。</p>
+<p>这种Re-captioning策略产生的训练数据具有几个显著优势。第一，描述文本的信息密度远高于原始互联网标注，包含了对场景、物体、动作、风格等方面的详细描述。第二，文本描述的语言质量更高，语法更规范，语义更连贯。第三，统一的标注风格使得模型能够更好地学习文本到视频的映射关系。这些高质量的数据是Sora能够生成高度忠实于文本提示的视频的重要原因。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=60秒高清生成能力的技术解读>60秒高清生成能力的技术解读<a href=#60秒高清生成能力的技术解读 class=hash-link aria-label=60秒高清生成能力的技术解读的直接链接 title=60秒高清生成能力的技术解读的直接链接 translate=no>​</a></h4>
+<p>Sora最令人瞩目的能力是生成长达60秒的高清视频，且视频内容具有高度的时序一致性和复杂的场景转换。这一能力的实现涉及多个技术层面的协同。</p>
+<p>首先是长时序建模能力。传统的视频生成模型通常只能生成几秒到十几秒的视频，主要受限于模型对长时序依赖的建模能力。Sora的DiT架构通过自注意力机制能够有效捕捉长距离的时序依赖，而时空Patch的表示方式将长视频压缩为可控长度的Token序列，使得模型能够在合理的计算开销下处理长视频。</p>
+<p>其次是多场景转换能力。Sora生成的视频中经常包含复杂的场景转换，如镜头切换、视角变化、时间跳转等。这表明模型在训练过程中学习到了丰富的视频编辑和叙事模式，能够自然地在不同场景之间进行过渡。这种能力很可能来源于训练数据中包含的大量 professionally edited（专业编辑的）视频内容。</p>
+<p>第三是高保真度的视觉质量。Sora生成的视频在视觉细节方面表现出色，包括光影效果、材质纹理、物体运动等方面都具有很高的真实感。这得益于模型的大规模参数量和大体量的训练数据，以及高质量的Re-captioning数据提供的精确指导。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=未公开细节的合理推测>未公开细节的合理推测<a href=#未公开细节的合理推测 class=hash-link aria-label=未公开细节的合理推测的直接链接 title=未公开细节的合理推测的直接链接 translate=no>​</a></h4>
+<p>由于OpenAI并未公开Sora的完整技术细节，许多关键信息需要基于公开信息和学术研究进行合理推测。</p>
+<p>关于模型规模，根据Sora展现出的生成质量和缩放特性，其参数量很可能在数十亿到上百亿的量级。DiT架构的一个已知特性是其在大规模参数下的优秀缩放表现，OpenAI很可能充分利用了这一特性。</p>
+<p>关于训练数据，Sora的训练集很可能包含数百万到数千万的视频片段，涵盖各种场景、风格和内容类型。考虑到Re-captioning策略的应用，训练数据的质量应该远高于原始互联网视频数据。</p>
+<p>关于架构细节，Sora很可能采用了多尺度训练策略，即在训练过程中逐步增加视频的分辨率和时长。这种策略能够帮助模型从简单到复杂逐步学习视频生成的能力，提高训练效率和生成质量。此外，Sora可能还使用了条件控制机制，允许用户通过文本提示对生成视频的内容、风格和节奏进行精细控制。</p>
+<p>关于潜在空间的维度和Patch的大小，根据相关学术研究的经验，潜在空间的维度可能在4到16通道之间，Patch的空间尺寸可能在16×16到32×32像素之间，时间维度上每帧或每隔几帧对应一个时间步。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=快手可灵kling国产视频生成的领军者>快手可灵Kling：国产视频生成的领军者<a href=#快手可灵kling国产视频生成的领军者 class=hash-link aria-label=快手可灵Kling：国产视频生成的领军者的直接链接 title=快手可灵Kling：国产视频生成的领军者的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=扩散transformer架构与长视频生成>扩散Transformer架构与长视频生成<a href=#扩散transformer架构与长视频生成 class=hash-link aria-label=扩散Transformer架构与长视频生成的直接链接 title=扩散Transformer架构与长视频生成的直接链接 translate=no>​</a></h4>
+<p>快手可灵Kling是国内最早展示出世界级视频生成能力的模型之一。Kling采用了扩散Transformer（Diffusion Transformer）架构作为其核心技术路线，这与Sora的架构选择一致，但在具体实现上有着独特的设计。</p>
+<p>Kling的架构设计重点解决了长视频生成中的核心挑战：时序一致性。在长视频生成中，模型需要确保视频前后帧之间的视觉一致性、物体运动的连贯性以及场景转换的自然性。Kling通过其定制的Transformer架构和注意力机制设计，能够在超过1分钟的视频中保持较好的一致性。</p>
+<p>Kling最引人注目的能力是其2分钟长视频生成能力。这是目前主流视频生成模型中能够生成的最长视频时长之一。实现2分钟的视频生成面临着巨大的技术挑战，包括计算资源消耗、时序一致性维护、内容多样性保证等。Kling很可能采用了分阶段生成策略，即先生成一个粗略的全局规划，然后逐步细化每个片段，最后进行整体优化以确保过渡自然。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=kling-26与音画同出技术>Kling 2.6与音画同出技术<a href=#kling-26与音画同出技术 class=hash-link aria-label="Kling 2.6与音画同出技术的直接链接" title="Kling 2.6与音画同出技术的直接链接" translate=no>​</a></h4>
+<p>Kling 2.6版本引入了一个重要的技术创新：音画同出。这意味着模型不仅能够生成视频画面，还能同时生成与视频内容匹配的音频，包括背景音乐、环境音效和人声等。这一能力的实现标志著视频生成模型从单纯的视觉生成向多模态生成的跨越。</p>
+<p>音画同出技术的核心挑战在于音视频之间的时序对齐和语义匹配。视频中的事件需要在正确的时间点对应相应的音频效果，例如门关闭的声音需要与门关闭的画面同步出现。Kling 2.6很可能采用了联合训练策略，在模型训练过程中同时输入视频和音频数据，学习两者之间的关联关系。此外，音频生成本身也是一个复杂的问题，需要处理不同类型声音的合成、混音和空间定位等。</p>
+<p>Kling 2.6的音画同出能力使得用户无需在视频生成后再单独添加音频，大大提升了创作效率。这一功能在短视频创作、广告制作和影视预演等场景中具有广泛的应用价值。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=物理世界规律理解>物理世界规律理解<a href=#物理世界规律理解 class=hash-link aria-label=物理世界规律理解的直接链接 title=物理世界规律理解的直接链接 translate=no>​</a></h4>
+<p>Kling在物理世界规律理解方面表现突出。生成的视频中，物体的运动遵循物理定律，如重力、碰撞、弹性等。例如，液体倾倒时的流动轨迹、物体掉落时的弹跳行为、布料飘动时的褶皱变化等都展现出较高的物理真实感。</p>
+<p>这种物理规律理解能力很可能来源于两个方面的技术积累。第一是大规模的真实世界视频训练数据，这些数据中包含了丰富的物理现象示例，模型通过学习这些数据隐式地掌握了物理规律。第二是可能的物理引擎辅助训练或物理约束损失函数，即在训练过程中引入物理约束，惩罚违反物理定律的生成结果。</p>
+<p>Kling对物理世界的理解不仅体现在宏观物体运动上，还体现在微观细节上。例如，反射和折射效果的模拟、阴影的动态变化、大气透视效果等。这些细节的准确呈现使得Kling生成的视频在视觉真实感方面达到了很高水平。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=runway-gen-3-alpha专业级视频生成的代表>Runway Gen-3 Alpha：专业级视频生成的代表<a href=#runway-gen-3-alpha专业级视频生成的代表 class=hash-link aria-label="Runway Gen-3 Alpha：专业级视频生成的代表的直接链接" title="Runway Gen-3 Alpha：专业级视频生成的代表的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=时空解耦transformer>时空解耦Transformer<a href=#时空解耦transformer class=hash-link aria-label=时空解耦Transformer的直接链接 title=时空解耦Transformer的直接链接 translate=no>​</a></h4>
+<p>Runway Gen-3 Alpha是Runway公司推出的第三代视频生成模型，其核心技术特色是时空解耦Transformer（Spatiotemporal Decoupled Transformer）架构。与Sora将时间和空间统一处理的时空Patch方案不同，Gen-3 Alpha选择将时间维度和空间维度的处理进行解耦，分别使用专门的模块进行处理。</p>
+<p>时空解耦的核心思想是将视频的时空注意力分解为空间注意力和时间注意力两个步骤。空间注意力负责处理每一帧内部的空间关系，学习帧级别的视觉特征。时间注意力则负责处理不同帧之间的时序关系，学习运动和变化的模式。这种分解方式有几个显著优势。</p>
+<p>首先是计算效率的提升。完整的时空自注意力的计算复杂度与序列长度的平方成正比，当视频帧数增加时，计算开销会急剧增长。而解耦后的空间注意力和时间注意力的计算复杂度分别与帧内Token数量和帧数成正比，总体计算开销大幅降低。</p>
+<p>其次是模型表达能力的增强。解耦架构允许模型分别优化空间和时间特征的学习，空间注意力可以专注于学习高质量的视觉外观，时间注意力可以专注于学习准确的运动动态。这种分工使得模型在两个方面都能达到更高的质量。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=专业级生成能力>专业级生成能力<a href=#专业级生成能力 class=hash-link aria-label=专业级生成能力的直接链接 title=专业级生成能力的直接链接 translate=no>​</a></h4>
+<p>Runway Gen-3 Alpha的目标定位是专业级视频生成工具。与面向大众市场的视频生成模型不同，Gen-3 Alpha更注重为专业创作者提供精细的控制能力和高质量的输出。</p>
+<p>Gen-3 Alpha提供了多种生成模式，包括文本到视频（Text-to-Video）、图片到视频（Image-to-Video）、风格迁移（Style Transfer）等。特别值得一提的是其对运镜（Camera Movement）的控制能力，用户可以指定推拉摇移等摄像机运动方式，模型能够在生成视频时准确执行这些运镜指令。</p>
+<p>在视觉质量方面，Gen-3 Alpha生成的视频在光影处理、色彩还原和细节呈现方面都达到了专业水准。模型对高级摄影概念的理解，如景深、焦距、曝光等，使其能够生成具有电影感的视频内容。这使得Gen-3 Alpha在广告制作、音乐MV拍摄和影视预演等专业场景中具有广泛的应用前景。</p>
+<p>Gen-3 Alpha还提供了对生成视频的精细编辑能力。用户可以在生成后对视频的特定区域进行修改，如替换物体、改变背景、调整运动轨迹等。这种编辑能力使得模型不仅是一个生成工具，更是一个创作平台。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=阿里万相wan21wan22开源视频生成的新标杆>阿里万相Wan2.1/Wan2.2：开源视频生成的新标杆<a href=#阿里万相wan21wan22开源视频生成的新标杆 class=hash-link aria-label=阿里万相Wan2.1/Wan2.2：开源视频生成的新标杆的直接链接 title=阿里万相Wan2.1/Wan2.2：开源视频生成的新标杆的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3d因果vae256倍时空压缩>3D因果VAE：256倍时空压缩<a href=#3d因果vae256倍时空压缩 class=hash-link aria-label=3D因果VAE：256倍时空压缩的直接链接 title=3D因果VAE：256倍时空压缩的直接链接 translate=no>​</a></h4>
+<p>阿里万相Wan系列模型在技术上最突出的创新之一是其3D因果VAE（3D Causal VAE，三维因果变分自编码器）。变分自编码器（VAE，Variational Autoencoder）是视频生成模型中用于数据压缩和潜在空间构建的关键组件，Wan的3D因果VAE在这方面实现了重大突破。</p>
+<p>3D因果VAE的"3D"指的是它同时在空间和时间三个维度上对视频进行压缩。传统的VAE通常只对空间维度进行压缩，将每帧图像从像素空间压缩到潜在空间，而时间维度保持不变或使用简单的时间下采样。Wan的3D因果VAE则实现了空间16倍和时间16倍的联合压缩，总体压缩比达到256倍（16×16=256）。这意味着一个原始视频在经过3D因果VAE处理后，其数据量将缩小到原来的1/256。</p>
+<p>"因果"（Causal）是这一VAE的另一个关键特性。因果性意味着在时间维度上，当前帧的编码只依赖于当前帧和之前的帧，不依赖未来的帧。这种设计使得VAE能够处理流式输入，在视频生成过程中无需等待整个视频完成即可逐步处理。这对于长视频生成和实时应用场景具有重要意义。</p>
+<p>256倍的压缩比带来了多方面的好处。首先，它大幅减少了扩散模型需要处理的数据量，使得模型能够在相同的计算资源下处理更长的视频或更高分辨率的视频。其次，高压缩比迫使VAE学习到视频中最重要的语义特征，过滤掉高频噪声和冗余信息，这实际上起到了一种正则化作用，有助于提高生成质量。第三，更紧凑的潜在空间使得扩散模型的训练更加高效，收敛速度更快。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=flow-matching与i2v-mask机制>Flow Matching与I2V Mask机制<a href=#flow-matching与i2v-mask机制 class=hash-link aria-label="Flow Matching与I2V Mask机制的直接链接" title="Flow Matching与I2V Mask机制的直接链接" translate=no>​</a></h4>
+<p>Wan系列模型采用了Flow Matching作为其训练框架。Flow Matching（流匹配）是一种较新的生成模型训练方法，与传统的扩散模型训练相比，Flow Matching通过学习一个连续的概率流（Probability Flow）将简单分布（如高斯分布）转换为数据分布。Flow Matching的优势在于其训练目标更加简洁，训练过程更加稳定，且生成的轨迹更加直接，采样效率更高。</p>
+<p>在图像到视频（I2V，Image-to-Video）生成任务中，Wan引入了I2V Mask机制。这一机制的核心思想是在视频生成过程中对输入图像（首帧）进行特殊保护，确保生成视频的首帧与输入图像保持高度一致。具体实现上，I2V Mask在注意力计算中对输入图像对应的Token施加特殊的掩码处理，防止扩散过程中的噪声对其产生影响。</p>
+<p>I2V Mask机制解决了I2V任务中的一个关键问题：首帧一致性。在传统的I2V方法中，由于扩散过程会对所有帧统一添加和去除噪声，输入图像的信息往往会在生成过程中逐渐丢失，导致生成视频的首帧与输入图像存在明显差异。I2V Mask通过选择性保护机制有效解决了这一问题，使得Wan在I2V任务上表现出色。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=特征缓存技术>特征缓存技术<a href=#特征缓存技术 class=hash-link aria-label=特征缓存技术的直接链接 title=特征缓存技术的直接链接 translate=no>​</a></h4>
+<p>Wan系列模型还引入了特征缓存（Feature Cache）技术来提高推理效率。在视频生成过程中，扩散模型需要多次迭代去噪，每次迭代都涉及大量的计算。特征缓存技术的核心思想是将部分中间计算结果缓存起来，在后续迭代中复用，从而减少重复计算。</p>
+<p>具体而言，特征缓存可以应用于多个层面。在时间层面，由于相邻迭代步骤之间的特征变化较小，可以缓存部分层的特征并在后续步骤中直接使用，跳过这些层的计算。在空间层面，可以缓存不活跃区域的特征，只对变化频繁的区域进行重新计算。这种策略在保持生成质量的同时显著提升了推理速度。</p>
+<p>特征缓存技术使得Wan模型在实际使用中的用户体验大幅提升。根据阿里的官方数据，特征缓存技术能够将推理速度提升数倍，同时对生成质量的影响可以忽略不计。这对于降低用户等待时间、提升产品体验具有重要意义。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=开源策略与双规格设计>开源策略与双规格设计<a href=#开源策略与双规格设计 class=hash-link aria-label=开源策略与双规格设计的直接链接 title=开源策略与双规格设计的直接链接 translate=no>​</a></h4>
+<p>Wan系列模型采用了Apache 2.0许可证进行完全开源，这在视频生成领域是一个大胆而重要的决策。Apache 2.0是业界最宽松的开源许可证之一，允许商业使用、修改和分发。这一开源策略使得Wan模型迅速获得了社区的广泛关注和采纳。</p>
+<p>Wan提供了14B和1.3B两种规格的模型。14B版本是旗舰模型，拥有140亿参数，在生成质量和能力上达到了业界领先水平。1.3B版本拥有13亿参数，虽然参数量大幅减少，但仍然保持了不错的生成质量，更重要的是其计算需求大幅降低，可以在消费级GPU上运行。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标<th>Wan 14B<th>Wan 1.3B<tbody><tr><td>参数量<td>140亿<td>13亿<tr><td>架构<td>DiT + Flow Matching<td>DiT + Flow Matching<tr><td>最大分辨率<td>720p<td>480p<tr><td>最大时长<td>约6秒<td>约5秒<tr><td>显存需求<td>约40GB<td>约8GB<tr><td>目标用户<td>研究者/企业<td>开发者/个人<tr><td>许可证<td>Apache 2.0<td>Apache 2.0</table>
+<p>这种双规格策略体现了Wan团队对市场需求的深入理解。14B版本面向研究机构和企业用户，提供顶级的生成质量，适合对质量有极高要求的专业场景。1.3B版本则面向开发者和个人用户，降低了使用门槛，使得更多人能够体验和使用视频生成技术。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=vbench榜首8622>VBench榜首：86.22%<a href=#vbench榜首8622 class=hash-link aria-label=VBench榜首：86.22%的直接链接 title=VBench榜首：86.22%的直接链接 translate=no>​</a></h4>
+<p>Wan模型在VBench（Video Benchmark）排行榜上取得了86.22%的高分，位列榜首。VBench是一个综合性的视频生成评估基准，从多个维度对视频生成模型进行评估，包括时序一致性、空间质量、运动平滑度、文本忠实度等。86.22%的得分意味着Wan在各个维度上都达到了很高的水平。</p>
+<p>Wan在VBench上的优异表现得益于其多项技术创新的协同效应。3D因果VAE提供了高质量的潜在空间表示，Flow Matching确保了训练的高效和稳定，I2V Mask保障了图像到视频任务的首帧一致性，特征缓存则在保持质量的同时提升了效率。这些技术的有机结合使得Wan在开源视频生成模型中确立了领先地位。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=智谱cogvideox旋转位置编码的创新应用>智谱CogVideoX：旋转位置编码的创新应用<a href=#智谱cogvideox旋转位置编码的创新应用 class=hash-link aria-label=智谱CogVideoX：旋转位置编码的创新应用的直接链接 title=智谱CogVideoX：旋转位置编码的创新应用的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3d-rope三维旋转位置编码>3D RoPE：三维旋转位置编码<a href=#3d-rope三维旋转位置编码 class=hash-link aria-label="3D RoPE：三维旋转位置编码的直接链接" title="3D RoPE：三维旋转位置编码的直接链接" translate=no>​</a></h4>
+<p>智谱CogVideoX模型在技术上的核心创新是3D RoPE（Rotary Position Embedding，旋转位置编码）的应用。RoPE最初由Su等人在2021年提出，用于自然语言处理中的Transformer模型，通过旋转变换将位置信息编码到注意力计算中。CogVideoX将RoPE扩展到三维（时间、高度、宽度），使其适用于视频生成任务。</p>
+<p>3D RoPE的核心思想是将每个位置在时间、高度和宽度三个维度上的坐标分别编码为旋转角度，然后将这些旋转角度应用到注意力计算的Query和Key向量上。这种编码方式有几个关键优势。</p>
+<p>首先，3D RoPE天然支持相对位置编码。由于旋转变换的数学性质，两个位置之间的注意力权重只取决于它们的相对位置，而非绝对位置。这意味着模型能够自然地学习到视频中物体的相对运动模式，如"从左到右移动"或"从前向后运动"等。</p>
+<p>其次，3D RoPE支持任意长度的外推。由于旋转位置编码不依赖于固定的位置嵌入表，模型可以处理训练时未见过的更长序列。这对于视频生成尤为重要，因为用户可能需要生成不同时长的视频，模型需要灵活适应各种长度。</p>
+<p>第三，3D RoPE在三个维度上的独立编码使得模型能够分别学习时间、高度和宽度方向上的位置模式。这种解耦的位置信息表示与视频数据的自然结构高度吻合，有助于模型更有效地学习视频的时空特征。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=专家transformer架构>专家Transformer架构<a href=#专家transformer架构 class=hash-link aria-label=专家Transformer架构的直接链接 title=专家Transformer架构的直接链接 translate=no>​</a></h4>
+<p>CogVideoX采用了专家Transformer（Expert Transformer）架构，这是一种结合了MoE（Mixture of Experts，专家混合）思想的Transformer设计。传统的稠密Transformer中，每个Token需要经过所有参数的计算，而MoE架构则为每个Token选择一部分"专家"参数进行处理，从而在不增加计算量的情况下扩大模型的总参数量。</p>
+<p>CogVideoX的专家Transformer设计可能采用了以下策略：将Transformer中的某些前馈网络（FFN，Feed-Forward Network）层替换为多个专家FFN，通过一个路由（Routing）机制为每个Token选择最合适的专家。这种设计使得模型能够在保持推理速度的同时大幅增加参数量，从而提升生成质量。</p>
+<p>专家Transformer的另一个优势是其天然的模块化特性。不同的专家可能专注于不同的视频生成子任务，如人物运动、自然风景、文字渲染等。这种专业化分工使得模型在各个子任务上都能达到更高的质量水平。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=开源生态建设>开源生态建设<a href=#开源生态建设 class=hash-link aria-label=开源生态建设的直接链接 title=开源生态建设的直接链接 translate=no>​</a></h4>
+<p>CogVideoX在开源方面也做出了重要贡献。智谱AI将CogVideoX模型以开源形式发布，并提供了完整的技术文档和代码，使得研究者和开发者能够自由使用和改进该模型。</p>
+<p>CogVideoX的开源生态建设包括多个方面。模型权重在Hugging Face等平台上公开发布，支持多种推理框架。技术报告详细描述了模型架构和训练方法，为学术界提供了宝贵的参考。此外，智谱还提供了便捷的API接口，使得开发者能够轻松集成CogVideoX到自己的应用中。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>CogVideoX<th>说明<tbody><tr><td>位置编码<td>3D RoPE<td>三维旋转位置编码<tr><td>架构<td>专家Transformer<td>MoE架构提升参数效率<tr><td>任务支持<td>T2V, I2V<td>文本到视频、图像到视频<tr><td>开源<td>是<td>完整开源<tr><td>特色<td>3D RoPE外推能力<td>支持变长视频生成</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=腾讯混元hunyuanvideo大规模dit的实践>腾讯混元HunyuanVideo：大规模DiT的实践<a href=#腾讯混元hunyuanvideo大规模dit的实践 class=hash-link aria-label=腾讯混元HunyuanVideo：大规模DiT的实践的直接链接 title=腾讯混元HunyuanVideo：大规模DiT的实践的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=大规模dit架构>大规模DiT架构<a href=#大规模dit架构 class=hash-link aria-label=大规模DiT架构的直接链接 title=大规模DiT架构的直接链接 translate=no>​</a></h4>
+<p>腾讯混元HunyuanVideo采用了大规模DiT（Diffusion Transformer，扩散Transformer）架构，是腾讯在视频生成领域的重要技术布局。HunyuanVideo的架构设计与Sora类似，都基于DiT主干网络，但在具体实现上有着腾讯独特的技术选择。</p>
+<p>HunyuanVideo的DiT架构采用了大规模参数设计，模型参数量达到了数十亿量级。大规模参数为模型提供了强大的表示能力，使其能够学习到复杂的视频生成模式。同时，腾讯在训练数据和训练策略上也进行了大量优化，确保大规模模型能够得到充分的训练。</p>
+<p>在潜在空间构建方面，HunyuanVideo使用了一个高效的视频VAE（Variational Autoencoder，变分自编码器）将原始视频压缩到低维潜在空间。这个VAE的设计需要在压缩率和重建质量之间取得平衡，过高的压缩率可能导致信息丢失，过低的压缩率则会增加扩散模型的计算负担。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=开源贡献>开源贡献<a href=#开源贡献 class=hash-link aria-label=开源贡献的直接链接 title=开源贡献的直接链接 translate=no>​</a></h4>
+<p>HunyuanVideo的一个重要贡献是其开源策略。腾讯将HunyuanVideo模型开源发布，为社区提供了高质量的视频生成模型。这一决策对于推动整个视频生成领域的发展具有积极意义。</p>
+<p>HunyuanVideo的开源内容包括模型权重、推理代码和技术文档。模型权重以宽松的许可证发布，允许研究和商业使用。推理代码支持多种硬件平台和推理框架，确保用户能够在不同的环境中使用该模型。技术文档详细描述了模型架构和训练细节，为研究者提供了重要参考。</p>
+<p>腾讯还积极与开源社区合作，将HunyuanVideo集成到多个开源项目和工作流中。这种开放的态度使得HunyuanVideo在发布后迅速获得了社区的认可和采纳，成为开源视频生成模型的重要选择之一。</p>
+<p>HunyuanVideo的技术特色还体现在其对中文内容的理解和生成能力上。由于腾讯拥有丰富的中文互联网数据资源，HunyuanVideo在处理中文相关的文本提示和生成包含中文元素的视频方面具有天然优势。这使其在国内应用场景中具有独特的竞争力。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=minimax-abab-video-1原生高清的精巧设计>MiniMax abab-video-1：原生高清的精巧设计<a href=#minimax-abab-video-1原生高清的精巧设计 class=hash-link aria-label="MiniMax abab-video-1：原生高清的精巧设计的直接链接" title="MiniMax abab-video-1：原生高清的精巧设计的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=1280x720-25fps原生高清>1280x720 25fps原生高清<a href=#1280x720-25fps原生高清 class=hash-link aria-label="1280x720 25fps原生高清的直接链接" title="1280x720 25fps原生高清的直接链接" translate=no>​</a></h4>
+<p>MiniMax abab-video-1在视频生成领域以一个独特的方式脱颖而出：它专注于原生高清视频生成，直接输出1280×720分辨率、25fps帧率的视频，而无需后处理放大或插帧。这一设计选择使其在特定应用场景中具有明显优势。</p>
+<p>原生高清生成意味着模型在训练和推理过程中直接以1280×720的分辨率进行操作，而不是先生成低分辨率视频再通过超分辨率模型放大。这种方式的优点是生成视频的细节更加自然真实，不存在超分辨率放大可能引入的伪影。同时，25fps的帧率与大多数视频播放平台的标准一致，生成的视频可以直接使用而无需帧率转换。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标<th>abab-video-1<th>说明<tbody><tr><td>原生分辨率<td>1280×720<td>无需后处理放大<tr><td>帧率<td>25fps<td>标准视频帧率<tr><td>最大时长<td>6秒<td>短视频生成<tr><td>架构<td>DiT<td>扩散Transformer<tr><td>特点<td>原生高清<td>细节真实自然</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=最长6秒的设计权衡>最长6秒的设计权衡<a href=#最长6秒的设计权衡 class=hash-link aria-label=最长6秒的设计权衡的直接链接 title=最长6秒的设计权衡的直接链接 translate=no>​</a></h4>
+<p>abab-video-1将最大生成时长设定为6秒，这是一个有意识的设计权衡。与Kling的2分钟或Sora的60秒相比，6秒似乎很短，但这一选择实际上体现了MiniMax对产品质量和实用性的不同理解。</p>
+<p>短时长原生高清生成的策略有几个优势。首先是单帧质量的大幅提升。在相同的计算资源下，更短的时长意味着模型可以将更多的计算预算分配给每一帧，从而生成更高质量的视觉内容。其次是训练效率的提高。6秒视频的训练数据量更小，模型可以更快地完成训练迭代，加速产品改进。第三是推理速度的优化。6秒视频的生成时间更短，用户等待时间更少，使用体验更好。</p>
+<p>abab-video-1的定位可能更偏向于社交媒体内容创作、广告素材生成等短视频场景。在这些场景中，视频的质量往往比时长更重要，用户更关注视觉效果的精美程度而非内容的叙事完整性。6秒的时长恰好覆盖了大多数社交媒体短视频的核心展示时间。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=模型横向对比与技术路线分析>模型横向对比与技术路线分析<a href=#模型横向对比与技术路线分析 class=hash-link aria-label=模型横向对比与技术路线分析的直接链接 title=模型横向对比与技术路线分析的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=关键指标全面对比>关键指标全面对比<a href=#关键指标全面对比 class=hash-link aria-label=关键指标全面对比的直接链接 title=关键指标全面对比的直接链接 translate=no>​</a></h4>
+<p>以下表格对七款主流视频生成模型的关键指标进行了全面对比。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标<th>Sora<th>Kling<th>Gen-3 Alpha<th>Wan2.1<th>CogVideoX<th>HunyuanVideo<th>abab-video-1<tbody><tr><td>架构<td>DiT<td>DiT<td>时空解耦Transformer<td>DiT+Flow Matching<td>专家Transformer<td>DiT<td>DiT<tr><td>参数量<td>未公开<td>未公开<td>未公开<td>14B/1.3B<td>未公开<td>未公开<td>未公开<tr><td>最大时长<td>60秒<td>120秒<td>约10秒<td>约6秒<td>约6秒<td>未公开<td>6秒<tr><td>最大分辨率<td>1080p<td>1080p<td>1080p<td>720p<td>720p<td>720p<td>720p<tr><td>音频生成<td>否<td>是(2.6)<td>否<td>否<td>否<td>否<td>否<tr><td>是否开源<td>否<td>否<td>否<td>是(Apache 2.0)<td>是<td>是<td>否<tr><td>VBench得分<td>未公开<td>未公开<td>未公开<td>86.22%<td>未公开<td>未公开<td>未公开</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=架构技术路线对比>架构技术路线对比<a href=#架构技术路线对比 class=hash-link aria-label=架构技术路线对比的直接链接 title=架构技术路线对比的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>技术维度<th>Sora<th>Kling<th>Gen-3 Alpha<th>Wan2.1<th>CogVideoX<th>HunyuanVideo<th>abab-video-1<tbody><tr><td>数据表示<td>时空Patch<td>时空Patch<td>时空解耦<td>3D因果VAE<td>3D RoPE<td>视频VAE<td>标准潜在空间<tr><td>位置编码<td>未公开<td>未公开<td>未公开<td>未公开<td>3D RoPE<td>未公开<td>未公开<tr><td>训练方法<td>扩散<td>扩散<td>扩散<td>Flow Matching<td>扩散<td>扩散<td>扩散<tr><td>数据标注<td>Re-captioning<td>未公开<td>未公开<td>未公开<td>未公开<td>未公开<td>未公开<tr><td>效率优化<td>未公开<td>未公开<td>时空解耦<td>特征缓存<td>专家路由<td>未公开<td>原生高清</table>
+<p>从架构技术路线来看，这些模型可以分为几个主要流派。第一类是DiT统一派，以Sora、Kling、HunyuanVideo和abab-video-1为代表，它们都采用DiT作为主干架构，通过大规模参数和数据来提升生成质量。第二类是架构创新派，以Gen-3 Alpha的时空解耦Transformer和CogVideoX的专家Transformer为代表，它们在架构层面进行创新以解决特定问题。第三类是系统优化派，以Wan为代表，在数据表示（3D因果VAE）、训练方法（Flow Matching）和推理优化（特征缓存）等多个层面进行系统性的创新。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=各模型优势领域分析>各模型优势领域分析<a href=#各模型优势领域分析 class=hash-link aria-label=各模型优势领域分析的直接链接 title=各模型优势领域分析的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>核心优势<th>最佳应用场景<tbody><tr><td>Sora<td>长视频生成、场景转换、高保真度<td>影视预演、复杂叙事视频<tr><td>Kling<td>超长视频(2分钟)、音画同出、物理理解<td>短视频创作、广告制作<tr><td>Gen-3 Alpha<td>专业级控制、运镜控制、电影感<td>专业影视、广告、MV<tr><td>Wan2.1/2.2<td>开源、高压缩比、VBench榜首<td>研究、开发、定制化部署<tr><td>CogVideoX<td>3D RoPE外推、专家架构、开源<td>研究、变长视频生成<tr><td>HunyuanVideo<td>大规模DiT、中文优势、开源<td>中文场景、国内应用<tr><td>abab-video-1<td>原生高清、快速生成<td>社交媒体、短视频广告</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=技术发展趋势分析>技术发展趋势分析<a href=#技术发展趋势分析 class=hash-link aria-label=技术发展趋势分析的直接链接 title=技术发展趋势分析的直接链接 translate=no>​</a></h4>
+<p>从以上对比分析中，可以识别出视频生成领域几个明确的技术发展趋势。</p>
+<p>第一，DiT架构已成为主流选择。在七款模型中，有五款采用了DiT或其变体作为主干架构。这反映了DiT在缩放特性和生成质量方面的优势已经得到了广泛认可。然而，具体的实现方式各不相同，包括数据表示（时空Patch vs 3D因果VAE）、训练方法（标准扩散 vs Flow Matching）和效率优化（特征缓存 vs 时空解耦）等方面的差异。</p>
+<p>第二，开源与闭源形成了双轨并行的发展格局。Wan、CogVideoX和HunyuanVideo选择了开源路线，通过社区力量推动技术进步。Sora、Kling、Gen-3 Alpha和abab-video-1则选择了闭源路线，通过商业运营实现价值变现。开源模型在推动学术研究和降低使用门槛方面发挥着重要作用，而闭源模型在产品化和用户体验方面往往更胜一筹。</p>
+<p>第三，长视频生成能力成为核心竞争力。从Sora的60秒到Kling的120秒，视频生成模型的最大时长在不断突破。长视频生成要求模型具备更强的时序建模能力、更高效的计算利用和更复杂的内容规划能力，这些挑战驱动着架构设计和训练方法的持续创新。</p>
+<p>第四，多模态生成是未来的重要方向。Kling 2.6的音画同出能力预示着视频生成模型正在从单一的视觉生成向多模态生成演进。未来，视频生成模型可能会整合更多模态，如文本、音频、3D信息等，实现更完整的内容创作能力。</p>
+<p>第五，效率优化日益重要。随着模型规模的增大和用户需求的增长，推理效率成为影响产品体验的关键因素。Wan的特征缓存、Gen-3 Alpha的时空解耦、CogVideoX的专家路由等都是针对效率问题的创新解决方案。未来，更高效的架构设计和推理策略将继续成为研究热点。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=训练数据策略对比>训练数据策略对比<a href=#训练数据策略对比 class=hash-link aria-label=训练数据策略对比的直接链接 title=训练数据策略对比的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>数据策略<th>标注方法<th>数据规模<tbody><tr><td>Sora<td>Re-captioning<td>DALL-E 3 + GPT-4<td>未公开<tr><td>Kling<td>未公开<td>未公开<td>未公开<tr><td>Gen-3 Alpha<td>未公开<td>未公开<td>未公开<tr><td>Wan2.1<td>标准配对<td>自动标注<td>未公开<tr><td>CogVideoX<td>标准配对<td>自动标注<td>未公开<tr><td>HunyuanVideo<td>中文优化<td>自动标注<td>未公开<tr><td>abab-video-1<td>高清优先<td>自动标注<td>未公开</table>
+<p>在训练数据策略方面，Sora的Re-captioning方法是最具创新性的方案，通过利用强大的图像标注模型和大语言模型来提升训练数据的质量。其他模型虽然也使用了自动标注方法，但具体的标注策略和质量水平各不相同。数据质量在很大程度上决定了模型的上限，因此训练数据策略的优化是提升模型性能的重要途径。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=生成质量与效率权衡>生成质量与效率权衡<a href=#生成质量与效率权衡 class=hash-link aria-label=生成质量与效率权衡的直接链接 title=生成质量与效率权衡的直接链接 translate=no>​</a></h4>
+<p>视频生成模型面临着生成质量与生成效率之间的根本性权衡。更高的分辨率、更长的时长、更大的模型参数量通常意味着更好的生成质量，但也意味着更高的计算成本和更长的等待时间。</p>
+<p>不同模型在这一权衡中做出了不同的选择。Sora和Kling选择了追求极致的质量和时长，不遗余力地投入计算资源。abab-video-1则选择了在较短的时长内实现原生高清，追求单帧质量的最大化。Wan通过特征缓存等技术在不牺牲质量的前提下提升效率。Gen-3 Alpha通过时空解耦在保持质量的同时降低计算开销。</p>
+<p>这种权衡没有绝对的对错，而是取决于目标应用场景的需求。专业影视制作可能更倾向于高质量长时长的方案，而社交媒体内容创作可能更看重效率和单帧质量。理解各模型在质量-效率权衡中的定位，有助于用户选择最适合自己需求的模型。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=各模型技术细节深度对比>各模型技术细节深度对比<a href=#各模型技术细节深度对比 class=hash-link aria-label=各模型技术细节深度对比的直接链接 title=各模型技术细节深度对比的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=潜在空间设计对比>潜在空间设计对比<a href=#潜在空间设计对比 class=hash-link aria-label=潜在空间设计对比的直接链接 title=潜在空间设计对比的直接链接 translate=no>​</a></h4>
+<p>潜在空间的设计是视频生成模型的基础，直接影响模型的效率和生成质量。各模型在潜在空间设计上呈现出不同的技术选择。</p>
+<p>Sora使用视频压缩网络将视频压缩到低维潜在空间，然后分解为时空Patch。这种设计的优势在于时空联合压缩，能够有效捕捉时空相关性，但可能面临长视频计算量过大的问题。Wan的3D因果VAE实现了256倍的时空压缩，是目前已公开的最高压缩比之一。高压缩比使得扩散模型需要处理的数据量大幅减少，有利于长视频生成和快速推理。因果性设计还支持流式处理，增加了模型的灵活性。</p>
+<p>CogVideoX通过3D RoPE在潜在空间中引入了精确的三维位置信息。虽然RoPE本身不是压缩方法，但它使得模型能够更有效地利用潜在空间中的位置信息，提高了位置相关的建模能力。Gen-3 Alpha的时空解耦设计隐含地将潜在空间分为空间分量和时间分量，分别进行处理。这种分解使得模型能够更高效地处理潜在空间中的信息。</p>
+<p>HunyuanVideo和abab-video-1的VAE设计细节虽然未完全公开，但根据其生成质量和速度表现，它们的潜在空间设计应该也在压缩率和重建质量之间取得了良好的平衡。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=注意力机制对比>注意力机制对比<a href=#注意力机制对比 class=hash-link aria-label=注意力机制对比的直接链接 title=注意力机制对比的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>注意力类型<th>优势<th>劣势<tbody><tr><td>Sora<td>全时空自注意力<td>全局建模能力强<td>计算复杂度高<tr><td>Kling<td>未公开(推测全注意力)<td>长视频建模<td>计算开销大<tr><td>Gen-3 Alpha<td>时空解耦注意力<td>计算效率高<td>可能损失部分交互信息<tr><td>Wan<td>未公开(推测全注意力+缓存)<td>质量与效率兼顾<td>缓存策略增加复杂度<tr><td>CogVideoX<td>3D RoPE增强注意力<td>位置感知强、支持外推<td>RoPE实现增加计算<tr><td>HunyuanVideo<td>未公开<td>-<td>-<tr><td>abab-video-1<td>未公开<td>-<td>-</table>
+<p>注意力机制是Transformer架构的核心，直接影响模型的建模能力和计算效率。全时空自注意力提供了最强的建模能力，但其O(n²)的计算复杂度在处理长视频时成为瓶颈。时空解耦注意力通过分离空间和时间维度降低了计算复杂度，但可能损失部分时空交互信息。3D RoPE增强的注意力在保持全注意力结构的同时引入了精确的位置编码，是一种兼顾精度和效率的方案。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=训练策略对比>训练策略对比<a href=#训练策略对比 class=hash-link aria-label=训练策略对比的直接链接 title=训练策略对比的直接链接 translate=no>​</a></h4>
+<p>各模型在训练策略上也有显著差异。Sora的Re-captioning策略通过提升训练数据质量来增强模型学习效果。Wan的Flow Matching方法提供了比标准扩散训练更稳定的训练过程和更高效的采样路径。CogVideoX的专家Transformer通过条件计算提高了参数利用率，使得模型在相同的训练数据下能够学习更丰富的模式。</p>
+<p>训练数据规模是另一个重要维度。虽然大多数模型的具体训练数据规模未公开，但从生成质量推断，领先模型的训练数据量应该在数千万到上亿视频片段的量级。数据的多样性和质量同样重要，涵盖不同场景、风格、分辨率和时长的训练数据有助于模型学习更全面的视频生成能力。</p>
+<p>训练成本也是一个需要考虑的因素。大规模DiT模型的训练需要大量的GPU资源和能源消耗。据估计，训练一个数十亿参数的视频生成模型可能需要数百到数千GPU日的计算量。这使得训练数据策略和训练效率优化变得至关重要，良好的策略可以在相同的计算预算下获得更好的模型性能。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=应用场景与市场定位分析>应用场景与市场定位分析<a href=#应用场景与市场定位分析 class=hash-link aria-label=应用场景与市场定位分析的直接链接 title=应用场景与市场定位分析的直接链接 translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=内容创作领域>内容创作领域<a href=#内容创作领域 class=hash-link aria-label=内容创作领域的直接链接 title=内容创作领域的直接链接 translate=no>​</a></h4>
+<p>在内容创作领域，不同模型的定位和适用场景存在明显差异。Sora和Kling凭借长视频生成能力，适合用于影视预演、剧情短片和纪录片等需要复杂叙事的场景。Gen-3 Alpha的专业级控制能力使其成为广告制作和音乐MV的理想选择。abab-video-1的原生高清和快速生成特性适合社交媒体内容创作和短视频广告。</p>
+<p>Wan和CogVideoX等开源模型则为独立创作者和小型工作室提供了可负担的视频生成方案。通过本地部署这些开源模型，创作者可以在不支付API费用的情况下使用视频生成技术，这对于预算有限的创作者具有重要意义。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=研究与开发领域>研究与开发领域<a href=#研究与开发领域 class=hash-link aria-label=研究与开发领域的直接链接 title=研究与开发领域的直接链接 translate=no>​</a></h4>
+<p>在研究领域，开源模型的价值尤为突出。Wan、CogVideoX和HunyuanVideo为学术研究提供了高质量的基线模型，研究者可以在这些模型的基础上进行改进和创新。完整的开源代码和详细的技术文档降低了研究门槛，加速了学术进展。</p>
+<p>对于企业开发者，开源模型提供了定制化部署的可能性。企业可以根据自己的需求对模型进行微调或修改，部署在私有基础设施上，满足数据安全和定制化的需求。Wan的双规格设计（14B/1.3B）特别适合不同规模的部署场景，大型企业可以使用14B版本获得最佳质量，初创公司可以使用1.3B版本降低成本。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=商业化路径>商业化路径<a href=#商业化路径 class=hash-link aria-label=商业化路径的直接链接 title=商业化路径的直接链接 translate=no>​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>商业化模式<th>目标客户<th>竞争优势<tbody><tr><td>Sora<td>API/订阅<td>企业/创作者<td>质量领先、品牌效应<tr><td>Kling<td>API/平台<td>创作者/企业<td>长视频、音画同出<tr><td>Gen-3 Alpha<td>订阅/API<td>专业创作者<td>专业控制、电影感<tr><td>Wan2.1<td>开源/企业服务<td>开发者/企业<td>开源、高性能<tr><td>CogVideoX<td>开源/API<td>开发者/研究者<td>开源、技术创新<tr><td>HunyuanVideo<td>开源/企业服务<td>开发者/企业<td>中文优势、开源<tr><td>abab-video-1<td>API/订阅<td>创作者/企业<td>原生高清、快速</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=未来发展方向>未来发展方向<a href=#未来发展方向 class=hash-link aria-label=未来发展方向的直接链接 title=未来发展方向的直接链接 translate=no>​</a></h3>
+<p>基于对当前主流模型的分析，视频生成领域的未来发展可能呈现以下几个方向。</p>
+<p>首先是更长视频的生成能力。虽然Kling已经实现了2分钟的视频生成，但与实际影视作品相比仍有差距。未来模型需要进一步突破长视频生成中的时序一致性、内容规划和计算效率等挑战。</p>
+<p>其次是更高分辨率和帧率的生成。目前大多数模型的输出分辨率为720p到1080p，帧率为24到30fps。未来模型可能需要支持4K甚至8K分辨率和60fps帧率的生成，以满足高端影视制作的需求。</p>
+<p>第三是多模态联合生成。Kling 2.6的音画同出是一个重要开端，未来模型可能会进一步整合文本生成、3D建模、触觉信息等更多模态，实现真正的全模态内容创作。</p>
+<p>第四是更强的可控性。当前模型主要依赖文本提示进行控制，未来可能支持更精细的控制方式，如草图引导、动作捕捉数据驱动、物理参数调整等，使创作者能够更精确地控制生成视频的各个方面。</p>
+<p>第五是更高的物理真实感。虽然当前模型在物理规律理解方面已有一定进展，但在复杂物理现象（如流体动力学、刚体碰撞、软体变形等）的精确模拟方面仍有很大提升空间。未来的模型可能会更深度地整合物理引擎或物理仿真技术。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=总结>总结<a href=#总结 class=hash-link aria-label=总结的直接链接 title=总结的直接链接 translate=no>​</a></h3>
+<p>本章对七款主流视频生成模型进行了深入分析。OpenAI Sora以时空Patch和DiT架构奠定了视频生成的技术范式，其Re-captioning策略为高质量训练数据提供了新思路。快手可灵Kling在长视频生成和音画同出方面引领行业发展。Runway Gen-3 Alpha的时空解耦Transformer为效率优化提供了新方向。阿里万相Wan2.1/Wan2.2以3D因果VAE、Flow Matching和特征缓存等系统性创新在开源领域树立了新标杆。智谱CogVideoX的3D RoPE和专家Transformer展示了架构创新的价值。腾讯混元HunyuanVideo在大规模DiT实践和中文内容生成方面做出了重要贡献。MiniMax abab-video-1则在原生高清生成方面提供了独特的解决方案。</p>
+<p>这些模型在技术路线上的多样性反映了视频生成领域仍处于快速发展和探索阶段。DiT架构虽已成为主流，但在数据表示、训练方法、效率优化等关键维度上，不同的技术选择各有优劣。开源与闭源的双轨发展、长视频与高质量的不同侧重、通用性与专业化的权衡选择，共同构成了一个丰富多彩的视频生成技术生态。随着技术的持续进步和应用场景的不断拓展，视频生成模型将在内容创作、教育培训、商业营销等领域发挥越来越重要的作用。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-video/chapter-10.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-09><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>chapter-09</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-video/chapter-11><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>chapter-11</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#第十章-主流视频生成模型详解 class="table-of-contents__link toc-highlight">第十章 主流视频生成模型详解</a><ul><li><a href=#引言视频生成模型的爆发年代 class="table-of-contents__link toc-highlight">引言：视频生成模型的爆发年代</a><li><a href=#openai-sora重新定义视频生成的天花板 class="table-of-contents__link toc-highlight">OpenAI Sora：重新定义视频生成的天花板</a><ul><li><a href=#架构核心时空patch与dit class="table-of-contents__link toc-highlight">架构核心：时空Patch与DiT</a><li><a href=#re-captioning高质量训练数据的关键 class="table-of-contents__link toc-highlight">Re-captioning：高质量训练数据的关键</a><li><a href=#60秒高清生成能力的技术解读 class="table-of-contents__link toc-highlight">60秒高清生成能力的技术解读</a><li><a href=#未公开细节的合理推测 class="table-of-contents__link toc-highlight">未公开细节的合理推测</a></ul><li><a href=#快手可灵kling国产视频生成的领军者 class="table-of-contents__link toc-highlight">快手可灵Kling：国产视频生成的领军者</a><ul><li><a href=#扩散transformer架构与长视频生成 class="table-of-contents__link toc-highlight">扩散Transformer架构与长视频生成</a><li><a href=#kling-26与音画同出技术 class="table-of-contents__link toc-highlight">Kling 2.6与音画同出技术</a><li><a href=#物理世界规律理解 class="table-of-contents__link toc-highlight">物理世界规律理解</a></ul><li><a href=#runway-gen-3-alpha专业级视频生成的代表 class="table-of-contents__link toc-highlight">Runway Gen-3 Alpha：专业级视频生成的代表</a><ul><li><a href=#时空解耦transformer class="table-of-contents__link toc-highlight">时空解耦Transformer</a><li><a href=#专业级生成能力 class="table-of-contents__link toc-highlight">专业级生成能力</a></ul><li><a href=#阿里万相wan21wan22开源视频生成的新标杆 class="table-of-contents__link toc-highlight">阿里万相Wan2.1/Wan2.2：开源视频生成的新标杆</a><ul><li><a href=#3d因果vae256倍时空压缩 class="table-of-contents__link toc-highlight">3D因果VAE：256倍时空压缩</a><li><a href=#flow-matching与i2v-mask机制 class="table-of-contents__link toc-highlight">Flow Matching与I2V Mask机制</a><li><a href=#特征缓存技术 class="table-of-contents__link toc-highlight">特征缓存技术</a><li><a href=#开源策略与双规格设计 class="table-of-contents__link toc-highlight">开源策略与双规格设计</a><li><a href=#vbench榜首8622 class="table-of-contents__link toc-highlight">VBench榜首：86.22%</a></ul><li><a href=#智谱cogvideox旋转位置编码的创新应用 class="table-of-contents__link toc-highlight">智谱CogVideoX：旋转位置编码的创新应用</a><ul><li><a href=#3d-rope三维旋转位置编码 class="table-of-contents__link toc-highlight">3D RoPE：三维旋转位置编码</a><li><a href=#专家transformer架构 class="table-of-contents__link toc-highlight">专家Transformer架构</a><li><a href=#开源生态建设 class="table-of-contents__link toc-highlight">开源生态建设</a></ul><li><a href=#腾讯混元hunyuanvideo大规模dit的实践 class="table-of-contents__link toc-highlight">腾讯混元HunyuanVideo：大规模DiT的实践</a><ul><li><a href=#大规模dit架构 class="table-of-contents__link toc-highlight">大规模DiT架构</a><li><a href=#开源贡献 class="table-of-contents__link toc-highlight">开源贡献</a></ul><li><a href=#minimax-abab-video-1原生高清的精巧设计 class="table-of-contents__link toc-highlight">MiniMax abab-video-1：原生高清的精巧设计</a><ul><li><a href=#1280x720-25fps原生高清 class="table-of-contents__link toc-highlight">1280x720 25fps原生高清</a><li><a href=#最长6秒的设计权衡 class="table-of-contents__link toc-highlight">最长6秒的设计权衡</a></ul><li><a href=#模型横向对比与技术路线分析 class="table-of-contents__link toc-highlight">模型横向对比与技术路线分析</a><ul><li><a href=#关键指标全面对比 class="table-of-contents__link toc-highlight">关键指标全面对比</a><li><a href=#架构技术路线对比 class="table-of-contents__link toc-highlight">架构技术路线对比</a><li><a href=#各模型优势领域分析 class="table-of-contents__link toc-highlight">各模型优势领域分析</a><li><a href=#技术发展趋势分析 class="table-of-contents__link toc-highlight">技术发展趋势分析</a><li><a href=#训练数据策略对比 class="table-of-contents__link toc-highlight">训练数据策略对比</a><li><a href=#生成质量与效率权衡 class="table-of-contents__link toc-highlight">生成质量与效率权衡</a></ul><li><a href=#各模型技术细节深度对比 class="table-of-contents__link toc-highlight">各模型技术细节深度对比</a><ul><li><a href=#潜在空间设计对比 class="table-of-contents__link toc-highlight">潜在空间设计对比</a><li><a href=#注意力机制对比 class="table-of-contents__link toc-highlight">注意力机制对比</a><li><a href=#训练策略对比 class="table-of-contents__link toc-highlight">训练策略对比</a></ul><li><a href=#应用场景与市场定位分析 class="table-of-contents__link toc-highlight">应用场景与市场定位分析</a><ul><li><a href=#内容创作领域 class="table-of-contents__link toc-highlight">内容创作领域</a><li><a href=#研究与开发领域 class="table-of-contents__link toc-highlight">研究与开发领域</a><li><a href=#商业化路径 class="table-of-contents__link toc-highlight">商业化路径</a></ul><li><a href=#未来发展方向 class="table-of-contents__link toc-highlight">未来发展方向</a><li><a href=#总结 class="table-of-contents__link toc-highlight">总结</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

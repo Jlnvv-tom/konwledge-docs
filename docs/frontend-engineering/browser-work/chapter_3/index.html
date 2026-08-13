@@ -1,0 +1,579 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_3" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第3章 V8 引擎概览 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第3章 V8 引擎概览 | 知识库"/><meta data-rh=true name=description content="你写的 JavaScript 代码，V8 引擎不是一行一行翻译的，而是经过一条精密的编译管道，最终变成 CPU 能直接执行的机器码。这条管道上有 6 个关卡，每个关卡都在决定你的代码能跑多快。"/><meta data-rh=true property=og:description content="你写的 JavaScript 代码，V8 引擎不是一行一行翻译的，而是经过一条精密的编译管道，最终变成 CPU 能直接执行的机器码。这条管道上有 6 个关卡，每个关卡都在决定你的代码能跑多快。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3","name":"第3章 V8 引擎概览","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第3章 V8 引擎概览</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第3章 V8 引擎概览</h1></header>
+<blockquote>
+<p>你写的 JavaScript 代码，V8 引擎不是一行一行翻译的，而是经过一条精密的编译管道，最终变成 CPU 能直接执行的机器码。这条管道上有 6 个关卡，每个关卡都在决定你的代码能跑多快。</p>
+</blockquote>
+<p>我是怕浪猫，一个喜欢拆引擎的技术博主。上期讲完 Chrome 的多进程架构，今天我们进入 V8 引擎的世界。这一章会完整拆解 V8 的执行管道，从源代码到机器码的每一步，以及 V8 的内存管理和垃圾回收机制。这是整个系列最硬核的几章之一，做好准备。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=31-v8-的设计目标与核心思想>3.1 V8 的设计目标与核心思想<a href=#31-v8-的设计目标与核心思想 class=hash-link aria-label="3.1 V8 的设计目标与核心思想的直接链接" title="3.1 V8 的设计目标与核心思想的直接链接" translate=no>​</a></h2>
+<p>V8 是 Google 为 Chrome 浏览器开发的 JavaScript 引擎，于 2008 年随 Chrome 一起发布。它的名字来源于那台著名的 V8 发动机，暗示的是高性能。</p>
+<p>V8 的核心设计目标只有一个：让 JavaScript 的执行速度尽可能接近原生代码。这在 2008 年是一个非常激进的目标，因为当时的 JavaScript 引擎（如 SpiderMonkey、JScript）普遍采用解释执行，速度比编译型语言慢 1-2 个数量级。</p>
+<p>V8 实现这个目标依赖三个核心思想。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=311-jit-编译为什么需要即时编译>3.1.1 JIT 编译：为什么需要即时编译<a href=#311-jit-编译为什么需要即时编译 class=hash-link aria-label="3.1.1 JIT 编译：为什么需要即时编译的直接链接" title="3.1.1 JIT 编译：为什么需要即时编译的直接链接" translate=no>​</a></h3>
+<p>JIT（Just-In-Time Compilation，即时编译）是 V8 最核心的技术。要理解 JIT 的价值，先看看两种传统执行方式的优劣。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>执行方式<th>工作原理<th>优点<th>缺点<tbody><tr><td>解释执行<td>逐行解析源代码，直接执行<td>启动快，内存占用低<td>运行慢<tr><td>AOT 编译<td>运行前将源代码全部编译为机器码<td>运行快<td>启动慢，内存占用高<tr><td>JIT 编译<td>运行时监控热点代码，编译为机器码<td>启动快，运行快<td>实现复杂，有预热开销</table>
+<p>JIT 的核心思想是「边执行边优化」。代码开始以解释方式快速启动执行，同时引擎监控哪些函数被频繁调用（热点代码）。当某个函数被调用足够多次后，JIT 编译器会将它编译为优化的机器码，后续调用直接执行机器码。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">JIT 编译工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">源代码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">解释执行（快速启动）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  监控执行频率和类型信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  函数调用次数 > 阈值？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── 否 ── 继续解释执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └── 是 ── JIT 编译器介入</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          生成优化机器码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          后续调用直接执行机器码（性能接近原生）</span><br/></div></code></pre></div></div>
+<p>JIT 编译的关键优势是它利用了运行时信息。传统 AOT（Ahead-Of-Time，提前编译）编译在运行前就完成，无法知道代码的实际运行模式。JIT 在运行时收集信息，知道哪些代码是热点、变量通常是什么类型，可以据此做更激进的优化。</p>
+<blockquote>
+<p>JIT 不是「解释和编译的二选一」，而是「先解释再编译，用运行时信息指导优化」的聪明策略。它让 JavaScript 既有快速启动，又有高速运行。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=312-隐藏类hidden-classes--shapes>3.1.2 隐藏类（Hidden Classes / Shapes）<a href=#312-隐藏类hidden-classes--shapes class=hash-link aria-label="3.1.2 隐藏类（Hidden Classes / Shapes）的直接链接" title="3.1.2 隐藏类（Hidden Classes / Shapes）的直接链接" translate=no>​</a></h3>
+<p>JavaScript 是动态类型语言，对象的属性可以随时增删，类型可以随时变化。这让属性访问的优化变得非常困难。</p>
+<p>在静态类型语言（如 C++、Java）中，对象的内存布局在编译时就确定了。访问一个属性就是简单的内存偏移计算，只需要一条机器指令。而 JavaScript 中，对象的属性随时可能变化，无法在编译时确定内存布局。</p>
+<p>V8 的解决方案是隐藏类（Hidden Classes），也叫 Shapes 或 Maps。隐藏类是 V8 在对象背后维护的一个描述对象「形状」的数据结构。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">隐藏类工作原理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 创建对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">let p1 = { x: 1, y: 2 };</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// V8 内部状态：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// p1 的隐藏类 HC1 描述：有属性 x（偏移0）和 y（偏移1）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 访问 p1.x → 通过 HC1 查找，x 在偏移0 → 直接读取内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 创建另一个同形状对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">let p2 = { x: 3, y: 4 };</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// V8 发现 p2 的形状与 p1 相同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// p2 复用同一个隐藏类 HC1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 访问 p2.x → 同样通过 HC1 查找 → 同样读取偏移0</span><br/></div></code></pre></div></div>
+<p>当对象的属性发生变化时，V8 会创建一个新的隐藏类，并与旧的隐藏类建立转换链接：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">隐藏类转换链</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">对象 p = { x: 1 }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 隐藏类 HC0 { x: offset 0 }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">p.y = 2  (添加属性 y)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 隐藏类 HC1 { x: offset 0, y: offset 1 }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (HC0 → HC1 的转换链接：添加属性 y)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">p.z = 3  (添加属性 z)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 隐藏类 HC2 { x: offset 0, y: offset 1, z: offset 2 }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (HC1 → HC2 的转换链接：添加属性 z)</span><br/></div></code></pre></div></div>
+<p>隐藏类的关键性能影响：如果多个对象的属性添加顺序相同，它们会共享相同的隐藏类，属性访问会很快。如果属性添加顺序不同，会创建不同的隐藏类，导致性能下降。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>代码模式<th>隐藏类行为<th>性能<tbody><tr><td><code>p1 = {x:1, y:2}; p2 = {x:3, y:4}</code><td>p1 和 p2 共享同一隐藏类<td>好<tr><td><code>p1 = {x:1, y:2}; p2 = {y:4, x:3}</code><td>p1 和 p2 有不同隐藏类<td>差<tr><td><code>p1 = {}; p1.x=1; p1.y=2;</code><td>逐步添加，创建多个隐藏类<td>一般<tr><td><code>p1 = {}; delete p1.x</code><td>删除属性导致隐藏类变化<td>差</table>
+<blockquote>
+<p>隐藏类是 V8 让动态语言拥有静态语言属性访问速度的秘密武器。代价是开发者必须注意属性的添加顺序，否则隐藏类会碎片化。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=313-内联缓存inline-caches>3.1.3 内联缓存（Inline Caches）<a href=#313-内联缓存inline-caches class=hash-link aria-label="3.1.3 内联缓存（Inline Caches）的直接链接" title="3.1.3 内联缓存（Inline Caches）的直接链接" translate=no>​</a></h3>
+<p>内联缓存（Inline Caches，IC）是与隐藏类配合的另一项核心优化技术。</p>
+<p>当 V8 执行属性访问 <code>obj.x</code> 时，它会记录上一次访问时 obj 的隐藏类和属性 x 的偏移量。下次再执行同一段代码时，如果 obj 的隐藏类没变，就直接用上次记录的偏移量访问属性，跳过隐藏类查找过程。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">内联缓存工作原理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第一次执行 obj.x：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 查找 obj 的隐藏类 → HC1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 在 HC1 中查找 x → 偏移量 0</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 读取 obj+0 的值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 缓存信息：(HC1, x → offset 0)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第二次执行 obj.x：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 检查 obj 的隐藏类 → HC1 (与缓存一致)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 直接读取 obj+0 (跳过查找)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 完成（比第一次快很多）</span><br/></div></code></pre></div></div>
+<p>内联缓存有几种状态，随着代码执行的深入逐步变化：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>IC 状态<th>含义<th>性能<tbody><tr><td>Uninitialized<td>首次执行，未缓存<td>最慢<tr><td>Monomorphic<td>缓存了一种隐藏类<td>快<tr><td>Polymorphic<td>缓存了 2-4 种隐藏类<td>中等<tr><td>Megamorphic<td>超过 4 种隐藏类，放弃缓存<td>慢</table>
+<blockquote>
+<p>内联缓存和隐藏类是 V8 性能优化的「双子星」。隐藏类让属性有固定的位置，内联缓存让访问跳过查找。两者配合，动态语言的属性访问可以接近静态语言的性能。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=32-v8-的执行管道execution-pipeline>3.2 V8 的执行管道（Execution Pipeline）<a href=#32-v8-的执行管道execution-pipeline class=hash-link aria-label="3.2 V8 的执行管道（Execution Pipeline）的直接链接" title="3.2 V8 的执行管道（Execution Pipeline）的直接链接" translate=no>​</a></h2>
+<p>V8 的执行管道是理解 V8 工作原理的核心。从 JavaScript 源代码到 CPU 执行的机器码，中间经过多个阶段，每个阶段都有不同的编译器负责。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=321-解析阶段parsingscanner-与-parser>3.2.1 解析阶段（Parsing）：Scanner 与 Parser<a href=#321-解析阶段parsingscanner-与-parser class=hash-link aria-label="3.2.1 解析阶段（Parsing）：Scanner 与 Parser的直接链接" title="3.2.1 解析阶段（Parsing）：Scanner 与 Parser的直接链接" translate=no>​</a></h3>
+<p>JavaScript 代码在 V8 中的第一步是解析。解析分为两个子阶段：词法分析（Scanning）和语法分析（Parsing）。</p>
+<p>Scanner（词法分析器）的工作是将源代码字符串分解为 Token（词法单元）。例如：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">源代码：let x = 1 + 2;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Scanner 输出：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: LET</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: IDENTIFIER "x"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: EQUALS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: NUMBER 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: PLUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: NUMBER 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Token: SEMICOLON</span><br/></div></code></pre></div></div>
+<p>Parser（语法分析器）接收 Token 流，根据 JavaScript 语法规则构建 AST（Abstract Syntax Tree，抽象语法树）。AST 是源代码的树形结构表示，每个节点代表一个语法结构。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">AST 结构示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">源代码：let x = 1 + 2;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AST：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  VariableDeclaration</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├── name: "x"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └── init: BinaryExpression</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            ├── operator: "+"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            ├── left: Literal (value: 1)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            └── right: Literal (value: 2)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=322-ast-生成与预解析preparse--lazy-parsing>3.2.2 AST 生成与预解析（Preparse / Lazy Parsing）<a href=#322-ast-生成与预解析preparse--lazy-parsing class=hash-link aria-label="3.2.2 AST 生成与预解析（Preparse / Lazy Parsing）的直接链接" title="3.2.2 AST 生成与预解析（Preparse / Lazy Parsing）的直接链接" translate=no>​</a></h3>
+<p>V8 的解析策略不是一次性解析所有代码，而是采用懒解析（Lazy Parsing）策略。</p>
+<p>JavaScript 代码中经常有大量函数定义但未必会被调用。如果一开始就把所有函数都完整解析为 AST，会浪费大量时间和内存。V8 的策略是：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">预解析与完整解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 顶层代码：立即完整解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">function outer() {           // 预解析（只看结构，不生成完整 AST）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  var x = 1;                 //</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  function inner() {         // 预解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    return x + 1;            //</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  }                          //</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  return inner();            // outer 被调用时，完整解析 outer 函数体</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}                            //</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                             // inner 被调用时，完整解析 inner 函数体</span><br/></div></code></pre></div></div>
+<p>预解析（Preparse）只做最基本的语法检查，记录函数的参数名和变量名，不生成完整的 AST。当函数被实际调用时，才进行完整解析。</p>
+<p>这种策略的好处：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>策略<th>首次解析时间<th>内存占用<th>适用场景<tbody><tr><td>全量解析<td>慢<td>高<td>所有代码都执行<tr><td>预解析 + 懒解析<td>快<td>低<td>大部分代码不执行</table>
+<blockquote>
+<p>预解析是 V8 用空间换时间的反向操作：用「不完全解析」换「更快的启动」。对于大型 Web 应用，预解析可以节省数百毫秒的启动时间。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=323-ignition-解释器字节码执行>3.2.3 Ignition 解释器（字节码执行）<a href=#323-ignition-解释器字节码执行 class=hash-link aria-label="3.2.3 Ignition 解释器（字节码执行）的直接链接" title="3.2.3 Ignition 解释器（字节码执行）的直接链接" translate=no>​</a></h3>
+<p>Ignition 是 V8 的解释器，它接收 Parser 生成的 AST，将其编译为字节码（Bytecode），然后逐条解释执行。</p>
+<p>字节码是一种中间表示，比源代码更紧凑，比机器码更抽象。每条字节码指令对应一个操作，如加载变量、算术运算、函数调用等。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Ignition 字节码示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">JavaScript 源代码：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  function add(a, b) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    return a + b;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">生成的字节码（简化版）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Lda a          // 将参数 a 加载到累加器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Star r0        // 将累加器值存入寄存器 r0</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Lda b          // 将参数 b 加载到累加器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Add r0         // 将 r0 的值与累加器相加</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Return         // 返回累加器的值</span><br/></div></code></pre></div></div>
+<p>Ignition 的字节码是平台无关的，同一份字节码可以在任何平台上运行。字节码的执行速度比源代码解释快，但比机器码慢。Ignition 同时承担一个关键职责：收集类型反馈（Type Feedback）信息，为后续的 JIT 编译提供优化依据。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=324-sparkplug-编译器非优化中间层>3.2.4 Sparkplug 编译器（非优化中间层）<a href=#324-sparkplug-编译器非优化中间层 class=hash-link aria-label="3.2.4 Sparkplug 编译器（非优化中间层）的直接链接" title="3.2.4 Sparkplug 编译器（非优化中间层）的直接链接" translate=no>​</a></h3>
+<p>Sparkplug 是 V8 在 2021 年引入的编译器，位于 Ignition 和 TurboFan 之间。它的角色是「非优化编译器」。</p>
+<p>为什么要加一个非优化编译器？因为 Ignition 解释执行虽然启动快，但对于频繁执行的代码，解释开销仍然显著。而 TurboFan 优化编译虽然运行快，但编译时间长，需要等待足够的类型反馈数据。</p>
+<p>Sparkplug 填补了这个空档：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">V8 编译管道（含 Sparkplug）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">源代码 → AST → Ignition 字节码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                   Ignition 解释执行（收集类型反馈）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        │  函数调用 ~10 次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                   Sparkplug 编译（非优化机器码，快速生成）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        │  函数调用 ~1000 次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                   TurboFan 编译（优化机器码，基于类型反馈）</span><br/></div></code></pre></div></div>
+<p>Sparkplug 编译速度极快（比 TurboFan 快两个数量级），生成的代码虽然不优化，但比解释执行快 50% 左右。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>编译阶段<th>编译速度<th>执行速度<th>触发条件<tbody><tr><td>Ignition（解释）<td>极快<td>慢<td>立即<tr><td>Sparkplug<td>快<td>中等<td>调用约 10 次<tr><td>TurboFan<td>慢<td>快<td>调用约 1000 次</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=325-maglev-编译器中层优化-jit>3.2.5 Maglev 编译器（中层优化 JIT）<a href=#325-maglev-编译器中层优化-jit class=hash-link aria-label="3.2.5 Maglev 编译器（中层优化 JIT）的直接链接" title="3.2.5 Maglev 编译器（中层优化 JIT）的直接链接" translate=no>​</a></h3>
+<p>Maglev 是 V8 在 2023 年引入的编译器，位于 Sparkplug 和 TurboFan 之间。它是中层优化编译器，填补了 Sparkplug 和 TurboFan 之间的性能空档。</p>
+<p>Maglev 的设计目标是：比 Sparkplug 更优化，但编译速度比 TurboFan 快得多。它利用 Ignition 收集的类型反馈做部分优化，但不做 TurboFan 那么激进的优化。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">V8 完整编译管道（2024 版）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Ignition（解释器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  收集类型反馈</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Sparkplug（非优化编译器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  快速生成机器码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Maglev（中层优化编译器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  基于类型反馈做中等优化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">TurboFan（顶层优化编译器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     基于类型反馈做激进优化</span><br/></div></code></pre></div></div>
+<p>四层编译管道让 V8 可以根据代码的热度逐步提升优化级别，在启动速度和峰值性能之间取得平衡。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>编译器<th>角色<th>优化程度<th>编译速度<th>执行速度<tbody><tr><td>Ignition<td>解释器<td>无<td>极快<td>慢<tr><td>Sparkplug<td>非优化编译<td>无<td>快<td>中等<tr><td>Maglev<td>中层优化<td>部分<td>中等<td>快<tr><td>TurboFan<td>顶层优化<td>激进<td>慢<td>很快</table>
+<blockquote>
+<p>四层编译管道不是过度设计，而是 V8 团队 15 年优化的结晶。每一层都在「编译时间」和「执行性能」之间找到不同的平衡点，让代码从冷启动到热运行的每一步都有最优选择。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=326-turbofan-编译器顶层优化-jit>3.2.6 TurboFan 编译器（顶层优化 JIT）<a href=#326-turbofan-编译器顶层优化-jit class=hash-link aria-label="3.2.6 TurboFan 编译器（顶层优化 JIT）的直接链接" title="3.2.6 TurboFan 编译器（顶层优化 JIT）的直接链接" translate=no>​</a></h3>
+<p>TurboFan 是 V8 的顶层优化编译器，它基于 Ignition 收集的类型反馈信息，生成高度优化的机器码。</p>
+<p>TurboFan 的主要优化策略：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优化策略<th>说明<th>效果<tbody><tr><td>类型特化<td>根据类型反馈，假设变量类型不变，生成特化代码<td>消除类型检查<tr><td>内联<td>将被调用函数的代码嵌入调用处<td>消除调用开销<tr><td>逃逸分析<td>分析对象是否逃逸出函数，未逃逸的对象分配在栈上<td>减少堆分配<tr><td>边界检查消除<td>根据循环分析，消除冗余的数组边界检查<td>减少分支<tr><td>常量折叠<td>编译期计算常量表达式<td>减少运行时计算</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=327-反优化deoptimization>3.2.7 反优化（Deoptimization）<a href=#327-反优化deoptimization class=hash-link aria-label="3.2.7 反优化（Deoptimization）的直接链接" title="3.2.7 反优化（Deoptimization）的直接链接" translate=no>​</a></h3>
+<p>JIT 编译的一个根本假设是「历史行为预测未来行为」。如果这个假设被打破（例如变量的类型发生了变化），V8 必须执行反优化（Deoptimization）。</p>
+<p>反优化是将 TurboFan 生成的优化机器码回退到 Ignition 字节码执行的过程。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">反优化触发示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">function process(x) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  return x + 1;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 前 1000 次调用都传数字</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">process(1);   // TurboFan 假设 x 始终是数字</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">process(2);   // 编译为：直接整数加法</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">process(999);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 第 1001 次调用传入字符串</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">process("hello");  // 类型假设被打破！</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              // → 触发反优化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              // → 回退到 Ignition 字节码执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              // → 后续可能重新触发 TurboFan（以新类型）</span><br/></div></code></pre></div></div>
+<p>反优化的代价很高：不仅要回退到解释执行，还要丢弃优化代码，后续可能需要重新编译。频繁的反优化会严重拖慢性能。</p>
+<blockquote>
+<p>反优化是 JIT 编译的「安全网」。没有它，类型假设出错会导致错误的结果。但频繁触犯反优化等于在编译和解编译之间来回折腾，性能反而不如纯解释执行。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=33-v8-的内存管理>3.3 V8 的内存管理<a href=#33-v8-的内存管理 class=hash-link aria-label="3.3 V8 的内存管理的直接链接" title="3.3 V8 的内存管理的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=331-堆heap结构划分>3.3.1 堆（Heap）结构划分<a href=#331-堆heap结构划分 class=hash-link aria-label="3.3.1 堆（Heap）结构划分的直接链接" title="3.3.1 堆（Heap）结构划分的直接链接" translate=no>​</a></h3>
+<p>V8 将 JavaScript 对象存储在堆（Heap）中，堆被划分为多个区域，每个区域有不同的管理策略。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">V8 堆结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                  V8 Heap                 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌───────────────────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │         新生代（Young Gen）         │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌───────────┐ ┌───────────┐     │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ From-Space │ │ To-Space  │     │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ (活跃对象)  │ │ (空闲)    │     │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └───────────┘ └───────────┘     │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └───────────────────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌───────────────────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │         老生代（Old Gen）           │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌──────────┐ ┌────────────────┐  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ 指针空间  │ │ 数据空间        │  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │(含指针对象)│ │(纯数据对象)     │  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └──────────┘ └────────────────┘  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └───────────────────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌───────────┐ ┌───────────┐           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │大对象空间  │ │ 代码空间   │           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │(Large Obj)│ │(Code Space)│          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └───────────┘ └───────────┘           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>各区域的职责：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>区域<th>存储内容<th>GC 策略<th>大小<tbody><tr><td>新生代<td>新创建的对象<td>Scavenge（复制式）<td>较小（1-8MB）<tr><td>老生代<td>存活时间长的对象<td>Mark-Sweep-Compact<td>较大<tr><td>大对象空间<td>超过阈值的大对象<td>独立管理<td>按需分配<tr><td>代码空间<td>JIT 生成的机器码<td>独立管理<td>中等</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=332-垃圾回收机制>3.3.2 垃圾回收机制<a href=#332-垃圾回收机制 class=hash-link aria-label="3.3.2 垃圾回收机制的直接链接" title="3.3.2 垃圾回收机制的直接链接" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3321-minor-gcscavenge--cheney-算法>3.3.2.1 Minor GC（Scavenge / Cheney 算法）<a href=#3321-minor-gcscavenge--cheney-算法 class=hash-link aria-label="3.3.2.1 Minor GC（Scavenge / Cheney 算法）的直接链接" title="3.3.2.1 Minor GC（Scavenge / Cheney 算法）的直接链接" translate=no>​</a></h4>
+<p>新生代的垃圾回收使用 Scavenge 算法，基于 Cheney 的半空间复制策略。</p>
+<p>新生代被分为两个相等的半空间：From-Space 和 To-Space。新对象分配在 From-Space 中。当 From-Space 满了时，触发 Scavenge：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Scavenge 工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回收前：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  From-Space: [A] [B] [C] [D] [E] [F]  (部分存活，部分垃圾)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  To-Space:   (空)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回收过程：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 从根集合遍历，标记存活对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 将存活对象从 From-Space 复制到 To-Space</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 复制过程中整理内存，消除碎片</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回收后：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  From-Space: (空)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  To-Space:   [A] [C] [E]  (仅存活对象，紧凑排列)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">交换 From-Space 和 To-Space</span><br/></div></code></pre></div></div>
+<p>Scavenge 的优点是速度快（只处理存活对象，不扫描垃圾），缺点是浪费一半内存空间。对于新生代中「大多数对象朝生夕灭」的特点，这个策略非常高效。</p>
+<p>在 Scavenge 过程中，如果某个对象已经经历过一次 Scavenge（即已经存活了一次 GC），它会被晋升（Promote）到老生代。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3322-major-gcmark-sweep-compact--orinoco>3.3.2.2 Major GC（Mark-Sweep-Compact / Orinoco）<a href=#3322-major-gcmark-sweep-compact--orinoco class=hash-link aria-label="3.3.2.2 Major GC（Mark-Sweep-Compact / Orinoco）的直接链接" title="3.3.2.2 Major GC（Mark-Sweep-Compact / Orinoco）的直接链接" translate=no>​</a></h4>
+<p>老生代的垃圾回收使用 Mark-Sweep-Compact（标记-清除-整理）算法，由 Orinoco 项目实现并发和增量优化。</p>
+<p>三个阶段的工作：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Major GC 三阶段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段一：标记（Mark）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  从根集合出发，遍历对象引用链</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  标记所有可达对象为「存活」</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  根集合包括：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 全局对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 当前执行栈中的局部变量</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 寄存器中的引用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段二：清除（Sweep）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  遍历堆中所有对象</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  未被标记的对象即为垃圾，释放其内存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">阶段三：整理（Compact）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  将存活对象向内存一端移动</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  消除内存碎片</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  更新引用地址</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段<th>工作<th>耗时<th>暂停主线程？<tbody><tr><td>标记<td>遍历引用链，标记存活对象<td>长<td>部分（可并发）<tr><td>清除<td>扫描堆，释放垃圾对象内存<td>中<td>短暂<tr><td>整理<td>移动对象，消除碎片<td>长<td>短暂</table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3323-并发标记与并行清理>3.3.2.3 并发标记与并行清理<a href=#3323-并发标记与并行清理 class=hash-link aria-label="3.3.2.3 并发标记与并行清理的直接链接" title="3.3.2.3 并发标记与并行清理的直接链接" translate=no>​</a></h4>
+<p>Orinoco 项目对 Major GC 的关键优化是并发标记（Concurrent Marking）。标记阶段可以在后台线程执行，不阻塞主线程。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">并发标记工作模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">主线程：    [JavaScript 执行] ──┬── [JavaScript 执行] ──┬── [短暂暂停]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              │                        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">辅助线程：                    └── [并发标记] ───────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              (标记阶段大部分在后台完成)</span><br/></div></code></pre></div></div>
+<p>并发标记的难点在于：主线程在执行 JavaScript 时可能修改对象引用关系，导致标记结果不一致。V8 通过写屏障（Write Barrier）解决：当主线程修改引用关系时，通过写屏障通知 GC 线程更新标记状态。</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=3324-增量标记与空闲时间垃圾回收>3.3.2.4 增量标记与空闲时间垃圾回收<a href=#3324-增量标记与空闲时间垃圾回收 class=hash-link aria-label="3.3.2.4 增量标记与空闲时间垃圾回收的直接链接" title="3.3.2.4 增量标记与空闲时间垃圾回收的直接链接" translate=no>​</a></h4>
+<p>增量标记（Incremental Marking）将一次长时间的标记任务拆分为多个小步骤，穿插在 JavaScript 执行之间。每个步骤只标记一小部分对象，然后交还控制权给主线程。</p>
+<p>空闲时间垃圾回收（Idle-Time GC）利用浏览器空闲时间执行 GC。当 Chrome 知道下一帧渲染还有空闲时间时，会通知 V8 执行一部分 GC 工作。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>GC 优化策略<th>原理<th>效果<tbody><tr><td>并发标记<td>标记阶段在后台线程执行<td>减少主线程暂停<tr><td>增量标记<td>标记拆分为小步骤<td>缩短单次暂停时间<tr><td>空闲时间 GC<td>利用空闲时间执行 GC<td>避免影响交互<tr><td>并行清理<td>多线程同时清理<td>加速清理阶段</table>
+<blockquote>
+<p>现代 GC 的核心目标不是「更快回收」，而是「更少暂停」。V8 的 Orinoco 项目把 GC 暂停从几十毫秒降到几毫秒，让 Web 应用几乎感受不到 GC 的存在。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=333-内存泄漏的常见模式>3.3.3 内存泄漏的常见模式<a href=#333-内存泄漏的常见模式 class=hash-link aria-label="3.3.3 内存泄漏的常见模式的直接链接" title="3.3.3 内存泄漏的常见模式的直接链接" translate=no>​</a></h3>
+<p>即使有 GC，JavaScript 仍然可能发生内存泄漏。内存泄漏的本质是：对象不再使用，但仍然被引用，导致 GC 无法回收。</p>
+<p>常见内存泄漏模式：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模式<th>原因<th>示例<tbody><tr><td>意外的全局变量<td>变量未声明就赋值<td><code>function f() { x = 1; }</code><tr><td>被遗忘的定时器<td>setInterval 未清理<td><code>setInterval(() => {...}, 1000)</code><tr><td>闭包引用<td>闭包持有大对象引用<td>闭包中引用了不需要的大数组<tr><td>DOM 引用<td>JS 变量引用已移除的 DOM<td><code>let el = document.getElementById('x'); el.remove();</code><tr><td>事件监听器<td>未移除的监听器<td><code>addEventListener</code> 无对应 <code>removeEventListener</code></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=34-mojo-的-idl-定义与代码生成>3.4 Mojo 的 IDL 定义与代码生成<a href=#34-mojo-的-idl-定义与代码生成 class=hash-link aria-label="3.4 Mojo 的 IDL 定义与代码生成的直接链接" title="3.4 Mojo 的 IDL 定义与代码生成的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=341-mojo-idl-语法详解>3.4.1 Mojo IDL 语法详解<a href=#341-mojo-idl-语法详解 class=hash-link aria-label="3.4.1 Mojo IDL 语法详解的直接链接" title="3.4.1 Mojo IDL 语法详解的直接链接" translate=no>​</a></h3>
+<p>Mojo 使用自己的接口定义语言（IDL）来描述进程间通信的接口。IDL 文件以 <code>.mojom</code> 为扩展名，定义了消息类型、数据结构和接口方法。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// navigation.mojom (简化示例)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 定义一个结构体</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">struct NavigationParams {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  url.mojom.Url url;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  string method;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  array&lt;uint8> post_body;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  bool is_reload;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 定义一个接口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">interface NavigationHost {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 异步方法：请求导航</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RequestNavigation(NavigationParams params) => (bool success);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 异步方法：通知导航完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DidFinishNavigation(bool success, string error_message);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 同步方法（阻塞调用方）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  [Sync] GetCookies(string url) => (string cookies);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">// 定义枚举</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">enum NavigationType {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  kReload,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  kHistory,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  kNewNavigation,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div></code></pre></div></div>
+<p>Mojo IDL 支持多种数据类型，包括基本类型（int32, float, bool 等）、字符串、数组、映射、嵌套结构体和接口指针。每个 <code>.mojom</code> 文件会被代码生成器编译为多种语言的绑定代码。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=342-代码生成流程>3.4.2 代码生成流程<a href=#342-代码生成流程 class=hash-link aria-label="3.4.2 代码生成流程的直接链接" title="3.4.2 代码生成流程的直接链接" translate=no>​</a></h3>
+<p>Mojo 的代码生成器接收 <code>.mojom</code> 文件，生成对应语言的接口实现代码。Chrome 主要使用 C++ 绑定，但也支持 JavaScript 和 Java 绑定。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 代码生成流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">navigation.mojom</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Mojo 编译器 (mojom_parser)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │  语法分析 + 语义检查</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  代码生成器 (generators)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ├─► C++ 生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │   ├─ navigation.mojom.h        (接口声明)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │   ├─ navigation.mojom-internal.h (内部实现)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │   └─ navigation.mojom.cc        (实现代码)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ├─► JavaScript 生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │   └─ navigation.mojom-web.js    (JS 绑定)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       └─► Java 生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">           └─ NavigationHostMojom.java   (Java 绑定)</span><br/></div></code></pre></div></div>
+<p>生成的 C++ 代码包含：接口基类（定义纯虚方法）、代理类（Stub，用于发送 IPC 消息）、实现绑定（实现具体业务逻辑）、序列化/反序列化代码（将参数编码为二进制消息）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=343-channelproxy-与消息管道>3.4.3 ChannelProxy 与消息管道<a href=#343-channelproxy-与消息管道 class=hash-link aria-label="3.4.3 ChannelProxy 与消息管道的直接链接" title="3.4.3 ChannelProxy 与消息管道的直接链接" translate=no>​</a></h3>
+<p>Mojo 的底层通信依赖 ChannelProxy。ChannelProxy 是一个平台无关的 IPC 通道抽象，它在不同平台上使用不同的底层传输机制。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ChannelProxy 架构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">应用层          Mojo Interface (类型安全)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">               MessagePipe (双向消息管道)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                 ChannelProxy</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          ┌────────────┴────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          │                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    序列化/反序列化           消息路由</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          │                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ┌─────┴─────┐           ┌──────┴─────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │ Linux     │           │ 跨进程      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │ Unix      │           │ 消息传递    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │ Domain    │           │ (FD passing)│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │ Socket    │           │            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └───────────┘           └────────────┘</span><br/></div></code></pre></div></div>
+<p>在 Linux 上，Mojo 使用 Unix Domain Socket 作为底层传输。Unix Domain Socket 支持传递文件描述符（FD passing），这让 Mojo 可以高效地传递共享内存的句柄。在 macOS 上使用 Mach Port，在 Windows 上使用 Named Pipe。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=344-序列化与反序列化机制>3.4.4 序列化与反序列化机制<a href=#344-序列化与反序列化机制 class=hash-link aria-label="3.4.4 序列化与反序列化机制的直接链接" title="3.4.4 序列化与反序列化机制的直接链接" translate=no>​</a></h3>
+<p>Mojo 的消息在传输前需要序列化为二进制格式。Mojo 使用自定义的高效序列化格式，而非 Protocol Buffers 或 JSON。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 消息序列化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">原始调用:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  navigation_host->RequestNavigation(params)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  params = { url: "https://example.com", method: "GET" }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">序列化后的二进制消息:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Message Header                        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ message_id: 0x1234                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ interface_id: 0x0001              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └─ flags: async                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├────────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Payload (序列化后的 NavigationParams)   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ url: "https://example.com"        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │   (length-prefixed string)          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ├─ method: "GET"                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │   (length-prefixed string)          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └─ is_reload: false                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│      (1 byte bool)                    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>Mojo 序列化的特点是对齐优化：所有字段按自然对齐方式排列，避免填充浪费。指闹和字符串使用偏移量引用，支持结构体嵌套和循环引用。整个序列化过程不涉及任何内存分配（在预分配的缓冲区上操作），性能极高。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=345-ipc-安全验证trusteduntrusted>3.4.5 IPC 安全验证（Trusted/Untrusted）<a href=#345-ipc-安全验证trusteduntrusted class=hash-link aria-label="3.4.5 IPC 安全验证（Trusted/Untrusted）的直接链接" title="3.4.5 IPC 安全验证（Trusted/Untrusted）的直接链接" translate=no>​</a></h3>
+<p>并非所有 IPC 消息都是可信的。渲染进程可能被恶意网页攻破，因此从渲染进程发来的 IPC 消息必须经过严格验证。</p>
+<p>Chrome 将 IPC 消息分为两类：受信任的（Trusted）和不受信任的（Untrusted）。受信任的消息来自浏览器进程自身或其他可信进程，不受信任的消息来自渲染进程。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">IPC 消息验证层次</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第1层：消息格式验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 消息大小是否合法？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 字段偏移是否在范围内？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 字符串长度是否合理？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 嵌套深度是否超限？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第2层：语义验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 调用者是否有权限调用此接口？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ URL 是否合法？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 文件路径是否在允许范围内？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 权限检查是否通过？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">第3层：内容验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ URL 是否属于恶意站点？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 请求频率是否异常？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 数据大小是否超限？</span><br/></div></code></pre></div></div>
+<p>每个 Mojo 接口在注册时会声明其安全级别。渲染进程只能调用被标记为「渲染进程可调用」的接口方法。例如，渲染进程可以请求导航到新 URL，但不能直接读取文件系统。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=346-跨进程序调用的实现>3.4.6 跨进程序调用的实现<a href=#346-跨进程序调用的实现 class=hash-link aria-label="3.4.6 跨进程序调用的实现的直接链接" title="3.4.6 跨进程序调用的实现的直接链接" translate=no>​</a></h3>
+<p>Mojo 支持 [Sync] 标记的同步方法。同步方法会阻塞调用方进程，直到被调用方返回结果。这看起来简单，但实现上需要处理死锁和重入问题。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">同步调用流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 A                    浏览器进程 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │  [Sync] GetCookies(url)      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │ ────────────────────────────►│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │  (A 阻塞等待响应)             │  处理请求...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │                              │  读取 Cookie 数据库</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │  ←───────────────────────────│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │  (cookies)                   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │  A 恢复执行                   │</span><br/></div></code></pre></div></div>
+<p>同步调用的问题在于：如果被调用方也需要回调调用方（重入），就会死锁。Mojo 通过「同步调用时继续处理其他异步消息」来部分解决这个问题。调用方在等待响应时，仍然会处理收到的其他异步 IPC 消息，但不会处理同步消息。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=347-消息优先级与调度>3.4.7 消息优先级与调度<a href=#347-消息优先级与调度 class=hash-link aria-label="3.4.7 消息优先级与调度的直接链接" title="3.4.7 消息优先级与调度的直接链接" translate=no>​</a></h3>
+<p>并非所有 IPC 消流都是同等重要的。用户输入事件（如鼠标点击、触摸）需要尽快处理，而后台任务的消息可以延迟。Mojo 支持消息优先级机制。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 消息优先级</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">优先级队列：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ┌────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 最高：用户输入事件           │  ← 立即处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ├─ touchmove, click       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  └─ keydown                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 高：渲染相关                 │  ← 下一帧前处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ├─ requestAnimationFrame  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  └─ 合成器更新              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 中：默认                     │  ← 尽快处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ├─ 网络响应                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  └─ 定时器回调              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ 低：后台任务                 │  ← 空闲时处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ├─ requestIdleCallback    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  └─ 数据预取                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>Chrome 的任务调度器在 IO 线程上接收所有 IPC 消息，根据优先级放入不同队列。高优先级队列中的消息会被优先分派到目标线程处理。这种设计确保了即使在大量后台 IPC 消息涌入时，用户交互仍能获得快速响应。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=36-mojo-idl-与代码生成>3.6 Mojo IDL 与代码生成<a href=#36-mojo-idl-与代码生成 class=hash-link aria-label="3.6 Mojo IDL 与代码生成的直接链接" title="3.6 Mojo IDL 与代码生成的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=361-mojo-idl-定义>3.6.1 Mojo IDL 定义<a href=#361-mojo-idl-定义 class=hash-link aria-label="3.6.1 Mojo IDL 定义的直接链接" title="3.6.1 Mojo IDL 定义的直接链接" translate=no>​</a></h3>
+<p>Mojo 使用 IDL（Interface Definition Language，接口定义语言）定义接口，自动生成多语言绑定代码。</p>
+<div class="language-mojom codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-mojom codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// example.mojom</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">module example.module;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">interface MathService {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Add(int32 a, int32 b) => (int32 result);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Multiply(int32 a, int32 b) => (int32 result);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 代码生成流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">example.mojom (IDL 定义)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">mojo_bindings_generator</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ example.mojom.cc (C++ 绑定)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ example.mojom.js (JavaScript 绑定)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ example.mojom-lite.dart (Dart 绑定)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">使用生成的绑定代码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 创建接口代理（Proxy）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 创建接口实现（Stub）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 自动序列化/反序列化</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>IDL 类型<th>映射<tbody><tr><td>int32<td>int32_t / number<tr><td>string<td>std::string / string<tr><td>array<td>std::vector / Array<tr><td>interface<td>InterfacePtr</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=362-消息优先级与调度>3.6.2 消息优先级与调度<a href=#362-消息优先级与调度 class=hash-link aria-label="3.6.2 消息优先级与调度的直接链接" title="3.6.2 消息优先级与调度的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 消息优先级</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HIGH: 用户交互相关</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 输入事件、滚动</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 优先处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">NORMAL: 默认</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 大部分 IPC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">LOW: 后台任务</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 预取、垃圾回收通知</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 空闲时处理</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Mojo 的 IDL 驱动设计让跨进程通信像本地函数调用一样简单。开发者只需定义 .mojom 文件，生成器自动处理序列化、反序列化和传输。这比手动构建消息格式安全得多——不会出现序列化错误或字段不匹配。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+<p>V8 的核心知识体系：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>关键收益<tbody><tr><td>JIT 编译<td>解释 + 运行时编译<td>兼顾启动速度和运行性能<tr><td>隐藏类<td>动态对象的形状描述<td>属性访问接近静态语言<tr><td>内联缓存<td>缓存属性访问结果<td>跳过隐藏类查找<tr><td>执行管道<td>Ignition → Sparkplug → Maglev → TurboFan<td>逐步优化，按热度升级<tr><td>垃圾回收<td>Scavenge + Mark-Sweep-Compact<td>分代回收，并发标记</table>
+<p>觉得有用？收藏起来，下次想回顾 V8 引擎原理的时候直接翻出来看。</p>
+<p>你在实际项目中遇到过 V8 相关的性能问题吗？是 GC 导致的卡顿还是反优化导致的性能下降？评论区说说。</p>
+<p>关注怕浪猫，下期我们继续拆解 V8 的高级机制，讲 WebAssembly（Wasm）引擎、TurboFan 的优化策略细节、事件循环在 V8 中的实现，以及 V8 性能分析工具的使用。系列进度 3/24。</p>
+<p>下期预告：第 4 章「V8 的高级机制」。我们会讲 Wasm（WebAssembly，一种可移植的二进制指令格式）是如何在 V8 中加载和执行的，TurboFan 做了哪些激进优化，以及宏任务和微任务在 V8 底层是怎么调度的。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_3.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第2章 Chrome 多进程架构详解</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第4章 V8 的高级机制</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#31-v8-的设计目标与核心思想 class="table-of-contents__link toc-highlight">3.1 V8 的设计目标与核心思想</a><ul><li><a href=#311-jit-编译为什么需要即时编译 class="table-of-contents__link toc-highlight">3.1.1 JIT 编译：为什么需要即时编译</a><li><a href=#312-隐藏类hidden-classes--shapes class="table-of-contents__link toc-highlight">3.1.2 隐藏类（Hidden Classes / Shapes）</a><li><a href=#313-内联缓存inline-caches class="table-of-contents__link toc-highlight">3.1.3 内联缓存（Inline Caches）</a></ul><li><a href=#32-v8-的执行管道execution-pipeline class="table-of-contents__link toc-highlight">3.2 V8 的执行管道（Execution Pipeline）</a><ul><li><a href=#321-解析阶段parsingscanner-与-parser class="table-of-contents__link toc-highlight">3.2.1 解析阶段（Parsing）：Scanner 与 Parser</a><li><a href=#322-ast-生成与预解析preparse--lazy-parsing class="table-of-contents__link toc-highlight">3.2.2 AST 生成与预解析（Preparse / Lazy Parsing）</a><li><a href=#323-ignition-解释器字节码执行 class="table-of-contents__link toc-highlight">3.2.3 Ignition 解释器（字节码执行）</a><li><a href=#324-sparkplug-编译器非优化中间层 class="table-of-contents__link toc-highlight">3.2.4 Sparkplug 编译器（非优化中间层）</a><li><a href=#325-maglev-编译器中层优化-jit class="table-of-contents__link toc-highlight">3.2.5 Maglev 编译器（中层优化 JIT）</a><li><a href=#326-turbofan-编译器顶层优化-jit class="table-of-contents__link toc-highlight">3.2.6 TurboFan 编译器（顶层优化 JIT）</a><li><a href=#327-反优化deoptimization class="table-of-contents__link toc-highlight">3.2.7 反优化（Deoptimization）</a></ul><li><a href=#33-v8-的内存管理 class="table-of-contents__link toc-highlight">3.3 V8 的内存管理</a><ul><li><a href=#331-堆heap结构划分 class="table-of-contents__link toc-highlight">3.3.1 堆（Heap）结构划分</a><li><a href=#332-垃圾回收机制 class="table-of-contents__link toc-highlight">3.3.2 垃圾回收机制</a><ul><li><a href=#3321-minor-gcscavenge--cheney-算法 class="table-of-contents__link toc-highlight">3.3.2.1 Minor GC（Scavenge / Cheney 算法）</a><li><a href=#3322-major-gcmark-sweep-compact--orinoco class="table-of-contents__link toc-highlight">3.3.2.2 Major GC（Mark-Sweep-Compact / Orinoco）</a><li><a href=#3323-并发标记与并行清理 class="table-of-contents__link toc-highlight">3.3.2.3 并发标记与并行清理</a><li><a href=#3324-增量标记与空闲时间垃圾回收 class="table-of-contents__link toc-highlight">3.3.2.4 增量标记与空闲时间垃圾回收</a></ul><li><a href=#333-内存泄漏的常见模式 class="table-of-contents__link toc-highlight">3.3.3 内存泄漏的常见模式</a></ul><li><a href=#34-mojo-的-idl-定义与代码生成 class="table-of-contents__link toc-highlight">3.4 Mojo 的 IDL 定义与代码生成</a><ul><li><a href=#341-mojo-idl-语法详解 class="table-of-contents__link toc-highlight">3.4.1 Mojo IDL 语法详解</a><li><a href=#342-代码生成流程 class="table-of-contents__link toc-highlight">3.4.2 代码生成流程</a><li><a href=#343-channelproxy-与消息管道 class="table-of-contents__link toc-highlight">3.4.3 ChannelProxy 与消息管道</a><li><a href=#344-序列化与反序列化机制 class="table-of-contents__link toc-highlight">3.4.4 序列化与反序列化机制</a><li><a href=#345-ipc-安全验证trusteduntrusted class="table-of-contents__link toc-highlight">3.4.5 IPC 安全验证（Trusted/Untrusted）</a><li><a href=#346-跨进程序调用的实现 class="table-of-contents__link toc-highlight">3.4.6 跨进程序调用的实现</a><li><a href=#347-消息优先级与调度 class="table-of-contents__link toc-highlight">3.4.7 消息优先级与调度</a></ul><li><a href=#36-mojo-idl-与代码生成 class="table-of-contents__link toc-highlight">3.6 Mojo IDL 与代码生成</a><ul><li><a href=#361-mojo-idl-定义 class="table-of-contents__link toc-highlight">3.6.1 Mojo IDL 定义</a><li><a href=#362-消息优先级与调度 class="table-of-contents__link toc-highlight">3.6.2 消息优先级与调度</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

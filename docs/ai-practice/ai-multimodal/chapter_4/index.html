@@ -1,0 +1,484 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-multimodal/chapter_4" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第4章 开源AI视频生成模型巡礼 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第4章 开源AI视频生成模型巡礼 | 知识库"/><meta data-rh=true name=description content=图片玩熟了，视频怎么搞？4个开源模型试下来，怕浪猫踩了不少坑。 /><meta data-rh=true property=og:description content=图片玩熟了，视频怎么搞？4个开源模型试下来，怕浪猫踩了不少坑。 /><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/","name":"AI 多模态生成","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4","name":"第4章 开源AI视频生成模型巡礼","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="折叠侧边栏分类 'AI 多模态生成'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_1><span title="第1章 开源AI图片生成生态全景" class=linkLabel_WmDU>第1章 开源AI图片生成生态全景</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/contents><span title="系列文章规划：AI 多模态生成 - 图片与视频创作" class=linkLabel_WmDU>系列文章规划：AI 多模态生成 - 图片与视频创作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2><span title="第2章 提示词工程与生成控制" class=linkLabel_WmDU>第2章 提示词工程与生成控制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_3><span title="第3章 图生图、局部重绘与ControlNet" class=linkLabel_WmDU>第3章 图生图、局部重绘与ControlNet</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4><span title="第4章 开源AI视频生成模型巡礼" class=linkLabel_WmDU>第4章 开源AI视频生成模型巡礼</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_5><span title="第5章 ComfyUI视频生成工作流实战" class=linkLabel_WmDU>第5章 ComfyUI视频生成工作流实战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_6><span title="第6章 LoRA微调与个性化模型训练" class=linkLabel_WmDU>第6章 LoRA微调与个性化模型训练</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_7><span title="第7章 AI创作工程化与自动化流水线" class=linkLabel_WmDU>第7章 AI创作工程化与自动化流水线</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_8><span title="第8章 全链路回顾与AI生成未来展望" class=linkLabel_WmDU>第8章 全链路回顾与AI生成未来展望</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span>AI 多模态生成</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第4章 开源AI视频生成模型巡礼</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第4章 开源AI视频生成模型巡礼</h1></header>
+<p>图片玩熟了，视频怎么搞？4个开源模型试下来，怕浪猫踩了不少坑。</p>
+<p>我是怕浪猫，「AI造物手册」第4章。这章我们把目光从静帧移向动态，盘点当前主流的开源AI视频生成模型。从图生视频到文生视频，每个模型都拆开看清楚。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-视频生成的技术路线扩散模型如何从静帧走向动态>4.1 视频生成的技术路线：扩散模型如何从静帧走向动态<a href=#41-视频生成的技术路线扩散模型如何从静帧走向动态 class=hash-link aria-label="4.1 视频生成的技术路线：扩散模型如何从静帧走向动态的直接链接" title="4.1 视频生成的技术路线：扩散模型如何从静帧走向动态的直接链接" translate=no>​</a></h2>
+<p>AI视频生成的核心挑战是时序一致性——每一帧要好看，帧与帧之间还要连贯。</p>
+<p>当前主流的技术路线有三种：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>技术路线<th>原理<th>代表模型<tbody><tr><td>图生视频<td>从一张静图出发，预测后续帧的运动<td>SVD、CogVideoX I2V<tr><td>文生视频<td>直接从文本生成视频序列<td>Mochi 1、CogVideoX T2V<tr><td>帧插值<td>生成关键帧后插帧补全中间画面<td>AnimateDiff + Deforum</table>
+<p><strong>扩散模型做视频的基本思路</strong></p>
+<p>和图片生成的扩散过程类似，但扩展到了时空维度：</p>
+<ol>
+<li class="">输入文本/图片条件</li>
+<li class="">从时空噪声开始（多帧噪声）</li>
+<li class="">逐步去噪，同时考虑空间一致性和时间连贯性</li>
+<li class="">通过3D VAE或帧间注意力机制保证时序连续性</li>
+</ol>
+<blockquote>
+<p>图片生成是2D空间的去噪，视频生成是2D+时间维度的去噪——计算量翻了几十倍。</p>
+</blockquote>
+<p>关键架构差异：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>组件<th>图片生成<th>视频生成<tbody><tr><td>VAE<td>2D空间编码<td>3D时空编码<tr><td>注意力<td>空间自注意力<td>空间+时序注意力<tr><td>计算量<td>单帧<td>N帧（通常16-48帧）<tr><td>显存<td>4-16GB<td>16-80GB</table>
+<p>这就是为什么视频生成对硬件要求远高于图片生成。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-stable-video-diffusion图生视频的开源起点>4.2 Stable Video Diffusion：图生视频的开源起点<a href=#42-stable-video-diffusion图生视频的开源起点 class=hash-link aria-label="4.2 Stable Video Diffusion：图生视频的开源起点的直接链接" title="4.2 Stable Video Diffusion：图生视频的开源起点的直接链接" translate=no>​</a></h2>
+<p>Stable Video Diffusion（SVD）是Stability AI在2023年11月发布的开源视频生成模型，也是第一个高质量的开源图生视频模型。</p>
+<p><strong>核心参数</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目<th>参数<tbody><tr><td>输入<td>单张图片<tr><td>输出<td>14帧或25帧视频<tr><td>分辨率<td>576x1024或1024x576<tr><td>帧率<td>约6fps（生成后可插帧到24fps）<tr><td>架构<td>基于SD2.1的UNet + 时间层<tr><td>许可<td>开源，非商业</table>
+<p><strong>使用方式</strong></p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 通过Diffusers使用SVD</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> torch</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> diffusers </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> StableVideoDiffusionPipeline</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> diffusers</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">utils </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> load_image</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> export_to_video</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">pipe </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> StableVideoDiffusionPipeline</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">from_pretrained</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"stabilityai/stable-video-diffusion-img2vid-xt"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    torch_dtype</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">torch</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">float16</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    variant</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"fp16"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">to</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"cuda"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 加载输入图片</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> load_image</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"input_image.png"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> image</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">resize</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>1024</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>576</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 生成视频</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">frames </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    image</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_frames</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>25</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    decode_chunk_size</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>8</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 降低显存占用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    motion_bucket_id</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>127</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 控制运动幅度</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    noise_aug_strength</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0.1</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 噪声增强，提高连贯性</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">frames</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">export_to_video</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">frames</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"output.mp4"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> fps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>8</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p><strong>SVD的参数调优</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数<th>作用<th>推荐值<tbody><tr><td>motion_bucket_id<td>运动幅度（0-255）<td>127（默认），大运动场景调高<tr><td>noise_aug_strength<td>噪声增强<td>0.05-0.15<tr><td>decode_chunk_size<td>解码块大小<td>4-8（显存小时调低）<tr><td>num_frames<td>生成帧数<td>14或25</table>
+<blockquote>
+<p>SVD的运动控制有限——它更像是在"让图片动起来"，而不是"生成全新视频"。</p>
+</blockquote>
+<p><strong>SVD的局限</strong></p>
+<ul>
+<li class="">只能图生视频，不支持文生视频</li>
+<li class="">运动幅度有限，大运动容易画面崩坏</li>
+<li class="">非商业许可，限制了商用场景</li>
+<li class="">质量在2024年已被后续模型超越</li>
+</ul>
+<p>但作为入门视频生成的教学模型，SVD仍然有价值。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-cogvideox智谱的视频生成模型与api调用>4.3 CogVideoX：智谱的视频生成模型与API调用<a href=#43-cogvideox智谱的视频生成模型与api调用 class=hash-link aria-label="4.3 CogVideoX：智谱的视频生成模型与API调用的直接链接" title="4.3 CogVideoX：智谱的视频生成模型与API调用的直接链接" translate=no>​</a></h2>
+<p>CogVideoX是智谱AI（清华系）在2024年8月开始开源的视频生成模型系列，与智谱的商用产品"清影"同源。</p>
+<p><strong>模型版本演进</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>版本<th>参数量<th>能力<th>开源时间<tbody><tr><td>CogVideoX-2B<td>2B<td>文生视频，6秒，720x480<td>2024.08<tr><td>CogVideoX-5B<td>5B<td>文生视频，更长时长<td>2024.10<tr><td>CogVideoX1.5-5B<td>5B<td>5-10秒，768P，16帧<td>2024.11<tr><td>CogVideoX1.5-5B-I2V<td>5B<td>图生视频，任意比例<td>2024.11</table>
+<p><strong>技术特点</strong></p>
+<p>CogVideoX采用了三维变分自编码器（3D VAE）和DiT（Diffusion Transformer）架构：</p>
+<ul>
+<li class="">文本、时间、空间三维度融合</li>
+<li class="">参考Sora算法设计</li>
+<li class="">相比前代CogVideo推理速度提升6倍</li>
+<li class="">支持最长226 token的英文提示词</li>
+</ul>
+<p><strong>本地使用</strong></p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># CogVideoX-2B 文生视频</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> torch</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> diffusers </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> CogVideoXPipeline</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> diffusers</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">utils </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> export_to_video</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">pipe </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> CogVideoXPipeline</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">from_pretrained</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"THUDM/CogVideoX-2b"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    torch_dtype</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">torch</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">float16</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">to</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"cuda"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">video </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"A street artist in a worn denim jacket paints a colorful mural on a brick wall, "</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"timelapse style, sunlight shifting across the wall"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_videos_per_prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>1</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>50</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_frames</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>8</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    guidance_scale</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>6</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    generator</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">torch</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">Generator</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"cuda"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">manual_seed</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>42</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">frames</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">export_to_video</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">video</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"cogvideo_output.mp4"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> fps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>8</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p><strong>API调用方式</strong></p>
+<p>智谱也提供了API服务，不需要本地部署：</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 通过智谱API调用（需注册获取API Key）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> zhipuai </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> ZhipuAI</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">client </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> ZhipuAI</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">api_key</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"your_api_key"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">response </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> client</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">videos</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">generate</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    model</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"cogvideox"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"Ocean waves crashing on rocky shore at sunset"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    duration</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>6</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    resolution</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"720p"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>CogVideoX是国内首个可通过API调用的视频模型——不想折腾本地部署的，直接用API。</p>
+</blockquote>
+<p><strong>CogVideoX的显存需求</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>显存需求<th>推荐显卡<tbody><tr><td>CogVideoX-2B<td>36GB<td>A100 / 多卡<tr><td>CogVideoX-5B<td>40GB+<td>A100 80GB<tr><td>量化版2B<td>18GB<td>RTX 4090</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=44-mochi-1百亿参数的文本到视频模型>4.4 Mochi 1：百亿参数的文本到视频模型<a href=#44-mochi-1百亿参数的文本到视频模型 class=hash-link aria-label="4.4 Mochi 1：百亿参数的文本到视频模型的直接链接" title="4.4 Mochi 1：百亿参数的文本到视频模型的直接链接" translate=no>​</a></h2>
+<p>Mochi 1是Genmo公司在2024年10月发布的开源文生视频模型，参数量达100亿，是目前公开发布的规模最大的开源视频生成模型之一。</p>
+<p><strong>核心参数</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目<th>参数<tbody><tr><td>参数量<td>10B<tr><td>架构<td>Asymmetric Diffusion Transformer (AsymmDiT)<tr><td>输入<td>文本提示词<tr><td>输出<td>5.4秒视频，848x480分辨率<tr><td>许可<td>Apache 2.0（可商用）<tr><td>显存需求<td>60GB+（支持CPU offload降低）</table>
+<p><strong>架构特点</strong></p>
+<p>AsymmDiT架构的设计思路：</p>
+<ul>
+<li class="">视频和文本使用不同参数量的分支</li>
+<li class="">视频分支大，处理复杂的时空建模</li>
+<li class="">文本分支小，处理相对简单的语言理解</li>
+<li class="">这种非对称设计在保持效果的同时优化了计算效率</li>
+</ul>
+<p><strong>本地部署</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 克隆仓库</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>git</span><span class="token plain"> clone https://github.com/genmoai/models.git</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">cd</span><span class="token plain"> models</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">pip </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> uv</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">uv venv .venv</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">source</span><span class="token plain"> .venv/bin/activate</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">uv pip </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> setuptools</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">uv pip </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-e</span><span class="token plain"> </span><span class="token builtin class-name">.</span><span class="token plain"> --no-build-isolation</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 下载模型权重</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">python3 ./scripts/download_weights.py weights/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Gradio界面运行</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">python3 ./demos/gradio_ui.py </span><span class="token parameter variable" style=color:#36acaa>--model_dir</span><span class="token plain"> weights/ </span><span class="token parameter variable" style=color:#36acaa>--cpu_offload</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># 命令行生成</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">python3 ./demos/cli.py </span><span class="token parameter variable" style=color:#36acaa>--model_dir</span><span class="token plain"> weights/ </span><span class="token parameter variable" style=color:#36acaa>--cpu_offload</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>--prompt</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"A dramatic timelapse of clouds rolling over mountain peaks at golden hour"</span><br/></div></code></pre></div></div>
+<p><strong>Mochi 1的优劣势</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优势<th>劣势<tbody><tr><td>画质优秀，运动自然<td>生成速度慢（分钟级）<tr><td>Apache 2.0可商用<td>显存需求高<tr><td>提示词遵循度高<td>分辨率限于848x480<tr><td>支持ComfyUI<td>生态尚在建设中</table>
+<blockquote>
+<p>Mochi 1的效果确实惊艳，但"生成848x480分辨率的6秒视频需要数分钟"——速度是最大的痛点。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=45-ltx-video实时视频潜在扩散的突破>4.5 LTX-Video：实时视频潜在扩散的突破<a href=#45-ltx-video实时视频潜在扩散的突破 class=hash-link aria-label="4.5 LTX-Video：实时视频潜在扩散的突破的直接链接" title="4.5 LTX-Video：实时视频潜在扩散的突破的直接链接" translate=no>​</a></h2>
+<p>LTX-Video由以色列Lightricks公司于2024年底发布，论文标题为《LTX-Video: Realtime Video Latent Diffusion》。</p>
+<p><strong>核心亮点</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目<th>参数<tbody><tr><td>生成速度<td>2秒生成5秒视频<tr><td>分辨率<td>768x512<tr><td>帧数<td>40帧（5秒@8fps）<tr><td>架构<td>DiT + 高效VAE<tr><td>显存需求<td>相对较低</table>
+<p>LTX-Video的核心突破在于效率：</p>
+<ul>
+<li class="">高度优化的潜在空间表示</li>
+<li class="">减少了扩散步骤（仅需少量步数）</li>
+<li class="">高效的3D VAE设计</li>
+</ul>
+<p><strong>与其他模型的对比</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>生成时间<th>分辨率<th>时长<th>可商用<tbody><tr><td>SVD<td>约30秒<td>576x1024<td>3秒<td>否<tr><td>CogVideoX-2B<td>约30秒<td>720x480<td>6秒<td>需登记<tr><td>Mochi 1<td>数分钟<td>848x480<td>5.4秒<td>是<tr><td>LTX-Video<td>约2秒<td>768x512<td>5秒<td>是</table>
+<blockquote>
+<p>LTX-Video的出现让"实时视频生成"不再是一句口号——2秒出5秒视频，这意味着交互式应用成为可能。</p>
+</blockquote>
+<p><strong>开源视频模型选型决策表</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>你的需求<th>推荐模型<th>理由<tbody><tr><td>快速体验视频生成<td>LTX-Video<td>速度快，显存友好<tr><td>追求最高画质<td>Mochi 1<td>10B参数，画质最佳<tr><td>国内部署+API调用<td>CogVideoX<td>智谱API稳定，国内访问快<tr><td>图生视频（从照片生成动态）<td>SVD<td>专门的图生视频模型<tr><td>可商用项目<td>Mochi 1 / LTX-Video<td>Apache 2.0许可</table>
+<p>你选哪个？评论区告诉我你的选择和理由。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章总结>本章总结<a href=#本章总结 class=hash-link aria-label=本章总结的直接链接 title=本章总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型<th>架构<th>优势<th>劣势<tbody><tr><td>SVD<td>SD2.1+时间层<td>图生视频入门好<td>非商用，运动有限<tr><td>CogVideoX<td>DiT + 3D VAE<td>国内首个API视频模型<td>显存需求高<tr><td>Mochi 1<td>AsymmDiT 10B<td>画质最佳，可商用<td>速度慢，显存高<tr><td>LTX-Video<td>DiT + 高效VAE<td>实时生成，速度快<td>生态初期</table>
+<p>觉得有用？收藏起来，选视频模型时直接照抄对比表。</p>
+<p>这4个模型你用过哪个？体验如何？评论区交流。</p>
+<p>关注怕浪猫，下期我们进ComfyUI，手把手搭视频生成工作流。</p>
+<p>系列进度 4/8，下篇：ComfyUI视频生成工作流实战。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-multimodal/chapter_4.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_3><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第3章 图生图、局部重绘与ControlNet</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_5><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第5章 ComfyUI视频生成工作流实战</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#41-视频生成的技术路线扩散模型如何从静帧走向动态 class="table-of-contents__link toc-highlight">4.1 视频生成的技术路线：扩散模型如何从静帧走向动态</a><li><a href=#42-stable-video-diffusion图生视频的开源起点 class="table-of-contents__link toc-highlight">4.2 Stable Video Diffusion：图生视频的开源起点</a><li><a href=#43-cogvideox智谱的视频生成模型与api调用 class="table-of-contents__link toc-highlight">4.3 CogVideoX：智谱的视频生成模型与API调用</a><li><a href=#44-mochi-1百亿参数的文本到视频模型 class="table-of-contents__link toc-highlight">4.4 Mochi 1：百亿参数的文本到视频模型</a><li><a href=#45-ltx-video实时视频潜在扩散的突破 class="table-of-contents__link toc-highlight">4.5 LTX-Video：实时视频潜在扩散的突破</a><li><a href=#本章总结 class="table-of-contents__link toc-highlight">本章总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

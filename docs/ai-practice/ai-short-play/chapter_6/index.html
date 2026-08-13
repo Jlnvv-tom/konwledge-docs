@@ -1,0 +1,694 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-short-play/chapter_6" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第6章 第四步：图生视频 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第6章 第四步：图生视频 | 知识库"/><meta data-rh=true name=description content='静态漫画图变成了动态视频片段，AI 漫剧才算真正"动"起来。但图生视频也是整个流水线中翻车率最高的环节。'/><meta data-rh=true property=og:description content='静态漫画图变成了动态视频片段，AI 漫剧才算真正"动"起来。但图生视频也是整个流水线中翻车率最高的环节。'/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/","name":"AI 漫剧与短剧","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6","name":"第6章 第四步：图生视频","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="折叠侧边栏分类 'AI 漫剧与短剧'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_1><span title="第1章 认识 AI 漫剧与行业机会" class=linkLabel_WmDU>第1章 认识 AI 漫剧与行业机会</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_2><span title="第2章 工具矩阵总览" class=linkLabel_WmDU>第2章 工具矩阵总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_3><span title="第3章 第一步：剧本与分镜" class=linkLabel_WmDU>第3章 第一步：剧本与分镜</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_4><span title="第4章 第二步：角色与场景设定" class=linkLabel_WmDU>第4章 第二步：角色与场景设定</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_5><span title="第5章 第三步：分镜生图" class=linkLabel_WmDU>第5章 第三步：分镜生图</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_6><span title="第6章 第四步：图生视频" class=linkLabel_WmDU>第6章 第四步：图生视频</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_7><span title="第7章 第五步：配音配乐" class=linkLabel_WmDU>第7章 第五步：配音配乐</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_8><span title="第8章 第六步：剪辑合成" class=linkLabel_WmDU>第8章 第六步：剪辑合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_9><span title="第9章 全流程实战" class=linkLabel_WmDU>第9章 全流程实战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_10><span title="第10章 进阶技巧与避坑" class=linkLabel_WmDU>第10章 进阶技巧与避坑</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-short-play/><span>AI 漫剧与短剧</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第6章 第四步：图生视频</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第6章 第四步：图生视频</h1></header>
+<p>静态漫画图变成了动态视频片段，AI 漫剧才算真正"动"起来。但图生视频也是整个流水线中翻车率最高的环节。</p>
+<p>我是怕浪猫，上期讲了分镜生图，这期进入流水线第四步：图生视频（Image-to-Video，I2V）。这一步的技术含量最高，不可控因素也最多。我会讲清楚 I2V 的原理、工具选择、运镜控制和翻车补救方案。</p>
+<blockquote>
+<p>图生视频是流水线的"险桥"。前面三步都是陆地行走，这一步开始走钢丝。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=61-图生视频的原理视频扩散模型>6.1 图生视频的原理：视频扩散模型<a href=#61-图生视频的原理视频扩散模型 class=hash-link aria-label="6.1 图生视频的原理：视频扩散模型的直接链接" title="6.1 图生视频的原理：视频扩散模型的直接链接" translate=no>​</a></h2>
+<p>要理解图生视频为什么难，得先理解它的工作原理。</p>
+<p>图生视频模型（Image-to-Video Model）的核心技术是视频扩散模型（Video Diffusion Model）。它和文生图模型一样基于扩散原理，但有一个关键区别：它不是生成单张图片，而是生成一系列连续的帧（Frame），这些帧按顺序播放就构成了视频。</p>
+<p>视频扩散模型的工作过程可以简化为三步。</p>
+<p>第一步，模型接收一张静态图片作为"起始帧"（First Frame），并接收一段文本指令作为运动引导（Motion Guidance）。</p>
+<p>第二步，模型基于起始帧和运动引导，预测后续帧的内容。这个预测过程本身就是扩散去噪过程，从噪声开始，逐步去噪还原出每一帧。</p>
+<p>第三步，模型生成的所有帧按顺序组合，加上时间维度，输出为视频文件。</p>
+<div class="language-mermaid codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-mermaid codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">flowchart LR</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    A[静态图片\n起始帧] --> B[视频扩散模型]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    C[文本指令\n运动引导] --> B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    B --> D[帧1\n帧2\n帧3\n...\n帧N]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    D --> E[视频片段 MP4]</span><br/></div></code></pre></div></div>
+<p>这个过程的难点在于"时间一致性"（Temporal Consistency）。模型不仅要保证每一帧的画面质量，还要保证相邻帧之间的变化是连贯的。如果帧与帧之间的角色外观、场景布局发生跳变，视频就会出现"闪烁"（Flickering）。</p>
+<p>理解了原理，你就明白图生视频为什么会出现以下常见问题了。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>常见问题<th>原理层面的解释<tbody><tr><td>角色变形<td>不同帧中角色的五官和体型发生了不一致的变化<tr><td>画面闪烁<td>相邻帧之间的画面元素跳变，如背景物体位置突变<tr><td>运动不自然<td>模型对物理运动的理解不够准确，如重力、惯性表现错误<tr><td>细节消失<td>随着帧数增加，模型"忘记"了起始帧的细节，如饰品消失、纹理模糊<tr><td>幻觉内容<td>模型"脑补"了原图中不存在的元素，如多出一个人影</table>
+<blockquote>
+<p>图生视频的本质是"让模型猜图片下一秒会变成什么样"。猜得准就是好视频，猜不准就是翻车。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=62-工具对比可灵即梦runwayvidu>6.2 工具对比：可灵、即梦、Runway、Vidu<a href=#62-工具对比可灵即梦runwayvidu class=hash-link aria-label="6.2 工具对比：可灵、即梦、Runway、Vidu的直接链接" title="6.2 工具对比：可灵、即梦、Runway、Vidu的直接链接" translate=no>​</a></h2>
+<p>目前市面上有多个图生视频工具，选择合适的工具是这一步的关键决策。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=工具能力矩阵>工具能力矩阵<a href=#工具能力矩阵 class=hash-link aria-label=工具能力矩阵的直接链接 title=工具能力矩阵的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具名称<th>画质<th>动态控制<th>免费额度<th>单段时长<th>中文友好<th>推荐指数<tbody><tr><td>可灵 Kling<td>优秀<td>强<td>每日免费额度<td>最长 10 秒<td>是<td>★★★★★<tr><td>即梦 AI<td>良好<td>中<td>充足<td>最长 10 秒<td>是<td>★★★★<tr><td>Runway Gen-3<td>优秀<td>强<td>有限<td>最长 10 秒<td>否<td>★★★★<tr><td>Vidu<td>良好<td>中<td>有限<td>最长 8 秒<td>是<td>★★★☆<tr><td>海螺 AI<td>良好<td>中<td>有限<td>最长 10 秒<td>是<td>★★★☆<tr><td>Luma<td>中上<td>中<td>有限<td>5-10 秒<td>否<td>★★★<tr><td>Pika<td>中上<td>中<td>有限<td>5-10 秒<td>否<td>★★★</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=各工具特点详解>各工具特点详解<a href=#各工具特点详解 class=hash-link aria-label=各工具特点详解的直接链接 title=各工具特点详解的直接链接 translate=no>​</a></h3>
+<p><strong>可灵（Kling）</strong> 是快手推出的视频生成模型，目前在国产图生视频工具中画质领先。可灵的优势是动态控制能力强，支持运镜指令（如推、拉、摇、移）和动作描述。免费额度每日刷新，付费版可解锁更长时长和更高画质。可灵的弱点是有时候人物动作幅度过大，容易出现变形。</p>
+<p><strong>即梦 AI</strong> 是字节跳动的产品，优势是一站式（生图+图生视频+配音都能在即梦完成），对新手非常友好。即梦的图生视频画质中上，动态控制中等，但免费额度充足，适合新手入门和快速验证。弱点是运镜控制不如可灵精细。</p>
+<p><strong>Runway Gen-3</strong> 是国际上技术领先的图生视频工具之一。Gen-3 的运镜控制非常精细，画质优秀，特别是对物体运动和镜头运动的理解比较准确。弱点是免费额度有限，需要科学上网，对中文用户不够友好。</p>
+<p><strong>Vidu</strong> 是生数科技推出的工具，有一个特色功能是角色一致性（Character Reference），可以在不同视频中保持角色外观一致。画质和动态控制中等，适合需要跨集角色一致性的场景。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=工具选择建议>工具选择建议<a href=#工具选择建议 class=hash-link aria-label=工具选择建议的直接链接 title=工具选择建议的直接链接 translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>用户类型<th>推荐工具<th>理由<tbody><tr><td>新手入门<td>即梦 AI<td>一站式，免费额度大，操作简单<tr><td>进阶创作者<td>可灵 + 即梦<td>可灵做关键镜头，即梦做普通镜头<tr><td>专业创作者<td>可灵 Pro + Runway<td>画质和控制力最优组合<tr><td>预算有限<td>即梦 + 海螺 + Luma<td>多个免费工具交替使用</table>
+<blockquote>
+<p>不要只用一个工具。不同工具在不同场景下各有优势，组合使用效果最佳。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=63-运镜与微动让静态图动起来>6.3 运镜与微动：让静态图动起来<a href=#63-运镜与微动让静态图动起来 class=hash-link aria-label="6.3 运镜与微动：让静态图动起来的直接链接" title="6.3 运镜与微动：让静态图动起来的直接链接" translate=no>​</a></h2>
+<p>图生视频的核心技能是"运镜控制"和"微动设计"。运镜控制镜头怎么动，微动控制画面里的元素怎么动。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=运镜指令>运镜指令<a href=#运镜指令 class=hash-link aria-label=运镜指令的直接链接 title=运镜指令的直接链接 translate=no>​</a></h3>
+<p>运镜指令告诉模型"镜头怎么运动"。不同工具对运镜指令的支持方式不同，但核心概念是通用的。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>运镜类型<th>英文指令<th>效果<th>适用场景<tbody><tr><td>推镜头<td>Zoom In / Push In<td>镜头逐渐靠近主体<td>强调情绪、突出细节<tr><td>拉镜头<td>Zoom Out / Pull Out<td>镜头逐渐远离主体<td>展示环境、建立全景<tr><td>左摇<td>Pan Left<td>镜头向左转<td>展示环境、跟随运动<tr><td>右摇<td>Pan Right<td>镜头向右转<td>展示环境、跟随运动<tr><td>上摇<td>Tilt Up<td>镜头向上转<td>展示高大物体、仰望感<tr><td>下摇<td>Tilt Down<td>镜头向下转<td>展示地面、俯视感<tr><td>左移<td>Track Left<td>镜头向左平移<td>侧面跟随角色<tr><td>右移<td>Track Right<td>镜头向右平移<td>侧面跟随角色<tr><td>环绕<td>Orbit / Arc<td>镜头绕主体旋转<td>展示角色全貌<tr><td>固定<td>Static / Fixed<td>镜头不动<td>稳定叙事</table>
+<p>在提示词中使用运镜指令时，建议用英文描述。例如：<code>camera slowly zooms in on the character's face</code>（镜头缓慢推近角色面部）或 <code>camera pans right to reveal the street</code>（镜头右摇展示街道）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=微动设计>微动设计<a href=#微动设计 class=hash-link aria-label=微动设计的直接链接 title=微动设计的直接链接 translate=no>​</a></h3>
+<p>微动（Micro Motion）是指画面中细微的动态效果。它不是大幅度的动作，而是让画面"活起来"的小细节。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>微动类型<th>提示词示例<th>效果<tbody><tr><td>头发飘动<td>hair gently swaying in the wind<td>增加动感<tr><td>衣服飘动<td>clothes slightly moving<td>增加真实感<tr><td>眨眼<td>character blinks slowly<td>增加生命感<tr><td>呼吸<td>subtle breathing movement<td>增加真实感<tr><td>雨滴下落<td>rain falling, water splashing<td>环境动态<tr><td>灯光闪烁<td>lights flickering slightly<td>氛围动态<tr><td>烟雾飘散<td>smoke drifting slowly<td>氛围动态<tr><td>水面波纹<td>water rippling gently<td>环境动态</table>
+<p>微动设计的原则是"克制"。一个镜头中只需要 1-2 种微动效果，不要贪多。如果你在提示词中同时要求头发飘动、衣服飘动、眨眼、呼吸、雨滴下落、灯光闪烁，模型会试图同时生成所有这些动态，结果往往是什么都动不好，反而出现变形和闪烁。</p>
+<blockquote>
+<p>运镜定"镜头怎么动"，微动定"画面里什么动"。两者配合，静态图就活了。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=运镜指令编写原则>运镜指令编写原则<a href=#运镜指令编写原则 class=hash-link aria-label=运镜指令编写原则的直接链接 title=运镜指令编写原则的直接链接 translate=no>​</a></h3>
+<p>编写运镜指令时，有几个原则能显著提升生成质量。</p>
+<p><strong>原则一：一次只用一种运镜</strong>。不要在一段 5 秒的视频中同时要求推和摇，模型很难同时处理两种镜头运动。如果一个镜头需要从推变为摇，把它拆成两段分别生成，在剪辑时拼接。</p>
+<p><strong>原则二：运镜速度要明确</strong>。不要只写 zoom in，要写 slowly zoom in 或 fast zoom in。速度不同，观感完全不同。一般推荐 slow 和 gently 等修饰词，因为快速运镜更容易出现画面不稳定。</p>
+<p><strong>原则三：运镜方向要与画面构图匹配</strong>。如果角色在画面左侧，镜头向左摇会摇出画面。运镜方向要考虑角色在画面中的位置和面朝方向。</p>
+<p><strong>原则四：参考分镜脚本中的运镜字段</strong>。在剧本分镜阶段已经定义了每个镜头的运镜方式，在图生视频时直接参考，保持一致性。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>运镜指令<th>正确写法<th>错误写法<th>问题<tbody><tr><td>缓推<td>camera slowly zooms in on character's face<td>zoom in<td>缺少速度描述<tr><td>右摇<td>camera gently pans right to reveal the street<td>pan and zoom<td>混合运镜<tr><td>固定<td>static camera, no movement<td>hold<td>描述不明确<tr><td>环绕<td>camera slowly orbits around the character<td>rotate around<td>用词不标准</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=角色动作的生成策略>角色动作的生成策略<a href=#角色动作的生成策略 class=hash-link aria-label=角色动作的生成策略的直接链接 title=角色动作的生成策略的直接链接 translate=no>​</a></h3>
+<p>除了运镜，图生视频还需要定义"角色在做什么"。角色动作的生成策略直接影响视频质量。</p>
+<p><strong>微动优先策略</strong>。对于对话类镜头，角色不需要大幅度动作。只做微动（眨眼、嘴部开合对应台词、轻微头部转动）效果最好。大幅度动作（走路、跑步、打斗）的翻车率远高于微动。</p>
+<p><strong>动作分解策略</strong>。如果一个镜头需要角色做一个复合动作（如"起身走向门口"），把它分解为多个简单动作，分别生成视频片段，在剪辑时拼接。"起身"和"走向门口"分别生成，效果比一次生成好得多。</p>
+<p><strong>动作幅度控制策略</strong>。在提示词中使用修饰词控制动作幅度。如 slightly turns head（轻微转头）比 turns head（转头）更可控。gentle movement（轻柔动作）比 fast movement（快速动作）更稳定。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>动作类型<th>翻车率<th>推荐策略<th>替代方案<tbody><tr><td>微动（眨眼/呼吸）<td>低<td>直接生成<td>无<tr><td>嘴部动作（说话）<td>低<td>直接生成<td>后期对口型<tr><td>头部转动<td>中<td>用 slight/gently 修饰<td>分解为多段<tr><td>身体微转<td>中<td>用 slight 修饰<td>用运镜替代<tr><td>起身/坐下<td>高<td>分解动作<td>用转场跳过<tr><td>行走<td>高<td>用移镜头跟随<td>用多镜头拼接<tr><td>跑步/打斗<td>极高<td>不推荐直接生成<td>用特效/转场替代</table>
+<blockquote>
+<p>动作越简单，视频越稳定。宁可多用几个简单镜头拼接，也不要赌一个复杂镜头一次成功。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=提示词编写实例>提示词编写实例<a href=#提示词编写实例 class=hash-link aria-label=提示词编写实例的直接链接 title=提示词编写实例的直接链接 translate=no>​</a></h3>
+<p>以下是一个完整的图生视频提示词编写实例，展示从分镜信息到 I2V 提示词的转换过程。</p>
+<p>分镜信息：</p>
+<ul>
+<li class="">景别：中景</li>
+<li class="">运镜：缓慢推</li>
+<li class="">画面描述：女主坐在咖啡厅窗边，右手搅动咖啡，表情焦虑</li>
+<li class="">情绪：焦虑</li>
+<li class="">台词：（无）</li>
+</ul>
+<p>I2V 提示词：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">camera slowly zooms in on the character, medium shot,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">a young woman with long straight black hair, wearing beige trench coat,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">sitting by the window in a Japanese-style cafe,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">right hand gently stirring coffee with a spoon,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">anxious expression, slightly frowning, eyes looking out the window,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">hair slightly swaying, subtle breathing movement,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">rain drops falling outside the window, warm yellow lighting,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">smooth motion, stable background</span><br/></div></code></pre></div></div>
+<p>这个提示词的结构是：运镜（前）+ 景别 + 角色描述 + 场景描述 + 角色动作 + 表情 + 微动 + 环境动态 + 稳定性词。每个部分都简洁明确，不堆砌关键词。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=64-单段时长与节奏10-15-秒的设计逻辑>6.4 单段时长与节奏：10-15 秒的设计逻辑<a href=#64-单段时长与节奏10-15-秒的设计逻辑 class=hash-link aria-label="6.4 单段时长与节奏：10-15 秒的设计逻辑的直接链接" title="6.4 单段时长与节奏：10-15 秒的设计逻辑的直接链接" translate=no>​</a></h2>
+<p>一集 60-90 秒的漫剧，通常由 6-9 个视频片段组成。每个片段多长？怎么排列？这涉及到节奏设计。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=单段时长的选择>单段时长的选择<a href=#单段时长的选择 class=hash-link aria-label=单段时长的选择的直接链接 title=单段时长的选择的直接链接 translate=no>​</a></h3>
+<p>目前主流图生视频工具的单段时长上限是 10 秒（部分工具 5-8 秒）。实际制作中，建议每段控制在 5-10 秒，原因有三个。</p>
+<p>第一，时长越短，模型越容易保持质量。视频扩散模型在帧数较多时更容易出现质量下降（变形、闪烁、细节消失）。5-8 秒的片段质量通常比 10 秒的片段更稳定。</p>
+<p>第二，短视频的节奏更快。在短视频平台上，快节奏剪辑的完播率通常高于慢节奏。每 5-8 秒切换一次镜头，能保持观众的注意力。</p>
+<p>第三，短片段更容易补救。如果一个 5 秒的片段翻车了，重新生成只需要几分钟。如果一个 10 秒的片段在第 8 秒翻车，你可能需要重新生成整个片段。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>单段时长<th>画质稳定性<th>节奏感<th>翻车成本<th>推荐度<tbody><tr><td>3-5 秒<td>高<td>快<td>低<td>新手推荐<tr><td>5-8 秒<td>中高<td>中快<td>中<td>标准推荐<tr><td>8-10 秒<td>中<td>中<td>中高<td>进阶使用<tr><td>10 秒以上<td>低<td>慢<td>高<td>不推荐</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=节奏排列>节奏排列<a href=#节奏排列 class=hash-link aria-label=节奏排列的直接链接 title=节奏排列的直接链接 translate=no>​</a></h3>
+<p>一集漫剧的节奏不是匀速的。好的节奏有快有慢，形成"张力曲线"（Tension Curve）。</p>
+<p>一个推荐的节奏排列模式是：快（钩子）→ 慢（铺垫）→ 快（冲突升级）→ 慢（情绪点）→ 快（高潮）→ 悬念（结尾）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>位置<th>节奏<th>时长<th>作用<tbody><tr><td>开头钩子<td>快<td>5-6 秒<td>抓住注意力<tr><td>铺垫<td>慢<td>8-10 秒<td>建立情境<tr><td>冲突升级<td>快<td>5-6 秒<td>推高紧张感<tr><td>情绪点<td>慢<td>8-10 秒<td>深化情感<tr><td>高潮<td>快<td>5-6 秒<td>冲突爆发<tr><td>悬念结尾<td>中<td>6-8 秒<td>留住观众</table>
+<p>这个节奏模式不是固定公式，你可以根据故事内容调整。但核心原则是：不要全程快，也不要全程慢。快慢交替才能形成节奏感。</p>
+<blockquote>
+<p>节奏不是"每个镜头多长"的技术问题，而是"观众情绪怎么流动"的艺术问题。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=65-翻车排查与补救方案>6.5 翻车排查与补救方案<a href=#65-翻车排查与补救方案 class=hash-link aria-label="6.5 翻车排查与补救方案的直接链接" title="6.5 翻车排查与补救方案的直接链接" translate=no>​</a></h2>
+<p>图生视频是翻车率最高的环节。以下分类整理常见翻车问题和补救方案。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=翻车一角色变形>翻车一：角色变形<a href=#翻车一角色变形 class=hash-link aria-label=翻车一：角色变形的直接链接 title=翻车一：角色变形的直接链接 translate=no>​</a></h3>
+<p><strong>表现</strong>：角色的五官、体型在视频中发生变化。眼睛变大或变小、脸型变化、身体比例失调。</p>
+<p><strong>原因</strong>：视频扩散模型在生成多帧时，角色的一致性会随帧数增加而下降。</p>
+<p><strong>补救方案</strong>。方案 A：缩短时长。如果 10 秒的片段在第 6 秒开始变形，把它截成两个 5 秒的片段，分别生成。方案 B：降低动态幅度。减少提示词中的动作描述，让角色只做微动（如眨眼、呼吸），不做大幅度动作。方案 C：换工具。不同工具的角色保持能力不同，可灵和 Runway 在角色保持方面相对较好。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=翻车二画面闪烁>翻车二：画面闪烁<a href=#翻车二画面闪烁 class=hash-link aria-label=翻车二：画面闪烁的直接链接 title=翻车二：画面闪烁的直接链接 translate=no>​</a></h3>
+<p><strong>表现</strong>：视频画面出现明暗交替的闪烁，或背景元素位置跳变。</p>
+<p><strong>原因</strong>：相邻帧之间的画面元素不一致，模型在帧间预测不稳定。</p>
+<p><strong>补救方案</strong>。方案 A：在提示词中加入稳定性关键词，如 <code>smooth motion, stable background, consistent lighting</code>。方案 B：减少运镜幅度，用固定镜头或缓慢推拉替代快速移动。方案 C：如果使用 SD 系工具，调高运动一致性参数。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=翻车三幻觉内容>翻车三：幻觉内容<a href=#翻车三幻觉内容 class=hash-link aria-label=翻车三：幻觉内容的直接链接 title=翻车三：幻觉内容的直接链接 translate=no>​</a></h3>
+<p><strong>表现</strong>：视频中出现原图中不存在的元素。多出一个人影、多出一个物体、背景出现不该有的东西。</p>
+<p><strong>原因</strong>：模型在生成过程中"脑补"了不存在的元素，这是扩散模型的固有缺陷。</p>
+<p><strong>补救方案</strong>。方案 A：在提示词中明确排除，如 <code>no extra characters, no additional objects</code>。方案 B：换一个种子重新生成。方案 C：如果幻觉内容固定出现在某个位置，可以在剪辑阶段用裁剪或遮挡处理。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=翻车四运动不自然>翻车四：运动不自然<a href=#翻车四运动不自然 class=hash-link aria-label=翻车四：运动不自然的直接链接 title=翻车四：运动不自然的直接链接 translate=no>​</a></h3>
+<p><strong>表现</strong>：角色或物体的运动不符合物理规律。人走路像滑步、物体下落太慢或太快、头发飘动方向不对。</p>
+<p><strong>原因</strong>：视频扩散模型对物理规律的理解有限，它学的是"画面怎么变"，不是"物理怎么运作"。</p>
+<p><strong>补救方案</strong>。方案 A：简化运动。不要让角色做复杂的全身运动，改为微动（表情变化、头部微转）。方案 B：用运镜替代角色运动。与其让角色走动（容易不自然），不如用镜头移动来制造动感。方案 C：在剪辑阶段用转场效果遮盖不自然的部分。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>翻车类型<th>严重程度<th>发生频率<th>最佳补救<th>预防措施<tbody><tr><td>角色变形<td>高<td>高<td>缩短时长<td>减少大幅度动作<tr><td>画面闪烁<td>中高<td>中<td>稳定性关键词<td>减少运镜幅度<tr><td>幻觉内容<td>中<td>中<td>换种子<td>明确排除描述<tr><td>运动不自然<td>中<td>高<td>简化运动<td>用运镜替代角色运动<tr><td>细节消失<td>低<td>高<td>缩短时长<td>接受或后期修复</table>
+<blockquote>
+<p>图生视频的翻车不是"会不会"的问题，是"翻几次"的问题。把翻车当作流程的一部分，提前规划补救时间。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=不同工具的提示词差异>不同工具的提示词差异<a href=#不同工具的提示词差异 class=hash-link aria-label=不同工具的提示词差异的直接链接 title=不同工具的提示词差异的直接链接 translate=no>​</a></h3>
+<p>不同图生视频工具对提示词的响应方式不同，同一个提示词在不同工具上效果差异很大。了解这些差异能帮助你更高效地使用工具。</p>
+<p><strong>可灵</strong>。可灵对中文提示词的理解较好，你可以直接用中文描述运镜和动作。可灵支持结构化描述，如分"运镜"和"动作"两部分填写。建议在可灵中用简洁的中文描述，避免过长的复合句。</p>
+<p><strong>即梦 AI</strong>。即梦的提示词也支持中文，但建议运镜指令用英文（因为底层模型对英文运镜词的响应更准确）。即梦的操作界面提供了运镜选项按钮，可以直接选择"推/拉/摇/移"，不需要在提示词中重复描述。</p>
+<p><strong>Runway Gen-3</strong>。Runway 的提示词必须是英文，且对描述性语言的理解较好。建议用完整的英文句子描述，而不是关键词堆叠。如 <code>The camera slowly pushes in on the woman's face as she looks out the window with an anxious expression</code>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具<th>提示词语言<th>推荐写法<th>运镜设置方式<tbody><tr><td>可灵<td>中文/英文<td>简洁中文+英文运镜词<td>文本描述或选项按钮<tr><td>即梦<td>中文/英文<td>中文动作+英文运镜词<td>界面选项按钮<tr><td>Runway<td>仅英文<td>完整英文句子<td>文本描述<tr><td>Vidu<td>中文/英文<td>简洁描述<td>文本描述</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频片段的文件管理>视频片段的文件管理<a href=#视频片段的文件管理 class=hash-link aria-label=视频片段的文件管理的直接链接 title=视频片段的文件管理的直接链接 translate=no>​</a></h3>
+<p>图生视频产出的文件比图片大得多，管理不当容易混乱。</p>
+<p>建议每个镜头生成后立即按规范命名：<code>镜头{镜头号}_v{版本号}.mp4</code>。比如第一版生成的镜头 3 命名为 <code>镜头03_v1.mp4</code>，重做后命名为 <code>镜头03_v2.mp4</code>。最终选用的版本复制一份为 <code>镜头03.mp4</code>（去掉版本号），用于后续剪辑。</p>
+<p>视频文件建议存放在专用的视频目录中，不要和图片混在一起。按照第 2 章定义的目录结构，存放在 <code>04_视频片段/第{集号}集/</code> 下。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=翻车补救的时间预算>翻车补救的时间预算<a href=#翻车补救的时间预算 class=hash-link aria-label=翻车补救的时间预算的直接链接 title=翻车补救的时间预算的直接链接 translate=no>​</a></h3>
+<p>在计划一集的制作时间时，图生视频环节要预留 30-50% 的翻车重试时间。比如 8 个镜头，每个镜头平均重试 1.5 次，你需要准备 12 次生成的额度。这也是为什么前面强调要选择免费额度充足或价格合理的工具。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=视频片段验收清单>视频片段验收清单<a href=#视频片段验收清单 class=hash-link aria-label=视频片段验收清单的直接链接 title=视频片段验收清单的直接链接 translate=no>​</a></h3>
+<p>所有视频片段生成后，进入下一步前做一次验收。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>验收项<th>标准<th>检查方法<tbody><tr><td>角色一致性<td>角色在视频中外观稳定<td>完整观看每段视频<tr><td>画面稳定性<td>无明显闪烁和跳变<td>关注背景和边缘区域<tr><td>运镜流畅性<td>运镜自然不突兀<td>对照运镜指令检查<tr><td>时长合规<td>每段 5-10 秒<td>查看视频属性<tr><td>分辨率<td>1080P 以上<td>查看视频属性<tr><td>无幻觉内容<td>无多余人物和物体<td>仔细观看画面<tr><td>情绪匹配<td>动态效果与情绪标注一致<td>对照分镜脚本</table>
+<p>觉得有用？收藏起来，下次做图生视频的时候直接照着翻车清单排查。你在图生视频时最常遇到什么问题？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲第五步：配音配乐。AI 配音怎么匹配角色音色？BGM 音量怎么调？怎么让声音和画面完美对位？下期讲清楚。</p>
+<p>系列进度 6/10，下篇：第7章 第五步：配音配乐</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-short-play/chapter_6.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_5><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第5章 第三步：分镜生图</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-short-play/chapter_7><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第7章 第五步：配音配乐</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#61-图生视频的原理视频扩散模型 class="table-of-contents__link toc-highlight">6.1 图生视频的原理：视频扩散模型</a><li><a href=#62-工具对比可灵即梦runwayvidu class="table-of-contents__link toc-highlight">6.2 工具对比：可灵、即梦、Runway、Vidu</a><ul><li><a href=#工具能力矩阵 class="table-of-contents__link toc-highlight">工具能力矩阵</a><li><a href=#各工具特点详解 class="table-of-contents__link toc-highlight">各工具特点详解</a><li><a href=#工具选择建议 class="table-of-contents__link toc-highlight">工具选择建议</a></ul><li><a href=#63-运镜与微动让静态图动起来 class="table-of-contents__link toc-highlight">6.3 运镜与微动：让静态图动起来</a><ul><li><a href=#运镜指令 class="table-of-contents__link toc-highlight">运镜指令</a><li><a href=#微动设计 class="table-of-contents__link toc-highlight">微动设计</a><li><a href=#运镜指令编写原则 class="table-of-contents__link toc-highlight">运镜指令编写原则</a><li><a href=#角色动作的生成策略 class="table-of-contents__link toc-highlight">角色动作的生成策略</a><li><a href=#提示词编写实例 class="table-of-contents__link toc-highlight">提示词编写实例</a></ul><li><a href=#64-单段时长与节奏10-15-秒的设计逻辑 class="table-of-contents__link toc-highlight">6.4 单段时长与节奏：10-15 秒的设计逻辑</a><ul><li><a href=#单段时长的选择 class="table-of-contents__link toc-highlight">单段时长的选择</a><li><a href=#节奏排列 class="table-of-contents__link toc-highlight">节奏排列</a></ul><li><a href=#65-翻车排查与补救方案 class="table-of-contents__link toc-highlight">6.5 翻车排查与补救方案</a><ul><li><a href=#翻车一角色变形 class="table-of-contents__link toc-highlight">翻车一：角色变形</a><li><a href=#翻车二画面闪烁 class="table-of-contents__link toc-highlight">翻车二：画面闪烁</a><li><a href=#翻车三幻觉内容 class="table-of-contents__link toc-highlight">翻车三：幻觉内容</a><li><a href=#翻车四运动不自然 class="table-of-contents__link toc-highlight">翻车四：运动不自然</a><li><a href=#不同工具的提示词差异 class="table-of-contents__link toc-highlight">不同工具的提示词差异</a><li><a href=#视频片段的文件管理 class="table-of-contents__link toc-highlight">视频片段的文件管理</a><li><a href=#翻车补救的时间预算 class="table-of-contents__link toc-highlight">翻车补救的时间预算</a><li><a href=#视频片段验收清单 class="table-of-contents__link toc-highlight">视频片段验收清单</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

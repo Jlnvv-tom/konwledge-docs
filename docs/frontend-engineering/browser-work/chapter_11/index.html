@@ -1,0 +1,883 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_11" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第11章 DNS 与网络协议基础 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第11章 DNS 与网络协议基础 | 知识库"/><meta data-rh=true name=description content="输入网址到页面开始加载，第一步是 DNS 解析。这个过程通常只需几十毫秒，但背后涉及本地缓存、系统缓存、路由器缓存、递归查询、根域名服务器等多个层级。"/><meta data-rh=true property=og:description content="输入网址到页面开始加载，第一步是 DNS 解析。这个过程通常只需几十毫秒，但背后涉及本地缓存、系统缓存、路由器缓存、递归查询、根域名服务器等多个层级。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11","name":"第11章 DNS 与网络协议基础","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第11章 DNS 与网络协议基础</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第11章 DNS 与网络协议基础</h1></header>
+<blockquote>
+<p>输入网址到页面开始加载，第一步是 DNS 解析。这个过程通常只需几十毫秒，但背后涉及本地缓存、系统缓存、路由器缓存、递归查询、根域名服务器等多个层级。</p>
+</blockquote>
+<p>我是怕浪猫，从这章开始我们进入网络栈。第 11 章讲 DNS（Domain Name System，域名系统）解析过程、TCP（Transmission Control Protocol，传输控制协议）连接建立与拥塞控制、以及浏览器如何管理网络连接池。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=111-dns-解析的全过程>11.1 DNS 解析的全过程<a href=#111-dns-解析的全过程 class=hash-link aria-label="11.1 DNS 解析的全过程的直接链接" title="11.1 DNS 解析的全过程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1111-dns-解析的层级>11.1.1 DNS 解析的层级<a href=#1111-dns-解析的层级 class=hash-link aria-label="11.1.1 DNS 解析的层级的直接链接" title="11.1.1 DNS 解析的层级的直接链接" translate=no>​</a></h3>
+<p>DNS 解析是将域名转换为 IP 地址的过程。这个过程涉及多个层级的缓存和查询。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">DNS 解析完整流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 浏览器 DNS 缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Chrome 维护自己的 DNS 缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   命中 → 直接返回 IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼ 未命中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 操作系统 DNS 缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   OS 维护系统级 DNS 缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   命中 → 直接返回 IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼ 未命中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 本地 hosts 文件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   检查 /etc/hosts（Linux/macOS）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   或 C:\Windows\System32\drivers\etc\hosts（Windows）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   命中 → 直接返回 IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼ 未命中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 本地 DNS 服务器（递归解析器）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   通常是 ISP（Internet Service Provider，互联网服务提供商）的 DNS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   或配置的公共 DNS（如 8.8.8.8、114.114.114.114）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   命中 → 直接返回 IP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼ 未命中</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 递归查询</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   本地 DNS 服务器代替浏览器进行递归查询</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 查询根域名服务器（Root Server）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ├─ 查询顶级域名服务器（TLD Server）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   └─ 查询权威域名服务器（Authoritative Server）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">6. 返回 IP 地址</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   逐层缓存，下次直接命中</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1112-dns-记录类型>11.1.2 DNS 记录类型<a href=#1112-dns-记录类型 class=hash-link aria-label="11.1.2 DNS 记录类型的直接链接" title="11.1.2 DNS 记录类型的直接链接" translate=no>​</a></h3>
+<p>DNS 不仅存储域名到 IP 的映射，还存储其他类型的记录。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>记录类型<th>全称<th>说明<th>示例<tbody><tr><td>A<td>Address<td>域名到 IPv4 地址<td>example.com → 93.184.216.34<tr><td>AAAA<td>IPv6 Address<td>域名到 IPv6 地址<td>example.com → 2606:2800:220:1:...<tr><td>CNAME<td>Canonical Name<td>域名别名<td><a href=http://www.example.com target=_blank rel="noopener noreferrer" class="">www.example.com</a> → example.com<tr><td>MX<td>Mail Exchange<td>邮件服务器<td>example.com → mail.example.com<tr><td>NS<td>Name Server<td>域名服务器<td>example.com → ns1.example.com<tr><td>TXT<td>Text<td>任意文本<td>SPF、DKIM 验证<tr><td>SOA<td>Start of Authority<td>域权威信息<td>主服务器、管理员邮箱等<tr><td>SRV<td>Service<td>服务记录<td>指定服务的端口和主机</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1113-dns-缓存与-ttl>11.1.3 DNS 缓存与 TTL<a href=#1113-dns-缓存与-ttl class=hash-link aria-label="11.1.3 DNS 缓存与 TTL的直接链接" title="11.1.3 DNS 缓存与 TTL的直接链接" translate=no>​</a></h3>
+<p>DNS 记录有一个 TTL（Time To Live，生存时间）字段，控制缓存的有效期。TTL 越短，DNS 变更生效越快，但查询频率越高；TTL 越长，缓存命中率越高，但变更生效越慢。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">DNS 缓存 TTL 示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">example.com 的 A 记录：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  IP: 93.184.216.34</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  TTL: 3600（1小时）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">缓存行为：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  第一次查询 → 递归查询 → 获得 IP + TTL=3600</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  缓存 1 小时</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1 小时内的查询 → 直接返回缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1 小时后 → 缓存过期 → 重新查询</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>TTL 值<th>适用场景<th>优缺点<tbody><tr><td>60s（1分钟）<td>频繁变更 IP<td>变更快，但查询多<tr><td>3600s（1小时）<td>一般场景<td>平衡<tr><td>86400s（1天）<td>稳定 IP<td>查询少，但变更慢</table>
+<blockquote>
+<p>Chrome 的 DNS 缓存有自己的过期策略，不完全依赖 DNS 记录的 TTL。Chrome 会对即将过期的记录提前刷新，避免在关键请求时等待 DNS 解析。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1114-dns-预解析>11.1.4 DNS 预解析<a href=#1114-dns-预解析 class=hash-link aria-label="11.1.4 DNS 预解析的直接链接" title="11.1.4 DNS 预解析的直接链接" translate=no>​</a></h3>
+<p>Chrome 支持 DNS 预解析（DNS Prefetching），提前解析可能访问的域名，减少后续请求的延迟。</p>
+<div class="language-html codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-html codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>&lt;!-- 预解析单个域名 --></span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token tag punctuation" style=color:#393A34>&lt;</span><span class="token tag" style=color:#00009f>link</span><span class="token tag" style=color:#00009f> </span><span class="token tag attr-name" style=color:#00a4db>rel</span><span class="token tag attr-value punctuation attr-equals" style=color:#393A34>=</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag attr-value" style=color:#e3116c>dns-prefetch</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag" style=color:#00009f> </span><span class="token tag attr-name" style=color:#00a4db>href</span><span class="token tag attr-value punctuation attr-equals" style=color:#393A34>=</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag attr-value" style=color:#e3116c>//api.example.com</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag punctuation" style=color:#393A34>></span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>&lt;!-- 预连接（DNS + TCP + TLS） --></span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token tag punctuation" style=color:#393A34>&lt;</span><span class="token tag" style=color:#00009f>link</span><span class="token tag" style=color:#00009f> </span><span class="token tag attr-name" style=color:#00a4db>rel</span><span class="token tag attr-value punctuation attr-equals" style=color:#393A34>=</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag attr-value" style=color:#e3116c>preconnect</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag" style=color:#00009f> </span><span class="token tag attr-name" style=color:#00a4db>href</span><span class="token tag attr-value punctuation attr-equals" style=color:#393A34>=</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag attr-value" style=color:#e3116c>//api.example.com</span><span class="token tag attr-value punctuation" style=color:#393A34>"</span><span class="token tag punctuation" style=color:#393A34>></span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优化方式<th>做了什么<th>开销<th>效果<tbody><tr><td>dns-prefetch<td>只做 DNS 解析<td>极小<td>节省 DNS 时间<tr><td>preconnect<td>DNS + TCP + TLS<td>小<td>节省全部连接时间<tr><td>preload<td>DNS + 连接 + 请求<td>中<td>提前获取资源</table>
+<p>Chrome 还会自动学习用户的浏览模式，对可能访问的域名做隐式预解析。比如页面中的链接、图片 src 等，Chrome 可能在用户点击前就预解析 DNS。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=112-tcp-连接建立>11.2 TCP 连接建立<a href=#112-tcp-连接建立 class=hash-link aria-label="11.2 TCP 连接建立的直接链接" title="11.2 TCP 连接建立的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1121-三次握手>11.2.1 三次握手<a href=#1121-三次握手 class=hash-link aria-label="11.2.1 三次握手的直接链接" title="11.2.1 三次握手的直接链接" translate=no>​</a></h3>
+<p>TCP（Transmission Control Protocol，传输控制协议）使用三次握手（Three-Way Handshake）建立连接。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TCP 三次握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端                                    服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  SYN（seq=x）                           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ──────────────────────────────────────► │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │           SYN-RCVD 状态                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  SYN+ACK（seq=y, ack=x+1）              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ◄────────────────────────────────────── │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ESTABLISHED 状态                       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ACK（ack=y+1）                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ──────────────────────────────────────► │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │           ESTABLISHED 状态              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  可以开始发送数据                        │</span><br/></div></code></pre></div></div>
+<p>三次握手的意义：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>步骤<th>作用<th>说明<tbody><tr><td>SYN<td>客户端发起连接<td>告诉服务器我想连接<tr><td>SYN+ACK<td>服务器确认并回应<td>告诉客户端我准备好了<tr><td>ACK<td>客户端确认<td>双方都知道连接已建立</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1122-tcp-拥塞控制>11.2.2 TCP 拥塞控制<a href=#1122-tcp-拥塞控制 class=hash-link aria-label="11.2.2 TCP 拥塞控制的直接链接" title="11.2.2 TCP 拥塞控制的直接链接" translate=no>​</a></h3>
+<p>TCP 通过拥塞控制算法避免网络拥塞。Chrome 默认使用 BBR（Bottleneck Bandwidth and Round-trip propagation time）或 CUBIC 拥塞控制算法。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TCP 拥塞控制四个阶段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 慢启动（Slow Start）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   初始拥塞窗口（cwnd）= 10 MSS（最大报文段长度）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   每收到一个 ACK，cwnd 加 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   cwnd 呈指数增长：10 → 20 → 40 → 80 → ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 拥塞避免（Congestion Avoidance）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   当 cwnd 达到慢启动阈值（ssthresh）时</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   改为线性增长：每个 RTT（Round-Trip Time，往返时延）cwnd 加 1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 快速重传（Fast Retransmit）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   收到 3 个重复 ACK → 立即重传丢失的包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   不等待超时</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 快速恢复（Fast Recovery）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ssthresh = cwnd / 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   cwnd = ssthresh</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   继续拥塞避免</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>拥塞控制算法<th>特点<th>Chrome 使用<tbody><tr><td>CUBIC<td>基于丢包的拥塞控制<td>旧版本默认<tr><td>BBR<td>基于带宽和延迟的拥塞控制<td>新版本默认<tr><td>New Reno<td>经典算法<td>不会使用</table>
+<p>BBR 算法的优势在于不依赖丢包来判断拥塞，而是通过测量带宽和 RTT 来调整发送速率。在高延迟网络中，BBR 比 CUBIC 性能更好。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1123-tcp-优化技术>11.2.3 TCP 优化技术<a href=#1123-tcp-优化技术 class=hash-link aria-label="11.2.3 TCP 优化技术的直接链接" title="11.2.3 TCP 优化技术的直接链接" translate=no>​</a></h3>
+<p>现代 TCP 实现包含多种优化技术，减少连接建立和数据传输的延迟。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优化技术<th>全称<th>说明<th>效果<tbody><tr><td>TFO<td>TCP Fast Open<td>首次握手时携带数据<td>节省 1 RTT<tr><td>SACK<td>Selective Acknowledgment<td>选择性确认<td>减少重传<tr><td>Window Scaling<td>—<td>窗口缩放<td>支持大窗口<tr><td>Timestamps<td>—<td>时间戳<td>更精确 RTT<tr><td>ECN<td>Explicit Congestion Notification<td>显式拥塞通知<td>提前感知拥塞</table>
+<p>TCP Fast Open（TFO）是 Chrome 支持的一个优化。在首次连接时，客户端获取一个 TFO Cookie。后续连接时，客户端在 SYN 包中携带 TFO Cookie 和请求数据，服务器验证 Cookie 后立即处理数据，不需要等待三次握手完成。</p>
+<blockquote>
+<p>TCP 的各种优化技术本质上都在做一件事：减少等待时间。从三次握手到 TFO，从 CUBIC 到 BBR，每一次优化都是在寻找「等」的环节并想办法消除它。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=113-浏览器网络栈架构>11.3 浏览器网络栈架构<a href=#113-浏览器网络栈架构 class=hash-link aria-label="11.3 浏览器网络栈架构的直接链接" title="11.3 浏览器网络栈架构的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1131-网络栈的分层>11.3.1 网络栈的分层<a href=#1131-网络栈的分层 class=hash-link aria-label="11.3.1 网络栈的分层的直接链接" title="11.3.1 网络栈的分层的直接链接" translate=no>​</a></h3>
+<p>Chrome 的网络栈是一个分层的架构，每一层负责不同的功能。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Chrome 网络栈分层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">应用层（浏览器进程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ URL 请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Cookie 管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 缓存管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 重定向处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP 层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ HTTP/1.1 解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ HTTP/2 帧处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ HTTP/3（QUIC）处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ Headers 管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">安全层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ TLS 握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 证书验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 加密/解密</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">传输层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ TCP 连接管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ QUIC 连接管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ Socket I/O</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">网络层</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ DNS 解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 代理配置</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 系统 Socket API</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1132-连接池管理>11.3.2 连接池管理<a href=#1132-连接池管理 class=hash-link aria-label="11.3.2 连接池管理的直接链接" title="11.3.2 连接池管理的直接链接" translate=no>​</a></h3>
+<p>Chrome 维护一个网络连接池，复用已建立的 TCP/TLS 连接，避免每次请求都重新建立连接。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">连接池工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求 https://api.example.com/data</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">检查连接池</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 有空闲的 api.example.com:443 连接？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 有 → 复用连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 没有 → 新建连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">发送请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 连接保持打开（keep-alive）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 放回连接池</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">下次请求同一域名</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 从连接池取出连接复用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接池参数：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 每个域名最大连接数：6（HTTP/1.1）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 连接空闲超时：~60秒</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  - 总最大连接数：255</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>协议<th>每域名最大连接<th>说明<tbody><tr><td>HTTP/1.1<td>6<td>浏览器限制<tr><td>HTTP/2<td>1（多路复用）<td>一个连接处理多个请求<tr><td>HTTP/3<td>1（多路复用）<td>同 HTTP/2</table>
+<blockquote>
+<p>HTTP/2 和 HTTP/3 的多路复用让一个 TCP/QUIC 连接可以同时处理多个请求，不需要像 HTTP/1.1 那样维护多个连接。这也是为什么 HTTP/2 在加载多资源页面时比 HTTP/1.1 快得多。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1133-socket-pool-的实现>11.3.3 Socket Pool 的实现<a href=#1133-socket-pool-的实现 class=hash-link aria-label="11.3.3 Socket Pool 的实现的直接链接" title="11.3.3 Socket Pool 的实现的直接链接" translate=no>​</a></h3>
+<p>Chrome 的 Socket Pool 基于 Mojo IPC 通信。网络请求不一定在渲染进程中执行，而是在 Network Service（网络服务）中统一管理。Network Service 是一个独立的服务，所有渲染进程的网络请求都通过它处理。</p>
+<p>这种集中式网络管理的好处是：连接池可以跨标签页共享，同一个域名的连接可以在不同标签页之间复用。同时，网络逻辑的崩溃不会影响渲染进程，提高了浏览器的稳定性。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>传统架构<th>Chrome 网络服务架构<tbody><tr><td>网络请求位置<td>渲染进程内<td>独立 Network Service<tr><td>连接池共享<td>仅标签页内<td>跨标签页共享<tr><td>崩溃隔离<td>网络崩溃影响渲染<td>独立崩溃不影响渲染<tr><td>Cookie 管理<td>各进程分别管理<td>集中管理</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=114-tls-握手过程>11.4 TLS 握手过程<a href=#114-tls-握手过程 class=hash-link aria-label="11.4 TLS 握手过程的直接链接" title="11.4 TLS 握手过程的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1141-tls-13-握手>11.4.1 TLS 1.3 握手<a href=#1141-tls-13-握手 class=hash-link aria-label="11.4.1 TLS 1.3 握手的直接链接" title="11.4.1 TLS 1.3 握手的直接链接" translate=no>​</a></h3>
+<p>TLS（Transport Layer Security，传输层安全协议）是 HTTPS 的基础。TLS 1.3 是当前最新的版本，它将握手过程从 TLS 1.2 的 2-RTT 减少到 1-RTT。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">TLS 1.3 握手过程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">客户端                                    服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ClientHello                            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  （含支持的密码套件、密钥共享）            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ──────────────────────────────────────► │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  ServerHello                            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  （选定密码套件、密钥共享）                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  EncryptedExtensions                    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  Certificate（服务器证书）               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  CertificateVerify                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  Finished                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ◄────────────────────────────────────── │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  Finished                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ ──────────────────────────────────────► │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  可以开始发送应用数据                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">总耗时：1-RTT</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1142-tls-13-vs-tls-12>11.4.2 TLS 1.3 vs TLS 1.2<a href=#1142-tls-13-vs-tls-12 class=hash-link aria-label="11.4.2 TLS 1.3 vs TLS 1.2的直接链接" title="11.4.2 TLS 1.3 vs TLS 1.2的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性<th>TLS 1.2<th>TLS 1.3<tbody><tr><td>握手 RTT<td>2-RTT<td>1-RTT<tr><td>会话恢复<td>1-RTT<td>0-RTT<tr><td>密码套件数量<td>多<td>少（精简）<tr><td>前向安全<td>可选<td>强制<tr><td>不安全算法<td>支持一些<td>全部移除</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1143-0-rtt-会话恢复>11.4.3 0-RTT 会话恢复<a href=#1143-0-rtt-会话恢复 class=hash-link aria-label="11.4.3 0-RTT 会话恢复的直接链接" title="11.4.3 0-RTT 会话恢复的直接链接" translate=no>​</a></h3>
+<p>TLS 1.3 支持 0-RTT（Zero Round-Trip Time）会话恢复，在恢复之前的 TLS 会话时，不需要额外的握手往返。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">0-RTT 会话恢复</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">首次连接：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ClientHello → ServerHello → 数据传输</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  （1-RTT，服务器返回 PSK（Pre-Shared Key））</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">再次连接（会话恢复）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ClientHello + 0-RTT 数据 → 服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  服务器验证 PSK 后立即处理数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  （0-RTT，数据在握手完成前就发送了）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">注意：0-RTT 数据有重放攻击风险</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     服务器需要做重放检测</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>0-RTT 是 TLS 1.3 的重要优化。对于已建立过连接的服务器，Chrome 可以在第一个数据包中就携带请求数据，将连接建立时间减少到 0。但 0-RTT 数据有重放攻击风险，只适合幂等请求（如 GET）。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1144-证书透明度>11.4.4 证书透明度<a href=#1144-证书透明度 class=hash-link aria-label="11.4.4 证书透明度的直接链接" title="11.4.4 证书透明度的直接链接" translate=no>​</a></h3>
+<p>Certificate Transparency（CT，证书透明度）是 Chrome 要求所有公开信任的 TLS 证书必须记录到公开的 CT 日志中。这个机制旨在防止证书颁发机构（CA，Certificate Authority）错误签发证书。</p>
+<p>Chrome 在建立 TLS 连接时会验证服务器证书是否包含 CT 日志的签名。如果没有，Chrome 会拒绝连接或显示警告。这确保了每个公开证书都可以被独立审计。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=115-secure-dns-与-dns-over-https>11.5 Secure DNS 与 DNS-over-HTTPS<a href=#115-secure-dns-与-dns-over-https class=hash-link aria-label="11.5 Secure DNS 与 DNS-over-HTTPS的直接链接" title="11.5 Secure DNS 与 DNS-over-HTTPS的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1151-dns-的隐私问题>11.5.1 DNS 的隐私问题<a href=#1151-dns-的隐私问题 class=hash-link aria-label="11.5.1 DNS 的隐私问题的直接链接" title="11.5.1 DNS 的隐私问题的直接链接" translate=no>​</a></h3>
+<p>传统 DNS 查询使用 UDP（User Datagram Protocol，用户数据报协议）明文传输，任何中间人都可以看到你查询了什么域名。这是一个隐私问题。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1152-dns-over-https>11.5.2 DNS-over-HTTPS<a href=#1152-dns-over-https class=hash-link aria-label="11.5.2 DNS-over-HTTPS的直接链接" title="11.5.2 DNS-over-HTTPS的直接链接" translate=no>​</a></h3>
+<p>DNS-over-HTTPS（DoH）将 DNS 查询封装在 HTTPS 请求中，加密 DNS 查询内容。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">传统 DNS vs DoH</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">传统 DNS：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  浏览器 → UDP 53 → DNS 服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  明文传输，中间人可见</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">DoH：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  浏览器 → HTTPS 443 → DoH 服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  加密传输，中间人不可见</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>DNS 方式<th>传输协议<th>加密<th>端口<tbody><tr><td>传统 DNS<td>UDP/TCP<td>否<td>53<tr><td>DNS-over-TLS（DoT）<td>TLS<td>是<td>853<tr><td>DNS-over-HTTPS（DoH）<td>HTTPS<td>是<td>443</table>
+<p>Chrome 支持配置 DoH，用户可以选择使用 Cloudflare（1.1.1.1）或 Google（8.8.8.8）等 DoH 服务器。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1153-dns-安全扩展>11.5.3 DNS 安全扩展<a href=#1153-dns-安全扩展 class=hash-link aria-label="11.5.3 DNS 安全扩展的直接链接" title="11.5.3 DNS 安全扩展的直接链接" translate=no>​</a></h3>
+<p>DNSSEC（Domain Name System Security Extensions，DNS 安全扩展）是 DNS 的安全协议，它通过数字签名验证 DNS 响应的真实性，防止 DNS 劫持和缓存投毒。</p>
+<p>DNSSEC 的工作原理是：DNS 记录附带数字签名，客户端通过验证签名确认记录来自权威服务器且未被篡改。DNSSEC 不加密 DNS 查询（它不是 DoH 的替代品），但确保查询结果的完整性。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>安全机制<th>防护目标<th>加密<th>完整性<tbody><tr><td>传统 DNS<td>无<td>否<td>否<tr><td>DNSSEC<td>DNS 劫持/投毒<td>否<td>是<tr><td>DoH<td>窃听<td>是<td>是<tr><td>DoH + DNSSEC<td>全面<td>是<td>是</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=116-浏览器网络请求的生命周期>11.6 浏览器网络请求的生命周期<a href=#116-浏览器网络请求的生命周期 class=hash-link aria-label="11.6 浏览器网络请求的生命周期的直接链接" title="11.6 浏览器网络请求的生命周期的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1161-请求状态机>11.6.1 请求状态机<a href=#1161-请求状态机 class=hash-link aria-label="11.6.1 请求状态机的直接链接" title="11.6.1 请求状态机的直接链接" translate=no>​</a></h3>
+<p>Chrome 的网络请求经过一系列状态转换，从 URL 解析到最终响应。每个状态对应不同的处理逻辑。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">请求状态转换</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">URL 解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  解析 URL，提取协议/域名/端口/路径</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">DNS 解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  域名 → IP 地址</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接建立</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  TCP 握手 + TLS 握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">发送请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  请求行 + Headers + Body</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">等待响应</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  服务器处理请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">接收响应</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  响应 Headers + Body</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">处理重定向</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  如果 3xx → 回到 URL 解析</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">完成</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1162-重定向处理>11.6.2 重定向处理<a href=#1162-重定向处理 class=hash-link aria-label="11.6.2 重定向处理的直接链接" title="11.6.2 重定向处理的直接链接" translate=no>​</a></h3>
+<p>当服务器返回 3xx 状态码时，Chrome 需要跟随重定向。重定向涉及 DNS 解析、连接建立等完整流程，可能显著增加页面加载时间。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>重定向类型<th>状态码<th>说明<th>缓存？<tbody><tr><td>永久重定向<td>301<td>资源永久移动<td>是<tr><td>临时重定向<td>302<td>资源临时移动<td>否<tr><td>临时重定向<td>307<td>保持方法的临时重定向<td>否<tr><td>永久重定向<td>308<td>保持方法的永久重定向<td>是</table>
+<blockquote>
+<p>每次重定向都增加一个 RTT 的延迟。如果你的页面从 http → https → <a href=http://www.example.com target=_blank rel="noopener noreferrer" class="">www.example.com</a> → example.com，那是 3 次重定向。尽量减少重定向链，特别是首屏加载时。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=117-http11-keep-alive-与管线化>11.7 HTTP/1.1 Keep-Alive 与管线化<a href=#117-http11-keep-alive-与管线化 class=hash-link aria-label="11.7 HTTP/1.1 Keep-Alive 与管线化的直接链接" title="11.7 HTTP/1.1 Keep-Alive 与管线化的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1171-keep-alive-的详细工作机制>11.7.1 Keep-Alive 的详细工作机制<a href=#1171-keep-alive-的详细工作机制 class=hash-link aria-label="11.7.1 Keep-Alive 的详细工作机制的直接链接" title="11.7.1 Keep-Alive 的详细工作机制的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 的 Keep-Alive 机制允许在同一个 TCP 连接上发送多个请求，避免了每次请求都重新建立 TCP 连接的开销。但 Keep-Alive 并不意味着请求可以并行——请求仍然是串行的。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 Keep-Alive 工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">TCP 连接建立 (3次握手 + TLS 握手)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求1: GET /index.html → 响应1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ (连接保持打开)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求2: GET /style.css → 响应2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │ (连接保持打开)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求3: GET /script.js → 响应3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">空闲超时 (60秒无请求)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">连接关闭</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">优势:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  节省了请求2和请求3的 TCP/TLS 握手时间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (约 1-2 RTT per connection)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">劣势:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求仍然串行 (请求2必须等响应1完成)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1172-http11-管线化pipelining的失败>11.7.2 HTTP/1.1 管线化（Pipelining）的失败<a href=#1172-http11-管线化pipelining的失败 class=hash-link aria-label="11.7.2 HTTP/1.1 管线化（Pipelining）的失败的直接链接" title="11.7.2 HTTP/1.1 管线化（Pipelining）的失败的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 规范实际上定义了管线化（Pipelining）——允许在同一个连接上连续发送多个请求，不等响应就发送下一个。但这个特性在实践中几乎从未被使用。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 管线化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求1: GET /index.html ──────── 响应1</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求2: GET /style.css  ────── 响应2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求3: GET /script.js ────── 响应3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请求连续发送，但响应必须按序返回 (FIFO)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">问题: 队头阻塞 (HOL Blocking)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果响应1很慢 (大文件)，响应2和3即使已准备好</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  也必须等响应1完成才能发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 管线化比 Keep-Alive 串行更差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 浏览器默认禁用管线化</span><br/></div></code></pre></div></div>
+<p>管线化失败的原因：响应必须按序返回（HTTP/1.1 的限制）、中间代理可能不支持管线化导致连接失败、管线化请求的幂等性要求限制。Chrome 从未默认启用过 HTTP/1.1 管线化。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=118-http2-的-hpack-头部压缩算法>11.8 HTTP/2 的 HPACK 头部压缩算法<a href=#118-http2-的-hpack-头部压缩算法 class=hash-link aria-label="11.8 HTTP/2 的 HPACK 头部压缩算法的直接链接" title="11.8 HTTP/2 的 HPACK 头部压缩算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1181-hpack-的三个组件>11.8.1 HPACK 的三个组件<a href=#1181-hpack-的三个组件 class=hash-link aria-label="11.8.1 HPACK 的三个组件的直接链接" title="11.8.1 HPACK 的三个组件的直接链接" translate=no>​</a></h3>
+<p>HPACK 是 HTTP/2 的头部压缩算法，它通过三个组件协同工作减少头部大小。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HPACK 工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">组件1: 静态表 (Static Table)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  预定义了 61 个最常见的 HTTP 头部字段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 1: :authority</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 2: :method GET</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 3: :method POST</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 4: :path /</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 6: accept-encoding</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 8: accept-language</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  发送时只需引用索引号，如:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  "索引 2" → :method GET</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  (从 15 字节压缩到 1 字节)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">组件2: 动态表 (Dynamic Table)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  连接内共享的头部历史记录</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  首次发送完整头部 → 存入动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  后续请求引用动态表索引</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求1: cookie: session=abc123... (完整发送)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">         → 存入动态表[0]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求2: 引用动态表[0] (1 字节)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">组件3: 哈夫曼编码 (Huffman Coding)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  对字符串值进行哈夫曼编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  高频字符用短编码，低频字符用长编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 'e' (高频) → 3 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ 'x' (低频) → 11 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ 平均压缩率 30-50%</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1182-hpack-压缩效果实测>11.8.2 HPACK 压缩效果实测<a href=#1182-hpack-压缩效果实测 class=hash-link aria-label="11.8.2 HPACK 压缩效果实测的直接链接" title="11.8.2 HPACK 压缩效果实测的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>头部字段<th>原始大小<th>HPACK 压缩后<th>压缩率<tbody><tr><td>:method GET<td>12B<td>1B (静态表)<td>92%<tr><td>:path /<td>7B<td>1B (静态表)<td>86%<tr><td>user-agent<td>120B<td>45B (动态表+哈夫曼)<td>63%<tr><td>cookie<td>500B<td>30B (动态表引用)<td>94%<tr><td>accept-encoding<td>25B<td>1B (静态表)<td>96%</table>
+<p>首次请求的压缩率较低（因为动态表还没建立），后续请求的压缩率可达 80-95%。Cookie 是压缩收益最大的字段——同一个域名的请求通常携带相同的 Cookie，存入动态表后只需引用索引。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=119-http2-优先级与依赖树>11.9 HTTP/2 优先级与依赖树<a href=#119-http2-优先级与依赖树 class=hash-link aria-label="11.9 HTTP/2 优先级与依赖树的直接链接" title="11.9 HTTP/2 优先级与依赖树的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1191-http2-的优先级模型>11.9.1 HTTP/2 的优先级模型<a href=#1191-http2-的优先级模型 class=hash-link aria-label="11.9.1 HTTP/2 的优先级模型的直接链接" title="11.9.1 HTTP/2 的优先级模型的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 早期版本定义了一个基于依赖树的优先级模型。每个流可以依赖另一个流，形成树形结构。服务器根据依赖树分配带宽和资源。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 优先级依赖树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">         根</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        / | \</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      A   B   C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      |   |   |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      D   E   F</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     / \</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    G   H</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">优先级规则:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  A、B、C 平分根的带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  D 获得 A 的全部带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  G、H 平分 D 的带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">权重 (weight 1-256):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果 A 和 B 都有权重 128</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 各获得 50% 带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如果 A=128, B=256</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → A 获得 1/3, B 获得 2/3</span><br/></div></code></pre></div></div>
+<p>这个模型过于复杂，实际服务器实现困难。RFC 9218 引入了简化的优先级方案：urgency (1-7) 和 incremental (bool)。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1192-简化后的优先级方案>11.9.2 简化后的优先级方案<a href=#1192-简化后的优先级方案 class=hash-link aria-label="11.9.2 简化后的优先级方案的直接链接" title="11.9.2 简化后的优先级方案的直接链接" translate=no>​</a></h3>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// fetch API 设置优先级</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/critical.css'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>priority</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'high'</span><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic>// urgency=1</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/image.jpg'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>priority</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'auto'</span><span class="token plain">    </span><span class="token comment" style=color:#999988;font-style:italic>// urgency=3 (默认)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/analytics'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>priority</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'low'</span><span class="token plain">     </span><span class="token comment" style=color:#999988;font-style:italic>// urgency=6</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>urgency 值<th>语义<th>适用资源<tbody><tr><td>1<td>highest<td>关键 CSS、首屏字体<tr><td>2<td>high<td>关键 JS、首屏图片<tr><td>3-4<td>medium<td>普通资源<tr><td>5-6<td>low<td>分析脚本、预加载<tr><td>7<td>lowest<td>后台同步</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1110-http3-的-qpack-头部压缩>11.10 HTTP/3 的 QPACK 头部压缩<a href=#1110-http3-的-qpack-头部压缩 class=hash-link aria-label="11.10 HTTP/3 的 QPACK 头部压缩的直接链接" title="11.10 HTTP/3 的 QPACK 头部压缩的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11101-qpack-与-hpack-的关键差异>11.10.1 QPACK 与 HPACK 的关键差异<a href=#11101-qpack-与-hpack-的关键差异 class=hash-link aria-label="11.10.1 QPACK 与 HPACK 的关键差异的直接链接" title="11.10.1 QPACK 与 HPACK 的关键差异的直接链接" translate=no>​</a></h3>
+<p>QPACK 是 HTTP/3 的头部压缩算法，专为 QUIC 的流独立性设计。HPACK 的动态表引用可能导致流间阻塞（一个流的头部引用了动态表，但动态表的更新在另一个流中被阻塞）。QPACK 通过异步确认机制解决了这个问题。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">QPACK 异步确认机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流1 发送请求:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  引用动态表[3]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  但动态表[3] 是最近插入的，尚未被确认</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 标记为 "可能需要阻塞"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果接收端已有动态表[3]，正常处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 如果没有，接收端发送拒绝信号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 发送方回退到字面值编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">流3 同时发送请求:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  不引用动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 独立处理，不受流1的影响</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → QUIC 的流独立性得以保持</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11102-0-rtt-早期数据的安全风险>11.10.2 0-RTT 早期数据的安全风险<a href=#11102-0-rtt-早期数据的安全风险 class=hash-link aria-label="11.10.2 0-RTT 早期数据的安全风险的直接链接" title="11.10.2 0-RTT 早期数据的安全风险的直接链接" translate=no>​</a></h3>
+<p>0-RTT 虽然减少了延迟，但引入了重放攻击（Replay Attack）的风险。攻击者可以截获 0-RTT 数据包，重复发送给服务器。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">0-RTT 重放攻击</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 客户端发送 0-RTT 请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   POST /transfer</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   { to: "attacker", amount: 1000 }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 攻击者截获请求包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 攻击者重放请求包给服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   服务器收到重复的 POST /transfer</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 如果服务器不做重放检测</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 重复执行转账!</span><br/></div></code></pre></div></div>
+<p>0-RTT 的安全限制：只允许幂等请求（GET、HEAD）、服务器必须实现重放检测（如使用 nonce 或时间戳）、0-RTT 数据有有效期限制（通常几分钟）、PSK（Pre-Shared Key）有过期时间。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11103-http3-连接迁移>11.10.3 HTTP/3 连接迁移<a href=#11103-http3-连接迁移 class=hash-link aria-label="11.10.3 HTTP/3 连接迁移的直接链接" title="11.10.3 HTTP/3 连接迁移的直接链接" translate=no>​</a></h3>
+<p>HTTP/3 基于 QUIC，继承了 QUIC 的连接迁移能力。当设备切换网络时（如从 WiFi 切到蜂窝），HTTP/3 连接不会中断。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/3 连接迁移场景</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">时刻 T1: 用户在 WiFi 下浏览</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  设备 IP: 192.168.1.100</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  QUIC Connection ID: 0xABCDEF</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  正在下载大文件 (进度 50%)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">时刻 T2: 用户走出家门，切换到 4G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  设备 IP: 10.0.0.50</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Connection ID 不变: 0xABCDEF</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  客户端从新 IP 发送 QUIC 包</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  服务器通过 Connection ID 识别</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 文件下载继续，不中断</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 用户无感知</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">对比 HTTP/2:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  TCP 连接因 IP 变化而断开</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 文件下载失败</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 需要重新建立连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 重新请求资源</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11104-http3-在中国的部署挑战>11.10.4 HTTP/3 在中国的部署挑战<a href=#11104-http3-在中国的部署挑战 class=hash-link aria-label="11.10.4 HTTP/3 在中国的部署挑战的直接链接" title="11.10.4 HTTP/3 在中国的部署挑战的直接链接" translate=no>​</a></h3>
+<p>HTTP/3 在中国的部署面临特殊挑战，主要与网络基础设施相关。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>挑战<th>原因<th>影响<tbody><tr><td>UDP 限速<td>部分运营商对 UDP 流量限速<td>QUIC 性能下降<tr><td>UDP 阻断<td>部分企业防火墙完全阻断 UDP<td>QUIC 不可用<tr><td>QoS 差异<td>运营商优先保障 TCP 质量<td>UDP 延迟更高<tr><td>CDN 支持<td>国内 CDN 对 HTTP/3 支持参差不齐<td>部署不均匀</table>
+<p>Chrome 的智能回退机制：如果 QUIC 连接在超时内未建立，自动回退到 HTTP/2 over TCP。这使得 HTTP/3 的部署不会因为网络兼容性问题导致页面无法访问，但回退过程中会增加约 1-2 个 RTT 的延迟。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=117-http11-keep-alive-与管线化-1>11.7 HTTP/1.1 keep-alive 与管线化<a href=#117-http11-keep-alive-与管线化-1 class=hash-link aria-label="11.7 HTTP/1.1 keep-alive 与管线化的直接链接" title="11.7 HTTP/1.1 keep-alive 与管线化的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1171-keep-alive-机制>11.7.1 keep-alive 机制<a href=#1171-keep-alive-机制 class=hash-link aria-label="11.7.1 keep-alive 机制的直接链接" title="11.7.1 keep-alive 机制的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 默认开启 keep-alive，允许在同一个 TCP 连接上发送多个请求，避免重复建立连接。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">无 keep-alive（HTTP/1.0）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求1 → TCP 握手 → TLS 握手 → 请求 → 响应 → 关闭</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求2 → TCP 握手 → TLS 握手 → 请求 → 响应 → 关闭</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 每次请求都需要完整握手</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">有 keep-alive（HTTP/1.1）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求1 → TCP 握手 → TLS 握手 → 请求 → 响应</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求2 → 请求 → 响应（复用连接）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求3 → 请求 → 响应（复用连接）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 只需一次握手</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1172-管线化及其限制>11.7.2 管线化及其限制<a href=#1172-管线化及其限制 class=hash-link aria-label="11.7.2 管线化及其限制的直接链接" title="11.7.2 管线化及其限制的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 支持管线化（Pipelining），允许在收到前一个响应之前发送下一个请求。但管线化有严重限制：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>限制<th>说明<tbody><tr><td>队头阻塞<td>前一个响应慢，后续响应都阻塞<tr><td>响应顺序<td>必须按请求顺序返回<tr><td>浏览器支持<td>大多数浏览器默认禁用<tr><td>中间件<td>代理可能不支持</table>
+<blockquote>
+<p>HTTP/1.1 管线化实际上几乎没人用。Chrome 和 Firefox 默认禁用管线化，因为队头阻塞问题太严重。HTTP/2 的多路复用才真正解决了 HTTP 层的队头阻塞问题。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=118-hpack-头部压缩>11.8 HPACK 头部压缩<a href=#118-hpack-头部压缩 class=hash-link aria-label="11.8 HPACK 头部压缩的直接链接" title="11.8 HPACK 头部压缩的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1181-hpack-算法>11.8.1 HPACK 算法<a href=#1181-hpack-算法 class=hash-link aria-label="11.8.1 HPACK 算法的直接链接" title="11.8.1 HPACK 算法的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 使用 HPACK（Header Compression for HTTP/2，HTTP/2 头部压缩算法）压缩头部。HPACK 使用静态表、动态表和 Huffman 编码三种方式压缩。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HPACK 压缩机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 静态表（61 个常见头部）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   :method: GET → 索引 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   :path: / → 索引 4</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   :scheme: https → 索引 7</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   content-type: text/html → 索引 25</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 动态表（连接级共享）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   首次发送: cookie: session=abc123</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 存入动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   后续发送: cookie: session=abc123</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 引用动态表索引</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. Huffman 编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   对字符串值进行 Huffman 编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 进一步压缩</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>压缩方式<th>典型压缩率<th>说明<tbody><tr><td>无压缩<td>0%<td>原始大小<tr><td>静态表<td>50-70%<td>常见头部<tr><td>动态表<td>80-95%<td>重复头部<tr><td>Huffman<td>额外 10-20%<td>字符串值</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=119-http2-优先级与依赖树-1>11.9 HTTP/2 优先级与依赖树<a href=#119-http2-优先级与依赖树-1 class=hash-link aria-label="11.9 HTTP/2 优先级与依赖树的直接链接" title="11.9 HTTP/2 优先级与依赖树的直接链接" translate=no>​</a></h2>
+<p>HTTP/2 允许客户端为每个流设置优先级和依赖关系，指导服务器优先发送重要资源。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/2 优先级依赖树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Root</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ HTML (weight: 256, 最高优先级)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   ├─ CSS (weight: 200)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   └─ JS (weight: 100)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ Image (weight: 32)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └─ Font (weight: 128)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  权重高的流优先分配带宽</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  依赖关系决定发送顺序</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>HTTP/2 的优先级机制在实践中效果不佳。原因是浏览器和服务器的实现不一致，且中间代理可能忽略优先级。HTTP/3 用更简单的 Extensible Priorities 方案替代了复杂的依赖树。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1110-0-rtt-安全风险>11.10 0-RTT 安全风险<a href=#1110-0-rtt-安全风险 class=hash-link aria-label="11.10 0-RTT 安全风险的直接链接" title="11.10 0-RTT 安全风险的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11101-重放攻击>11.10.1 重放攻击<a href=#11101-重放攻击 class=hash-link aria-label="11.10.1 重放攻击的直接链接" title="11.10.1 重放攻击的直接链接" translate=no>​</a></h3>
+<p>0-RTT（Zero Round Trip Time，零往返时间）允许客户端在第一次握手时就发送数据，减少延迟。但 0-RTT 数据存在重放攻击风险。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">0-RTT 重放攻击场景</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 客户端发送 0-RTT 请求（包含 POST 数据）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 攻击者截获请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 攻击者重放请求到服务器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 服务器执行两次相同操作（如转账）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">防护措施：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 服务器只允许幂等请求使用 0-RTT</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → GET/HEAD 安全，POST 不安全</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 使用单次令牌（anti-replay token）</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>请求类型<th>0-RTT 安全<th>说明<tbody><tr><td>GET<td>安全<td>幂等<tr><td>HEAD<td>安全<td>幂等<tr><td>POST<td>不安全<td>非幂等<tr><td>PUT<td>不安全<td>非幂等<tr><td>DELETE<td>不安全<td>非幂等</table>
+<blockquote>
+<p>0-RTT 是性能与安全的权衡。它减少了延迟，但增加了重放攻击风险。TLS 1.3 规定 0-RTT 数据只能用于幂等请求，服务器实现必须检查请求方法。Chrome 对 0-RTT 非常谨慎，只在特定场景下使用。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=119-http11-keep-alive-与管线化>11.9 HTTP/1.1 keep-alive 与管线化<a href=#119-http11-keep-alive-与管线化 class=hash-link aria-label="11.9 HTTP/1.1 keep-alive 与管线化的直接链接" title="11.9 HTTP/1.1 keep-alive 与管线化的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1191-keep-alive-机制>11.9.1 keep-alive 机制<a href=#1191-keep-alive-机制 class=hash-link aria-label="11.9.1 keep-alive 机制的直接链接" title="11.9.1 keep-alive 机制的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 默认开启 keep-alive，复用 TCP 连接发送多个请求。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.0 vs HTTP/1.1 连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.0:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  连接 → 请求 → 响应 → 断开</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每次请求都建立新连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → TCP 握手 + TLS 握手开销大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">HTTP/1.1 keep-alive:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  连接 → 请求1 → 响应1 → 请求2 → 响应2 → ... → 断开</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  复用 TCP 连接</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 节省握手开销</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 但请求必须串行（队头阻塞）</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>HTTP/1.0<th>HTTP/1.1 keep-alive<tbody><tr><td>连接复用<td>否<td>是<tr><td>队头阻塞<td>无<td>有<tr><td>TCP 握手<td>每次需要<td>首次需要<tr><td>空闲超时<td>—<td>Keep-Alive: timeout=5</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1192-管线化>11.9.2 管线化<a href=#1192-管线化 class=hash-link aria-label="11.9.2 管线化的直接链接" title="11.9.2 管线化的直接链接" translate=no>​</a></h3>
+<p>HTTP/1.1 管线化（Pipelining）允许在响应前发送多个请求，但浏览器普遍禁用了管线化。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">管线化问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 队头阻塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 请求1响应慢 → 请求2的响应被阻塞</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 即使请求2已处理完也要等待</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 实现复杂</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 服务器需要保证响应顺序</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 中间代理可能不支持</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 实际效果差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 大部分场景没有性能提升</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 反而增加复杂度</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">结果：Chrome/Firefox 禁用了管线化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ 转而使用多连接并行（6 个连接/域名）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ HTTP/2 多路复用彻底解决了这个问题</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>HTTP/1.1 的队头阻塞问题是 HTTP/2 诞生的主要原因。HTTP/1.1 用 6 个并行连接缓解队头阻塞，但每个连接仍然是串行的。HTTP/2 在一个连接上多路复用多个请求，彻底消除了 HTTP 层的队头阻塞。但 TCP 层的队头阻塞仍然存在，直到 HTTP/3（QUIC）才解决。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1110-hpack-压缩算法>11.10 HPACK 压缩算法<a href=#1110-hpack-压缩算法 class=hash-link aria-label="11.10 HPACK 压缩算法的直接链接" title="11.10 HPACK 压缩算法的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11101-hpack-原理>11.10.1 HPACK 原理<a href=#11101-hpack-原理 class=hash-link aria-label="11.10.1 HPACK 原理的直接链接" title="11.10.1 HPACK 原理的直接链接" translate=no>​</a></h3>
+<p>HTTP/2 使用 HPACK 算法压缩头部。HPACK 结合了静态表、动态表和 Huffman 编码。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">HPACK 压缩流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 静态表（61 个常见头）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 预定义的常用头部字段</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 如 :method: GET → 索引 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不需要传输完整字符串</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 连接级别共享</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 之前发送过的头部加入动态表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 后续请求引用索引即可</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. Huffman 编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 对字符串值进行 Huffman 编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 高频字符用短编码</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 进一步压缩体积</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">压缩效果：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  原始头部: ~800 字节</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HPACK 后: ~30 字节</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  压缩率: ~96%</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>压缩方式<th>原始大小<th>压缩后<th>效果<tbody><tr><td>无压缩<td>800B<td>800B<td>0%<tr><td>静态表<td>800B<td>400B<td>50%<tr><td>动态表<td>800B<td>100B<td>87%<tr><td>+ Huffman<td>800B<td>30B<td>96%</table>
+<blockquote>
+<p>HPACK 的动态表是连接级别的，不同连接不共享。这意味着首个请求的头部不会被压缩，后续请求才能命中动态表。HTTP/3 的 QPACK 改进了这一点，支持跨连接的动态表共享（需要 QUIC 的 server push 机制配合）。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>性能影响<tbody><tr><td>DNS 解析<td>6 层缓存 + 递归查询<td>TTL 控制缓存有效期<tr><td>DNS 预解析<td>提前解析域名<td>减少首次请求延迟<tr><td>TCP 握手<td>三次握手 + BBR 拥塞控制<td>影响连接建立时间<tr><td>连接池<td>复用 TCP/TLS 连接<td>避免重复握手<tr><td>TLS 1.3<td>1-RTT 握手 + 0-RTT 恢复<td>减少安全连接延迟<tr><td>DoH<td>加密 DNS 查询<td>隐私保护</table>
+<p>觉得有用？收藏起来，下次排查网络性能问题时翻出来看。</p>
+<p>你的网站还在用 HTTP/1.1 吗？升级到 HTTP/2 或 HTTP/3 了吗？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲 HTTP 协议的演进，从 HTTP/1.1 的队头阻塞到 HTTP/2 的多路复用再到 HTTP/3 的 QUIC。系列进度 11/24。</p>
+<p>下期预告：第 12 章「HTTP/1.1、HTTP/2 与 HTTP/3」。我们会拆解三个 HTTP 版本的核心差异、HTTP/2 的多路复用与 Server Push、以及 HTTP/3 基于 QUIC 的创新。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_11.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第10章 事件处理与输入管道</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#111-dns-解析的全过程 class="table-of-contents__link toc-highlight">11.1 DNS 解析的全过程</a><ul><li><a href=#1111-dns-解析的层级 class="table-of-contents__link toc-highlight">11.1.1 DNS 解析的层级</a><li><a href=#1112-dns-记录类型 class="table-of-contents__link toc-highlight">11.1.2 DNS 记录类型</a><li><a href=#1113-dns-缓存与-ttl class="table-of-contents__link toc-highlight">11.1.3 DNS 缓存与 TTL</a><li><a href=#1114-dns-预解析 class="table-of-contents__link toc-highlight">11.1.4 DNS 预解析</a></ul><li><a href=#112-tcp-连接建立 class="table-of-contents__link toc-highlight">11.2 TCP 连接建立</a><ul><li><a href=#1121-三次握手 class="table-of-contents__link toc-highlight">11.2.1 三次握手</a><li><a href=#1122-tcp-拥塞控制 class="table-of-contents__link toc-highlight">11.2.2 TCP 拥塞控制</a><li><a href=#1123-tcp-优化技术 class="table-of-contents__link toc-highlight">11.2.3 TCP 优化技术</a></ul><li><a href=#113-浏览器网络栈架构 class="table-of-contents__link toc-highlight">11.3 浏览器网络栈架构</a><ul><li><a href=#1131-网络栈的分层 class="table-of-contents__link toc-highlight">11.3.1 网络栈的分层</a><li><a href=#1132-连接池管理 class="table-of-contents__link toc-highlight">11.3.2 连接池管理</a><li><a href=#1133-socket-pool-的实现 class="table-of-contents__link toc-highlight">11.3.3 Socket Pool 的实现</a></ul><li><a href=#114-tls-握手过程 class="table-of-contents__link toc-highlight">11.4 TLS 握手过程</a><ul><li><a href=#1141-tls-13-握手 class="table-of-contents__link toc-highlight">11.4.1 TLS 1.3 握手</a><li><a href=#1142-tls-13-vs-tls-12 class="table-of-contents__link toc-highlight">11.4.2 TLS 1.3 vs TLS 1.2</a><li><a href=#1143-0-rtt-会话恢复 class="table-of-contents__link toc-highlight">11.4.3 0-RTT 会话恢复</a><li><a href=#1144-证书透明度 class="table-of-contents__link toc-highlight">11.4.4 证书透明度</a></ul><li><a href=#115-secure-dns-与-dns-over-https class="table-of-contents__link toc-highlight">11.5 Secure DNS 与 DNS-over-HTTPS</a><ul><li><a href=#1151-dns-的隐私问题 class="table-of-contents__link toc-highlight">11.5.1 DNS 的隐私问题</a><li><a href=#1152-dns-over-https class="table-of-contents__link toc-highlight">11.5.2 DNS-over-HTTPS</a><li><a href=#1153-dns-安全扩展 class="table-of-contents__link toc-highlight">11.5.3 DNS 安全扩展</a></ul><li><a href=#116-浏览器网络请求的生命周期 class="table-of-contents__link toc-highlight">11.6 浏览器网络请求的生命周期</a><ul><li><a href=#1161-请求状态机 class="table-of-contents__link toc-highlight">11.6.1 请求状态机</a><li><a href=#1162-重定向处理 class="table-of-contents__link toc-highlight">11.6.2 重定向处理</a></ul><li><a href=#117-http11-keep-alive-与管线化 class="table-of-contents__link toc-highlight">11.7 HTTP/1.1 Keep-Alive 与管线化</a><ul><li><a href=#1171-keep-alive-的详细工作机制 class="table-of-contents__link toc-highlight">11.7.1 Keep-Alive 的详细工作机制</a><li><a href=#1172-http11-管线化pipelining的失败 class="table-of-contents__link toc-highlight">11.7.2 HTTP/1.1 管线化（Pipelining）的失败</a></ul><li><a href=#118-http2-的-hpack-头部压缩算法 class="table-of-contents__link toc-highlight">11.8 HTTP/2 的 HPACK 头部压缩算法</a><ul><li><a href=#1181-hpack-的三个组件 class="table-of-contents__link toc-highlight">11.8.1 HPACK 的三个组件</a><li><a href=#1182-hpack-压缩效果实测 class="table-of-contents__link toc-highlight">11.8.2 HPACK 压缩效果实测</a></ul><li><a href=#119-http2-优先级与依赖树 class="table-of-contents__link toc-highlight">11.9 HTTP/2 优先级与依赖树</a><ul><li><a href=#1191-http2-的优先级模型 class="table-of-contents__link toc-highlight">11.9.1 HTTP/2 的优先级模型</a><li><a href=#1192-简化后的优先级方案 class="table-of-contents__link toc-highlight">11.9.2 简化后的优先级方案</a></ul><li><a href=#1110-http3-的-qpack-头部压缩 class="table-of-contents__link toc-highlight">11.10 HTTP/3 的 QPACK 头部压缩</a><ul><li><a href=#11101-qpack-与-hpack-的关键差异 class="table-of-contents__link toc-highlight">11.10.1 QPACK 与 HPACK 的关键差异</a><li><a href=#11102-0-rtt-早期数据的安全风险 class="table-of-contents__link toc-highlight">11.10.2 0-RTT 早期数据的安全风险</a><li><a href=#11103-http3-连接迁移 class="table-of-contents__link toc-highlight">11.10.3 HTTP/3 连接迁移</a><li><a href=#11104-http3-在中国的部署挑战 class="table-of-contents__link toc-highlight">11.10.4 HTTP/3 在中国的部署挑战</a></ul><li><a href=#117-http11-keep-alive-与管线化-1 class="table-of-contents__link toc-highlight">11.7 HTTP/1.1 keep-alive 与管线化</a><ul><li><a href=#1171-keep-alive-机制 class="table-of-contents__link toc-highlight">11.7.1 keep-alive 机制</a><li><a href=#1172-管线化及其限制 class="table-of-contents__link toc-highlight">11.7.2 管线化及其限制</a></ul><li><a href=#118-hpack-头部压缩 class="table-of-contents__link toc-highlight">11.8 HPACK 头部压缩</a><ul><li><a href=#1181-hpack-算法 class="table-of-contents__link toc-highlight">11.8.1 HPACK 算法</a></ul><li><a href=#119-http2-优先级与依赖树-1 class="table-of-contents__link toc-highlight">11.9 HTTP/2 优先级与依赖树</a><li><a href=#1110-0-rtt-安全风险 class="table-of-contents__link toc-highlight">11.10 0-RTT 安全风险</a><ul><li><a href=#11101-重放攻击 class="table-of-contents__link toc-highlight">11.10.1 重放攻击</a></ul><li><a href=#119-http11-keep-alive-与管线化 class="table-of-contents__link toc-highlight">11.9 HTTP/1.1 keep-alive 与管线化</a><ul><li><a href=#1191-keep-alive-机制 class="table-of-contents__link toc-highlight">11.9.1 keep-alive 机制</a><li><a href=#1192-管线化 class="table-of-contents__link toc-highlight">11.9.2 管线化</a></ul><li><a href=#1110-hpack-压缩算法 class="table-of-contents__link toc-highlight">11.10 HPACK 压缩算法</a><ul><li><a href=#11101-hpack-原理 class="table-of-contents__link toc-highlight">11.10.1 HPACK 原理</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

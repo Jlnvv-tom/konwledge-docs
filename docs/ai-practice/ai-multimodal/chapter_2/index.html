@@ -1,0 +1,346 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-multimodal/chapter_2" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第2章 提示词工程与生成控制 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第2章 提示词工程与生成控制 | 知识库"/><meta data-rh=true name=description content=同一个模型，别人出图像大片，你出图像PPT——问题不在模型，在提示词。 /><meta data-rh=true property=og:description content=同一个模型，别人出图像大片，你出图像PPT——问题不在模型，在提示词。 /><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/","name":"AI 多模态生成","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2","name":"第2章 提示词工程与生成控制","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="折叠侧边栏分类 'AI 多模态生成'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_1><span title="第1章 开源AI图片生成生态全景" class=linkLabel_WmDU>第1章 开源AI图片生成生态全景</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/contents><span title="系列文章规划：AI 多模态生成 - 图片与视频创作" class=linkLabel_WmDU>系列文章规划：AI 多模态生成 - 图片与视频创作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_2><span title="第2章 提示词工程与生成控制" class=linkLabel_WmDU>第2章 提示词工程与生成控制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_3><span title="第3章 图生图、局部重绘与ControlNet" class=linkLabel_WmDU>第3章 图生图、局部重绘与ControlNet</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_4><span title="第4章 开源AI视频生成模型巡礼" class=linkLabel_WmDU>第4章 开源AI视频生成模型巡礼</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_5><span title="第5章 ComfyUI视频生成工作流实战" class=linkLabel_WmDU>第5章 ComfyUI视频生成工作流实战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_6><span title="第6章 LoRA微调与个性化模型训练" class=linkLabel_WmDU>第6章 LoRA微调与个性化模型训练</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_7><span title="第7章 AI创作工程化与自动化流水线" class=linkLabel_WmDU>第7章 AI创作工程化与自动化流水线</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_8><span title="第8章 全链路回顾与AI生成未来展望" class=linkLabel_WmDU>第8章 全链路回顾与AI生成未来展望</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span>AI 多模态生成</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第2章 提示词工程与生成控制</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第2章 提示词工程与生成控制</h1></header>
+<p>同一个模型，别人出图像大片，你出图像PPT——问题不在模型，在提示词。</p>
+<p>我是怕浪猫，这是「AI造物手册」系列第2章。上期讲了开源生态全景，这期我们钻进提示词工程，把"写什么"和"怎么写"这件事彻底讲透。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-正向提示词的结构化写法主体风格画质构图>2.1 正向提示词的结构化写法：主体+风格+画质+构图<a href=#21-正向提示词的结构化写法主体风格画质构图 class=hash-link aria-label="2.1 正向提示词的结构化写法：主体+风格+画质+构图的直接链接" title="2.1 正向提示词的结构化写法：主体+风格+画质+构图的直接链接" translate=no>​</a></h2>
+<p>很多人写提示词就是一句话丢进去，比如"a beautiful girl"。模型确实能出图，但结果完全靠运气。怕浪猫总结了一个万能提示词结构：</p>
+<p><strong>主体 + 细节描述 + 风格 + 画质 + 构图</strong></p>
+<p>每一部分的作用：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>部分<th>作用<th>示例<tbody><tr><td>主体<td>告诉模型画什么<td>a young woman reading a book<tr><td>细节描述<td>丰富主体特征<td>long black hair, wearing a white dress, sitting by the window<tr><td>风格<td>定义视觉风格<td>oil painting style, impressionist<tr><td>画质<td>提升输出质量<td>highly detailed, 8k, masterpiece<tr><td>构图<td>控制画面布局<td>close-up portrait, golden hour lighting</table>
+<p>组合起来：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">a young woman reading a book, long black hair, wearing a white dress, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">sitting by the window, oil painting style, impressionist, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">highly detailed, 8k, masterpiece, close-up portrait, golden hour lighting</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>提示词不是写作文，是给模型下指令——越精确，模型越不迷茫。</p>
+</blockquote>
+<p><strong>权重控制</strong></p>
+<p>在ComfyUI和WebUI中，可以通过括号和数字控制关键词权重：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">(masterpiece:1.2), (best quality:1.2), a girl, (red dress:1.4), </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">outdoor, (blurry background:0.8)</span><br/></div></code></pre></div></div>
+<ul>
+<li class=""><code>(word:1.4)</code> 表示提高该词权重40%</li>
+<li class=""><code>(word:0.8)</code> 表示降低该词权重20%</li>
+<li class="">权重范围建议在0.5-1.5之间，过大容易出现伪影</li>
+</ul>
+<p><strong>FLUX系列的提示词特点</strong></p>
+<p>FLUX.1与SD系列不同，它使用T5-XXL作为文本编码器，支持最长256个token的自然语言提示词。这意味着你不需要堆砌关键词，可以用自然语言描述：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">A weathered fisherman in his sixties stands on a wooden dock at dawn, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">holding a fishing net over his shoulder. The morning mist rises from </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">the calm sea behind him. Shot on 85mm lens, shallow depth of field, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">warm golden light.</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>SD靠关键词堆砌，FLUX靠自然语言描述——用对方式，效果天差地别。</p>
+</blockquote>
+<p>你有没有遇到过这种情况：写了很长的提示词，模型却只关注了前几个词？下一节的反向提示词能帮你解决部分问题。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-反向提示词排除不需要的元素>2.2 反向提示词：排除不需要的元素<a href=#22-反向提示词排除不需要的元素 class=hash-link aria-label="2.2 反向提示词：排除不需要的元素的直接链接" title="2.2 反向提示词：排除不需要的元素的直接链接" translate=no>​</a></h2>
+<p>正向提示词告诉模型"画什么"，反向提示词告诉模型"不画什么"。</p>
+<p>常见反向提示词模板：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 通用反向提示词</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">low quality, worst quality, blurry, deformed, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">bad anatomy, extra limbs, missing fingers, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">watermark, signature, text, jpeg artifacts</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 写实人像专用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">cartoon, 3d, illustration, anime, painting, </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">drawings, flat color, oversized eyes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 二次元专用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">realistic, photo, 3d, monochrome, grayscale</span><br/></div></code></pre></div></div>
+<p>反向提示词使用技巧：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>技巧<th>说明<th>示例<tbody><tr><td>排除质量问题<td>去除低质量特征<td>low quality, blurry, jpeg artifacts<tr><td>排除风格偏移<td>防止风格跑偏<td>写实场景加 cartoon, anime<tr><td>排除身体缺陷<td>避免手部等常见问题<td>extra fingers, deformed hands<tr><td>排除不需要的元素<td>去除水印等<td>watermark, signature, logo</table>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Diffusers中使用反向提示词</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"a woman in a red dress walking down a city street"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    negative_prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"low quality, blurry, cartoon, anime, watermark, text"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>30</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    guidance_scale</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>7.5</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">images</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>反向提示词不是越多越好——堆太多会压制模型的创造力，画面会变得平淡。</p>
+</blockquote>
+<p>注意：FLUX.1 schnell不支持反向提示词（guidance_scale=0时的蒸馏模型），FLUX.1 dev可以配合反向提示词使用。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-采样器与步数dpm-2m-karras为什么是万金油>2.3 采样器与步数：DPM++ 2M Karras为什么是万金油<a href=#23-采样器与步数dpm-2m-karras为什么是万金油 class=hash-link aria-label="2.3 采样器与步数：DPM++ 2M Karras为什么是万金油的直接链接" title="2.3 采样器与步数：DPM++ 2M Karras为什么是万金油的直接链接" translate=no>​</a></h2>
+<p>采样器（Sampler）决定了模型如何从噪声中逐步去噪生成图像。不同的采样器在速度和质量上有不同的权衡。</p>
+<p>主流采样器对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>采样器<th>速度<th>质量<th>特点<tbody><tr><td>Euler a<td>快<td>中等<td>适合快速测试，有随机性<tr><td>DPM++ 2M Karras<td>中等<td>优秀<td>均衡之选，画质细腻<tr><td>DPM++ SDE Karras<td>慢<td>极佳<td>质量最高但耗时翻倍<tr><td>DDIM<td>快<td>中等<td>经典采样器，可复现性好<tr><td>UniPC<td>快<td>优秀<td>新型采样器，速度质量兼顾</table>
+<p><strong>为什么DPM++ 2M Karras是万金油？</strong></p>
+<ul>
+<li class="">画质足够好，满足90%的使用场景</li>
+<li class="">速度可接受，30步出图约5-10秒（取决于显卡）</li>
+<li class="">稳定性高，不同模型和提示词下表现一致</li>
+<li class="">Karras噪声调度比默认调度在低步数时更优</li>
+</ul>
+<blockquote>
+<p>采样器选择困难症？怕浪猫的建议：无脑选DPM++ 2M Karras，30步，出错率最低。</p>
+</blockquote>
+<p>步数选择建议：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>步数范围<th>适用场景<th>效果<tbody><tr><td>4-8步<td>FLUX.1 schnell专用<td>蒸馏模型，几步就够<tr><td>15-20步<td>快速测试<td>能看但细节不够<tr><td>25-30步<td>日常出图<td>质量与速度的最佳平衡<tr><td>40-50步<td>精细出图<td>边际收益递减，仅用于最终输出<tr><td>50步以上<td>通常不必要<td>浪费时间，画质提升不明显</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-cfg-scale与采样步数的关系如何平衡质量与速度>2.4 CFG Scale与采样步数的关系：如何平衡质量与速度<a href=#24-cfg-scale与采样步数的关系如何平衡质量与速度 class=hash-link aria-label="2.4 CFG Scale与采样步数的关系：如何平衡质量与速度的直接链接" title="2.4 CFG Scale与采样步数的关系：如何平衡质量与速度的直接链接" translate=no>​</a></h2>
+<p>CFG Scale（Classifier Free Guidance）控制模型对提示词的"服从程度"。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># CFG Scale的效果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CFG=1:   模型自由发挥，可能偏离提示词</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CFG=3:   有一定遵循度，画面柔和</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CFG=7:   标准值，遵循度与画质的平衡点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CFG=12:  强遵循度，颜色饱和度增加</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CFG=20+: 过度遵循，画面出现伪影和过曝</span><br/></div></code></pre></div></div>
+<p>CFG与步数的配合策略：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>CFG<th>步数<th>说明<tbody><tr><td>快速草稿<td>3-5<td>15<td>先看构图对不对<tr><td>日常出图<td>7<td>30<td>标准配方<tr><td>精细人像<td>7-9<td>40<td>皮肤细节更丰富<tr><td>风格化插画<td>8-12<td>30<td>增强风格表现力</table>
+<blockquote>
+<p>CFG不是越高越好——超过15基本都会翻车，过曝和伪影会毁掉整张图。</p>
+</blockquote>
+<p><strong>FLUX系列的CFG差异</strong></p>
+<p>FLUX.1 dev的推荐CFG范围是3.5-4.5，远低于SD系列的7。这是因为FLUX的文本编码器（T5-XXL）对提示词理解更强，不需要高CFG来强制对齐。</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># FLUX.1 dev推荐参数</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"..."</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>28</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    guidance_scale</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>3.5</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># 注意FLUX的CFG远低于SD</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">images</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># FLUX.1 schnell推荐参数</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"..."</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>4</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    guidance_scale</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>0.0</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># schnell不需要CFG</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">images</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p>3步搞定参数调优：</p>
+<ol>
+<li class="">先用标准参数（CFG=7, 30步, DPM++ 2M Karras）出一张基线图</li>
+<li class="">调CFG控制遵循度，调步数控制细节</li>
+<li class="">对比效果，找到你的最佳组合</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-种子控制与批量生成可复现的图片创作流程>2.5 种子控制与批量生成：可复现的图片创作流程<a href=#25-种子控制与批量生成可复现的图片创作流程 class=hash-link aria-label="2.5 种子控制与批量生成：可复现的图片创作流程的直接链接" title="2.5 种子控制与批量生成：可复现的图片创作流程的直接链接" translate=no>​</a></h2>
+<p>种子（Seed）是随机噪声的初始值。相同的种子+相同的参数=相同的图片。</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 固定种子，可复现</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> torch</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">generator </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> torch</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">Generator</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"cuda"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">manual_seed</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>42</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"a mountain landscape at sunset"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    generator</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">generator</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>30</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">images</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>种子的实用技巧</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>种子策略<th>说明<tbody><tr><td>调试提示词<td>固定种子<td>只改提示词，看效果差异<tr><td>批量生成<td>随机种子<td>每张图用不同种子，增加多样性<tr><td>微调参数<td>固定种子<td>改步数/CFG时固定种子，隔离变量<tr><td>挑选最佳<td>随机种子x20<td>批量生成20张，挑最好的</table>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 批量生成并保存</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> i </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> </span><span class="token builtin">range</span><span class="token punctuation" style=color:#393A34>(</span><span class="token number" style=color:#36acaa>10</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    generator </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> torch</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">Generator</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>"cuda"</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">manual_seed</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">i </span><span class="token operator" style=color:#393A34>*</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>1000</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>+</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>42</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    image </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> pipe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        prompt</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"a futuristic city skyline at night"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        generator</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">generator</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        num_inference_steps</span><span class="token operator" style=color:#393A34>=</span><span class="token number" style=color:#36acaa>30</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">images</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    image</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">save</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string-interpolation string" style=color:#e3116c>f"city_</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>{</span><span class="token string-interpolation interpolation">i</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>}</span><span class="token string-interpolation string" style=color:#e3116c>.png"</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>种子是AI创作的"存档点"——找到一张满意的图，记下它的种子，之后随时可以在这个基础上微调。</p>
+</blockquote>
+<p><strong>在ComfyUI中管理种子</strong></p>
+<p>ComfyUI的KSampler节点有seed和control_after_generate两个选项：</p>
+<ul>
+<li class="">fixed：固定种子，每次运行结果相同</li>
+<li class="">random：每次随机</li>
+<li class="">increment：每次+1</li>
+<li class="">decrement：每次-1</li>
+</ul>
+<p>调试工作流时用fixed，出图时切random批量跑。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章总结>本章总结<a href=#本章总结 class=hash-link aria-label=本章总结的直接链接 title=本章总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数<th>推荐值<th>说明<tbody><tr><td>提示词结构<td>主体+细节+风格+画质+构图<td>万能公式<tr><td>反向提示词<td>质量排除+风格排除<td>不要堆太多<tr><td>采样器<td>DPM++ 2M Karras<td>万金油选择<tr><td>步数<td>25-30步（SD）/ 4-28步（FLUX）<td>按模型选择<tr><td>CFG<td>7（SD）/ 3.5（FLUX dev）/ 0（FLUX schnell）<td>按模型选择<tr><td>种子<td>调试时固定，出图时随机<td>可复现的关键</table>
+<p>觉得有用？收藏起来，下次写提示词时直接套用模板。</p>
+<p>你的提示词一般写多长？评论区说说你的习惯。</p>
+<p>关注怕浪猫，下期我们讲图生图、局部重绘与ControlNet，让你的图片精准可控。</p>
+<p>系列进度 2/8，下篇：图生图、局部重绘与ControlNet。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-multimodal/chapter_2.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-multimodal/contents><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>系列文章规划：AI 多模态生成 - 图片与视频创作</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-multimodal/chapter_3><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第3章 图生图、局部重绘与ControlNet</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#21-正向提示词的结构化写法主体风格画质构图 class="table-of-contents__link toc-highlight">2.1 正向提示词的结构化写法：主体+风格+画质+构图</a><li><a href=#22-反向提示词排除不需要的元素 class="table-of-contents__link toc-highlight">2.2 反向提示词：排除不需要的元素</a><li><a href=#23-采样器与步数dpm-2m-karras为什么是万金油 class="table-of-contents__link toc-highlight">2.3 采样器与步数：DPM++ 2M Karras为什么是万金油</a><li><a href=#24-cfg-scale与采样步数的关系如何平衡质量与速度 class="table-of-contents__link toc-highlight">2.4 CFG Scale与采样步数的关系：如何平衡质量与速度</a><li><a href=#25-种子控制与批量生成可复现的图片创作流程 class="table-of-contents__link toc-highlight">2.5 种子控制与批量生成：可复现的图片创作流程</a><li><a href=#本章总结 class="table-of-contents__link toc-highlight">本章总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

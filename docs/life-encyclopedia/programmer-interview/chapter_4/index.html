@@ -1,0 +1,167 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-life-encyclopedia/programmer-interview/chapter_4" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战 | 知识库"/><meta data-rh=true name=description content='有个候选人跟我抱怨："八股文我背了三个月，Redis、MySQL、JVM全都倒背如流，一面还是挂了。"我问他面试官问了什么，他说问的全是没背过的场景题。问题就出在这：他以为一面考的是"背得多不多"，实际上一面考的是"基础牢不牢、能不能落地"。背诵和掌握，是两回事。'/><meta data-rh=true property=og:description content='有个候选人跟我抱怨："八股文我背了三个月，Redis、MySQL、JVM全都倒背如流，一面还是挂了。"我问他面试官问了什么，他说问的全是没背过的场景题。问题就出在这：他以为一面考的是"背得多不多"，实际上一面考的是"基础牢不牢、能不能落地"。背诵和掌握，是两回事。'/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/","name":"程序员面试100问","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4","name":"程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/life-encyclopedia/><span title="📚 生活与百科" class=linkLabel_WmDU>📚 生活与百科</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/cat/><span title=猫的知识全书 class=categoryLinkLabel_W154>猫的知识全书</span></a><button aria-label="展开侧边栏分类 '猫的知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/children/><span title=育儿知识全书 class=categoryLinkLabel_W154>育儿知识全书</span></a><button aria-label="展开侧边栏分类 '育儿知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/english/><span title=英语学习 class=categoryLinkLabel_W154>英语学习</span></a><button aria-label="展开侧边栏分类 '英语学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/programmer-english/><span title=程序员英语 class=categoryLinkLabel_W154>程序员英语</span></a><button aria-label="展开侧边栏分类 '程序员英语'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/internet-future/><span title=互联网未来五年 class=categoryLinkLabel_W154>互联网未来五年</span></a><button aria-label="展开侧边栏分类 '互联网未来五年'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/konwledge-docs/docs/life-encyclopedia/skill-book/全村穿越后又穿越回去了/正文/第001章_天光异变><span title=技能之书 class=categoryLinkLabel_W154>技能之书</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/><span title=程序员面试100问 class=categoryLinkLabel_W154>程序员面试100问</span></a><button aria-label="折叠侧边栏分类 '程序员面试100问'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_1><span title=程序员面试100问·第1篇：求职准备——面试从投简历之前就开始了 class=linkLabel_WmDU>程序员面试100问·第1篇：求职准备——面试从投简历之前就开始了</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_2><span title=程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门 class=linkLabel_WmDU>程序员面试100问·第2篇：笔试实战——第一道大规模淘汰闸门</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_3><span title=程序员面试100问·第3篇：简历筛选关——30秒定生死 class=linkLabel_WmDU>程序员面试100问·第3篇：简历筛选关——30秒定生死</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_4><span title=程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战 class=linkLabel_WmDU>程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_5><span title=程序员面试100问·第5篇：技术二面——项目深挖与系统设计 class=linkLabel_WmDU>程序员面试100问·第5篇：技术二面——项目深挖与系统设计</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_6><span title=程序员面试100问·第6篇：技术三面——交叉面与Leader面的终极考验 class=linkLabel_WmDU>程序员面试100问·第6篇：技术三面——交叉面与Leader面的终极考验</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_7><span title=程序员面试100问·第7篇：HR面——不是走流程，是最后的守门人 class=linkLabel_WmDU>程序员面试100问·第7篇：HR面——不是走流程，是最后的守门人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_8><span title=程序员面试100问·第8篇：谈Offer——从口头到书面的最后博弈 class=linkLabel_WmDU>程序员面试100问·第8篇：谈Offer——从口头到书面的最后博弈</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_9><span title=程序员面试100问·第9篇：背调与入职——offer到手后的最后一公里 class=linkLabel_WmDU>程序员面试100问·第9篇：背调与入职——offer到手后的最后一公里</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_10><span title=程序员面试100问·第10篇：避坑与心态——收官之战 class=linkLabel_WmDU>程序员面试100问·第10篇：避坑与心态——收官之战</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/tech-pioneers/><span title=科技与互联网先驱 class=categoryLinkLabel_W154>科技与互联网先驱</span></a><button aria-label="展开侧边栏分类 '科技与互联网先驱'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/><span>程序员面试100问</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>程序员面试100问·第4篇：技术一面——八股与手撕代码的守门战</h1></header>
+<p>有个候选人跟我抱怨："八股文我背了三个月，Redis、MySQL、JVM全都倒背如流，一面还是挂了。"我问他面试官问了什么，他说问的全是没背过的场景题。问题就出在这：他以为一面考的是"背得多不多"，实际上一面考的是"基础牢不牢、能不能落地"。背诵和掌握，是两回事。</p>
+<p>我是怕浪猫，八年开发经验，面过两百多场技术面试，也当过面试官。前几篇讲完了笔试和简历，从今天开始进入面试的核心环节。这一篇讲技术一面——它是你第一次真正和面试官对话，也是淘汰率最高的环节之一。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-一面到底在考什么面试官的打分表>4.1 一面到底在考什么：面试官的打分表<a href=#41-一面到底在考什么面试官的打分表 class=hash-link aria-label="4.1 一面到底在考什么：面试官的打分表的直接链接" title="4.1 一面到底在考什么：面试官的打分表的直接链接" translate=no>​</a></h2>
+<p>先回答一个所有人都想知道的问题：面试官手里到底有没有打分表？答案是有，而且绝大多数公司的技术面试都有标准化的评分维度。</p>
+<p>以主流大厂为例，一面面试官通常按这几个维度打分：基础知识的扎实程度（占三到四成）、代码能力（占三成）、项目理解深度（占两成）、沟通表达与学习能力（占一到两成）。总分决定你是否进入下一轮，任何单一维度严重拉胯都可能被一票否决。</p>
+<p>一面的定位是"考察下限"：面试官要确认你不是水货，基础概念能讲清楚，代码能写出来，遇到不会的能诚实面对。一面很少考特别偏门的知识，考的都是"本该会"的东西。所以一面挂掉，通常不是因为你不够优秀，而是因为你"本该会的没答好"。</p>
+<p>理解了打分表，你就知道准备的重点：八股文不是背答案，而是要能"讲原理、讲场景、讲取舍"。面试官问"Redis为什么快"，背出"因为单线程+内存操作"只能得基础分，能补上"为什么单线程反而快（避免上下文切换和锁竞争）、内存操作为什么快（纳秒级随机访问）、还有哪些设计细节（IO多路复用）"才能拿高分。</p>
+<blockquote>
+<p>一面考的不是你会多少，而是你"本该会的"是否真的会——面试官不怕你不会，怕你假装会。</p>
+</blockquote>
+<p>你有没有过这种体验：背得滚瓜烂熟的概念，被面试官多问一句"为什么"就卡壳？</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-自我介绍与面试沟通两分钟抓住面试官>4.2 自我介绍与面试沟通：两分钟抓住面试官<a href=#42-自我介绍与面试沟通两分钟抓住面试官 class=hash-link aria-label="4.2 自我介绍与面试沟通：两分钟抓住面试官的直接链接" title="4.2 自我介绍与面试沟通：两分钟抓住面试官的直接链接" translate=no>​</a></h2>
+<p>一面开场通常是自我介绍，这是你唯一一次完全掌控节奏的机会，但很多人把它讲成了"简历复读机"。</p>
+<p>自我介绍的黄金结构是三段式：我是谁、我做过什么、我为什么适合这个岗位。时长控制在两分钟以内。第一段用一句话介绍自己的背景：几年经验、主要技术栈、最近在做什么方向。第二段挑一个最能代表你水平的项目，用STAR（Situation情境、Task任务、Action行动、Result结果）结构讲清楚你做了什么、解决了什么难点。第三段把话题引向岗位：我关注贵司这个岗位的原因是XXX，我的XXX经验和岗位高度匹配。最后留一个话头："具体细节我们后面可以展开聊。"——这句话能引导面试官往你准备好的方向问。</p>
+<p>面试中的沟通技巧同样重要。面试官打断你，不一定是坏事：可能是你讲偏了，他在拉你回正轨；也可能是他确认你已经掌握了，想换下一个问题。连环追问是好事，说明你的回答勾起了他的兴趣，他在验证深度。</p>
+<p>回答问题的通用框架是"结论先行、分层展开"：先直接给出答案，再展开解释，最后补一句适用场景或局限性。比如问"什么是索引"，先答"索引是数据库加速查询的数据结构，核心是B+树"，再展开B+树的结构特点和为什么用它，最后补"索引也有代价，写操作会变慢，所以要权衡"。这样的回答结构，面试官听着舒服，也容易给高分。</p>
+<blockquote>
+<p>面试不是审讯，是对话——你的目标是让面试官在最短时间内确认"这人靠谱"，而不是被他问倒。</p>
+</blockquote>
+<p>自我介绍练过吗？建议对着镜子讲三遍，录下来听一遍，你会发现"嗯""然后"这类口头禅比想象中多得多。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-基础八股核心考点四类高频问题清单>4.3 基础八股核心考点：四类高频问题清单<a href=#43-基础八股核心考点四类高频问题清单 class=hash-link aria-label="4.3 基础八股核心考点：四类高频问题清单的直接链接" title="4.3 基础八股核心考点：四类高频问题清单的直接链接" translate=no>​</a></h2>
+<p>一面的八股问题高度集中，主要分布在四类：编程语言、操作系统、计算机网络、数据库。下面按"考点+回答深度"给你列一份清单。</p>
+<p>编程语言，高频考点包括：内存管理机制（如Java的GC，Garbage Collection，垃圾回收）、并发编程（线程安全、锁、线程池）、语言特性对比（值传递与引用传递、接口与抽象类）。回答要点：能讲原理，能讲场景，能讲坑。比如线程池，要能说清核心参数（核心线程数、最大线程数、队列容量、拒绝策略）的含义和调优思路。</p>
+<p>操作系统，高频考点包括：进程与线程的区别、进程间通信方式、死锁的四个必要条件（互斥、持有并等待、不可剥夺、循环等待）、虚拟内存与分页。回答要点：会画图（进程状态图）、会举例子（用现实场景类比）、能联系实际（服务端编程里进程和线程怎么用）。</p>
+<p>计算机网络，高频考点包括：TCP（Transmission Control Protocol，传输控制协议）三次握手四次挥手、HTTP（Hypertext Transfer Protocol，超文本传输协议）与HTTPS（HTTP over SSL/TLS，基于安全套接层/传输层安全协议的HTTP）的区别、DNS（Domain Name System，域名系统）解析过程、TCP与UDP（User Datagram Protocol，用户数据报协议）的对比。回答要点：理解每个机制"为什么存在"，比如三次握手是为了确认双方收发能力都正常，四次挥手是因为TCP是全双工、两个方向要分别关闭。</p>
+<p>数据库，高频考点包括：索引原理（B+树为什么适合做索引）、事务的ACID特性（原子性Atomicity、一致性Consistency、隔离性Isolation、持久性Durability）、事务隔离级别、锁机制（行锁、表锁、间隙锁）、慢SQL优化思路。回答要点：索引部分一定要理解B+树的结构原理——多路平衡搜索树、叶子节点存数据且用链表串联、高度低适合磁盘IO，这是整个索引问题的根基。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类别<th>高频考点<th>回答深度要求<tbody><tr><td>编程语言<td>内存管理、并发、语言特性<td>原理+场景+坑<tr><td>操作系统<td>进程线程、死锁、虚拟内存<td>会画图、会类比<tr><td>计算机网络<td>TCP握手、HTTP/HTTPS、DNS<td>讲清"为什么存在"<tr><td>数据库<td>索引、事务、锁、慢SQL<td>吃透B+树原理</table>
+<blockquote>
+<p>八股文的正确打开方式：不是背结论，而是把每个结论背后的"为什么"和"适用场景"串起来——能讲出取舍的八股，才是活的知识。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=44-手撕代码评判标准与沟通法>4.4 手撕代码：评判标准与沟通法<a href=#44-手撕代码评判标准与沟通法 class=hash-link aria-label="4.4 手撕代码：评判标准与沟通法的直接链接" title="4.4 手撕代码：评判标准与沟通法的直接链接" translate=no>​</a></h2>
+<p>一面必考手撕代码，通常一到两道，难度中等。很多人以为手撕代码考的是"写不写得出来"，其实考的是"思考过程+代码质量+沟通协作"。</p>
+<p>面试官评判手撕代码，一般看四点。第一，思路是否正确：你选的算法和数据结构对不对。第二，边界是否考虑：空输入、特殊值有没有处理。第三，代码质量：命名是否清晰、结构是否合理、有没有明显bug。第四，沟通是否顺畅：你愿不愿意边写边讲、能不能接受提示并改进。</p>
+<p>手撕代码的流程应该是：先和面试官确认题意（输入输出、边界、复杂度要求），再讲思路（用什么算法、为什么、时间空间复杂度多少），得到面试官认可后开始写，写完主动跑测试用例验证。不要拿到题就闷头写——先沟通再动手，既是好习惯，也能避免方向错了白写。</p>
+<p>这里有个核心技巧：写代码前先讲思路，是给自己上保险。如果思路有问题，面试官会提示你；如果思路没问题，你的回答已经拿到一半分了。边写边讲也很重要，讲出你的思考过程，让面试官跟着你的思路走。</p>
+<p>手撕代码卡住了怎么办？正确的姿势是：主动说出你的思路卡点，然后向面试官要提示。比如"我想到用双指针，但不确定移动条件"，面试官通常会给引导。要提示不丢分，硬扛到超时才丢分。还有一种情况：你发现思路错了，大方承认并换思路，比硬着头皮写完一个错误答案强得多。</p>
+<p>给一个链表反转的经典实现，这是最高频的手撕题之一，考察的是指针操作的扎实度：</p>
+<div class="language-java codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-java codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">public ListNode reverseList(ListNode head) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ListNode prev = null;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ListNode curr = head;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    while (curr != null) {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ListNode next = curr.next;  // 先保存下一个节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        curr.next = prev;           // 反转当前节点指针</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        prev = curr;                // prev 前移</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        curr = next;                // curr 前移</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    return prev;</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">}</span><br/></div></code></pre></div></div>
+<p>这段代码的核心是三个指针的配合：prev指向已反转部分的新头，curr指向当前要处理的节点，next临时保存curr的下一个节点防止链表断裂。理解了这个"先保存后继、再反转指针、最后同步移动"的节奏，链表类题目就通了。</p>
+<blockquote>
+<p>手撕代码考的不是结果，是过程——面试官要看到你的思考路径，而不是一个沉默的答题机器。</p>
+</blockquote>
+<p>写代码时紧张吗？教你一个心理暗示：把面试官当成结对编程的同事，你不是在考试，是在和他一起解决问题。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=45-遇到不会的题怎么办诚实与转化的艺术>4.5 遇到不会的题怎么办：诚实与转化的艺术<a href=#45-遇到不会的题怎么办诚实与转化的艺术 class=hash-link aria-label="4.5 遇到不会的题怎么办：诚实与转化的艺术的直接链接" title="4.5 遇到不会的题怎么办：诚实与转化的艺术的直接链接" translate=no>​</a></h2>
+<p>一面一定会遇到你不会的问题，这是必然的，区别只在于你怎么应对。面试官不是要考倒你，而是要观察你在"不会"时的反应——这本身就是考察项。</p>
+<p>应对不会的题，分三步走。第一步，诚实表态：直接说"这块我了解不深"，千万别编。面试官都是行家，编造的答案经不起两句追问，一旦发现你编，印象分会断崖式下跌。第二步，展示已有的理解：把你知道的相关知识讲出来，哪怕只是概念层面。比如不会"布隆过滤器"（Bloom Filter，一种概率型数据结构，用于快速判断元素是否可能存在于集合中），可以讲"我理解它是一种空间效率极高的集合判断结构，用多个哈希函数映射位数组，可能有误判但不会漏判"——展示你的知识迁移能力。第三步，表达学习意愿：补一句"这块我回去会系统补一下"，让面试官看到你的态度。</p>
+<p>还有一种常见的"半会不会"：知道概念，但讲不透。这时候用"我知道原理，但细节记不清了"开头，然后把你知道的部分讲清楚。诚实加部分正确，比假装全懂强得多。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>情况<th>错误应对<th>正确应对<tbody><tr><td>完全不会<td>编造答案<td>诚实表态+展示已有理解<tr><td>半会不会<td>含糊其辞<td>明确边界+讲清已知部分<tr><td>思路卡住<td>沉默硬扛<td>说出卡点+主动要提示</table>
+<blockquote>
+<p>面试官不要求你无所不知，但要求你诚实、清醒、有学习能力——"不会"本身不扣分，"假装会"才扣分。</p>
+</blockquote>
+<p>一面心态还有个关键：别把一次失败当审判。一面挂了，可能是岗位匹配度问题，可能是面试官风格问题，不一定是你能力问题。做好复盘，下一场继续。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=46-一面常见场景题演练十个必会问题>4.6 一面常见场景题演练：十个必会问题<a href=#46-一面常见场景题演练十个必会问题 class=hash-link aria-label="4.6 一面常见场景题演练：十个必会问题的直接链接" title="4.6 一面常见场景题演练：十个必会问题的直接链接" translate=no>​</a></h2>
+<p>一面除了八股和手撕代码，还会问一些场景题，考察你能否把知识应用到实际。以下十个高频场景题，每个都要能答出"思路+要点"。</p>
+<p>第一题：接口突然变慢，怎么排查？思路：链路拆解——先看监控（接口耗时分布在哪一段），再看日志（有没有报错、超时），然后逐段检查（数据库慢查询、缓存命中率、外部调用延迟），最后定位根因。第二题：线上OOM（Out Of Memory，内存溢出）了怎么办？思路：先止损（重启或扩容），再排查（抓堆转储、分析大对象），最后修复（定位泄漏点、优化代码）。第三题：缓存和数据库数据不一致怎么办？思路：先讲不一致的产生场景（缓存更新失败、并发读写），再讲解决方案（先更新数据库再删缓存、延迟双删、消息队列异步同步）。第四题：如何设计一个限流方案？思路：讲限流算法（固定窗口、滑动窗口、令牌桶、漏桶），讲选型（令牌桶适合突发流量，滑动窗口适合平滑限流），讲落地（Redis+Lua脚本实现分布式限流）。</p>
+<p>第五题：服务重启后缓存全失效，怎么防止雪崩？思路：讲缓存雪崩的成因（大量key同时过期、缓存服务宕机），讲解决方案（过期时间加随机值、多级缓存、限流降级、缓存预热）。第六题：消息丢失怎么处理？思路：讲消息队列的三种丢失场景（生产端丢失、存储端丢失、消费端丢失），每种场景的应对（生产端确认机制、存储端持久化、消费端手动确认+重试）。第七题：数据库表数据量太大，怎么优化？思路：讲分库分表、索引优化、冷热数据分离、归档。第八题：如何保证接口的幂等性？思路：讲幂等的概念（重复请求结果一致），讲实现（唯一索引、状态机、分布式锁、Token机制）。</p>
+<p>第九题：微服务之间调用失败怎么办？思路：讲重试机制、熔断降级（熔断器的三个状态：关闭、打开、半开）、超时控制、服务降级兜底。第十题：如何做容量评估？思路：讲峰值QPS估算（日活乘以人均请求数除以秒数再乘峰值系数）、容量预留（百分之二十到三十的余量）、压测验证（用压测工具验证系统承载能力）。</p>
+<blockquote>
+<p>场景题考的是"知识迁移"——每个知识点都要能落到具体场景，答出思路、方案和权衡，就是高分答案。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=47-一面防坑清单这些错误不要犯>4.7 一面防坑清单：这些错误不要犯<a href=#47-一面防坑清单这些错误不要犯 class=hash-link aria-label="4.7 一面防坑清单：这些错误不要犯的直接链接" title="4.7 一面防坑清单：这些错误不要犯的直接链接" translate=no>​</a></h2>
+<p>一面挂掉的原因，除了技术不达标，还有很多"非技术原因"。以下防坑清单，每一条都是真实踩过的坑。</p>
+<p>坑一：迟到或早到太多。迟到是态度问题，早到半小时以上也会打乱面试官安排，提前五到十分钟到最合适。远程面试提前十分钟上线测试设备。坑二：着装随意。程序员面试不需要西装，但也不能拖鞋短裤，干净整洁是底线。坑三：对面试官不尊重。打断面试官说话、反驳面试官的提问（"你这个问法不对"）、面试中接电话，都是大忌。坑四：答非所问。面试官问A你答B，说明没听懂问题——没听懂就确认，"您问的是XXX吗"，不要硬答。坑五：过度紧张。说话声音发抖、语速过快、逻辑混乱——紧张可以理解，但会影响表达，提前练习自我介绍和常见问题能缓解。</p>
+<p>坑六：抢答。面试官问题还没说完就抢着答，容易答偏，等面试官说完再答。坑七：贬低前公司。聊离职原因时吐槽前公司，面试官会想"你入职后会不会也这么说我们"。坑八：只背答案不讲原理。八股背得溜但问个"为什么"就卡壳，面试官会认为你只会背书。坑九：手撕代码时沉默。闷头写代码不和面试官沟通，面试官无法评估你的思路。坑十：面试结束不提问。面试官问"你还有什么问题"时回答"没有"，会显得你对这个机会不感兴趣——准备两三个问题，问团队、问业务、问技术。</p>
+<blockquote>
+<p>一面防坑的核心是"专业感"——准时、尊重、沟通、诚实，这些非技术细节决定了面试官对你的整体印象。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本篇小结>本篇小结<a href=#本篇小结 class=hash-link aria-label=本篇小结的直接链接 title=本篇小结的直接链接 translate=no>​</a></h2>
+<p>技术一面是面试的守门战，考的是基础扎实度和代码能力这两个"下限"。理解面试官的打分表，你才知道重点往哪使劲；学会三段式自我介绍和结论先行的回答框架，你才能在沟通中拿高分；吃透四类八股考点的"原理+场景+取舍"，背诵才能变成掌握；掌握手撕代码的流程和沟通法，代码题才不会白丢分；学会面对不会的题，诚实和转化能力本身就是加分项。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模块<th>核心要点<th>一句话总结<tbody><tr><td>打分表<td>基础40%+代码30%+项目20%+沟通10%<td>考下限不考偏门<tr><td>自我介绍<td>三段式、两分钟、留话头<td>引导面试官问你会的问题<tr><td>八股考点<td>语言/OS/网络/数据库<td>讲原理讲场景讲取舍<tr><td>手撕代码<td>先沟通再动手、边写边讲<td>过程比结果重要<tr><td>不会的题<td>诚实+展示理解+学习意愿<td>假装会才扣分</table>
+<p>觉得有用？收藏起来，一面之前过一遍。你一面被问过最离谱的八股题是什么？评论区说说，看看谁的问题更离谱。</p>
+<p>关注怕浪猫，这个系列持续更新。系列进度 4/10。</p>
+<p>下一篇，我们讲技术二面——项目深挖与系统设计。为什么二面挂的人比一面还多？系统设计题到底有没有标准答案？下篇见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/life-encyclopedia/programmer-interview/chapter_4.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_3><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>程序员面试100问·第3篇：简历筛选关——30秒定生死</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/chapter_5><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>程序员面试100问·第5篇：技术二面——项目深挖与系统设计</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#41-一面到底在考什么面试官的打分表 class="table-of-contents__link toc-highlight">4.1 一面到底在考什么：面试官的打分表</a><li><a href=#42-自我介绍与面试沟通两分钟抓住面试官 class="table-of-contents__link toc-highlight">4.2 自我介绍与面试沟通：两分钟抓住面试官</a><li><a href=#43-基础八股核心考点四类高频问题清单 class="table-of-contents__link toc-highlight">4.3 基础八股核心考点：四类高频问题清单</a><li><a href=#44-手撕代码评判标准与沟通法 class="table-of-contents__link toc-highlight">4.4 手撕代码：评判标准与沟通法</a><li><a href=#45-遇到不会的题怎么办诚实与转化的艺术 class="table-of-contents__link toc-highlight">4.5 遇到不会的题怎么办：诚实与转化的艺术</a><li><a href=#46-一面常见场景题演练十个必会问题 class="table-of-contents__link toc-highlight">4.6 一面常见场景题演练：十个必会问题</a><li><a href=#47-一面防坑清单这些错误不要犯 class="table-of-contents__link toc-highlight">4.7 一面防坑清单：这些错误不要犯</a><li><a href=#本篇小结 class="table-of-contents__link toc-highlight">本篇小结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

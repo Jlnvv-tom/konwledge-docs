@@ -1,0 +1,826 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-life-encyclopedia/programmer-english/ch06-reading-tech-docs" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第六章：英文技术文档阅读 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第六章：英文技术文档阅读 | 知识库"/><meta data-rh=true name=description content=代码是世界的通用语言，但文档才是理解这个世界的说明书。当你能高效阅读英文技术文档时，你就拥有了比同行快一步获取信息的能力——不是靠翻译工具等二手信息，而是直接站在信息源头。 /><meta data-rh=true property=og:description content=代码是世界的通用语言，但文档才是理解这个世界的说明书。当你能高效阅读英文技术文档时，你就拥有了比同行快一步获取信息的能力——不是靠翻译工具等二手信息，而是直接站在信息源头。 /><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/","name":"程序员英语","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs","name":"第六章：英文技术文档阅读","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/life-encyclopedia/><span title="📚 生活与百科" class=linkLabel_WmDU>📚 生活与百科</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/cat/><span title=猫的知识全书 class=categoryLinkLabel_W154>猫的知识全书</span></a><button aria-label="展开侧边栏分类 '猫的知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/children/><span title=育儿知识全书 class=categoryLinkLabel_W154>育儿知识全书</span></a><button aria-label="展开侧边栏分类 '育儿知识全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/english/><span title=英语学习 class=categoryLinkLabel_W154>英语学习</span></a><button aria-label="展开侧边栏分类 '英语学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/life-encyclopedia/programmer-english/><span title=程序员英语 class=categoryLinkLabel_W154>程序员英语</span></a><button aria-label="折叠侧边栏分类 '程序员英语'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch01-coding-core-vocabulary><span title=第一章：编程核心词汇 class=linkLabel_WmDU>第一章：编程核心词汇</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch02-dev-workflow-vocabulary><span title=第二章：开发流程词汇 class=linkLabel_WmDU>第二章：开发流程词汇</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch03-tech-doc-vocabulary><span title=第三章：技术文档高频词汇 class=linkLabel_WmDU>第三章：技术文档高频词汇</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch04-listening-training><span title=第四章：听力训练 class=linkLabel_WmDU>第四章：听力训练</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch05-speaking-expression><span title=第五章：口语表达 class=linkLabel_WmDU>第五章：口语表达</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs><span title=第六章：英文技术文档阅读 class=linkLabel_WmDU>第六章：英文技术文档阅读</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch07-reading-tech-blogs><span title=第七章：英文技术博客阅读 class=linkLabel_WmDU>第七章：英文技术博客阅读</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch08-reading-emails-and-docs><span title=第八章：英文邮件与文档阅读 class=linkLabel_WmDU>第八章：英文邮件与文档阅读</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch09-tech-writing><span title=第九章：英文技术写作 class=linkLabel_WmDU>第九章：英文技术写作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch10-email-writing><span title=第十章：英文邮件写作 class=linkLabel_WmDU>第十章：英文邮件写作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch11-instant-messaging-writing><span title=第十一章：即时通讯写作 class=linkLabel_WmDU>第十一章：即时通讯写作</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch12-job-hunting-english><span title=第十二章：外企求职英语 class=linkLabel_WmDU>第十二章：外企求职英语</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch13-daily-office-english><span title=第十三章：外企日常办公英语 class=linkLabel_WmDU>第十三章：外企日常办公英语</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch14-culture-and-communication><span title=第十四章：外企文化与沟通习惯 class=linkLabel_WmDU>第十四章：外企文化与沟通习惯</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch15-interview-question-bank><span title=第十五章：英文面试实战题库 class=linkLabel_WmDU>第十五章：英文面试实战题库</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch16-building-reading-flow><span title=第十六章：构建英文技术阅读流 class=linkLabel_WmDU>第十六章：构建英文技术阅读流</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch17-premium-content-sources><span title=第十七章：优质英文技术内容源 class=linkLabel_WmDU>第十七章：优质英文技术内容源</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch18-reading-to-output><span title=第十八章：从阅读到输出 class=linkLabel_WmDU>第十八章：从阅读到输出</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/appendix-a-b-vocabulary><span title="附录 A：程序员高频词汇表（按主题分类）" class=linkLabel_WmDU>附录 A：程序员高频词汇表（按主题分类）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/life-encyclopedia/programmer-english/appendix-cdef-templates><span title="附录 C/D/E/F：实用模板与资源速查" class=linkLabel_WmDU>附录 C/D/E/F：实用模板与资源速查</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/internet-future/><span title=互联网未来五年 class=categoryLinkLabel_W154>互联网未来五年</span></a><button aria-label="展开侧边栏分类 '互联网未来五年'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/konwledge-docs/docs/life-encyclopedia/skill-book/全村穿越后又穿越回去了/正文/第001章_天光异变><span title=技能之书 class=categoryLinkLabel_W154>技能之书</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/programmer-interview/><span title=程序员面试100问 class=categoryLinkLabel_W154>程序员面试100问</span></a><button aria-label="展开侧边栏分类 '程序员面试100问'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/life-encyclopedia/tech-pioneers/><span title=科技与互联网先驱 class=categoryLinkLabel_W154>科技与互联网先驱</span></a><button aria-label="展开侧边栏分类 '科技与互联网先驱'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/life-encyclopedia/programmer-english/><span>程序员英语</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第六章：英文技术文档阅读</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第六章：英文技术文档阅读</h1></header>
+<blockquote>
+<p>代码是世界的通用语言，但文档才是理解这个世界的说明书。当你能高效阅读英文技术文档时，你就拥有了比同行快一步获取信息的能力——不是靠翻译工具等二手信息，而是直接站在信息源头。</p>
+</blockquote>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=61-官方文档阅读策略快速定位结构理解>6.1 官方文档阅读策略（快速定位/结构理解）<a href=#61-官方文档阅读策略快速定位结构理解 class=hash-link aria-label="6.1 官方文档阅读策略（快速定位/结构理解）的直接链接" title="6.1 官方文档阅读策略（快速定位/结构理解）的直接链接" translate=no>​</a></h2>
+<p>每个程序员都经历过这样的场景：遇到一个报错或者想实现某个功能，打开 Google 搜了一下，排在第一的是官方文档链接，点进去——然后面对密密麻麻的英文，不知从何读起。</p>
+<p>其实，阅读官方文档最大的误区就是"从头到尾逐字读"。官方文档不是小说，它更像是一本字典加一本说明书。你需要的是<strong>快速定位</strong>和<strong>结构理解</strong>，而不是线性阅读。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=611-官方文档的常见结构>6.1.1 官方文档的常见结构<a href=#611-官方文档的常见结构 class=hash-link aria-label="6.1.1 官方文档的常见结构的直接链接" title="6.1.1 官方文档的常见结构的直接链接" translate=no>​</a></h3>
+<p>大多数成熟的官方文档都遵循类似的信息架构。理解了这个架构，你就能快速找到需要的内容：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>文档区域<th>英文名称<th>作用<th>什么时候看<tbody><tr><td>快速上手<td>Quick Start / Getting Started<td>最小可运行示例<td>第一次接触这个工具<tr><td>指南<td>Guide / Tutorial<td>手把手教学<td>系统学习某个功能<tr><td>API 参考<td>API Reference<td>接口细节查询<td>需要查具体参数/返回值<tr><td>配置<td>Configuration<td>可配置项列表<td>需要调参数时<tr><td>迁移指南<td>Migration Guide<td>版本升级注意事项<td>升级版本时<tr><td>常见问题<td>FAQ<td>高频问题解答<td>遇到问题时先看看<tr><td>更新日志<td>Changelog / Release Notes<td>每个版本改了什么<td>了解版本变化</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=612-快速定位三步法>6.1.2 快速定位三步法<a href=#612-快速定位三步法 class=hash-link aria-label="6.1.2 快速定位三步法的直接链接" title="6.1.2 快速定位三步法的直接链接" translate=no>​</a></h3>
+<p>当你打开一个官方文档页面时，建议按照以下三步操作：</p>
+<p><strong>第一步：看侧边栏（Sidebar），定位章节。</strong> 大多数文档站点左侧都有导航树。先扫描一级目录，找到与你需求最接近的板块，再展开看子目录。比如你想了解 React 的 <code>useEffect</code>，不要在搜索框里搜（结果太杂），而是去 Sidebar 找 Hooks → useEffect。</p>
+<p><strong>第二步：扫标题，不读正文。</strong> 进入目标页面后，先快速滚动一遍，只看各级标题（H1/H2/H3），建立对页面内容的整体认知。这一步只需 10-20 秒，但能帮你判断这个页面是否真的包含你需要的信息。</p>
+<p><strong>第三步：用 Ctrl+F 精确搜索。</strong> 确定页面后，用浏览器搜索功能定位具体关键词。比如你在看 webpack 配置文档，想了解 <code>devServer</code> 的 <code>proxy</code> 选项，直接搜索 "proxy" 即可。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=613-真实示例阅读-vuejs-官方文档>6.1.3 真实示例：阅读 Vue.js 官方文档<a href=#613-真实示例阅读-vuejs-官方文档 class=hash-link aria-label="6.1.3 真实示例：阅读 Vue.js 官方文档的直接链接" title="6.1.3 真实示例：阅读 Vue.js 官方文档的直接链接" translate=no>​</a></h3>
+<p>下面是 Vue.js 官方文档中关于 <code>computed</code> properties 的一段内容：</p>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=computed-properties>Computed Properties<a href=#computed-properties class=hash-link aria-label="Computed Properties的直接链接" title="Computed Properties的直接链接" translate=no>​</a></h3>
+<p>In-template expressions are very convenient, but they're meant for simple operations. Putting too much logic in your templates can make them bloated and hard to maintain. For example, if we have an object with nested properties:</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> author </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>reactive</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>name</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'John Doe'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>books</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>'Vue 2 - Advanced Guide'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>'Vue 3 - Basic Guide'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>'Vue 4 - The Mystery'</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<p>And we want to display different messages depending on if <code>author</code> already has some books or not:</p>
+<div class="language-html codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-html codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token tag punctuation" style=color:#393A34>&lt;</span><span class="token tag" style=color:#00009f>p</span><span class="token tag punctuation" style=color:#393A34>></span><span class="token plain">Has published books:</span><span class="token tag punctuation" style=color:#393A34>&lt;/</span><span class="token tag" style=color:#00009f>p</span><span class="token tag punctuation" style=color:#393A34>></span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token tag punctuation" style=color:#393A34>&lt;</span><span class="token tag" style=color:#00009f>span</span><span class="token tag punctuation" style=color:#393A34>></span><span class="token plain">{{ author.books.length > 0 ? 'Yes' : 'No' }}</span><span class="token tag punctuation" style=color:#393A34>&lt;/</span><span class="token tag" style=color:#00009f>span</span><span class="token tag punctuation" style=color:#393A34>></span><br/></div></code></pre></div></div>
+<p>At this point, the template is getting a bit cluttered. We have to look at it for a second before realizing that it performs a calculation depending on <code>author.books.length</code>. The problem worsens if we want to include this calculation in the template more than once.</p>
+</blockquote>
+<p><strong>阅读拆解：</strong></p>
+<ol>
+<li class=""><strong>标题</strong> "Computed Properties" → 这一节讲的是计算属性</li>
+<li class=""><strong>第一句</strong> "In-template expressions are very convenient, but..." → 提出问题：模板里放太多逻辑不好</li>
+<li class=""><strong>代码示例</strong> → 给出一个具体场景，author 对象有 books 数组</li>
+<li class=""><strong>关键句</strong> "the template is getting a bit cluttered" → 模板变得混乱了</li>
+<li class=""><strong>暗示</strong> → 所以我们需要 computed properties 来解决</li>
+</ol>
+<p>注意这段文档的写作套路：<strong>先说问题（为什么需要）→ 给出反面示例（不用会怎样）→ 然后引出解决方案</strong>。这是技术文档最常见的论证结构。理解了这个结构，你就能预判下一段要讲什么，阅读效率大幅提升。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=614-高频词汇速查>6.1.4 高频词汇速查<a href=#614-高频词汇速查 class=hash-link aria-label="6.1.4 高频词汇速查的直接链接" title="6.1.4 高频词汇速查的直接链接" translate=no>​</a></h3>
+<p>阅读官方文档时，以下词汇频繁出现：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>英文<th>中文<th>常见语境<tbody><tr><td>deprecated<td>已废弃<td>某个 API 不再推荐使用<tr><td>recommended<td>推荐的<td>官方建议的做法<tr><td>required<td>必填的/必需的<td>参数必须提供<tr><td>optional<td>可选的<td>参数可省略<tr><td>defaults to<td>默认值为<td>不传时的默认行为<tr><td>available since<td>从...版本开始可用<td>某特性引入的版本<tr><td>note that / please note<td>请注意<td>重要提醒<tr><td>be aware that<td>注意<td>警告性提醒<tr><td>for more information, see<td>更多信息请参阅<td>指向其他文档链接<tr><td>prior to<td>在...之前<td>某操作之前需要做的事</table>
+<p>一个实用技巧：当你看到 <strong>"deprecated"</strong> 这个词时，要格外留心。它意味着这个 API 或用法在未来版本中会被移除，你应该寻找替代方案。文档中通常会写类似 "Use X instead" 或 "This has been replaced by Y" 的指引。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=62-api-reference-阅读方法>6.2 API Reference 阅读方法<a href=#62-api-reference-阅读方法 class=hash-link aria-label="6.2 API Reference 阅读方法的直接链接" title="6.2 API Reference 阅读方法的直接链接" translate=no>​</a></h2>
+<p>API Reference 是技术文档中最高频阅读的部分，也是最结构化的部分。每个 API 文档基本都遵循固定的信息结构，一旦掌握了解读方法，看任何 API 文档都能驾轻就熟。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=621-api-文档的标准结构>6.2.1 API 文档的标准结构<a href=#621-api-文档的标准结构 class=hash-link aria-label="6.2.1 API 文档的标准结构的直接链接" title="6.2.1 API 文档的标准结构的直接链接" translate=no>​</a></h3>
+<p>一个完整的 API 文档条目通常包含以下要素：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">方法名 / 端点（Endpoint）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 描述（Description）— 这个 API 是干什么的</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 参数（Parameters）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 名称</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 类型（Type）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 是否必填（Required/Optional）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── 默认值（Default）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── 说明（Description）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 返回值（Return Value / Response）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 异常 / 错误（Exceptions / Errors）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── 示例（Examples）</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=622-真实示例阅读-mdn-上的-arrayprototypemap>6.2.2 真实示例：阅读 MDN 上的 Array.prototype.map()<a href=#622-真实示例阅读-mdn-上的-arrayprototypemap class=hash-link aria-label="6.2.2 真实示例：阅读 MDN 上的 Array.prototype.map()的直接链接" title="6.2.2 真实示例：阅读 MDN 上的 Array.prototype.map()的直接链接" translate=no>​</a></h3>
+<p>下面是 MDN Web Docs 上 <code>Array.prototype.map()</code> 的文档片段：</p>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=arrayprototypemap>Array.prototype.map()<a href=#arrayprototypemap class=hash-link aria-label=Array.prototype.map()的直接链接 title=Array.prototype.map()的直接链接 translate=no>​</a></h3>
+<p>The <strong><code>map()</code></strong> method of <code>Array</code> instances creates a new array populated with the results of calling a provided function on every element in the calling array.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=syntax>Syntax<a href=#syntax class=hash-link aria-label=Syntax的直接链接 title=Syntax的直接链接 translate=no>​</a></h4>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>map</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">callbackFn</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>map</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">callbackFn</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> thisArg</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=parameters>Parameters<a href=#parameters class=hash-link aria-label=Parameters的直接链接 title=Parameters的直接链接 translate=no>​</a></h4>
+<ul>
+<li class=""><code>callbackFn</code>
+<ul>
+<li class="">A function to execute for each element in the array. Its return value is added to the new array. The function is called with the following arguments:
+<ul>
+<li class=""><code>element</code>
+<ul>
+<li class="">The current element being processed in the array.</li>
+</ul>
+</li>
+<li class=""><code>index</code>
+<ul>
+<li class="">The index of the current element being processed in the array.</li>
+</ul>
+</li>
+<li class=""><code>array</code>
+<ul>
+<li class="">The array <code>map()</code> was called upon.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><code>thisArg</code> <em>(Optional)</em>
+<ul>
+<li class="">A value to use as <code>this</code> when executing <code>callbackFn</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=return-value>Return value<a href=#return-value class=hash-link aria-label="Return value的直接链接" title="Return value的直接链接" translate=no>​</a></h4>
+<p>A new array with each element being the result of the callback function.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=description>Description<a href=#description class=hash-link aria-label=Description的直接链接 title=Description的直接链接 translate=no>​</a></h4>
+<p><code>map()</code> calls a provided <code>callbackFn</code> function once for each element in an array, in order, and constructs a new array from the results. <code>callbackFn</code> is invoked only for array indexes which have assigned values. It is not invoked for empty slots in sparse arrays.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=examples>Examples<a href=#examples class=hash-link aria-label=Examples的直接链接 title=Examples的直接链接 translate=no>​</a></h4>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> array1 </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>1</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>4</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>9</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>16</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> map1 </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> array1</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>map</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter">x</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> x </span><span class="token operator" style=color:#393A34>*</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">map1</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// Expected output: Array [2, 8, 18, 32]</span><br/></div></code></pre></div></div>
+</blockquote>
+<p><strong>阅读拆解：</strong></p>
+<ol>
+<li class="">
+<p><strong>第一句描述</strong> — "creates a new array populated with the results of calling a provided function on every element" → 核心信息：创建新数组 + 对每个元素调用函数 + 结果填充到新数组。一句话就说明了 <code>map</code> 的本质。</p>
+</li>
+<li class="">
+<p><strong>Syntax（语法）</strong> — 两种调用形式，第二种多了 <code>thisArg</code> 参数。</p>
+</li>
+<li class="">
+<p><strong>Parameters（参数）</strong> — <code>callbackFn</code> 是核心参数，它本身又接收三个子参数：<code>element</code>、<code>index</code>、<code>array</code>。注意层级关系，在文档中通过缩进表示。<code>thisArg</code> 标注了 <em>(Optional)</em>，说明可选。</p>
+</li>
+<li class="">
+<p><strong>Return value（返回值）</strong> — "A new array" → 关键词：<strong>new</strong>，说明不会修改原数组。</p>
+</li>
+<li class="">
+<p><strong>Description（详细说明）</strong> — 补充了一个重要细节：<code>callbackFn</code> 不会被 sparse arrays（稀疏数组）的空槽调用。</p>
+</li>
+<li class="">
+<p><strong>Examples（示例）</strong> — 最直观的学习材料，<code>[1, 4, 9, 16]</code> 经过 <code>x * 2</code> 变成 <code>[2, 8, 18, 32]</code>。</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=623-阅读-api-文档的技巧>6.2.3 阅读 API 文档的技巧<a href=#623-阅读-api-文档的技巧 class=hash-link aria-label="6.2.3 阅读 API 文档的技巧的直接链接" title="6.2.3 阅读 API 文档的技巧的直接链接" translate=no>​</a></h3>
+<p><strong>技巧一：先看 Description，再看 Examples，最后看 Parameters。</strong> 很多人一上来就扎进参数列表里，结果看了半天不知道这个 API 到底干什么。正确的顺序是：先理解功能 → 看示例建立直觉 → 再查参数细节。</p>
+<p><strong>技巧二：注意 Optional 和 Required 标记。</strong> 必填参数是必须理解的，可选参数可以暂时跳过，需要时再回来看。</p>
+<p><strong>技巧三：关注 Return value 的每一个词。</strong> 返回值描述中的用词非常精确：</p>
+<ul>
+<li class="">"a new array" → 新数组，原数组不变</li>
+<li class="">"the original array" → 原数组，可能被修改</li>
+<li class="">"this array" → 返回自身，支持链式调用</li>
+<li class="">"undefined" → 没有返回值</li>
+<li class="">"a promise" → 异步操作</li>
+</ul>
+<p><strong>技巧四：留意 Exceptions / Errors 部分。</strong> 这部分告诉你 API 在什么情况下会抛错。很多 bug 就是因为没看异常说明，没有做错误处理导致的。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=624-真实示例阅读-fetch-api-文档>6.2.4 真实示例：阅读 Fetch API 文档<a href=#624-真实示例阅读-fetch-api-文档 class=hash-link aria-label="6.2.4 真实示例：阅读 Fetch API 文档的直接链接" title="6.2.4 真实示例：阅读 Fetch API 文档的直接链接" translate=no>​</a></h3>
+<p>再来看一个 HTTP API 的例子——Fetch API 的 <code>fetch()</code> 函数：</p>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=fetch>fetch()<a href=#fetch class=hash-link aria-label=fetch()的直接链接 title=fetch()的直接链接 translate=no>​</a></h3>
+<p>The global <strong><code>fetch()</code></strong> method starts the process of fetching a resource from the network, returning a promise which is fulfilled once the response is available.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=syntax-1>Syntax<a href=#syntax-1 class=hash-link aria-label=Syntax的直接链接 title=Syntax的直接链接 translate=no>​</a></h4>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">resource</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">resource</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> options</span><span class="token punctuation" style=color:#393A34>)</span><br/></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=parameters-1>Parameters<a href=#parameters-1 class=hash-link aria-label=Parameters的直接链接 title=Parameters的直接链接 translate=no>​</a></h4>
+<ul>
+<li class=""><code>resource</code>
+<ul>
+<li class="">This defines the resource that you wish to fetch. This can either be a string, a <code>URL</code> object, or a <code>Request</code> object.</li>
+</ul>
+</li>
+<li class=""><code>options</code> <em>(Optional)</em>
+<ul>
+<li class="">A <code>RequestInit</code> object containing any custom settings that you want to apply to the request. The possible options are:
+<ul>
+<li class=""><code>method</code> — The request method, e.g., <code>"GET"</code>, <code>"POST"</code>.</li>
+<li class=""><code>headers</code> — Any headers you want to add to your request.</li>
+<li class=""><code>body</code> — The body of the request.</li>
+<li class=""><code>mode</code> — The mode you want to use for the request, e.g., <code>"cors"</code>, <code>"no-cors"</code>.</li>
+<li class=""><code>credentials</code> — Controls what browsers do with credentials (cookies, HTTP authentication entries).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=return-value-1>Return value<a href=#return-value-1 class=hash-link aria-label="Return value的直接链接" title="Return value的直接链接" translate=no>​</a></h4>
+<p>A <code>Promise</code> that resolves to a <code>Response</code> object.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=exceptions>Exceptions<a href=#exceptions class=hash-link aria-label=Exceptions的直接链接 title=Exceptions的直接链接 translate=no>​</a></h4>
+<ul>
+<li class=""><code>TypeError</code> — The specified URL string is invalid or the URL uses a protocol other than HTTP/HTTPS.</li>
+<li class=""><code>AbortError</code> — The request was aborted via an <code>AbortController</code>.</li>
+</ul>
+</blockquote>
+<p>注意几个关键词：</p>
+<ul>
+<li class="">"returning a <strong>promise</strong> which is <strong>fulfilled</strong> once the response is available" → 异步操作，返回 Promise</li>
+<li class="">"<strong>resolves to</strong> a Response object" → Promise resolve 后得到的是 Response 对象</li>
+<li class="">"TypeError" 和 "AbortError" → 两种可能的异常，如果你不做处理，可能就是未捕获的错误</li>
+</ul>
+<p>这些用词的精确性是英文技术文档的核心特征。中文翻译往往会丢失这种精确性，这也是为什么推荐直接阅读英文原文的原因。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=63-技术规范与-rfc-阅读技巧>6.3 技术规范与 RFC 阅读技巧<a href=#63-技术规范与-rfc-阅读技巧 class=hash-link aria-label="6.3 技术规范与 RFC 阅读技巧的直接链接" title="6.3 技术规范与 RFC 阅读技巧的直接链接" translate=no>​</a></h2>
+<p>RFC（Request for Comments）、W3C 规范、ECMA 规范——这些文档以枯燥、冗长、难读著称。但它们是技术的"源头法"，当你在 Stack Overflow 上找不到答案、博客文章互相矛盾时，规范文档是最终的裁判。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=631-规范文档的特点>6.3.1 规范文档的特点<a href=#631-规范文档的特点 class=hash-link aria-label="6.3.1 规范文档的特点的直接链接" title="6.3.1 规范文档的特点的直接链接" translate=no>​</a></h3>
+<p>规范文档和普通技术文档有很大不同：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特点<th>普通技术文档<th>规范文档<tbody><tr><td>目的<td>教你怎么用<td>定义什么是对的<tr><td>风格<td>教学式、引导式<td>定义式、法律式<tr><td>长度<td>几页到几十页<td>几十页到数百页<tr><td>示例<td>大量代码示例<td>极少或没有示例<tr><td>语言<td>通俗、随意<td>严格、正式<tr><td>关键词<td>should, can, will<td>MUST, SHOULD, MAY (有特殊含义)</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=632-rfc-2119理解关键词的含义>6.3.2 RFC 2119：理解关键词的含义<a href=#632-rfc-2119理解关键词的含义 class=hash-link aria-label="6.3.2 RFC 2119：理解关键词的含义的直接链接" title="6.3.2 RFC 2119：理解关键词的含义的直接链接" translate=no>​</a></h3>
+<p>阅读规范文档，首先要理解 RFC 2119 中定义的关键词。这些词在规范中有非常精确的含义，和日常英语完全不同：</p>
+<blockquote>
+<ul>
+<li class=""><strong>MUST</strong> — This word, or the terms "REQUIRED" or "SHALL", means that the definition is an absolute requirement of the specification.</li>
+<li class=""><strong>MUST NOT</strong> — This phrase, or the phrase "SHALL NOT", means that the definition is an absolute prohibition of the specification.</li>
+<li class=""><strong>SHOULD</strong> — This word, or the adjective "RECOMMENDED", means that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.</li>
+<li class=""><strong>SHOULD NOT</strong> — This phrase, or the phrase "NOT RECOMMENDED", means that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.</li>
+<li class=""><strong>MAY</strong> — This word, or the adjective "OPTIONAL", means that an item is truly optional.</li>
+</ul>
+</blockquote>
+<p>简单总结：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>关键词<th>含义<th>严重程度<tbody><tr><td>MUST / MUST NOT<td>必须做 / 必须不做<td>⛔ 绝对要求，不这么做就是不符合规范<tr><td>SHOULD / SHOULD NOT<td>应该做 / 不应该做<td>⚠️ 强烈建议，除非有充分理由<tr><td>MAY<td>可以做<td>💡 可选的，随意</table>
+<p>当你看到 "The server MUST return a 400 status code" 时，这不是建议，是铁律。而 "The client SHOULD include a User-Agent header" 意味着最好加上，但不加也不算违规。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=633-真实示例阅读-http11-规范rfc-9110>6.3.3 真实示例：阅读 HTTP/1.1 规范（RFC 9110）<a href=#633-真实示例阅读-http11-规范rfc-9110 class=hash-link aria-label="6.3.3 真实示例：阅读 HTTP/1.1 规范（RFC 9110）的直接链接" title="6.3.3 真实示例：阅读 HTTP/1.1 规范（RFC 9110）的直接链接" translate=no>​</a></h3>
+<p>下面是 RFC 9110（HTTP Semantics）中关于 <code>GET</code> 方法定义的一段：</p>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=921-get>9.2.1. GET<a href=#921-get class=hash-link aria-label="9.2.1. GET的直接链接" title="9.2.1. GET的直接链接" translate=no>​</a></h3>
+<p>The GET method requests transfer of a current selected representation for the target resource. GET is the primary mechanism of information retrieval and the focus of almost all performance optimizations. Hence, when people speak of retrieving some identifiable information via HTTP, they are generally referring to making a GET request.</p>
+<p>A client can request that the GET method be limited to a specific range of the selected representation data by using the Range header field.</p>
+<p>Although the request body is not prohibited for GET, it has no defined semantics for a GET request. A client <strong>SHOULD NOT</strong> generate a GET request with a body.</p>
+<p>The response to a GET request is cacheable; a cache <strong>MAY</strong> use it to satisfy subsequent GET requests.</p>
+</blockquote>
+<p><strong>阅读拆解：</strong></p>
+<ol>
+<li class="">
+<p><strong>第一段</strong> — 定义了 GET 的用途："requests transfer of a current selected representation" → 请求获取资源的表示。说人话就是：拿数据。</p>
+</li>
+<li class="">
+<p><strong>第二段</strong> — 补充说明：可以用 <code>Range</code> header 限制范围（比如断点续传）。</p>
+</li>
+<li class="">
+<p><strong>第三段</strong> — 关键信息："A client <strong>SHOULD NOT</strong> generate a GET request with a body" → 不应该在 GET 请求里放 body。注意是 SHOULD NOT，不是 MUST NOT，意味着技术上可以，但不推荐。</p>
+</li>
+<li class="">
+<p><strong>第四段</strong> — "cacheable" → GET 响应可以被缓存。cache <strong>MAY</strong> use it → 缓存可以用它来满足后续请求，注意是 MAY（可选的）。</p>
+</li>
+</ol>
+<p>短短四段话，信息密度极高。每句话都在定义行为规范，每个关键词（SHOULD NOT, MAY）都有精确的法律式含义。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=634-阅读规范的实用策略>6.3.4 阅读规范的实用策略<a href=#634-阅读规范的实用策略 class=hash-link aria-label="6.3.4 阅读规范的实用策略的直接链接" title="6.3.4 阅读规范的实用策略的直接链接" translate=no>​</a></h3>
+<p><strong>策略一：不要从头读，先看目录。</strong> RFC 通常有详细的 Table of Contents。先找到你关心的章节，直接跳过去。</p>
+<p><strong>策略二：搜索关键词。</strong> 用 Ctrl+F 搜索 "MUST"、"SHOULD"、"MAY" 来快速定位规范性条款。</p>
+<p><strong>策略三：结合实现来理解。</strong> 规范文档没有示例，但你可以自己写代码来验证理解。比如读了 HTTP 缓存规范后，用 curl 或 Postman 实际发请求，观察 response headers。</p>
+<p><strong>策略四：利用 RFC 的交叉引用。</strong> RFC 中大量使用 "see Section X" 或 "as defined in [RFC1234]" 的引用。遇到不理解的概念，顺着引用去看被引用的部分即可。</p>
+<p><strong>策略五：先读 Abstract 和 Introduction。</strong> 这两节通常用相对通俗的语言概括了整个规范的目标和范围，能帮你建立宏观认知。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=635-常见规范文档入口>6.3.5 常见规范文档入口<a href=#635-常见规范文档入口 class=hash-link aria-label="6.3.5 常见规范文档入口的直接链接" title="6.3.5 常见规范文档入口的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>规范类型<th>来源<th>典型文档<th>网址<tbody><tr><td>HTTP<td>IETF RFC<td>RFC 9110-9114<td>datatracker.ietf.org<tr><td>JavaScript<td>ECMA<td>ECMA-262<td>ecma-international.org<tr><td>HTML/CSS/DOM<td>W3C / WHATWG<td>HTML Living Standard<td>html.spec.whatwg.org<tr><td>URL<td>IETF<td>RFC 3986<td>datatracker.ietf.org<tr><td>JSON<td>IETF<td>RFC 8259<td>datatracker.ietf.org<tr><td>WebSocket<td>IETF<td>RFC 6455<td>datatracker.ietf.org<tr><td>Web API<td>W3C / MDN<td>各种 Web API 规范<td>developer.mozilla.org</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=64-stack-overflow-高赞回答阅读>6.4 Stack Overflow 高赞回答阅读<a href=#64-stack-overflow-高赞回答阅读 class=hash-link aria-label="6.4 Stack Overflow 高赞回答阅读的直接链接" title="6.4 Stack Overflow 高赞回答阅读的直接链接" translate=no>​</a></h2>
+<p>Stack Overflow（简称 SO）可能是程序员最常访问的英文网站之一。当你遇到一个技术问题，搜索后大概率会看到一条 SO 问答链接。学会高效阅读 SO 上的高赞回答，是一项非常实用的能力。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=641-so-页面结构解读>6.4.1 SO 页面结构解读<a href=#641-so-页面结构解读 class=hash-link aria-label="6.4.1 SO 页面结构解读的直接链接" title="6.4.1 SO 页面结构解读的直接链接" translate=no>​</a></h3>
+<p>一个典型的 SO 问答页面包含以下区域：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">问题区域</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 问题标题（Title）— 最上方的大标题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 问题描述（Question Body）— 问题的详细描述</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 问题标签（Tags）— 技术标签</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 投票数（Votes）— 问题被点赞的次数</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── 提问者信息 + 时间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">回答区域（可能有多个回答，按投票数排序）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 回答正文（Answer Body）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 投票数（Votes）— 回答被点赞的次数</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 被采纳标记（Accepted ✓）— 提问者采纳的回答</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── 评论（Comments）— 对回答的补充讨论</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── 回答者信息 + 时间</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=642-高效阅读-so-的策略>6.4.2 高效阅读 SO 的策略<a href=#642-高效阅读-so-的策略 class=hash-link aria-label="6.4.2 高效阅读 SO 的策略的直接链接" title="6.4.2 高效阅读 SO 的策略的直接链接" translate=no>​</a></h3>
+<p><strong>第一步：先看问题标题和标签，判断是否相关。</strong> 搜索结果可能不完全匹配你的问题。花 5 秒钟看标题和标签，判断是否值得深入。</p>
+<p><strong>第二步：看问题的投票数。</strong> 高票问题通常意味着很多人遇到了同样的问题，下面的回答质量也通常较高。</p>
+<p><strong>第三步：直接跳到最高赞回答或被采纳的回答。</strong> SO 默认按投票数排序，第一个回答通常是最有用的。如果第一个回答没有被采纳（没有绿色 ✓），可以留意是否有被采纳的回答在下面。</p>
+<p><strong>第四步：注意回答中的"Update"或"Edit"。</strong> 技术在演进，旧回答可能已过时。很多回答者会在原回答后追加更新，注明 "As of 2024, the recommended approach is..." 这样的信息。</p>
+<p><strong>第五步：看评论区。</strong> 有时候回答正文没有覆盖的边界情况、或者对回答的纠正，会出现在评论里。高赞评论往往包含有价值的补充。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=643-真实示例阅读-so-高赞回答>6.4.3 真实示例：阅读 SO 高赞回答<a href=#643-真实示例阅读-so-高赞回答 class=hash-link aria-label="6.4.3 真实示例：阅读 SO 高赞回答的直接链接" title="6.4.3 真实示例：阅读 SO 高赞回答的直接链接" translate=no>​</a></h3>
+<p>以下是一个经典的 SO 问答（有简化）：</p>
+<blockquote>
+<p><strong>Q: How do I return the response from an asynchronous call?</strong> <em>(votes: 3,800+)</em></p>
+<p>I have a function that does an asynchronous request. How can I return the response/result from this function?</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>var</span><span class="token plain"> result</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  $</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>ajax</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token literal-property property" style=color:#36acaa>url</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'...'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token function-variable function" style=color:#d73a49>success</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter">response</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      result </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> result</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"> </span><span class="token comment" style=color:#999988;font-style:italic>// Returns undefined</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>Tags: javascript, jquery, ajax, asynchronous</p>
+</blockquote>
+<p>这是一个极其经典的问题——为什么异步调用拿不到返回值。投票数高达 3800+，说明无数人踩过这个坑。</p>
+<p>来看最高赞回答（简化版）：</p>
+<blockquote>
+<p><strong>A: <em>(votes: 5,200+)</em> ✓ Accepted</strong></p>
+<p>You're not getting a result because <code>$.ajax</code> is asynchronous. By the time your <code>return result;</code> line executes, the AJAX request hasn't completed yet.</p>
+<p>The solution is to <strong>restructure your code</strong> to use callbacks, promises, or async/await.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=approach-1-promises>Approach 1: Promises<a href=#approach-1-promises class=hash-link aria-label="Approach 1: Promises的直接链接" title="Approach 1: Promises的直接链接" translate=no>​</a></h4>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> $</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>ajax</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token literal-property property" style=color:#36acaa>url</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'...'</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>then</span><span class="token punctuation" style=color:#393A34>(</span><span class="token keyword" style=color:#00009f>function</span><span class="token punctuation" style=color:#393A34>(</span><span class="token parameter">response</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">response</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=approach-2-asyncawait-es2017>Approach 2: async/await (ES2017+)<a href=#approach-2-asyncawait-es2017 class=hash-link aria-label="Approach 2: async/await (ES2017+)的直接链接" title="Approach 2: async/await (ES2017+)的直接链接" translate=no>​</a></h4>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-js codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> response </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'...'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>json</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>(</span><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> result </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>foo</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">result</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<p><strong>Explanation:</strong></p>
+<p>Think of it like ordering food at a restaurant. When you place your order, the cashier doesn't stand there holding your food until it's ready. Instead, they give you a number and call you back when your order is up.</p>
+<p>In JavaScript terms:</p>
+<ul>
+<li class="">Placing the order = initiating the async operation</li>
+<li class="">Getting a number = receiving a Promise</li>
+<li class="">Being called back = the Promise resolving</li>
+</ul>
+<p>The key insight is that <strong>you cannot return a value from a function that is computed asynchronously</strong>. You must either accept a callback, return a Promise, or use async/await.</p>
+</blockquote>
+<p><strong>阅读拆解：</strong></p>
+<ol>
+<li class="">
+<p><strong>第一句</strong> "You're not getting a result because <code>$.ajax</code> is asynchronous" → 一句话点明原因。</p>
+</li>
+<li class="">
+<p><strong>"The solution is to restructure your code"</strong> → 暗示这不是一个小修小补，而是需要调整代码结构。这种用词很重要，提醒你不要试图用 hack 的方式解决。</p>
+</li>
+<li class="">
+<p><strong>两种方案</strong> — Promise 和 async/await。注意标注了 "(ES2017+)"，告诉你 async/await 的版本要求。</p>
+</li>
+<li class="">
+<p><strong>Explanation 部分</strong> — 用餐厅点餐的类比来解释异步概念。这是 SO 高赞回答的常见特征：<strong>先给代码，再用通俗类比解释原理</strong>。</p>
+</li>
+<li class="">
+<p><strong>加粗的关键句</strong> "you cannot return a value from a function that is computed asynchronously" → 这是核心结论，加粗表示强调。</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=644-so-高频表达模式>6.4.4 SO 高频表达模式<a href=#644-so-高频表达模式 class=hash-link aria-label="6.4.4 SO 高频表达模式的直接链接" title="6.4.4 SO 高频表达模式的直接链接" translate=no>​</a></h3>
+<p>阅读 SO 时，以下表达模式反复出现：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>表达<th>含义<th>常见场景<tbody><tr><td>"You need to..." / "You have to..."<td>你需要...<td>给出解决方案<tr><td>"The reason is that..."<td>原因是...<td>解释问题成因<tr><td>"This happens because..."<td>这是因为...<td>解释原因<tr><td>"As of [version/date], ..."<td>截至某版本/日期<td>说明版本相关的变化<tr><td>"This is a known issue"<td>这是一个已知问题<td>官方已确认的 bug<tr><td>"Works for me"<td>我这边没问题<td>排查环境差异<tr><td>"Can you reproduce this on..."<td>你能在...上复现吗<td>排查环境<tr><td>"See also [link]"<td>另见<td>相关资源<tr><td>"Updated for [year/version]"<td>为某年/版本更新<td>回答已更新<tr><td>"For a more detailed explanation, see..."<td>详细解释请见<td>深入了解</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=645-注意事项>6.4.5 注意事项<a href=#645-注意事项 class=hash-link aria-label="6.4.5 注意事项的直接链接" title="6.4.5 注意事项的直接链接" translate=no>​</a></h3>
+<p>阅读 SO 时需要留意几点：</p>
+<ol>
+<li class="">
+<p><strong>投票数不等于正确性。</strong> 有些高赞回答在多年前是正确的，但技术已经演进。注意看回答的时间，以及是否有更新。</p>
+</li>
+<li class="">
+<p><strong>被采纳的回答不一定是最优解。</strong> 提问者采纳的答案只是对提问者有效，不一定适合你的场景。有时候排在第二、第三的回答反而更好。</p>
+</li>
+<li class="">
+<p><strong>留意标签中的版本信息。</strong> 比如 <code>[reactjs]</code> 和 <code>[react-hooks]</code> 标签下的回答可能针对不同版本的 React。</p>
+</li>
+<li class="">
+<p><strong>不要忽视评论。</strong> 评论中经常包含重要的补充信息，比如 "This doesn't work in React 18+" 这样的提醒。</p>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=65-github-issue-与-discussion-阅读>6.5 GitHub Issue 与 Discussion 阅读<a href=#65-github-issue-与-discussion-阅读 class=hash-link aria-label="6.5 GitHub Issue 与 Discussion 阅读的直接链接" title="6.5 GitHub Issue 与 Discussion 阅读的直接链接" translate=no>​</a></h2>
+<p>GitHub 早已不只是代码托管平台，它也是全球最大的开源技术讨论社区。项目的 Issues 区是 bug 报告和功能请求的集散地，Discussions 区是技术讨论的广场。学会从 Issue 和 Discussion 中提取关键信息，是参与开源项目和深度理解技术的重要能力。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=651-issue-的类型与结构>6.5.1 Issue 的类型与结构<a href=#651-issue-的类型与结构 class=hash-link aria-label="6.5.1 Issue 的类型与结构的直接链接" title="6.5.1 Issue 的类型与结构的直接链接" translate=no>​</a></h3>
+<p>GitHub Issue 通常分为以下几类：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型<th>典型标题特征<th>阅读价值<tbody><tr><td>Bug Report<td>"X doesn't work when Y"<td>了解已知 bug 和临时解决方案<tr><td>Feature Request<td>"Add support for X" / "Proposal: ..."<td>了解项目发展方向<tr><td>Question<td>"How do I..." / "Is it possible to..."<td>类似 SO 的问答<tr><td>Documentation<td>"Docs for X are unclear"<td>了解文档中的坑<tr><td>Tracking<td>"Tracking issue for X feature"<td>追踪某功能的实现进度</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=652-issue-的标准结构>6.5.2 Issue 的标准结构<a href=#652-issue-的标准结构 class=hash-link aria-label="6.5.2 Issue 的标准结构的直接链接" title="6.5.2 Issue 的标准结构的直接链接" translate=no>​</a></h3>
+<p>一个规范的 Bug Report Issue 通常包含以下部分：</p>
+<div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Description</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（问题的描述）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Reproduction steps</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（复现步骤）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>1.</span><span class="token plain"> ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>2.</span><span class="token plain"> ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>3.</span><span class="token plain"> ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Expected behavior</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（期望的行为）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Actual behavior</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（实际的行为）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Environment</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（环境信息）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>-</span><span class="token plain"> OS: ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>-</span><span class="token plain"> Node version: ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token list punctuation" style=color:#393A34>-</span><span class="token plain"> Package version: ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token title important punctuation" style=color:#393A34>##</span><span class="token title important"> Additional context</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">（补充信息，如日志、截图等）</span><br/></div></code></pre></div></div>
+<p>阅读 Issue 时，重点关注 <strong>Reproduction steps</strong>（复现步骤）和 <strong>Expected vs Actual behavior</strong>（期望 vs 实际行为）。这两部分包含了问题的核心信息。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=653-真实示例阅读-react-issue>6.5.3 真实示例：阅读 React Issue<a href=#653-真实示例阅读-react-issue class=hash-link aria-label="6.5.3 真实示例：阅读 React Issue的直接链接" title="6.5.3 真实示例：阅读 React Issue的直接链接" translate=no>​</a></h3>
+<p>以下是一个简化版的真实 React Issue：</p>
+<blockquote>
+<p><strong>#24534 — React 18: useEffect runs twice in development</strong></p>
+<p>Opened by @user123 on March 15, 2022 <em>(votes: 320)</em></p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=description-1>Description<a href=#description-1 class=hash-link aria-label=Description的直接链接 title=Description的直接链接 translate=no>​</a></h3>
+<p>After upgrading to React 18, my <code>useEffect</code> hooks are running twice on mount in development mode. This didn't happen in React 17. Is this a bug or expected behavior?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=reproduction-steps>Reproduction steps<a href=#reproduction-steps class=hash-link aria-label="Reproduction steps的直接链接" title="Reproduction steps的直接链接" translate=no>​</a></h3>
+<ol>
+<li class="">Create a new React 18 app with <code>create-react-app</code></li>
+<li class="">Add a <code>useEffect</code> with an empty dependency array:
+<div class="language-jsx codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-jsx codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>useEffect</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'mounted'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+</li>
+<li class="">Run <code>npm start</code> and open the browser console</li>
+<li class="">Notice "mounted" is logged twice</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=expected-behavior>Expected behavior<a href=#expected-behavior class=hash-link aria-label="Expected behavior的直接链接" title="Expected behavior的直接链接" translate=no>​</a></h3>
+<p><code>useEffect</code> should run once on mount.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=actual-behavior>Actual behavior<a href=#actual-behavior class=hash-link aria-label="Actual behavior的直接链接" title="Actual behavior的直接链接" translate=no>​</a></h3>
+<p><code>useEffect</code> runs twice on mount.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=environment>Environment<a href=#environment class=hash-link aria-label=Environment的直接链接 title=Environment的直接链接 translate=no>​</a></h3>
+<ul>
+<li class="">React version: 18.0.0</li>
+<li class="">Browser: Chrome 99</li>
+<li class="">OS: macOS 12.3</li>
+</ul>
+</blockquote>
+<p>接着来看维护者的回复（简化版）：</p>
+<blockquote>
+<p>**Comment by @gaearon <em>(votes: 850+)</em> **</p>
+<p>This is expected behavior in React 18's Strict Mode.</p>
+<p>In React 18, <code>&lt;StrictMode></code> now remounts every component once on mount in development. This is intentional — it helps you find bugs related to improper cleanup in your effects.</p>
+<p><strong>This only affects development mode.</strong> Your production build will not have this behavior.</p>
+<p>To fix side effects that shouldn't run twice, you should implement proper cleanup in your <code>useEffect</code>:</p>
+<div class="language-jsx codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-jsx codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>useEffect</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'mounted'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'unmounted'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<p>For more details, see the <a href=https://react.dev/blog/2022/03/29/react-v18#strict-mode-changes target=_blank rel="noopener noreferrer" class="">React 18 upgrade guide</a>.</p>
+</blockquote>
+<p><strong>阅读拆解：</strong></p>
+<ol>
+<li class="">
+<p><strong>标题</strong> "React 18: useEffect runs twice in development" → 问题一句话概括：React 18 中 useEffect 执行两次。</p>
+</li>
+<li class="">
+<p><strong>提问者的复现步骤</strong> 非常清晰：4 个步骤，附带代码。好的 Issue 都是这样——让维护者能快速复现问题。</p>
+</li>
+<li class="">
+<p><strong>维护者回复第一句</strong> "This is expected behavior" → 不是 bug，是设计如此。这一句话就解决了提问者的疑虑。</p>
+</li>
+<li class="">
+<p><strong>"This only affects development mode"</strong> → 关键信息：只影响开发环境，生产环境正常。看到这句就可以放心了。</p>
+</li>
+<li class="">
+<p><strong>解决方案</strong> → 给出了具体做法：在 useEffect 中实现 cleanup function。</p>
+</li>
+<li class="">
+<p><strong>参考链接</strong> → 指向官方升级指南，可以深入了解背后的设计决策。</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=654-从-issue-中提取关键信息的技巧>6.5.4 从 Issue 中提取关键信息的技巧<a href=#654-从-issue-中提取关键信息的技巧 class=hash-link aria-label="6.5.4 从 Issue 中提取关键信息的技巧的直接链接" title="6.5.4 从 Issue 中提取关键信息的技巧的直接链接" translate=no>​</a></h3>
+<p><strong>技巧一：先看 Issue 标题和标签。</strong> 标题告诉你问题是什么，标签（如 <code>bug</code>、<code>enhancement</code>、<code>documentation</code>、<code>wontfix</code>）告诉你 Issue 的性质和状态。</p>
+<p><strong>技巧二：看 Issue 的状态。</strong> Open 状态说明还没解决，Closed 状态需要看看是 "fixed" 还是 "wontfix"（不会修复）。如果是 Closed，直接跳到最后看维护者的最终回复。</p>
+<p><strong>技巧三：找维护者/作者的评论。</strong> 在长讨论中，最有价值的信息通常来自项目维护者。你可以用 Ctrl+F 搜索维护者的用户名，直接定位他们的评论。</p>
+<p><strong>技巧四：关注 "pinned" 和 "linked" Issues。</strong> Pinned Issue 通常是非常重要的公告或已知问题。Linked Issues（引用了其他 Issue 的评论）可能提供更多上下文。</p>
+<p><strong>技巧五：注意 "lock" 状态。</strong> 如果一个 Issue 被锁定（locked），通常意味着讨论已经结束，结论就在最后几条评论里。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=655-discussion-区的阅读>6.5.5 Discussion 区的阅读<a href=#655-discussion-区的阅读 class=hash-link aria-label="6.5.5 Discussion 区的阅读的直接链接" title="6.5.5 Discussion 区的阅读的直接链接" translate=no>​</a></h3>
+<p>GitHub Discussions 比 Issue 更自由，通常是开放性问题的讨论场所。阅读 Discussion 时：</p>
+<ol>
+<li class="">
+<p><strong>看原帖的分类。</strong> Discussion 通常分为 Q&A、Ideas、General、Show and Tell 等类别，不同类别的阅读策略不同。</p>
+</li>
+<li class="">
+<p><strong>关注 "marked as answer" 的回复。</strong> Q&A 类型的 Discussion 中，被标记为答案的回复是最有参考价值的。</p>
+</li>
+<li class="">
+<p><strong>留意维护者的态度。</strong> 在 Ideas 讨论中，维护者是否对某个提议表示兴趣，往往预示着这个功能是否会被实现。如果你看到维护者回复 "This is interesting, could you elaborate on the use case?"，说明他们认真考虑了这个提议；如果回复 "We have no plans to support this"，那就是委婉拒绝了。</p>
+</li>
+<li class="">
+<p><strong>看讨论的时间线。</strong> Discussion 可能跨越数月甚至数年。注意回复的时间顺序，早期的回复可能已经被后续讨论推翻。</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=656-github-高频词汇与表达>6.5.6 GitHub 高频词汇与表达<a href=#656-github-高频词汇与表达 class=hash-link aria-label="6.5.6 GitHub 高频词汇与表达的直接链接" title="6.5.6 GitHub 高频词汇与表达的直接链接" translate=no>​</a></h3>
+<p>阅读 GitHub Issue 和 Discussion 时，以下表达非常常见：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>表达<th>含义<th>常见场景<tbody><tr><td>"Could you provide a minimal reproduction?"<td>能提供一个最小复现吗？<td>维护者要求提问者提供复现步骤<tr><td>"This is a duplicate of #1234"<td>这与 #1234 重复<td>指向已有的相同问题<tr><td>"Closing as wontfix"<td>关闭，不会修复<td>维护者决定不处理<tr><td>"Closing as duplicate"<td>关闭，重复问题<td>与已有 Issue 重复<tr><td>"Fixed in #1234"<td>在 PR #1234 中修复<td>指向修复 PR<tr><td>"Released in v1.2.3"<td>在 v1.2.3 版本发布<td>修复已发布<tr><td>"Up for grabs"<td>认领<td>欢迎社区贡献<tr><td>"Good first issue"<td>适合新手<td>入门级贡献机会<tr><td>"Needs investigation"<td>需要调查<td>还没确认是否为 bug<tr><td>"Works as intended"<td>符合预期<td>不是 bug，是设计如此<tr><td>"What version are you using?"<td>你用的什么版本？<td>排查版本问题<tr><td>"Can you try the latest version?"<td>能试试最新版吗？<td>可能已修复<tr><td>"PR welcome"<td>欢迎提 PR<td>鼓励社区贡献代码</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=657-从-issue-中学习>6.5.7 从 Issue 中学习<a href=#657-从-issue-中学习 class=hash-link aria-label="6.5.7 从 Issue 中学习的直接链接" title="6.5.7 从 Issue 中学习的直接链接" translate=no>​</a></h3>
+<p>阅读 Issue 不只是解决问题，也是学习的好途径：</p>
+<ul>
+<li class=""><strong>学习如何写好的 Bug Report。</strong> 高质量的 Issue 模板可以学习，以后自己提 Issue 时也照着写。</li>
+<li class=""><strong>了解项目的设计决策。</strong> 很多 Feature Request 的讨论中，维护者会解释为什么选择 A 而不是 B，这是理解项目设计哲学的好机会。</li>
+<li class=""><strong>发现隐藏的用法和技巧。</strong> Issue 讨论中经常出现文档里没写的用法和 workaround。</li>
+<li class=""><strong>跟踪技术演进。</strong> 通过阅读 Tracking Issue，你可以了解某个功能从提案到实现的全过程。</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章小结>本章小结<a href=#本章小结 class=hash-link aria-label=本章小结的直接链接 title=本章小结的直接链接 translate=no>​</a></h2>
+<p>这一章我们学习了五种英文技术文档的阅读方法，来回顾一下要点：</p>
+<ol>
+<li class="">
+<p><strong>官方文档阅读</strong> — 不要逐字读，用「看侧边栏 → 扫标题 → Ctrl+F」三步法快速定位信息。理解文档「先说问题 → 给示例 → 引出方案」的常见结构。</p>
+</li>
+<li class="">
+<p><strong>API Reference 阅读</strong> — 按「Description → Examples → Parameters」的顺序读。关注返回值描述中的每一个关键词（new、original、undefined、promise），它们传递了精确的语义。注意 Required/Optional 标记和 Exceptions 部分。</p>
+</li>
+<li class="">
+<p><strong>RFC 与规范文档阅读</strong> — 理解 RFC 2119 的关键词体系（MUST/SHOULD/MAY），这是规范文档的基础语言。不要从头读，先看目录和 Abstract，用搜索定位关键词，结合代码实践来理解抽象定义。</p>
+</li>
+<li class="">
+<p><strong>Stack Overflow 阅读</strong> — 直接跳到最高赞或被采纳的回答，注意「Update」标记的过时信息，不要忽视评论区。理解 SO 高频表达模式（"The reason is that..."、"As of..."、"This is a known issue"）能提升阅读速度。</p>
+</li>
+<li class="">
+<p><strong>GitHub Issue 与 Discussion 阅读</strong> — 关注 Reproduction Steps 和 Expected/Actual Behavior，找维护者的评论，注意 Issue 的状态和标签。Discussion 中的 "marked as answer" 和维护者态度是关键信息。</p>
+</li>
+</ol>
+<p><strong>核心心法：</strong> 技术文档阅读不是英语阅读理解，不需要每个词都懂。你需要的是<strong>信息提取能力</strong>——快速找到关键信息，理解核心逻辑，忽略不必要的细节。这种能力只能通过大量实践来培养。建议从今天开始，遇到问题时优先阅读英文官方文档而不是找中文教程，坚持一个月，你会发现自己的英文技术阅读能力有质的飞跃。</p>
+<blockquote>
+<p>💡 <strong>下一章预告：</strong> 第七章将介绍英文技术博客的阅读方法，包括优质博客推荐、长文拆解策略、以及如何阅读技术论文。</p>
+</blockquote></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/life-encyclopedia/programmer-english/ch06-reading-tech-docs.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch05-speaking-expression><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第五章：口语表达</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/life-encyclopedia/programmer-english/ch07-reading-tech-blogs><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第七章：英文技术博客阅读</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#61-官方文档阅读策略快速定位结构理解 class="table-of-contents__link toc-highlight">6.1 官方文档阅读策略（快速定位/结构理解）</a><ul><li><a href=#611-官方文档的常见结构 class="table-of-contents__link toc-highlight">6.1.1 官方文档的常见结构</a><li><a href=#612-快速定位三步法 class="table-of-contents__link toc-highlight">6.1.2 快速定位三步法</a><li><a href=#613-真实示例阅读-vuejs-官方文档 class="table-of-contents__link toc-highlight">6.1.3 真实示例：阅读 Vue.js 官方文档</a><li><a href=#computed-properties class="table-of-contents__link toc-highlight">Computed Properties</a><li><a href=#614-高频词汇速查 class="table-of-contents__link toc-highlight">6.1.4 高频词汇速查</a></ul><li><a href=#62-api-reference-阅读方法 class="table-of-contents__link toc-highlight">6.2 API Reference 阅读方法</a><ul><li><a href=#621-api-文档的标准结构 class="table-of-contents__link toc-highlight">6.2.1 API 文档的标准结构</a><li><a href=#622-真实示例阅读-mdn-上的-arrayprototypemap class="table-of-contents__link toc-highlight">6.2.2 真实示例：阅读 MDN 上的 Array.prototype.map()</a><li><a href=#arrayprototypemap class="table-of-contents__link toc-highlight">Array.prototype.map()</a><ul><li><a href=#syntax class="table-of-contents__link toc-highlight">Syntax</a><li><a href=#parameters class="table-of-contents__link toc-highlight">Parameters</a><li><a href=#return-value class="table-of-contents__link toc-highlight">Return value</a><li><a href=#description class="table-of-contents__link toc-highlight">Description</a><li><a href=#examples class="table-of-contents__link toc-highlight">Examples</a></ul><li><a href=#623-阅读-api-文档的技巧 class="table-of-contents__link toc-highlight">6.2.3 阅读 API 文档的技巧</a><li><a href=#624-真实示例阅读-fetch-api-文档 class="table-of-contents__link toc-highlight">6.2.4 真实示例：阅读 Fetch API 文档</a><li><a href=#fetch class="table-of-contents__link toc-highlight">fetch()</a><ul><li><a href=#syntax-1 class="table-of-contents__link toc-highlight">Syntax</a><li><a href=#parameters-1 class="table-of-contents__link toc-highlight">Parameters</a><li><a href=#return-value-1 class="table-of-contents__link toc-highlight">Return value</a><li><a href=#exceptions class="table-of-contents__link toc-highlight">Exceptions</a></ul></ul><li><a href=#63-技术规范与-rfc-阅读技巧 class="table-of-contents__link toc-highlight">6.3 技术规范与 RFC 阅读技巧</a><ul><li><a href=#631-规范文档的特点 class="table-of-contents__link toc-highlight">6.3.1 规范文档的特点</a><li><a href=#632-rfc-2119理解关键词的含义 class="table-of-contents__link toc-highlight">6.3.2 RFC 2119：理解关键词的含义</a><li><a href=#633-真实示例阅读-http11-规范rfc-9110 class="table-of-contents__link toc-highlight">6.3.3 真实示例：阅读 HTTP/1.1 规范（RFC 9110）</a><li><a href=#921-get class="table-of-contents__link toc-highlight">9.2.1. GET</a><li><a href=#634-阅读规范的实用策略 class="table-of-contents__link toc-highlight">6.3.4 阅读规范的实用策略</a><li><a href=#635-常见规范文档入口 class="table-of-contents__link toc-highlight">6.3.5 常见规范文档入口</a></ul><li><a href=#64-stack-overflow-高赞回答阅读 class="table-of-contents__link toc-highlight">6.4 Stack Overflow 高赞回答阅读</a><ul><li><a href=#641-so-页面结构解读 class="table-of-contents__link toc-highlight">6.4.1 SO 页面结构解读</a><li><a href=#642-高效阅读-so-的策略 class="table-of-contents__link toc-highlight">6.4.2 高效阅读 SO 的策略</a><li><a href=#643-真实示例阅读-so-高赞回答 class="table-of-contents__link toc-highlight">6.4.3 真实示例：阅读 SO 高赞回答</a><ul><li><a href=#approach-1-promises class="table-of-contents__link toc-highlight">Approach 1: Promises</a><li><a href=#approach-2-asyncawait-es2017 class="table-of-contents__link toc-highlight">Approach 2: async/await (ES2017+)</a></ul><li><a href=#644-so-高频表达模式 class="table-of-contents__link toc-highlight">6.4.4 SO 高频表达模式</a><li><a href=#645-注意事项 class="table-of-contents__link toc-highlight">6.4.5 注意事项</a></ul><li><a href=#65-github-issue-与-discussion-阅读 class="table-of-contents__link toc-highlight">6.5 GitHub Issue 与 Discussion 阅读</a><ul><li><a href=#651-issue-的类型与结构 class="table-of-contents__link toc-highlight">6.5.1 Issue 的类型与结构</a><li><a href=#652-issue-的标准结构 class="table-of-contents__link toc-highlight">6.5.2 Issue 的标准结构</a><li><a href=#653-真实示例阅读-react-issue class="table-of-contents__link toc-highlight">6.5.3 真实示例：阅读 React Issue</a><li><a href=#description-1 class="table-of-contents__link toc-highlight">Description</a><li><a href=#reproduction-steps class="table-of-contents__link toc-highlight">Reproduction steps</a><li><a href=#expected-behavior class="table-of-contents__link toc-highlight">Expected behavior</a><li><a href=#actual-behavior class="table-of-contents__link toc-highlight">Actual behavior</a><li><a href=#environment class="table-of-contents__link toc-highlight">Environment</a><li><a href=#654-从-issue-中提取关键信息的技巧 class="table-of-contents__link toc-highlight">6.5.4 从 Issue 中提取关键信息的技巧</a><li><a href=#655-discussion-区的阅读 class="table-of-contents__link toc-highlight">6.5.5 Discussion 区的阅读</a><li><a href=#656-github-高频词汇与表达 class="table-of-contents__link toc-highlight">6.5.6 GitHub 高频词汇与表达</a><li><a href=#657-从-issue-中学习 class="table-of-contents__link toc-highlight">6.5.7 从 Issue 中学习</a></ul><li><a href=#本章小结 class="table-of-contents__link toc-highlight">本章小结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

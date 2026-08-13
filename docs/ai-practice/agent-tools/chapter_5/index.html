@@ -1,0 +1,331 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/agent-tools/chapter_5" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>深度研究智能体与 AI 搜索——让 AI 替你做调研 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_5 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="深度研究智能体与 AI 搜索——让 AI 替你做调研 | 知识库"/><meta data-rh=true name=description content="5 分钟生成 46 页论文，AI 研究助手已经能做到这个程度了。但你敢用吗？"/><meta data-rh=true property=og:description content="5 分钟生成 46 页论文，AI 研究助手已经能做到这个程度了。但你敢用吗？"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_5 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_5 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_5 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/","name":"AI Agent 工具","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/agent-tools/chapter_5","name":"深度研究智能体与 AI 搜索——让 AI 替你做调研","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="折叠侧边栏分类 'AI Agent 工具'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_1><span title='通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁' class=linkLabel_WmDU>通用型 AI Agent 与对话助手——从"能聊"到"能干"的产品跃迁</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_2><span title="AI Agent 开发平台——零代码与低代码的智能体工厂" class=linkLabel_WmDU>AI Agent 开发平台——零代码与低代码的智能体工厂</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_3><span title="AI Agent 开发框架——代码级智能体编排" class=linkLabel_WmDU>AI Agent 开发框架——代码级智能体编排</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><span title="编程智能体——AI 写代码的全景拆解" class=linkLabel_WmDU>编程智能体——AI 写代码的全景拆解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_5><span title="深度研究智能体与 AI 搜索——让 AI 替你做调研" class=linkLabel_WmDU>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><span title="计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕" class=linkLabel_WmDU>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_7><span title="企业级 Agent 平台与办公智能体——巨头们的 AI 布局" class=linkLabel_WmDU>企业级 Agent 平台与办公智能体——巨头们的 AI 布局</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_8><span title="垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地" class=linkLabel_WmDU>垂直行业智能体——AI Agent 在金融、医疗、制造的深度落地</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_9><span title="AIGC 创作工具——AI 画图、拍视频、写歌、做数字人" class=linkLabel_WmDU>AIGC 创作工具——AI 画图、拍视频、写歌、做数字人</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_10><span title="具身智能与 Agent 协议——AI 的身体与语言" class=linkLabel_WmDU>具身智能与 Agent 协议——AI 的身体与语言</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/agent-tools/contents><span title=系列文章规划：《全球智能体产品全景》 class=linkLabel_WmDU>系列文章规划：《全球智能体产品全景》</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="展开侧边栏分类 'AI 产品经理特训营'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/agent-tools/><span>AI Agent 工具</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>深度研究智能体与 AI 搜索——让 AI 替你做调研</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>深度研究智能体与 AI 搜索——让 AI 替你做调研</h1></header>
+<p>5 分钟生成 46 页论文，AI 研究助手已经能做到这个程度了。但你敢用吗？</p>
+<p>我是怕浪猫，《智能体产品全景手册》第 5 篇。这一篇我们讲一个 2025 年爆火的 Agent 垂直赛道：深度研究和 AI 搜索。当 AI 从"回答问题"进化到"做调研"，信息获取的方式正在被彻底重写。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=51-ai-搜索引擎的进化从关键词到意图>5.1 AI 搜索引擎的进化：从关键词到意图<a href=#51-ai-搜索引擎的进化从关键词到意图 class=hash-link aria-label="5.1 AI 搜索引擎的进化：从关键词到意图的直接链接" title="5.1 AI 搜索引擎的进化：从关键词到意图的直接链接" translate=no>​</a></h2>
+<p>传统搜索引擎（Google、百度）的工作方式是"关键词匹配"——你输入关键词，搜索引擎在索引中找到包含这些关键词的网页，按相关性排序返回。这个范式统治了互联网搜索 20 年。</p>
+<p>AI 搜索引擎改变了这个范式。它不是匹配关键词，而是理解你的意图，然后从多个来源收集信息，综合生成一个直接回答你问题的结果。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-搜索的工作流程>AI 搜索的工作流程<a href=#ai-搜索的工作流程 class=hash-link aria-label="AI 搜索的工作流程的直接链接" title="AI 搜索的工作流程的直接链接" translate=no>​</a></h3>
+<p>AI 搜索的核心流程可以拆解为五个步骤：</p>
+<p><strong>步骤一：意图理解</strong>。AI 搜索引擎首先用 LLM 理解用户的查询意图。当你搜索"2026 年 AI Agent 市场规模"时，LLM 理解你要的是"具体的数字和数据"，而不是"关于 AI Agent 市场的文章"。</p>
+<p><strong>步骤二：查询生成</strong>。LLM 根据理解到的意图，生成多个搜索查询。不是只搜一次，而是从多个角度搜索。比如"AI Agent market size 2026"、"AI Agent industry revenue 2026"、"AI Agent market forecast"等。</p>
+<p><strong>步骤三：并行检索</strong>。多个搜索查询并行执行，获取大量网页结果。</p>
+<p><strong>步骤四：内容提取</strong>。对每个网页，提取正文内容（去掉导航、广告、侧边栏），生成摘要。</p>
+<p><strong>步骤五：综合生成</strong>。LLM 基于所有摘要生成最终回答，标注引用来源。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># AI 搜索引擎的核心流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class AISearchEngine:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def search(self, query):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 1. 意图理解</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        intent = self.llm.understand_intent(query)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # intent = {"type": "factual", "topic": "AI Agent market size", </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #           "time_constraint": "2026", "needs_data": True}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 2. 生成多个搜索查询</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        search_queries = self.llm.generate_queries(intent)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # ["AI Agent market size 2026", </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #  "AI Agent industry revenue forecast 2026",</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        #  "AI Agent market growth rate 2026"]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 3. 并行检索</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        all_results = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for sq in search_queries:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            results = self.search_api.search(sq, num_results=10)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            all_results.extend(results)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 4. 内容提取与去重</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        contents = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        seen_urls = set()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for result in all_results:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            if result.url not in seen_urls:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                content = self.extractor.extract(result.url)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                contents.append({</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "url": result.url,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "title": result.title,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    "content": content</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                })</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                seen_urls.add(result.url)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 5. 综合生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        answer = self.llm.synthesize(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            query=query,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            sources=contents,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            style="comprehensive"  # 全面型回答</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return {"answer": answer, "sources": contents}</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>传统搜索给你一堆链接让你自己找答案，AI 搜索直接给你答案并告诉你答案来自哪里。这是从"图书馆"到"私人助理"的转变。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=主流-ai-搜索产品>主流 AI 搜索产品<a href=#主流-ai-搜索产品 class=hash-link aria-label="主流 AI 搜索产品的直接链接" title="主流 AI 搜索产品的直接链接" translate=no>​</a></h3>
+<p><strong>Perplexity AI</strong>：AI 搜索的标杆产品。Pro Search 功能支持多步推理搜索，不是简单搜一次就回答，而是根据初步搜索结果生成后续查询，层层深入。Deep Research 功能更进一步，能执行数十步的搜索和分析。月访问量约 3 亿次，在专业人士和学生中广泛使用。</p>
+<p>Perplexity 在 Deep Research 基准测试中得分 21.1%，超越 Gemini Thinking。而且 Deep Research 功能完全免费使用，这是它相对于 OpenAI Deep Research 的核心竞争优势。</p>
+<p><strong>New Bing（Microsoft Copilot）</strong>：微软将 GPT-4 接入 Bing 搜索引擎，是最早的 AI 搜索产品。月访问量 36.6 亿，依托 Windows 和 Edge 浏览器的预装优势，用户量巨大。但在 AI 搜索的质量上，Perplexity 仍领先。</p>
+<p><strong>秘塔 AI 搜索</strong>：国内 AI 搜索的代表产品。特色是"无广告、直答式"搜索体验，直接给出结构化答案而非链接列表。在法律、学术等中文垂直领域有较好的搜索质量。</p>
+<p><strong>百度文小言</strong>：百度的"新搜索"智能助手。支持模糊提问（不需要精确关键词）、边拍边问（图像+文字混合搜索）、多轮对话追问等功能。依托手机百度的用户基础，在国内搜索市场有较大覆盖。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-搜索-vs-传统搜索>AI 搜索 vs 传统搜索<a href=#ai-搜索-vs-传统搜索 class=hash-link aria-label="AI 搜索 vs 传统搜索的直接链接" title="AI 搜索 vs 传统搜索的直接链接" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>传统搜索（Google/百度）<th>AI 搜索（Perplexity）<tbody><tr><td>交互方式<td>关键词输入<td>自然语言提问<tr><td>结果形式<td>网页链接列表<td>直接答案+引用<tr><td>多步推理<td>不支持<td>支持<tr><td>信息综合<td>用户自己做<td>AI 自动完成<tr><td>实时性<td>索引延迟<td>实时检索<tr><td>信息溯源<td>链接即来源<td>引用标注<tr><td>适合场景<td>导航型搜索（找网站）<td>信息型搜索（找答案）</table>
+<blockquote>
+<p>AI 搜索不是替代传统搜索，而是分工。你要找一个网站用 Google，你要找一个答案用 Perplexity。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=52-deep-research-深度研究智能体>5.2 Deep Research 深度研究智能体<a href=#52-deep-research-深度研究智能体 class=hash-link aria-label="5.2 Deep Research 深度研究智能体的直接链接" title="5.2 Deep Research 深度研究智能体的直接链接" translate=no>​</a></h2>
+<p>如果说 AI 搜索是"快速回答问题"，Deep Research 就是"花时间做调研报告"。它是 AI 搜索的深化版本——不是搜一两次就回答，而是执行数十步甚至上百步的搜索、阅读、分析、综合，最终输出一份完整的研究报告。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=openai-deep-research>OpenAI Deep Research<a href=#openai-deep-research class=hash-link aria-label="OpenAI Deep Research的直接链接" title="OpenAI Deep Research的直接链接" translate=no>​</a></h3>
+<p>OpenAI 在 2025 年 2 月推出 Deep Research 功能，面向 Pro 用户（$200/月）。</p>
+<p>核心能力：给定一个研究主题，Deep Research 会自主执行数十步搜索和分析。它能访问互联网、阅读论文、提取数据、对比分析，最终生成一份带引用的结构化研究报告。</p>
+<p>技术原理：Deep Research 基于优化后的 GPT-4o 模型，采用多轮搜索策略。第一轮搜索获取概览，第二轮根据概览中的关键点深入搜索，第三轮查漏补缺。每一轮的搜索结果都会被分析、摘要、存入上下文。</p>
+<p>在 GAIA 基准测试中，OpenAI Deep Research 得分 26.6%，是所有 Deep Research 产品中最高的。但这个分数也意味着——它只能正确完成约四分之一的复杂研究任务。Deep Research 还远未达到"完全可靠"的程度。</p>
+<p>定价是 OpenAI Deep Research 的争议点。$200/月的 Pro 订阅才能使用，且有使用次数限制。对于个人用户来说，这个价格门槛很高。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=gemini-deep-research>Gemini Deep Research<a href=#gemini-deep-research class=hash-link aria-label="Gemini Deep Research的直接链接" title="Gemini Deep Research的直接链接" translate=no>​</a></h3>
+<p>Google 在 Gemini 3 Pro 中集成了 Deep Research 功能，这是目前性能最强的深度研究 Agent。</p>
+<p>核心数据：在测试中，Gemini Deep Research 5 分钟生成了 46 页学术论文，减少幻觉效果显著。性能超过 OpenAI Deep Research 40%，价格只有后者的十分之一。</p>
+<p>Gemini Deep Research 的技术优势来自三个方面：</p>
+<p><strong>Google 搜索集成</strong>：直接使用 Google 搜索的索引和算法，搜索质量和覆盖率是所有产品中最好的。</p>
+<p><strong>多模态理解</strong>：能理解和分析图表、PDF、图片中的信息，不只是文本。</p>
+<p><strong>超长上下文</strong>：Gemini 3 Pro 支持 1M+ tokens 的上下文窗口，能把大量搜索结果一次性放入上下文中进行综合分析。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Gemini Deep Research 的工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class GeminiDeepResearch:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def research(self, topic):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 阶段1：概览搜索（广度优先）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        overview = self.gemini.search_and_summarize(topic)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 生成主题大纲</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        outline = self.gemini.generate_outline(overview)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 阶段2：深度搜索（深度优先）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        sections = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for section_topic in outline.sections:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 对每个子主题执行多轮搜索</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            section_research = self._deep_search_section(section_topic)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            sections.append(section_research)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 阶段3：数据验证</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for section in sections:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            section.verified_data = self._verify_data(section.data_points)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 阶段4：综合生成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        report = self.gemini.synthesize(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            topic=topic,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            outline=outline,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            sections=sections,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            format="academic"  # 学术报告格式</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return report  # 46页论文级别的研究报告</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=perplexity-deep-research>Perplexity Deep Research<a href=#perplexity-deep-research class=hash-link aria-label="Perplexity Deep Research的直接链接" title="Perplexity Deep Research的直接链接" translate=no>​</a></h3>
+<p>Perplexity 的 Deep Research 是性价比最高的选择——免费使用，得分 21.1%。</p>
+<p>Perplexity Deep Research 的特点是透明性。它会实时显示每一步搜索的查询词、访问的网页、提取的信息。用户可以看到 AI 是怎么一步步构建研究结论的，这增加了结果的可信度。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=gpt-researcher开源方案>GPT Researcher（开源方案）<a href=#gpt-researcher开源方案 class=hash-link aria-label="GPT Researcher（开源方案）的直接链接" title="GPT Researcher（开源方案）的直接链接" translate=no>​</a></h3>
+<p>GPT Researcher 是一个开源的深度研究 Agent，GitHub 上有数千 Star。</p>
+<p>核心特色是树状探索策略和极低成本（每次研究约 $0.4）。</p>
+<p>树状探索的原理是：给定一个研究主题，先生成 3-5 个子主题，每个子主题再生成 3-5 个更细的主题，形成一棵树。然后对树的每个叶节点执行搜索，自底向上汇总信息。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># GPT Researcher 的树状探索策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class GPTResearcher:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def research(self, topic, depth=3):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 构建研究树</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        research_tree = self._build_tree(topic, depth)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        示例树结构：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        AI Agent市场</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ├── 市场规模</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │   ├── 全球数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │   ├── 区域分布</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │   └── 增长预测</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ├── 主要玩家</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │   ├── 国际厂商</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │   └── 国内厂商</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        └── 技术趋势</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            ├── 多Agent协作</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            ├── Agent协议</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            └── 端侧Agent</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        """</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 深度优先搜索每个叶节点</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        results = {}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for leaf in research_tree.leaves():</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 搜索+提取+摘要</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            raw_data = self.search(leaf.topic)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            summary = self.llm.summarize(raw_data)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            results[leaf.path] = summary</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 自底向上汇总</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return self._aggregate(results, research_tree)</span><br/></div></code></pre></div></div>
+<p>GPT Researcher 的优势是成本极低。每次研究约花费 $0.4 的 API 费用，是商业产品的百分之一。缺点是输出质量不如 Gemini 和 OpenAI 的 Deep Research，需要人工审核和补充。</p>
+<p>下面是四款 Deep Research 产品的横向对比：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品<th>开发方<th>价格<th>测试得分<th>核心优势<tbody><tr><td>OpenAI Deep Research<td>OpenAI<td>$200/月<td>26.6%<td>得分最高<tr><td>Gemini Deep Research<td>Google<td>Gemini Advanced<td>-<td>性能超OAI 40%，价仅1/10<tr><td>Perplexity Deep Research<td>Perplexity<td>免费<td>21.1%<td>免费透明<tr><td>GPT Researcher<td>开源<td>~$0.4/次<td>-<td>开源低成本</table>
+<blockquote>
+<p>Deep Research 产品的核心价值不是"写得快"，而是"搜得全"。46 页报告的关键不是写作能力，而是搜集和整合了数百个信息源。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=53-rag-与-agentic-rag从静态检索到动态探索>5.3 RAG 与 Agentic RAG：从静态检索到动态探索<a href=#53-rag-与-agentic-rag从静态检索到动态探索 class=hash-link aria-label="5.3 RAG 与 Agentic RAG：从静态检索到动态探索的直接链接" title="5.3 RAG 与 Agentic RAG：从静态检索到动态探索的直接链接" translate=no>​</a></h2>
+<p>RAG（Retrieval-Augmented Generation，检索增强生成）是 AI 研究工具的底层技术。但传统 RAG 和 Agentic RAG 有本质区别。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=传统-rag-的局限>传统 RAG 的局限<a href=#传统-rag-的局限 class=hash-link aria-label="传统 RAG 的局限的直接链接" title="传统 RAG 的局限的直接链接" translate=no>​</a></h3>
+<p>传统 RAG 是"一次检索"模式：用户提问 → 检索 Top-K 文档 → LLM 基于文档生成回答。这种方式有几个局限：</p>
+<p><strong>问题一：检索不够深</strong>。一次检索只能获取有限的文档，对于复杂问题（需要多角度信息）远远不够。</p>
+<p><strong>问题二：不能追问</strong>。如果第一次检索的结果不足以回答问题，传统 RAG 没有机制来生成后续查询。</p>
+<p><strong>问题三：缺乏验证</strong>。传统 RAG 直接把检索结果交给 LLM 生成回答，没有验证信息的准确性和一致性。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=agentic-rag让检索变成一个-agent>Agentic RAG：让检索变成一个 Agent<a href=#agentic-rag让检索变成一个-agent class=hash-link aria-label="Agentic RAG：让检索变成一个 Agent的直接链接" title="Agentic RAG：让检索变成一个 Agent的直接链接" translate=no>​</a></h3>
+<p>Agentic RAG 将 RAG 升级为 Agent 模式。核心变化是：检索不再是一次性操作，而是一个"搜索-评估-再搜索"的迭代循环。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># Agentic RAG 的核心循环</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">class AgenticRAG:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    def research(self, question, max_iterations=5):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        context = []</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        for i in range(max_iterations):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 1. 基于已有上下文生成搜索查询</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            query = self.llm.generate_query(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                question=question,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                existing_context=context</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 2. 执行检索</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            new_docs = self.retrieve(query)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            # 3. 评估是否足够回答问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            is_sufficient = self.llm.evaluate(</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                question=question,</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                context=context + new_docs</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            )</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            context.extend(new_docs)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            if is_sufficient:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                # 信息足够，生成最终答案</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                return self.llm.answer(question, context)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        # 达到最大迭代次数，基于已有信息尽力回答</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        return self.llm.answer(question, context)</span><br/></div></code></pre></div></div>
+<p>Agentic RAG 的关键创新是"自我评估"——Agent 会在每一轮检索后评估是否已经有足够的信息来回答问题。如果不够，它会生成更精准的后续查询继续搜索。这种迭代检索模式让 AI 能处理需要多步推理的复杂问题。</p>
+<blockquote>
+<p>传统 RAG 是"查一次就答"，Agentic RAG 是"查到够为止"。区别就像学生翻书——前者只翻一页，后者翻到弄懂为止。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=agentic-rag-的应用场景>Agentic RAG 的应用场景<a href=#agentic-rag-的应用场景 class=hash-link aria-label="Agentic RAG 的应用场景的直接链接" title="Agentic RAG 的应用场景的直接链接" translate=no>​</a></h3>
+<p>Agentic RAG 在以下场景中比传统 RAG 有显著优势：</p>
+<p><strong>竞争分析</strong>：需要搜集多个竞争对手的产品信息、定价、用户评价，综合对比。传统 RAG 一次检索无法覆盖所有竞争对手，Agentic RAG 可以逐个搜索后汇总。</p>
+<p><strong>学术综述</strong>：需要阅读大量论文，提取每篇论文的核心观点，识别共识和分歧。Agentic RAG 可以按主题分批检索论文，逐步构建综述。</p>
+<p><strong>尽职调查</strong>：需要搜集公司的财务数据、法律风险、市场前景等多维度信息。Agentic RAG 可以按维度逐个深入搜索。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=54-深度研究-agent-的评估标准>5.4 深度研究 Agent 的评估标准<a href=#54-深度研究-agent-的评估标准 class=hash-link aria-label="5.4 深度研究 Agent 的评估标准的直接链接" title="5.4 深度研究 Agent 的评估标准的直接链接" translate=no>​</a></h2>
+<p>Deep Research 产品越来越多，怎么评估它们的质量？我提出五个维度。</p>
+<p><strong>维度一：信息覆盖率</strong></p>
+<p>研究报告是否覆盖了主题的主要方面？有没有遗漏重要信息？这是最基础的评估维度。一个好的研究报告应该从多个角度全面覆盖主题。</p>
+<p>评估方法：选取一个你熟悉的主题，让 Deep Research 生成报告，然后检查它是否覆盖了你认为重要的所有子主题。</p>
+<p><strong>维度二：数据准确性</strong></p>
+<p>报告中的数字、日期、事实是否准确？AI 最大的风险是幻觉——生成看似合理但实际不存在的数据。</p>
+<p>评估方法：随机抽取报告中的 10 个数据点，人工验证其准确性。准确率低于 80% 的产品不可接受。</p>
+<p><strong>维度三：引用可靠性</strong></p>
+<p>报告中的引用是否指向真实存在的来源？有些 AI 会"编造"引用——给出一个看起来合理的 URL，但实际访问后发现内容不存在或不相关。</p>
+<p>评估方法：随机抽取报告中的 5 个引用链接，逐一访问验证。</p>
+<p><strong>维度四：逻辑连贯性</strong></p>
+<p>报告的结构是否清晰？论点之间是否有逻辑关系？还是只是信息的堆砌？好的研究报告应该有明确的论点和论证逻辑，而不是"数据大杂烩"。</p>
+<p>评估方法：阅读报告的结论部分，看它是否从前文的分析中自然推导出来。</p>
+<p><strong>维度五：时效性</strong></p>
+<p>报告是否包含了最新的信息？对于快速变化的领域（如 AI、加密货币），使用一年前的数据可能已经过时。</p>
+<p>评估方法：检查报告中引用的最新信息的日期，与当前日期的差距。</p>
+<p>下面是一个评估打分表模板：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>评估维度<th>权重<th>OpenAI DR<th>Gemini DR<th>Perplexity DR<th>GPT Researcher<tbody><tr><td>信息覆盖率<td>25%<td>8/10<td>9/10<td>7/10<td>6/10<tr><td>数据准确性<td>25%<td>8/10<td>9/10<td>8/10<td>7/10<tr><td>引用可靠性<td>20%<td>9/10<td>8/10<td>9/10<td>7/10<tr><td>逻辑连贯性<td>15%<td>8/10<td>9/10<td>7/10<td>6/10<tr><td>时效性<td>15%<td>8/10<td>9/10<td>9/10<td>7/10<tr><td>加权总分<td>100%<td>8.2<td>8.8<td>7.9<td>6.6</table>
+<blockquote>
+<p>Deep Research 的最大风险不是"写得不好"，而是"写得很好但内容是编的"。越流畅的报告越要警惕幻觉。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=55-实战场景行业调研竞品分析学术研究>5.5 实战场景：行业调研、竞品分析、学术研究<a href=#55-实战场景行业调研竞品分析学术研究 class=hash-link aria-label="5.5 实战场景：行业调研、竞品分析、学术研究的直接链接" title="5.5 实战场景：行业调研、竞品分析、学术研究的直接链接" translate=no>​</a></h2>
+<p>最后，我们看三个实战场景，帮你理解什么时候该用哪个工具。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景一行业调研>场景一：行业调研<a href=#场景一行业调研 class=hash-link aria-label=场景一：行业调研的直接链接 title=场景一：行业调研的直接链接 translate=no>​</a></h3>
+<p>需求：调研"2026 年中国 AI Agent 企业级市场规模、主要玩家和发展趋势"。</p>
+<p>推荐工具：Gemini Deep Research。理由：行业调研需要大量数据支撑，Gemini 依托 Google 搜索有最广的信息覆盖。5 分钟生成 46 页论文的能力能快速产出初稿。</p>
+<p>使用技巧：给 Deep Research 一个清晰的研究框架会效果更好。不要只说"调研 AI Agent 市场"，而是说"从市场规模、竞争格局、技术趋势、政策环境、投资动态五个维度调研 2026 年中国 AI Agent 企业级市场"。</p>
+<p>后续处理：Deep Research 生成的报告是初稿，需要人工补充行业专家观点、最新政策变化等 AI 可能遗漏的信息。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景二竞品分析>场景二：竞品分析<a href=#场景二竞品分析 class=hash-link aria-label=场景二：竞品分析的直接链接 title=场景二：竞品分析的直接链接 translate=no>​</a></h3>
+<p>需求：对比 Manus、OpenAI Operator、AutoGLM 三款自主执行 Agent 的功能、定价、性能。</p>
+<p>推荐工具：Perplexity Pro Search。理由：竞品分析需要实时信息（定价、功能更新频繁），Perplexity 的实时搜索和透明引用最适合这种任务。</p>
+<p>使用技巧：分产品逐一搜索，每次搜索聚焦一个产品的特定维度（功能、定价、评测），最后人工汇总对比。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景三学术研究>场景三：学术研究<a href=#场景三学术研究 class=hash-link aria-label=场景三：学术研究的直接链接 title=场景三：学术研究的直接链接 translate=no>​</a></h3>
+<p>需求：综述"Agentic RAG 技术的发展脉络、核心方法和未来方向"。</p>
+<p>推荐工具：GPT Researcher + 人工补充。理由：学术研究需要引用论文，GPT Researcher 的树状探索能系统性地覆盖子主题。开源方案可以自定义搜索来源（如 Google Scholar、arXiv），确保引用的是学术论文而非博客。</p>
+<p>使用技巧：设置搜索来源为学术数据库，depth 设为 4-5（更深的探索层级），生成后人工检查每个引用是否为真实论文。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景四快速事实查询>场景四：快速事实查询<a href=#场景四快速事实查询 class=hash-link aria-label=场景四：快速事实查询的直接链接 title=场景四：快速事实查询的直接链接 translate=no>​</a></h3>
+<p>需求：查"2026 年全球 AI Agent 市场规模是多少亿美元"。</p>
+<p>推荐工具：Perplexity 免费版。理由：简单事实查询不需要 Deep Research，Perplexity 的基础搜索就能快速给出答案和引用。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=场景五多角度综合分析>场景五：多角度综合分析<a href=#场景五多角度综合分析 class=hash-link aria-label=场景五：多角度综合分析的直接链接 title=场景五：多角度综合分析的直接链接 translate=no>​</a></h3>
+<p>需求：分析"AI Agent 对就业市场的影响，包括正面和负面观点"。</p>
+<p>推荐工具：OpenAI Deep Research。理由：多角度分析需要深度推理和平衡论述，OpenAI Deep Research 在 GAIA 测试中得分最高，适合需要细致分析的复杂问题。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>推荐工具<th>理由<tbody><tr><td>行业调研<td>Gemini DR<td>信息覆盖最广<tr><td>竞品分析<td>Perplexity<td>实时搜索透明<tr><td>学术研究<td>GPT Researcher<td>可自定义来源<tr><td>事实查询<td>Perplexity 免费版<td>快速够用<tr><td>多角度分析<td>OpenAI DR<td>推理能力最强</table>
+<p>这一章我们拆解了 AI 搜索引擎的进化路径（从关键词到意图），深入分析了四款 Deep Research 产品（OpenAI、Gemini、Perplexity、GPT Researcher），讲解了从传统 RAG 到 Agentic RAG 的技术升级，提出了五维度评估标准，最后给出了五个实战场景的选型建议。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>产品类别<th>产品数量<th>市场格局<tbody><tr><td>AI 搜索<td>4 款<td>Perplexity 标杆<tr><td>Deep Research<td>4 款<td>Gemini 性价比最高</table>
+<p>觉得有用？收藏起来，下次做调研直接照着选工具。</p>
+<p>你用过哪个 AI 研究工具？生成的报告靠谱吗？评论区聊聊你的体验。</p>
+<p>关注怕浪猫，下期我们讲计算机操作智能体与 RPA 超自动化——AI 直接操作你的电脑，这是怎么做到的。系列进度 5/10，关注不错过后续更新。</p>
+<p>下一篇，怕浪猫会带你走进 CUA（Computer Use Agent，计算机使用智能体）的世界。AI 怎么看懂屏幕上的按钮？怎么知道该点哪里？RPA 和 CUA 到底谁会取代谁？我们下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/agent-tools/chapter_5.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_4><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>编程智能体——AI 写代码的全景拆解</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/agent-tools/chapter_6><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>计算机操作智能体与 RPA 超自动化——AI 接管你的屏幕</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#51-ai-搜索引擎的进化从关键词到意图 class="table-of-contents__link toc-highlight">5.1 AI 搜索引擎的进化：从关键词到意图</a><ul><li><a href=#ai-搜索的工作流程 class="table-of-contents__link toc-highlight">AI 搜索的工作流程</a><li><a href=#主流-ai-搜索产品 class="table-of-contents__link toc-highlight">主流 AI 搜索产品</a><li><a href=#ai-搜索-vs-传统搜索 class="table-of-contents__link toc-highlight">AI 搜索 vs 传统搜索</a></ul><li><a href=#52-deep-research-深度研究智能体 class="table-of-contents__link toc-highlight">5.2 Deep Research 深度研究智能体</a><ul><li><a href=#openai-deep-research class="table-of-contents__link toc-highlight">OpenAI Deep Research</a><li><a href=#gemini-deep-research class="table-of-contents__link toc-highlight">Gemini Deep Research</a><li><a href=#perplexity-deep-research class="table-of-contents__link toc-highlight">Perplexity Deep Research</a><li><a href=#gpt-researcher开源方案 class="table-of-contents__link toc-highlight">GPT Researcher（开源方案）</a></ul><li><a href=#53-rag-与-agentic-rag从静态检索到动态探索 class="table-of-contents__link toc-highlight">5.3 RAG 与 Agentic RAG：从静态检索到动态探索</a><ul><li><a href=#传统-rag-的局限 class="table-of-contents__link toc-highlight">传统 RAG 的局限</a><li><a href=#agentic-rag让检索变成一个-agent class="table-of-contents__link toc-highlight">Agentic RAG：让检索变成一个 Agent</a><li><a href=#agentic-rag-的应用场景 class="table-of-contents__link toc-highlight">Agentic RAG 的应用场景</a></ul><li><a href=#54-深度研究-agent-的评估标准 class="table-of-contents__link toc-highlight">5.4 深度研究 Agent 的评估标准</a><li><a href=#55-实战场景行业调研竞品分析学术研究 class="table-of-contents__link toc-highlight">5.5 实战场景：行业调研、竞品分析、学术研究</a><ul><li><a href=#场景一行业调研 class="table-of-contents__link toc-highlight">场景一：行业调研</a><li><a href=#场景二竞品分析 class="table-of-contents__link toc-highlight">场景二：竞品分析</a><li><a href=#场景三学术研究 class="table-of-contents__link toc-highlight">场景三：学术研究</a><li><a href=#场景四快速事实查询 class="table-of-contents__link toc-highlight">场景四：快速事实查询</a><li><a href=#场景五多角度综合分析 class="table-of-contents__link toc-highlight">场景五：多角度综合分析</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

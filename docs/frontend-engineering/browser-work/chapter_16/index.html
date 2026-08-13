@@ -1,0 +1,1088 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_16" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第16章 Cookie 安全与隐私保护 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第16章 Cookie 安全与隐私保护 | 知识库"/><meta data-rh=true name=description content="Cookie 是 Web 身份认证的基础，也是隐私争议的中心。第三方 Cookie 正在被淘汰，但第一方 Cookie 依然重要。理解 Cookie 的安全属性和隐私替代方案是现代前端开发的必修课。"/><meta data-rh=true property=og:description content="Cookie 是 Web 身份认证的基础，也是隐私争议的中心。第三方 Cookie 正在被淘汰，但第一方 Cookie 依然重要。理解 Cookie 的安全属性和隐私替代方案是现代前端开发的必修课。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16","name":"第16章 Cookie 安全与隐私保护","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第16章 Cookie 安全与隐私保护</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第16章 Cookie 安全与隐私保护</h1></header>
+<blockquote>
+<p>Cookie 是 Web 身份认证的基础，也是隐私争议的中心。第三方 Cookie 正在被淘汰，但第一方 Cookie 依然重要。理解 Cookie 的安全属性和隐私替代方案是现代前端开发的必修课。</p>
+</blockquote>
+<p>我是怕浪猫，上期讲了沙箱与站点隔离，今天进入第 16 章：Cookie 安全与隐私保护。这一章拆解 Cookie 的安全属性、第三方 Cookie 消亡路线图、以及 Privacy Sandbox 的替代方案。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=161-cookie-的安全属性>16.1 Cookie 的安全属性<a href=#161-cookie-的安全属性 class=hash-link aria-label="16.1 Cookie 的安全属性的直接链接" title="16.1 Cookie 的安全属性的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1611-cookie-属性总览>16.1.1 Cookie 属性总览<a href=#1611-cookie-属性总览 class=hash-link aria-label="16.1.1 Cookie 属性总览的直接链接" title="16.1.1 Cookie 属性总览的直接链接" translate=no>​</a></h3>
+<p>一个 Cookie 可以设置多个属性，控制其行为和安全性。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Set-Cookie: session=abc123; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Domain=example.com; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Path=/; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Max-Age=86400; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Secure; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HttpOnly; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  SameSite=Lax; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Priority=High</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>属性<th>作用<th>安全意义<tbody><tr><td>Domain<td>Cookie 发送范围<td>控制可见域名<tr><td>Path<td>URL 路径限制<td>限制发送路径<tr><td>Max-Age/Expires<td>过期时间<td>限制持久性<tr><td>Secure<td>仅 HTTPS 发送<td>防中间人窃听<tr><td>HttpOnly<td>JS 不可读取<td>防 XSS 窃取<tr><td>SameSite<td>跨站发送策略<td>防 CSRF<tr><td>Priority<td>优先级<td>超限时的保留策略<tr><td>Partitioned<td>分区存储<td>替代第三方 Cookie</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1612-secure-属性>16.1.2 Secure 属性<a href=#1612-secure-属性 class=hash-link aria-label="16.1.2 Secure 属性的直接链接" title="16.1.2 Secure 属性的直接链接" translate=no>​</a></h3>
+<p>Secure 属性确保 Cookie 只在 HTTPS 连接中发送，防止在 HTTP 连接中被中间人窃听。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 设置 Secure 的 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Set-Cookie: session=abc123; Secure</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 行为：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># HTTPS 请求 → 发送 Cookie ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># HTTP 请求 → 不发送 Cookie ✗</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>所有现代浏览器都要求 SameSite=None 的 Cookie 必须同时设置 Secure。不支持 Secure 的 SameSite=None Cookie 会被拒绝。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1613-httponly-属性>16.1.3 HttpOnly 属性<a href=#1613-httponly-属性 class=hash-link aria-label="16.1.3 HttpOnly 属性的直接链接" title="16.1.3 HttpOnly 属性的直接链接" translate=no>​</a></h3>
+<p>HttpOnly 属性阻止 JavaScript 通过 document.cookie 读取 Cookie，是防范 XSS 窃取 Cookie 的第一道防线。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 设置了 HttpOnly 的 Cookie</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token known-class-name class-name">Set</span><span class="token operator" style=color:#393A34>-</span><span class="token maybe-class-name">Cookie</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> session</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">abc123</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"> </span><span class="token maybe-class-name">HttpOnly</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// JavaScript 无法读取</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">cookie</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 不包含 session Cookie</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 没有设置 HttpOnly 的 Cookie</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token known-class-name class-name">Set</span><span class="token operator" style=color:#393A34>-</span><span class="token maybe-class-name">Cookie</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> pref</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">dark</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"> </span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// JavaScript 可以读取</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">cookie</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// "pref=dark"</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Cookie 类型<th>建议 HttpOnly<th>原因<tbody><tr><td>会话 Cookie<td>是<td>敏感信息，不应被 JS 读取<tr><td>认证 Token<td>是<td>敏感信息<tr><td>CSRF Token<td>否<td>JS 需要读取并附加到请求头<tr><td>用户偏好<td>否<td>JS 需要读写<tr><td>分析追踪<td>视情况<td>看是否需要 JS 读取</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1614-samesite-属性详解>16.1.4 SameSite 属性详解<a href=#1614-samesite-属性详解 class=hash-link aria-label="16.1.4 SameSite 属性详解的直接链接" title="16.1.4 SameSite 属性详解的直接链接" translate=no>​</a></h3>
+<p>SameSite 属性控制 Cookie 在跨站请求中的发送行为，是 CSRF 防护的重要手段。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">SameSite 行为对比</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">场景：用户访问 evil.com，evil.com 向 bank.com 发请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">SameSite=Strict:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  请求不携带 bank.com 的 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  即使点击链接跳转到 bank.com 也不携带</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 最安全，但用户体验差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">SameSite=Lax（Chrome 默认）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  顶级导航的 GET 请求携带 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如：&lt;a href="bank.com">、window.location</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  子资源请求不携带</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  如：&lt;img>、&lt;iframe>、fetch</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  POST 不携带</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 安全与体验平衡</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">SameSite=None:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  所有跨站请求都携带 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  需要 Secure</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 用于需要跨站的场景（如嵌入式登录）</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>请求场景<th>Strict<th>Lax<th>None<tbody><tr><td>同源请求<td>携带<td>携带<td>携带<tr><td>顶级导航 GET<td>不携带<td>携带<td>携带<tr><td>顶级导航 POST<td>不携带<td>不携带<td>携带<tr><td><code>&lt;img></code> 跨域<td>不携带<td>不携带<td>携带<tr><td><code>&lt;iframe></code> 跨域<td>不携带<td>不携带<td>携带<tr><td>fetch 跨域<td>不携带<td>不携带<td>携带</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=162-第三方-cookie-的消亡>16.2 第三方 Cookie 的消亡<a href=#162-第三方-cookie-的消亡 class=hash-link aria-label="16.2 第三方 Cookie 的消亡的直接链接" title="16.2 第三方 Cookie 的消亡的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1621-什么是第三方-cookie>16.2.1 什么是第三方 Cookie<a href=#1621-什么是第三方-cookie class=hash-link aria-label="16.2.1 什么是第三方 Cookie的直接链接" title="16.2.1 什么是第三方 Cookie的直接链接" translate=no>​</a></h3>
+<p>第三方 Cookie 是指在当前页面域名之外的域名设置的 Cookie。通常用于跨站追踪和广告。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">第三方 Cookie 示例</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">页面: https://news.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ &lt;img src="https://ad.com/pixel"> </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → ad.com 设置 Cookie: tracking_id=123</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 这是第三方 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ &lt;iframe src="https://embed.com/widget"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → embed.com 设置 Cookie: session=abc</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 这是第三方 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ fetch('https://api.news.com/data')</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      → api.news.com 设置 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      → 如果 news.com 和 api.news.com 同站点 → 第一方</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户访问 other-site.com:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ &lt;img src="https://ad.com/pixel"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 发送 ad.com 的 tracking_id Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → ad.com 知道用户从 news.com 来了</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   → 跨站追踪</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1622-第三方-cookie-的问题>16.2.2 第三方 Cookie 的问题<a href=#1622-第三方-cookie-的问题 class=hash-link aria-label="16.2.2 第三方 Cookie 的问题的直接链接" title="16.2.2 第三方 Cookie 的问题的直接链接" translate=no>​</a></h3>
+<p>第三方 Cookie 是行为广告（Behavioral Advertising）的技术基础。广告网络通过在多个网站部署追踪像素，收集用户的浏览历史，用于精准广告投放。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>问题<th>说明<tbody><tr><td>隐私侵犯<td>用户浏览历史被跨站收集<tr><td>缺乏知情同意<td>大多数用户不知道被追踪<tr><td>数据滥用<td>追踪数据可能被出售或泄露<tr><td>指纹识别<td>追踪可扩展为设备指纹</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1623-chrome-的第三方-cookie-淘汰路线>16.2.3 Chrome 的第三方 Cookie 淘汰路线<a href=#1623-chrome-的第三方-cookie-淘汰路线 class=hash-link aria-label="16.2.3 Chrome 的第三方 Cookie 淘汰路线的直接链接" title="16.2.3 Chrome 的第三方 Cookie 淘汰路线的直接链接" translate=no>​</a></h3>
+<p>Chrome 正在逐步淘汰第三方 Cookie。这是 Web 隐私的重大变化。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>时间<th>事件<th>说明<tbody><tr><td>2020<td>Chrome 宣布淘汰计划<td>两年内逐步淘汰<tr><td>2020-2023<td>Privacy Sandbox 提案<td>开发替代方案<tr><td>2024<td>1% 用户禁用<td>小规模测试<tr><td>2025<td>全面禁用<td>100% 用户禁用第三方 Cookie</table>
+<blockquote>
+<p>第三方 Cookie 的消亡不是终点，而是新的开始。广告行业不会因此停止追踪用户，而是转向 Privacy Sandbox 等隐私保护更好的方案。开发者需要评估自己的服务是否依赖第三方 Cookie，并提前迁移。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=163-privacy-sandbox>16.3 Privacy Sandbox<a href=#163-privacy-sandbox class=hash-link aria-label="16.3 Privacy Sandbox的直接链接" title="16.3 Privacy Sandbox的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1631-privacy-sandbox-的目标>16.3.1 Privacy Sandbox 的目标<a href=#1631-privacy-sandbox-的目标 class=hash-link aria-label="16.3.1 Privacy Sandbox 的目标的直接链接" title="16.3.1 Privacy Sandbox 的目标的直接链接" translate=no>​</a></h3>
+<p>Privacy Sandbox 是 Chrome 提出的一系列 Web API，旨在在不使用第三方 Cookie 的情况下实现广告和测量功能，同时保护用户隐私。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>API<th>功能<th>替代的第三方 Cookie 用途<tbody><tr><td>Topics API<td>兴趣主题广告<td>行为广告<tr><td>Protected Audience API<td>重定向广告<td>用户追踪<tr><td>Attribution Reporting<td>广告归因<td>转化追踪<tr><td>Private Aggregation<td>匿名统计<td>受众测量<tr><td>Storage Access API<td>跨站存储授权<td>嵌入式登录</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1632-topics-api>16.3.2 Topics API<a href=#1632-topics-api class=hash-link aria-label="16.3.2 Topics API的直接链接" title="16.3.2 Topics API的直接链接" translate=no>​</a></h3>
+<p>Topics API 根据用户的浏览历史推断兴趣主题，广告平台可以获取这些主题来展示相关广告，但不会暴露具体浏览历史。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Topics API 巏作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 浏览器为每个网站分配主题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   example.com → Technology</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   sports.com → Sports</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   cooking.com → Food & Drink</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 浏览器记录用户最近 3 周的主题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Week 1: Technology, Sports</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Week 2: Sports, Food & Drink</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Week 3: Technology, Food & Drink</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 广告平台调用 API 获取主题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   document.browsingTopics()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 返回最近的主题（每个 epoch 1 个主题）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不暴露具体浏览了哪些网站</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 广告平台根据主题投放广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 看到主题 "Technology" → 展示技术产品广告</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>第三方 Cookie<th>Topics API<tbody><tr><td>数据粒度<td>精确到每个网站<td>主题级别<tr><td>用户识别<td>跨站追踪<td>无跨站追踪<tr><td>数据存储<td>广告平台<td>浏览器本地<tr><td>隐私保护<td>弱<td>强</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1633-chips分区-cookie>16.3.3 CHIPS（分区 Cookie）<a href=#1633-chips分区-cookie class=hash-link aria-label="16.3.3 CHIPS（分区 Cookie）的直接链接" title="16.3.3 CHIPS（分区 Cookie）的直接链接" translate=no>​</a></h3>
+<p>CHIPS（Cookies Having Independent Partitioned State，分区 Cookie）允许第三方 Cookie 按顶级站点分区存储，不跨站追踪。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 分区 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Set-Cookie: session=abc123; Partitioned; Secure; SameSite=None</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 行为：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 在 news.com 中加载 embed.com 的 iframe</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># → embed.com 设置分区 Cookie，关联到 news.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># </span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 在 other.com 中加载 embed.com 的 iframe</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># → embed.com 的 Cookie 不包含 news.com 的分区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># → 每个顶级站点有独立的分区</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">CHIPS 分区存储</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">传统第三方 Cookie:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ad.com 的 Cookie 在所有网站共享</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CHIPS 分区 Cookie:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  news.com + ad.com → Cookie A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  sports.com + ad.com → Cookie B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  other.com + ad.com → Cookie C</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每个分区独立，不跨站关联</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>CHIPS 是第三方 Cookie 的温和替代。它允许嵌入式服务在各个站点独立保存状态，但不跨站关联用户。对于需要嵌入式登录的服务（如 Disqus 评论系统），CHIPS 是理想的解决方案。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1634-protected-audience-apiturtledove>16.3.4 Protected Audience API（TURTLEDOVE）<a href=#1634-protected-audience-apiturtledove class=hash-link aria-label="16.3.4 Protected Audience API（TURTLEDOVE）的直接链接" title="16.3.4 Protected Audience API（TURTLEDOVE）的直接链接" translate=no>​</a></h3>
+<p>Protected Audience API（前身为 TURTLEDOVE）是 Privacy Sandbox 中用于重定向广告的 API。重定向广告是指向之前访问过某网站的用户展示广告。</p>
+<p>传统方式中，广告平台通过第三方 Cookie 追踪用户访问历史。Protected Audience API 将这个过程搬到了浏览器内部：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Protected Audience 工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 用户访问 example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 浏览器在本地记录兴趣组（Interest Group）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → { owner: 'ad-platform', name: 'shoes-shopper' }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 用户访问 other-site.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 页面中有广告位</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 浏览器运行竞价算法（本地）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 查看本地兴趣组</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 向 ad-platform 请求候选广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 本地决定展示哪个广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 广告展示</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 广告平台不知道用户具体是谁</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 只知道用户属于某个兴趣组</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 竞价在浏览器本地完成</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>第三方 Cookie 重定向<th>Protected Audience<tbody><tr><td>用户历史<td>广告平台服务器<td>浏览器本地<tr><td>竞价<td>广告平台服务器<td>浏览器本地<tr><td>隐私<td>跨站追踪<td>无跨站追踪<tr><td>延迟<td>低（服务器已有数据）<td>稍高（本地竞价）</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1635-attribution-reporting-api>16.3.5 Attribution Reporting API<a href=#1635-attribution-reporting-api class=hash-link aria-label="16.3.5 Attribution Reporting API的直接链接" title="16.3.5 Attribution Reporting API的直接链接" translate=no>​</a></h3>
+<p>Attribution Reporting API 用于广告归因——衡量用户看到广告后是否完成了转化（如购买）。传统方式中，广告平台通过第三方 Cookie 追踪用户从广告点击到转化的完整路径。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 注册广告点击归因</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 在广告页面</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/register-source'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>headers</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string-property property" style=color:#36acaa>'Attribution-Reporting-Eligible'</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'navigation-source'</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 在转化页面</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/register-trigger'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token literal-property property" style=color:#36acaa>headers</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string-property property" style=color:#36acaa>'Attribution-Reporting-Eligible'</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'trigger'</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 浏览器在本地匹配 source 和 trigger</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 延迟上报归因报告（防止实时追踪）</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=164-cookie-替代方案>16.4 Cookie 替代方案<a href=#164-cookie-替代方案 class=hash-link aria-label="16.4 Cookie 替代方案的直接链接" title="16.4 Cookie 替代方案的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1641-认证方案演进>16.4.1 认证方案演进<a href=#1641-认证方案演进 class=hash-link aria-label="16.4.1 认证方案演进的直接链接" title="16.4.1 认证方案演进的直接链接" translate=no>​</a></h3>
+<p>第三方 Cookie 淘汰后，一些依赖第三方 Cookie 的认证方案需要迁移。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方案<th>依赖第三方 Cookie？<th>替代方案<tbody><tr><td>单点登录（SSO）<td>部分<td>Storage Access API<tr><td>嵌入式登录<td>是<td>Storage Access API + CHIPS<tr><td>OAuth 2.0<td>否<td>重定向流程<tr><td>跨站 Widget<td>是<td>CHIPS + Storage Access API</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1642-storage-access-api>16.4.2 Storage Access API<a href=#1642-storage-access-api class=hash-link aria-label="16.4.2 Storage Access API的直接链接" title="16.4.2 Storage Access API的直接链接" translate=no>​</a></h3>
+<p>Storage Access API 允许嵌入式内容请求访问其第一方存储。用户需要授权。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 嵌入式 iframe 请求存储访问</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>requestStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>if</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">requestStorageAccess</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword control-flow" style=color:#00009f>try</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>requestStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token comment" style=color:#999988;font-style:italic>// 用户授权后，可以访问第一方 Cookie</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'存储访问已授权'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>catch</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">e</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token comment" style=color:#999988;font-style:italic>// 用户拒绝</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'存储访问被拒绝'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=165-浏览器存储与隐私>16.5 浏览器存储与隐私<a href=#165-浏览器存储与隐私 class=hash-link aria-label="16.5 浏览器存储与隐私的直接链接" title="16.5 浏览器存储与隐私的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1651-存储-api-的隐私考量>16.5.1 存储 API 的隐私考量<a href=#1651-存储-api-的隐私考量 class=hash-link aria-label="16.5.1 存储 API 的隐私考量的直接链接" title="16.5.1 存储 API 的隐私考量的直接链接" translate=no>​</a></h3>
+<p>除了 Cookie，浏览器还有多种存储机制。它们也面临隐私问题。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>存储机制<th>容量<th>跨站追踪风险<th>隐私保护<tbody><tr><td>Cookie<td>4KB/个<td>高<td>SameSite + 分区<tr><td>localStorage<td>5-10MB<td>中（同源限制）<td>同源策略<tr><td>sessionStorage<td>5-10MB<td>低（标签页隔离）<td>自动清除<tr><td>IndexedDB<td>大容量<td>中（同源限制）<td>同源策略<tr><td>Cache API<td>大容量<td>中<td>同源策略<tr><td>SharedArrayBuffer<td>内存级<td>高（侧信道）<td>COOP+COEP</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1652-存储分区>16.5.2 存储分区<a href=#1652-存储分区 class=hash-link aria-label="16.5.2 存储分区的直接链接" title="16.5.2 存储分区的直接链接" translate=no>​</a></h3>
+<p>为了防止跨站追踪，Chrome 正在将所有存储 API 分区化。分区键是顶级站点和当前站点。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">存储分区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">传统存储：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  embed.com 的 localStorage 在所有站点共享</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">分区存储：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  news.com + embed.com → 分区 A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  sports.com + embed.com → 分区 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每个分区独立，embed.com 无法跨站关联用户</span><br/></div></code></pre></div></div>
+<p>存储分区影响的 API 包括：localStorage、sessionStorage、IndexedDB、Cache API、Service Worker 缓存、Cookie。这意味着嵌入在不同网站中的第三方服务，每个网站的存储都是独立的。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1653-service-worker-与隐私>16.5.3 Service Worker 与隐私<a href=#1653-service-worker-与隐私 class=hash-link aria-label="16.5.3 Service Worker 与隐私的直接链接" title="16.5.3 Service Worker 与隐私的直接链接" translate=no>​</a></h3>
+<p>Service Worker 拦截网络请求的能力引发隐私担忧。Service Worker 可以看到所有网络请求，包括请求 URL 和响应头。但 Service Worker 受同源策略限制，只能拦截同源请求。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Service Worker 能力<th>隐私影响<th>限制<tbody><tr><td>拦截同源请求<td>低<td>同源限制<tr><td>修改请求/响应<td>中<td>仅同源<tr><td>后台同步<td>中<td>用户可见<tr><td>Push 通知<td>低<td>用户授权<tr><td>持久存储<td>中<td>有过期机制</table>
+<blockquote>
+<p>存储分区是隐私保护的必然趋势。未来所有浏览器存储都会按顶级站点分区，开发者需要假设跨站存储不再可用，像处理 CORS 一样处理存储分区。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=166-设备指纹与反指纹>16.6 设备指纹与反指纹<a href=#166-设备指纹与反指纹 class=hash-link aria-label="16.6 设备指纹与反指纹的直接链接" title="16.6 设备指纹与反指纹的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1661-设备指纹技术>16.6.1 设备指纹技术<a href=#1661-设备指纹技术 class=hash-link aria-label="16.6.1 设备指纹技术的直接链接" title="16.6.1 设备指纹技术的直接链接" translate=no>​</a></h3>
+<p>设备指纹（Device Fingerprinting）是不依赖 Cookie 的用户追踪技术。它通过收集设备的各种属性，生成唯一标识。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指纹维度<th>说明<th>稳定性<tbody><tr><td>User-Agent<td>浏览器和 OS 信息<td>中<tr><td>Canvas 指纹<td>GPU 渲染差异<td>高<tr><td>WebGL 指纹<td>GPU 信息<td>高<tr><td>字体列表<td>已安装字体<td>高<tr><td>屏幕分辨率<td>物理像素<td>高<tr><td>时区<td>系统时区<td>高<tr><td>语言<td>浏览器语言<td>中<tr><td>AudioContext<td>音频处理差异<td>高</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1662-chrome-的反指纹措施>16.6.2 Chrome 的反指纹措施<a href=#1662-chrome-的反指纹措施 class=hash-link aria-label="16.6.2 Chrome 的反指纹措施的直接链接" title="16.6.2 Chrome 的反指纹措施的直接链接" translate=no>​</a></h3>
+<p>Chrome 采取多项措施降低指纹识别的可行性：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>措施<th>说明<th>效果<tbody><tr><td>User-Agent 降级<td>冻结 UA 字符串<td>减少版本信息<tr><td>Canvas 噪声<td>添加微量随机化<td>降低 Canvas 指纹稳定性<tr><td>字体列表限制<td>只暴露通用字体<td>减少字体指纹<tr><td>时区精度<td>保持但限制 API<td>—<tr><td>JS API 限制<td>移除指纹相关 API<td>减少可探测属性</table>
+<blockquote>
+<p>设备指纹是比 Cookie 更难防范的隐私问题。即使用户清除 Cookie，指纹仍然可以识别用户。Privacy Sandbox 的设计目标之一就是让浏览器提供足够的功能，同时减少可用于指纹的信息量。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=166-chips-分区-cookie>16.6 CHIPS 分区 Cookie<a href=#166-chips-分区-cookie class=hash-link aria-label="16.6 CHIPS 分区 Cookie的直接链接" title="16.6 CHIPS 分区 Cookie的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1661-什么是分区-cookie>16.6.1 什么是分区 Cookie<a href=#1661-什么是分区-cookie class=hash-link aria-label="16.6.1 什么是分区 Cookie的直接链接" title="16.6.1 什么是分区 Cookie的直接链接" translate=no>​</a></h3>
+<p>CHIPS（Cookies Having Independent Partitioned State，分区独立 Cookie）是 Chrome 113 引入的机制，通过 Partitioned 属性让第三方 Cookie 按顶级站点分区存储。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">传统第三方 Cookie：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户访问 site-a.com，嵌入 ad.com 的广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → ad.com 设置 Cookie: id=abc</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户访问 site-b.com，嵌入 ad.com 的广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → ad.com 读取 Cookie: id=abc（跨站追踪！）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">分区 Cookie（CHIPS）：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户访问 site-a.com，嵌入 ad.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → ad.com 设置 Cookie: id=abc; Partitioned</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Cookie 存储为：{ partition: site-a.com, domain: ad.com, value: abc }</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  用户访问 site-b.com，嵌入 ad.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → ad.com 无法读取 abc（分区不同）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 只能设置新的分区 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 不跨站追踪</span><br/></div></code></pre></div></div>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># 设置分区 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Set-Cookie: __Host-session=abc123; Secure; Path=/; SameSite=None; Partitioned</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>传统第三方 Cookie<th>分区 Cookie<tbody><tr><td>跨站追踪<td>可以<td>不可以<tr><td>存储方式<td>按域名<td>按域名 + 顶级站点<tr><td>需要属性<td>无<td>Partitioned<tr><td>安全要求<td>无<td>Secure + SameSite=None</table>
+<blockquote>
+<p>CHIPS 的核心思想是「允许第三方 Cookie 存在，但不允许跨站追踪」。每个顶级站点有独立的 Cookie 分区，第三方服务可以存储状态（如登录会话），但无法跨站关联用户行为。这是第三方 Cookie 淘汰后的过渡方案。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=167-第一方集机制>16.7 第一方集机制<a href=#167-第一方集机制 class=hash-link aria-label="16.7 第一方集机制的直接链接" title="16.7 第一方集机制的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1671-first-party-sets>16.7.1 First-Party Sets<a href=#1671-first-party-sets class=hash-link aria-label="16.7.1 First-Party Sets的直接链接" title="16.7.1 First-Party Sets的直接链接" translate=no>​</a></h3>
+<p>First-Party Sets（第一方集）允许相关联的域名声明属于同一个「第一方」，从而在这些域名间共享第一方身份。例如，brand.com 和 shop.brand.com 可以声明为同一第一方集。</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// first-party-sets.json</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"primary"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"https://brand.com"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"members"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"https://shop.brand.com"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"https://api.brand.com"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token string" style=color:#e3116c>"https://cdn.brand.com"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">无 First-Party Sets：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  brand.com → Cookie: session=abc（第一方）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  shop.brand.com → 需要单独设置 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">有 First-Party Sets：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  brand.com + shop.brand.com + api.brand.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 声明为同一第一方</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → Cookie session=abc 在三个域名间共享</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 不被视为第三方 Cookie</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>First-Party Sets 解决了企业多域名场景下的 Cookie 共享问题。没有它，第三方 Cookie 淘汰后，brand.com 和 shop.brand.com 之间的会话共享会变成「第三方 Cookie」而被阻止。这个机制需要域名在 .well-known/first-party-set 声明成员关系，且 Chrome 验证后才生效。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=168-storage-access-api>16.8 Storage Access API<a href=#168-storage-access-api class=hash-link aria-label="16.8 Storage Access API的直接链接" title="16.8 Storage Access API的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1681-用户授权的跨站存储访问>16.8.1 用户授权的跨站存储访问<a href=#1681-用户授权的跨站存储访问 class=hash-link aria-label="16.8.1 用户授权的跨站存储访问的直接链接" title="16.8.1 用户授权的跨站存储访问的直接链接" translate=no>​</a></h3>
+<p>Storage Access API 让嵌入的第三方内容通过用户授权来访问其第一方存储。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// 第三方 iframe 中请求存储访问</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>requestStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>then</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 现在可以访问第一方 Cookie</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'获得存储访问权限'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>.</span><span class="token keyword control-flow" style=color:#00009f>catch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token arrow operator" style=color:#393A34>=></span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 用户拒绝或浏览器阻止</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'存储访问被拒绝'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 检查是否有权限</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> hasAccess </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>hasStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Storage Access API 流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1. 第三方 iframe 调用 requestStorageAccess()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2. 浏览器检查是否之前已授权</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 已授权：直接返回</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 未授权：弹出权限提示</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3. 用户选择</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 同意：iframe 获得第一方 Cookie 访问</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → 拒绝：Promise reject</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4. 权限有效期：30 天</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>第三方 Cookie<th>Storage Access API<tbody><tr><td>用户感知<td>无<td>有（弹窗）<tr><td>粒度<td>全局<td>按站点<tr><td>控制<td>浏览器设置<td>用户逐次授权<tr><td>追踪风险<td>高<td>低</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=169-存储分区>16.9 存储分区<a href=#169-存储分区 class=hash-link aria-label="16.9 存储分区的直接链接" title="16.9 存储分区的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1691-storage-partitioning>16.9.1 Storage Partitioning<a href=#1691-storage-partitioning class=hash-link aria-label="16.9.1 Storage Partitioning的直接链接" title="16.9.1 Storage Partitioning的直接链接" translate=no>​</a></h3>
+<p>存储分区是浏览器将 IndexedDB、LocalStorage、Cache Storage 等按顶级站点分区的机制。这与 CHIPS 的 Cookie 分区类似，但覆盖所有存储 API。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">存储分区结构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  顶级站点: https://site-a.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ IndexedDB</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   ├─ site-a.com 的数据库</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   └─ embedded-third-party.com 的数据库（分区）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├─ LocalStorage</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   ├─ site-a.com 的存储</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │   └─ embedded-third-party.com 的存储（分区）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └─ Cache Storage</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        └─ 同样分区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  顶级站点: https://site-b.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └─ embedded-third-party.com 的存储</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        → 与 site-a 中的完全隔离</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>存储 API<th>分区前<th>分区后<tbody><tr><td>IndexedDB<td>按域名<td>按顶级站点 + 域名<tr><td>LocalStorage<td>按域名<td>按顶级站点 + 域名<tr><td>Cache Storage<td>按域名<td>按顶级站点 + 域名<tr><td>Cookie<td>按域名<td>按顶级站点 + 域名（CHIPS）</table>
+<blockquote>
+<p>存储分区是隐私保护的底层机制。它确保第三方服务在不同网站中的存储互相隔离，无法通过共享存储来追踪用户。这对于 Service Worker 也有影响——嵌入的第三方 Service Worker 在不同网站上会注册为不同的实例。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1610-隐私预算>16.10 隐私预算<a href=#1610-隐私预算 class=hash-link aria-label="16.10 隐私预算的直接链接" title="16.10 隐私预算的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16101-privacy-budget-概念>16.10.1 Privacy Budget 概念<a href=#16101-privacy-budget-概念 class=hash-link aria-label="16.10.1 Privacy Budget 概念的直接链接" title="16.10.1 Privacy Budget 概念的直接链接" translate=no>​</a></h3>
+<p>隐私预算（Privacy Budget）是一种理论框架，限制网站在给定时间内可以获取的用户信息量。即使每个 API 单独看是安全的，组合使用多个 API 仍可能产生指纹。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">隐私预算模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  每个 API 调用消耗一定「隐私预算」</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  User-Agent:        2 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  屏幕分辨率:        5 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  时区:             3 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  语言:             2 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Canvas 指纹:      15 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  WebGL 指纹:       12 bits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  总预算: 256 bits / 天</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  超过预算 → API 返回通用值或报错</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>隐私机制<th>保护对象<th>状态<tbody><tr><td>第三方 Cookie 淘汰<td>跨站追踪<td>进行中<tr><td>CHIPS<td>Cookie 跨站<td>已实现<tr><td>存储分区<td>存储跨站<td>已实现<tr><td>Privacy Budget<td>指纹追踪<td>研究中</table>
+<blockquote>
+<p>隐私预算目前还在研究阶段，但代表了隐私保护的终极方向。它的核心思想是「不可能完全阻止指纹，但可以限制指纹的精度」。通过限制每天可获取的信息量，即使用户被指纹识别，也无法长期追踪。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1611-cookie-属性完整参考>16.11 Cookie 属性完整参考<a href=#1611-cookie-属性完整参考 class=hash-link aria-label="16.11 Cookie 属性完整参考的直接链接" title="16.11 Cookie 属性完整参考的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16111-cookie-属性详解>16.11.1 Cookie 属性详解<a href=#16111-cookie-属性详解 class=hash-link aria-label="16.11.1 Cookie 属性详解的直接链接" title="16.11.1 Cookie 属性详解的直接链接" translate=no>​</a></h3>
+<p>现代 Cookie 有多个属性控制安全性和行为。理解每个属性的作用是 Web 安全的基础。</p>
+<div class="language-http codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-http codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Set-Cookie: session=abc123; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Domain=.example.com; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Path=/; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Max-Age=86400; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Secure; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  HttpOnly; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  SameSite=Lax; </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Partitioned</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>属性<th>说明<th>示例<tbody><tr><td>Domain<td>作用域名<td>.example.com<tr><td>Path<td>作用路径<td>/api<tr><td>Max-Age<td>过期时间（秒）<td>86400<tr><td>Expires<td>过期时间（日期）<td>Wed, 09 Jun 2026<tr><td>Secure<td>仅 HTTPS<td>—<tr><td>HttpOnly<td>JS 不可访问<td>—<tr><td>SameSite<td>跨站策略<td>Strict/Lax/None<tr><td>Partitioned<td>分区存储<td>—</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16112-samesite-属性详解>16.11.2 SameSite 属性详解<a href=#16112-samesite-属性详解 class=hash-link aria-label="16.11.2 SameSite 属性详解的直接链接" title="16.11.2 SameSite 属性详解的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">SameSite 语义</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Strict:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 完全禁止跨站发送 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 从其他网站点击链接过来也不带 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 最安全但体验差</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Lax（Chrome 默认）:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 顶级导航的 GET 请求带 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 其他跨站请求不带</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 平衡安全与体验</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">None:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 允许跨站发送</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 必须同时设置 Secure</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  → 第三方 Cookie 场景</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>Strict<th>Lax<th>None<tbody><tr><td>同站请求<td>发送<td>发送<td>发送<tr><td>跨站链接<td>不发送<td>发送(GET)<td>发送<tr><td>跨站 POST<td>不发送<td>不发送<td>发送<tr><td>跨站 iframe<td>不发送<td>不发送<td>发送</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1612-privacy-sandbox-提案>16.12 Privacy Sandbox 提案<a href=#1612-privacy-sandbox-提案 class=hash-link aria-label="16.12 Privacy Sandbox 提案的直接链接" title="16.12 Privacy Sandbox 提案的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16121-privacy-sandbox-全景>16.12.1 Privacy Sandbox 全景<a href=#16121-privacy-sandbox-全景 class=hash-link aria-label="16.12.1 Privacy Sandbox 全景的直接链接" title="16.12.1 Privacy Sandbox 全景的直接链接" translate=no>​</a></h3>
+<p>Privacy Sandbox 是 Google 提出的一系列隐私提案，旨在第三方 Cookie 淘汰后维持广告生态运作。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Privacy Sandbox 提案分类</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">广告相关：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Topics API → 基于兴趣的广告（替代第三方 Cookie）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Protected Audience API → 再营销广告</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Attribution Reporting → 广告归因</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">反欺诈：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Private State Tokens → 反机器人</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Trust Tokens → 信任令牌</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">其他：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  FedCM → 联邦登录</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Storage Access API → 跨站存储授权</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>提案<th>替代功能<th>状态<tbody><tr><td>Topics API<td>兴趣追踪<td>试用中<tr><td>Protected Audience<td>再营销<td>试用中<tr><td>Attribution Reporting<td>转化追踪<td>试用中<tr><td>FedCM<td>跨站登录<td>试用中<tr><td>Private State Tokens<td>反欺诈<td>试用中</table>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// Topics API 示例</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 浏览器根据用户浏览历史生成兴趣主题</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">b</span><span class="token plain"> </span><span class="token maybe-class-name">Topics</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>observe</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>topics</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>'sports'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'tech'</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// 广告商可以获取用户主题（最近 3 周）</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> topics </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">b</span><span class="token plain"> </span><span class="token maybe-class-name">Topics</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>getTopics</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic>// [{ topic: 'sports', version: 'v1' }]</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Privacy Sandbox 的核心思想是「让浏览器成为中间人」。用户数据留在浏览器中，不再需要第三方追踪。广告商只能获取聚合后的、经过差分隐私处理的信号。这比第三方 Cookie 隐私性更好，但功能上也更有限。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1613-浏览器指纹防护>16.13 浏览器指纹防护<a href=#1613-浏览器指纹防护 class=hash-link aria-label="16.13 浏览器指纹防护的直接链接" title="16.13 浏览器指纹防护的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16131-指纹技术分类>16.13.1 指纹技术分类<a href=#16131-指纹技术分类 class=hash-link aria-label="16.13.1 指纹技术分类的直接链接" title="16.13.1 指纹技术分类的直接链接" translate=no>​</a></h3>
+<p>浏览器指纹（Browser Fingerprinting）是一种不依赖 Cookie 的用户追踪技术。它通过收集浏览器和设备的特征信息，生成唯一标识。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">指纹技术分类</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 基本指纹（精度：中）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → User-Agent、语言、时区</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 屏幕分辨率、色深</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 浏览器版本、插件列表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. Canvas 指纹（精度：高）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 绘制特定图形，读取像素值</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不同 GPU/驱动渲染结果不同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 识别率 > 99%</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. WebGL 指纹（精度：高）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 读取 GPU 信息和渲染特征</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → GPU 型号 + 驱动版本 = 唯一标识</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 音频指纹（精度：高）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → AudioContext 生成音频信号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不同音频硬件产生不同结果</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 字体指纹（精度：中）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 检测已安装字体列表</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 通过测量文字宽度判断字体</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指纹技术<th>识别率<th>用户提供信息<tbody><tr><td>Canvas<td>> 99%<td>不可拒绝<tr><td>WebGL<td>> 98%<td>不可拒绝<tr><td>Audio<td>> 95%<td>不可拒绝<tr><td>字体<td>> 85%<td>不可拒绝<tr><td>基本指纹<td>> 70%<td>部分可拒绝</table>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// Canvas 指纹原理</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>canvasFingerprint</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> canvas </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>createElement</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'canvas'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> ctx </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> canvas</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>getContext</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'2d'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">textBaseline</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'top'</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">font</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'16px Arial'</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ctx</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>fillText</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'Browser Fingerprint 🔍'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>return</span><span class="token plain"> canvas</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>toDataURL</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"> </span><span class="token comment" style=color:#999988;font-style:italic>// 不同设备产生不同结果</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16132-chrome-的指纹防护>16.13.2 Chrome 的指纹防护<a href=#16132-chrome-的指纹防护 class=hash-link aria-label="16.13.2 Chrome 的指纹防护的直接链接" title="16.13.2 Chrome 的指纹防护的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Chrome 指纹防护策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 主动冻结（Freezing）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 冻结 User-Agent 字符串</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 减少 UA 中的版本信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → UA-CH（User-Agent Client Hints）替代</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 噪声注入</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Canvas 指纹添加随机噪声</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 每次 API 调用结果略有不同</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 仅在隐身模式启用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 权限限制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 需要 Permission 的 API 统一管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Notification、Geolocation 等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 拒绝默认 = 无法指纹</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 定期清理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Site Data 清理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → IndexedDB、LocalStorage 等</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 减少可追踪时间窗口</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>指纹防护的核心矛盾是「可用性 vs 隐私」。完全阻止指纹需要禁用 Canvas、WebGL、Audio 等 API，但这样会导致大量网站无法使用。Chrome 的策略是逐步减少可指纹的信息量（如冻结 UA），同时在隐身模式中提供更强的防护。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1614-第三方-cookie-淘汰>16.14 第三方 Cookie 淘汰<a href=#1614-第三方-cookie-淘汰 class=hash-link aria-label="16.14 第三方 Cookie 淘汰的直接链接" title="16.14 第三方 Cookie 淘汰的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16141-淘汰时间线与影响>16.14.1 淘汰时间线与影响<a href=#16141-淘汰时间线与影响 class=hash-link aria-label="16.14.1 淘汰时间线与影响的直接链接" title="16.14.1 淘汰时间线与影响的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">第三方 Cookie 淘汰时间线</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2019: Google 宣布计划淘汰第三方 Cookie</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2020: Sandcastle API 提出后改名 Privacy Sandbox</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2022: Topics API、Protected Audience API 开始试用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2024: 第三方 Cookie 逐步淘汰</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → Phase 1: 1% 用户禁用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     → Phase 2: 100% 用户禁用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2025+: 完全淘汰</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">影响范围：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  广告追踪: 受影响最大</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  跨站登录: 部分受影响（FedCM 替代）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  第三方组件: 需要适配</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>第三方 Cookie 用途<th>替代方案<tbody><tr><td>广告追踪<td>跨站追踪用户<td>Topics API<tr><td>再营销<td>标记访客<td>Protected Audience<tr><td>转化追踪<td>测量广告效果<td>Attribution Reporting<tr><td>跨站登录<td>保持登录状态<td>FedCM<tr><td>嵌入内容<td>个性化内容<td>Storage Access API</table>
+<blockquote>
+<p>第三方 Cookie 淘汰不是「禁用追踪」，而是「改变追踪方式」。从「服务端追踪」（第三方 Cookie）转向「客户端追踪」（Privacy Sandbox API）。用户数据不再发送到广告商服务器，而是由浏览器本地处理，只返回聚合后的、差分隐私保护的信号。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1615-存储分区与隔离>16.15 存储分区与隔离<a href=#1615-存储分区与隔离 class=hash-link aria-label="16.15 存储分区与隔离的直接链接" title="16.15 存储分区与隔离的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16151-storage-partitioning>16.15.1 Storage Partitioning<a href=#16151-storage-partitioning class=hash-link aria-label="16.15.1 Storage Partitioning的直接链接" title="16.15.1 Storage Partitioning的直接链接" translate=no>​</a></h3>
+<p>存储分区（Storage Partitioning）是 Chrome 的新安全特性。它将每个网站的存储按顶级站点隔离，防止跨站追踪。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">存储分区前</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">site-a.com 嵌入 youtube.com iframe</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">site-b.com 也嵌入 youtube.com iframe</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">YouTube 在两个站点中共享同一个 LocalStorage</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ 可用于跨站追踪用户</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">存储分区后</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">site-a.com 嵌入 youtube.com → 分区 A</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">site-b.com 嵌入 youtube.com → 分区 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">YouTube 在两个站点中看到不同的 LocalStorage</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">→ 无法跨站追踪</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>存储类型<th>分区前<th>分区后<tbody><tr><td>LocalStorage<td>按 origin 共享<td>按顶级站点分区<tr><td>IndexedDB<td>按 origin 共享<td>按顶级站点分区<tr><td>SessionStorage<td>按 origin 共享<td>按顶级站点分区<tr><td>Cache API<td>按 origin 共享<td>按顶级站点分区<tr><td>Cookie<td>按 domain 共享<td>CHIPS 分区</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16152-storage-access-api>16.15.2 Storage Access API<a href=#16152-storage-access-api class=hash-link aria-label="16.15.2 Storage Access API的直接链接" title="16.15.2 Storage Access API的直接链接" translate=no>​</a></h3>
+<p>存储分区后，嵌入式内容需要跨分区访问存储时，使用 Storage Access API 请求权限。</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// Storage Access API</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>requestStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>if</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">requestStorageAccess</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword control-flow" style=color:#00009f>try</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> hasAccess </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>document</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>requestStorageAccess</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token keyword control-flow" style=color:#00009f>if</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">hasAccess</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic>// 现在可以访问未分区的存储</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token dom variable" style=color:#36acaa>localStorage</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>getItem</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'sharedKey'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>catch</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">e</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token comment" style=color:#999988;font-style:italic>// 用户拒绝了存储访问请求</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token console class-name">console</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>log</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'Storage access denied'</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Storage Access API 是存储分区与用户体验之间的平衡点。完全禁止跨分区访问会破坏嵌入式应用（如 YouTube、Google Maps），但无条件允许又等于没有分区。Storage Access API 让用户决定是否信任嵌入内容，类似权限提示。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1616-fedcm-联邦登录>16.16 FedCM 联邦登录<a href=#1616-fedcm-联邦登录 class=hash-link aria-label="16.16 FedCM 联邦登录的直接链接" title="16.16 FedCM 联邦登录的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16161-fedcm-原理>16.16.1 FedCM 原理<a href=#16161-fedcm-原理 class=hash-link aria-label="16.16.1 FedCM 原理的直接链接" title="16.16.1 FedCM 原理的直接链接" translate=no>​</a></h3>
+<p>FedCM（Federated Credential Management，联邦凭证管理）是 Privacy Sandbox 的登录提案。它替代第三方 Cookie 实现跨站单点登录，无需第三方 Cookie。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">FedCM 登录流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 用户访问 site-a.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → site-a.com 调用 navigator.credentials.get()</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 指定 identity provider: idp.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 浏览器弹出登录提示</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 显示 IdP 名称和图标</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 用户选择 IdP 账号</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 浏览器与 IdP 通信</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 获取 ID Token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 不经过 site-a.com 的 JavaScript</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 防止 IdP 追踪用户在 site-a.com 的行为</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. site-a.com 获取 Token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 验证 Token 完成登录</span><br/></div></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic>// FedCM 客户端调用</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>async</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>function</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>loginWithIdP</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword" style=color:#00009f>const</span><span class="token plain"> credential </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token dom variable" style=color:#36acaa>navigator</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">credentials</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>get</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token literal-property property" style=color:#36acaa>identity</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token literal-property property" style=color:#36acaa>providers</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token literal-property property" style=color:#36acaa>configURL</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'https://idp.com/fedcm.json'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token literal-property property" style=color:#36acaa>clientId</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'site-a-client-id'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// credential.token = ID Token</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic>// 发送到 site-a.com 服务器验证</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token keyword control-flow" style=color:#00009f>await</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>fetch</span><span class="token punctuation" style=color:#393A34>(</span><span class="token string" style=color:#e3116c>'/api/login'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token literal-property property" style=color:#36acaa>method</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'POST'</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token literal-property property" style=color:#36acaa>body</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token known-class-name class-name">JSON</span><span class="token punctuation" style=color:#393A34>.</span><span class="token method function property-access" style=color:#d73a49>stringify</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token literal-property property" style=color:#36acaa>token</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> credential</span><span class="token punctuation" style=color:#393A34>.</span><span class="token property-access">token</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对比<th>第三方 Cookie 登录<th>FedCM<tbody><tr><td>追踪风险<td>高<td>低<tr><td>用户体验<td>重定向<td>原生弹窗<tr><td>实现复杂度<td>中<td>低<tr><td>隐私保护<td>无<td>有</table>
+<blockquote>
+<p>FedCM 的核心优势是「中介隔离」。浏览器作为用户和 IdP 之间的中介，IdP 不知道用户在哪个网站上登录。这切断了 IdP 的追踪能力。用户也不需要经历烦人的重定向流程，直接在当前页面选择 IdP 账号即可。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>知识模块<th>核心内容<th>安全/隐私意义<tbody><tr><td>Cookie 安全属性<td>Secure/HttpOnly/SameSite<td>多维防护<tr><td>第三方 Cookie<td>跨站追踪的基础<td>正在被淘汰<tr><td>Privacy Sandbox<td>Topics/Protected Audience<td>隐私保护替代<tr><td>CHIPS<td>分区 Cookie<td>嵌入式服务方案<tr><td>Storage Access API<td>请求式存储访问<td>用户授权<tr><td>存储分区<td>所有存储 API<td>防跨站关联</table>
+<p>觉得有用？收藏起来，下次处理 Cookie 和隐私问题时直接翻。</p>
+<p>你的项目还在用第三方 Cookie 吗？有迁移计划吗？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们进入性能优化，讲 Core Web Vitals。系列进度 16/24。</p>
+<p>下期预告：第 17 章「Core Web Vitals 与性能指标」。我们会拆解 LCP（Largest Contentful Paint，最大内容绘制）、INP（Interaction to Next Paint，交互到下次绘制）、CLS（Cumulative Layout Shift，累积布局偏移）三大指标的测量原理和优化策略。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_16.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第15章 浏览器沙箱与站点隔离</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第17章 Core Web Vitals 与性能指标</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#161-cookie-的安全属性 class="table-of-contents__link toc-highlight">16.1 Cookie 的安全属性</a><ul><li><a href=#1611-cookie-属性总览 class="table-of-contents__link toc-highlight">16.1.1 Cookie 属性总览</a><li><a href=#1612-secure-属性 class="table-of-contents__link toc-highlight">16.1.2 Secure 属性</a><li><a href=#1613-httponly-属性 class="table-of-contents__link toc-highlight">16.1.3 HttpOnly 属性</a><li><a href=#1614-samesite-属性详解 class="table-of-contents__link toc-highlight">16.1.4 SameSite 属性详解</a></ul><li><a href=#162-第三方-cookie-的消亡 class="table-of-contents__link toc-highlight">16.2 第三方 Cookie 的消亡</a><ul><li><a href=#1621-什么是第三方-cookie class="table-of-contents__link toc-highlight">16.2.1 什么是第三方 Cookie</a><li><a href=#1622-第三方-cookie-的问题 class="table-of-contents__link toc-highlight">16.2.2 第三方 Cookie 的问题</a><li><a href=#1623-chrome-的第三方-cookie-淘汰路线 class="table-of-contents__link toc-highlight">16.2.3 Chrome 的第三方 Cookie 淘汰路线</a></ul><li><a href=#163-privacy-sandbox class="table-of-contents__link toc-highlight">16.3 Privacy Sandbox</a><ul><li><a href=#1631-privacy-sandbox-的目标 class="table-of-contents__link toc-highlight">16.3.1 Privacy Sandbox 的目标</a><li><a href=#1632-topics-api class="table-of-contents__link toc-highlight">16.3.2 Topics API</a><li><a href=#1633-chips分区-cookie class="table-of-contents__link toc-highlight">16.3.3 CHIPS（分区 Cookie）</a><li><a href=#1634-protected-audience-apiturtledove class="table-of-contents__link toc-highlight">16.3.4 Protected Audience API（TURTLEDOVE）</a><li><a href=#1635-attribution-reporting-api class="table-of-contents__link toc-highlight">16.3.5 Attribution Reporting API</a></ul><li><a href=#164-cookie-替代方案 class="table-of-contents__link toc-highlight">16.4 Cookie 替代方案</a><ul><li><a href=#1641-认证方案演进 class="table-of-contents__link toc-highlight">16.4.1 认证方案演进</a><li><a href=#1642-storage-access-api class="table-of-contents__link toc-highlight">16.4.2 Storage Access API</a></ul><li><a href=#165-浏览器存储与隐私 class="table-of-contents__link toc-highlight">16.5 浏览器存储与隐私</a><ul><li><a href=#1651-存储-api-的隐私考量 class="table-of-contents__link toc-highlight">16.5.1 存储 API 的隐私考量</a><li><a href=#1652-存储分区 class="table-of-contents__link toc-highlight">16.5.2 存储分区</a><li><a href=#1653-service-worker-与隐私 class="table-of-contents__link toc-highlight">16.5.3 Service Worker 与隐私</a></ul><li><a href=#166-设备指纹与反指纹 class="table-of-contents__link toc-highlight">16.6 设备指纹与反指纹</a><ul><li><a href=#1661-设备指纹技术 class="table-of-contents__link toc-highlight">16.6.1 设备指纹技术</a><li><a href=#1662-chrome-的反指纹措施 class="table-of-contents__link toc-highlight">16.6.2 Chrome 的反指纹措施</a></ul><li><a href=#166-chips-分区-cookie class="table-of-contents__link toc-highlight">16.6 CHIPS 分区 Cookie</a><ul><li><a href=#1661-什么是分区-cookie class="table-of-contents__link toc-highlight">16.6.1 什么是分区 Cookie</a></ul><li><a href=#167-第一方集机制 class="table-of-contents__link toc-highlight">16.7 第一方集机制</a><ul><li><a href=#1671-first-party-sets class="table-of-contents__link toc-highlight">16.7.1 First-Party Sets</a></ul><li><a href=#168-storage-access-api class="table-of-contents__link toc-highlight">16.8 Storage Access API</a><ul><li><a href=#1681-用户授权的跨站存储访问 class="table-of-contents__link toc-highlight">16.8.1 用户授权的跨站存储访问</a></ul><li><a href=#169-存储分区 class="table-of-contents__link toc-highlight">16.9 存储分区</a><ul><li><a href=#1691-storage-partitioning class="table-of-contents__link toc-highlight">16.9.1 Storage Partitioning</a></ul><li><a href=#1610-隐私预算 class="table-of-contents__link toc-highlight">16.10 隐私预算</a><ul><li><a href=#16101-privacy-budget-概念 class="table-of-contents__link toc-highlight">16.10.1 Privacy Budget 概念</a></ul><li><a href=#1611-cookie-属性完整参考 class="table-of-contents__link toc-highlight">16.11 Cookie 属性完整参考</a><ul><li><a href=#16111-cookie-属性详解 class="table-of-contents__link toc-highlight">16.11.1 Cookie 属性详解</a><li><a href=#16112-samesite-属性详解 class="table-of-contents__link toc-highlight">16.11.2 SameSite 属性详解</a></ul><li><a href=#1612-privacy-sandbox-提案 class="table-of-contents__link toc-highlight">16.12 Privacy Sandbox 提案</a><ul><li><a href=#16121-privacy-sandbox-全景 class="table-of-contents__link toc-highlight">16.12.1 Privacy Sandbox 全景</a></ul><li><a href=#1613-浏览器指纹防护 class="table-of-contents__link toc-highlight">16.13 浏览器指纹防护</a><ul><li><a href=#16131-指纹技术分类 class="table-of-contents__link toc-highlight">16.13.1 指纹技术分类</a><li><a href=#16132-chrome-的指纹防护 class="table-of-contents__link toc-highlight">16.13.2 Chrome 的指纹防护</a></ul><li><a href=#1614-第三方-cookie-淘汰 class="table-of-contents__link toc-highlight">16.14 第三方 Cookie 淘汰</a><ul><li><a href=#16141-淘汰时间线与影响 class="table-of-contents__link toc-highlight">16.14.1 淘汰时间线与影响</a></ul><li><a href=#1615-存储分区与隔离 class="table-of-contents__link toc-highlight">16.15 存储分区与隔离</a><ul><li><a href=#16151-storage-partitioning class="table-of-contents__link toc-highlight">16.15.1 Storage Partitioning</a><li><a href=#16152-storage-access-api class="table-of-contents__link toc-highlight">16.15.2 Storage Access API</a></ul><li><a href=#1616-fedcm-联邦登录 class="table-of-contents__link toc-highlight">16.16 FedCM 联邦登录</a><ul><li><a href=#16161-fedcm-原理 class="table-of-contents__link toc-highlight">16.16.1 FedCM 原理</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

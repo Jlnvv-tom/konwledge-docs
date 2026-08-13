@@ -1,0 +1,578 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ai-practice/ai-product-manager/chapter_2" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第2章 高级提示词工程 + AI 产品评测 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第2章 高级提示词工程 + AI 产品评测 | 知识库"/><meta data-rh=true name=description content='提示词写不好，模型再强也白搭。我见过太多产品经理直接把用户问题丢给大模型，然后抱怨"AI不行"。其实不是AI不行，是你没给AI足够的上下文和指令。'/><meta data-rh=true property=og:description content='提示词写不好，模型再强也白搭。我见过太多产品经理直接把用户问题丢给大模型，然后抱怨"AI不行"。其实不是AI不行，是你没给AI足够的上下文和指令。'/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/","name":"AI 产品经理特训营","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2","name":"第2章 高级提示词工程 + AI 产品评测","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/ai-practice/><span title="🤖 AI 应用与实战" class=linkLabel_WmDU>🤖 AI 应用与实战</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-learning/><span title="AI Agent 学习" class=categoryLinkLabel_W154>AI Agent 学习</span></a><button aria-label="展开侧边栏分类 'AI Agent 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-enterprise/><span title="AI Agent 企业应用实战" class=categoryLinkLabel_W154>AI Agent 企业应用实战</span></a><button aria-label="展开侧边栏分类 'AI Agent 企业应用实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-fullstack/><span title="AI Agent 全栈开发" class=categoryLinkLabel_W154>AI Agent 全栈开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 全栈开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-agent-native/><span title="AI Agent 原生开发" class=categoryLinkLabel_W154>AI Agent 原生开发</span></a><button aria-label="展开侧边栏分类 'AI Agent 原生开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-fed/><span title="FDE 角色与职业" class=categoryLinkLabel_W154>FDE 角色与职业</span></a><button aria-label="展开侧边栏分类 'FDE 角色与职业'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-interview/><span title="Agent 面试题" class=categoryLinkLabel_W154>Agent 面试题</span></a><button aria-label="展开侧边栏分类 'Agent 面试题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/agent-tools/><span title="AI Agent 工具" class=categoryLinkLabel_W154>AI Agent 工具</span></a><button aria-label="展开侧边栏分类 'AI Agent 工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-audio/><span title="AI 语音与音乐" class=categoryLinkLabel_W154>AI 语音与音乐</span></a><button aria-label="展开侧边栏分类 'AI 语音与音乐'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-image/><span title="AI 绘画教程" class=categoryLinkLabel_W154>AI 绘画教程</span></a><button aria-label="展开侧边栏分类 'AI 绘画教程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-video/><span title="AI 视频生成" class=categoryLinkLabel_W154>AI 视频生成</span></a><button aria-label="展开侧边栏分类 'AI 视频生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-short-play/><span title="AI 漫剧与短剧" class=categoryLinkLabel_W154>AI 漫剧与短剧</span></a><button aria-label="展开侧边栏分类 'AI 漫剧与短剧'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-multimodal/><span title="AI 多模态生成" class=categoryLinkLabel_W154>AI 多模态生成</span></a><button aria-label="展开侧边栏分类 'AI 多模态生成'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-tools/><span title="AI 提效工具" class=categoryLinkLabel_W154>AI 提效工具</span></a><button aria-label="展开侧边栏分类 'AI 提效工具'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span title="AI 产品经理特训营" class=categoryLinkLabel_W154>AI 产品经理特训营</span></a><button aria-label="折叠侧边栏分类 'AI 产品经理特训营'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_1><span title="第1章 AI 行业认知与首个 MVP 实战" class=linkLabel_WmDU>第1章 AI 行业认知与首个 MVP 实战</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_2><span title="第2章 高级提示词工程 + AI 产品评测" class=linkLabel_WmDU>第2章 高级提示词工程 + AI 产品评测</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_3><span title="第3章 RAG 与知识库：让大模型更懂业务" class=linkLabel_WmDU>第3章 RAG 与知识库：让大模型更懂业务</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_4><span title="第4章 Agent 设计方法论：打造终极进化智能体" class=linkLabel_WmDU>第4章 Agent 设计方法论：打造终极进化智能体</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_5><span title="第5章 机会捕捉：AI 产品市场与需求分析" class=linkLabel_WmDU>第5章 机会捕捉：AI 产品市场与需求分析</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_6><span title="第6章 产品打造：AI 产品的市场选择、设计与数据驱动" class=linkLabel_WmDU>第6章 产品打造：AI 产品的市场选择、设计与数据驱动</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_7><span title="第7章 AI 核心要素：产品经理的算法与算力课" class=linkLabel_WmDU>第7章 AI 核心要素：产品经理的算法与算力课</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_8><span title="第8章 AI 数据构建：知识库、评测与数据闭环" class=linkLabel_WmDU>第8章 AI 数据构建：知识库、评测与数据闭环</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_9><span title="第9章 AI 润物无声：重塑生活、学习与娱乐" class=linkLabel_WmDU>第9章 AI 润物无声：重塑生活、学习与娱乐</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_10><span title="第10章 AI 基石之力：重构零售、办公、编程" class=linkLabel_WmDU>第10章 AI 基石之力：重构零售、办公、编程</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_11><span title="第11章 AI 破界赋能：引领专业服务创新" class=linkLabel_WmDU>第11章 AI 破界赋能：引领专业服务创新</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_12><span title="第12章 AI 产品经理求职指南" class=linkLabel_WmDU>第12章 AI 产品经理求职指南</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_13><span title="第13章 AI 前沿动态与行业洞察" class=linkLabel_WmDU>第13章 AI 前沿动态与行业洞察</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/product-course/><span title=产品经理课 class=categoryLinkLabel_W154>产品经理课</span></a><button aria-label="展开侧边栏分类 '产品经理课'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-sdd/><span title="AI-SDD 实战" class=categoryLinkLabel_W154>AI-SDD 实战</span></a><button aria-label="展开侧边栏分类 'AI-SDD 实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/ai-practice/ai-ml-institutions/><span title="AI/ML 研究机构" class=categoryLinkLabel_W154>AI/ML 研究机构</span></a><button aria-label="展开侧边栏分类 'AI/ML 研究机构'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/驾驭工程><span title=驾驭工程 class=categoryLinkLabel_W154>驾驭工程</span></a><button aria-label="展开侧边栏分类 '驾驭工程'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/缩放定律><span title=缩放定律 class=categoryLinkLabel_W154>缩放定律</span></a><button aria-label="展开侧边栏分类 '缩放定律'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/category/思考><span title=思考 class=categoryLinkLabel_W154>思考</span></a><button aria-label="展开侧边栏分类 '思考'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/ai-practice/ai-product-manager/><span>AI 产品经理特训营</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第2章 高级提示词工程 + AI 产品评测</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第2章 高级提示词工程 + AI 产品评测</h1></header>
+<p>提示词写不好，模型再强也白搭。我见过太多产品经理直接把用户问题丢给大模型，然后抱怨"AI不行"。其实不是AI不行，是你没给AI足够的上下文和指令。</p>
+<p>我是怕浪猫，这章讲提示词工程和AI产品评测——驾驭大模型的两项核心能力。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-提示词工程从基础到进阶>2.1 提示词工程：从基础到进阶<a href=#21-提示词工程从基础到进阶 class=hash-link aria-label="2.1 提示词工程：从基础到进阶的直接链接" title="2.1 提示词工程：从基础到进阶的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=基础提示词工程概念与3大框架>基础提示词工程：概念与3大框架<a href=#基础提示词工程概念与3大框架 class=hash-link aria-label=基础提示词工程：概念与3大框架的直接链接 title=基础提示词工程：概念与3大框架的直接链接 translate=no>​</a></h3>
+<p>提示词（Prompt）就是你给大模型的输入。好的提示词能让模型输出质量提升数倍，差的提示词让模型输出随机且不可控。</p>
+<p>提示词工程不是"写一段话"，而是一种结构化的思维方式。3大基础框架：</p>
+<p><strong>框架一：CRISPE</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>元素<th>含义<th>示例<tbody><tr><td>C - Capacity<td>角色能力<td>你是一位资深市场分析师<tr><td>R - Request<td>具体请求<td>分析以下产品的市场定位<tr><td>I - Input<td>输入信息<td>产品名称：XXX，目标用户：XXX<tr><td>S - Steps<td>执行步骤<td>1.分析竞品 2.评估差异化 3.给出建议<tr><td>P - Presentation<td>输出格式<td>用表格呈现，附总结<tr><td>E - Example<td>示例<td>参考以下格式...</table>
+<p><strong>框架二：CO-STAR</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>元素<th>含义<th>示例<tbody><tr><td>C - Context<td>背景上下文<td>我们是一家B2B SaaS公司<tr><td>O - Objective<td>目标<td>撰写一封客户开发邮件<tr><td>S - Style<td>风格<td>专业但不生硬<tr><td>T - Tone<td>语气<td>自信、尊重<tr><td>A - Audience<td>受众<td>企业CTO<tr><td>R - Response<td>响应格式<td>邮件正文，不超过200字</table>
+<p><strong>框架三：RTF（最简洁）</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>元素<th>含义<th>示例<tbody><tr><td>R - Role<td>角色<td>你是客服专家<tr><td>T - Task<td>任务<td>回答用户关于退货的问题<tr><td>F - Format<td>格式<td>用3句话以内回答，附来源</table>
+<p>实际使用中，CRISPE最全面，适合复杂任务；CO-STAR适合内容创作类任务；RTF最简洁，适合快速原型。建议从RTF开始，逐步过渡到CRISPE。</p>
+<blockquote>
+<p>提示词不是"写一段话"，是"给模型一张完整的任务说明书"。说明书越清楚，结果越可控。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=思维链cot与思维树tot>思维链（CoT）与思维树（ToT）<a href=#思维链cot与思维树tot class=hash-link aria-label=思维链（CoT）与思维树（ToT）的直接链接 title=思维链（CoT）与思维树（ToT）的直接链接 translate=no>​</a></h3>
+<p><strong>思维链（Chain-of-Thought）</strong></p>
+<p>让模型"一步一步想"，而不是直接给答案。这是提升模型推理能力最简单有效的方法。</p>
+<p>不加思维链：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">问：一个商店有23个苹果，卖了15个，又进货了8个，现在有多少个？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">答：16个</span><br/></div></code></pre></div></div>
+<p>加思维链：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">问：一个商店有23个苹果，卖了15个，又进货了8个，现在有多少个？请一步一步思考。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">答：商店原有23个苹果。卖出15个后，剩余23-15=8个。又进货8个，现在有8+8=16个。答案是16个。</span><br/></div></code></pre></div></div>
+<p>思维链的3种使用方式：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方式<th>做法<th>适用场景<tbody><tr><td>Zero-shot CoT<td>加"请一步一步思考"<td>简单推理<tr><td>Few-shot CoT<td>给几个带推理过程的例子<td>特定类型推理<tr><td>Auto CoT<td>让模型自己生成推理链<td>未知推理类型</table>
+<p><strong>思维树（Tree-of-Thought）</strong></p>
+<p>思维链是线性的——一条路走到底。思维树是树状的——同时探索多条路径，选择最优解。</p>
+<p>思维树的核心思路：</p>
+<ol>
+<li class="">生成多个可能的下一步（分支）</li>
+<li class="">评估每个分支的价值</li>
+<li class="">选择最有前途的分支继续</li>
+<li class="">重复直到找到满意答案</li>
+</ol>
+<p>思维树适合需要"搜索最优解"的任务，比如策略规划、创意生成。缺点是token消耗大，成本高。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=自洽性推理self-consistency>自洽性推理（Self-Consistency）<a href=#自洽性推理self-consistency class=hash-link aria-label=自洽性推理（Self-Consistency）的直接链接 title=自洽性推理（Self-Consistency）的直接链接 translate=no>​</a></h3>
+<p>自洽性推理是思维链的增强版：对同一个问题生成多个思维链，然后选择最一致的答案。</p>
+<p>具体步骤：</p>
+<ol>
+<li class="">对同一问题生成N条不同的思维链（设置较高的Temperature）</li>
+<li class="">统计每条思维链的最终答案</li>
+<li class="">选择出现次数最多的答案作为最终答案</li>
+</ol>
+<p>为什么有效？因为正确的推理路径更有可能收敛到同一个答案，而错误的推理路径往往是随机的、发散的。通过"投票"可以过滤掉随机错误。</p>
+<p>实际应用建议：</p>
+<ul>
+<li class="">N取5-10即可，更多边际收益递减</li>
+<li class="">适合数学推理、逻辑判断等有明确答案的任务</li>
+<li class="">不适合创意类任务（创意没有标准答案）</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=少样本提示few-shot>少样本提示（Few-Shot）<a href=#少样本提示few-shot class=hash-link aria-label=少样本提示（Few-Shot）的直接链接 title=少样本提示（Few-Shot）的直接链接 translate=no>​</a></h3>
+<p>在提示词中给模型几个示例，让它学会你期望的输入输出模式。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">请根据产品名称生成一句话描述。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">示例1：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入：Notion</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出：All-in-one workspace for notes, docs, and projects</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">示例2：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入：Figma</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出：Collaborative interface design tool for teams</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">示例3：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入：Slack</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出：Messaging platform for team communication</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">现在请处理：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输入：{你的产品名}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出：</span><br/></div></code></pre></div></div>
+<p>Few-Shot的3个关键要点：</p>
+<ol>
+<li class=""><strong>示例质量比数量重要</strong> 3个高质量示例比10个平庸示例效果好</li>
+<li class=""><strong>示例要有多样性</strong> 覆盖不同类型的输入，避免模型只学会一种模式</li>
+<li class=""><strong>示例格式要一致</strong> 输入输出的格式统一，模型才能稳定遵循</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=系统提示词与用户提示词>系统提示词与用户提示词<a href=#系统提示词与用户提示词 class=hash-link aria-label=系统提示词与用户提示词的直接链接 title=系统提示词与用户提示词的直接链接 translate=no>​</a></h3>
+<p>大模型API通常有两种提示词：</p>
+<p><strong>系统提示词（System Prompt）</strong> 定义AI的角色、行为规则、约束条件。在会话中保持不变。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是一个专业的法律咨询助手。你的职责是：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 基于中国法律法规回答用户问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 明确标注法律依据（具体法条编号）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 不确定的内容要标注"仅供参考，建议咨询专业律师"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 不提供具体的法律建议，只提供法律信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 遇到超出范围的问题，建议用户咨询专业律师</span><br/></div></code></pre></div></div>
+<p><strong>用户提示词（User Prompt）</strong> 用户的具体问题或请求。每次对话可能不同。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">我和房东签了一年的租房合同，现在住了3个月想提前退租，房东说押金不退。这合法吗？</span><br/></div></code></pre></div></div>
+<p>产品设计中，系统提示词是你能控制的——你需要精心设计。用户提示词是不可控的——你需要设计产品交互来引导用户给出更好的提示词。</p>
+<blockquote>
+<p>系统提示词是AI产品的"基因"，决定了AI的行为边界和风格。用户提示词是"环境"，影响AI的具体表现。基因比环境更重要。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=温度temperature与top-p采样>温度（Temperature）与Top P采样<a href=#温度temperature与top-p采样 class=hash-link aria-label="温度（Temperature）与Top P采样的直接链接" title="温度（Temperature）与Top P采样的直接链接" translate=no>​</a></h3>
+<p>这两个参数控制模型输出的随机性。</p>
+<p><strong>Temperature（温度）</strong></p>
+<ul>
+<li class="">0.0：总是选择概率最高的token，输出最确定</li>
+<li class="">0.7：适中的随机性，适合大多数场景</li>
+<li class="">1.0：较高的随机性，适合创意类任务</li>
+<li class="">1.5+：非常随机，输出可能不连贯</li>
+</ul>
+<p><strong>Top P（核采样）</strong></p>
+<ul>
+<li class="">0.1：只从概率最高的10%的token中选择</li>
+<li class="">0.9：从概率最高的90%的token中选择</li>
+<li class="">1.0：从所有token中选择</li>
+</ul>
+<p>实际建议：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>Temperature<th>Top P<th>理由<tbody><tr><td>客服问答<td>0.1-0.3<td>0.9<td>需要准确一致的回答<tr><td>内容创作<td>0.7-0.9<td>0.95<td>需要一定的创造性<tr><td>代码生成<td>0.0-0.2<td>0.9<td>需要精确的语法<tr><td>头脑风暴<td>1.0-1.2<td>1.0<td>需要最大的多样性</table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-提示词实战>2.2 提示词实战<a href=#22-提示词实战 class=hash-link aria-label="2.2 提示词实战的直接链接" title="2.2 提示词实战的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=实战人设打造>实战：人设打造<a href=#实战人设打造 class=hash-link aria-label=实战：人设打造的直接链接 title=实战：人设打造的直接链接 translate=no>​</a></h3>
+<p>让AI扮演特定角色，是最常见也最有效的提示词技巧之一。</p>
+<p>好的角色提示词模板：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是{角色名称}，一位{角色背景描述}。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你的核心特征：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 说话风格：{具体描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 专业领域：{具体描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 价值观倾向：{具体描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你的行为规则：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. {规则1}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. {规则2}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. {规则3}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你绝对不会：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. {禁止1}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. {禁止2}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">当遇到{特定情况}时，你会{具体行为}。</span><br/></div></code></pre></div></div>
+<p>实际案例——电商客服人设：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是小美，一位在XX电商工作了3年的客服专员。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你的核心特征：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 说话风格：亲切自然，像朋友一样聊天，不用客服腔</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 专业领域：退货政策、物流查询、商品咨询</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 价值观倾向：站在用户角度思考，能帮就帮</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你的行为规则：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 先确认理解用户的问题，再给解决方案</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 能在线解决的就在线解决，不给用户增加操作步骤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 涉及金额的问题，主动帮用户算清楚</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">你绝对不会：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 用"尊敬的客户"这种说法</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 让用户自己去查政策</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 在未确认的情况下承诺具体时间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">当遇到无法解决的问题时，你会说："这个问题我需要帮你转接专员，稍等一下哈"</span><br/></div></code></pre></div></div>
+<p>人设打造的核心原则：具体胜过抽象。"亲切自然"不如"像朋友一样聊天"，"专业"不如"在XX电商工作了3年"。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=实战项目风险评估>实战：项目风险评估<a href=#实战项目风险评估 class=hash-link aria-label=实战：项目风险评估的直接链接 title=实战：项目风险评估的直接链接 translate=no>​</a></h3>
+<p>用提示词做结构化的风险评估：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是一位项目管理风险评估专家。请对以下项目进行风险评估。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">项目信息：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 项目名称：{名称}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 项目周期：{周期}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 团队规模：{人数}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 技术栈：{技术栈}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 核心功能：{功能列表}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请从以下维度评估风险：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 技术风险（技术复杂度、技术成熟度、技术依赖）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 进度风险（工期合理性、里程碑设置、并行任务冲突）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 资源风险（人力、算力、数据）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 外部风险（政策、供应商、竞品）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出格式：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">| 风险维度 | 风险项 | 严重程度(1-5) | 可能性(1-5) | 风险分值 | 缓解措施 |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|---------|--------|-------------|-----------|---------|---------|</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">最后给出总体风险评级和前3个最需要关注的风险。</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=实战用ai做商业决策>实战：用AI做商业决策<a href=#实战用ai做商业决策 class=hash-link aria-label=实战：用AI做商业决策的直接链接 title=实战：用AI做商业决策的直接链接 translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是一位商业战略顾问。请帮助分析以下商业决策。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">决策背景：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">{背景描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">可选方案：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">A. {方案A描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">B. {方案B描述}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">请从以下角度分析：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 市场机会（市场规模、增长率、竞争格局）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 资源需求（资金、人力、时间）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 风险评估（最大风险是什么，概率多大）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 预期收益（短期3个月、中期1年、长期3年）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 退出策略（如果失败，如何止损）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">最终给出你的建议和理由。用数据和逻辑支撑，不要空洞的结论。</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=实战风格化新闻稿>实战：风格化新闻稿<a href=#实战风格化新闻稿 class=hash-link aria-label=实战：风格化新闻稿的直接链接 title=实战：风格化新闻稿的直接链接 translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是一位资深新闻稿撰写人。请撰写一篇新闻稿。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">要求：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 风格：{科技媒体/官方通稿/社交媒体/行业分析}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 字数：{300-500字}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 核心信息：{要点1、要点2、要点3}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 受众：{目标读者}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 语气：{正式/轻松/专业}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">新闻稿结构：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 标题（不超过20字，有信息量）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 导语（一句话说清楚发生了什么）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 正文（展开核心信息）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 引用（模拟CEO或负责人的发言）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 关于我们（一句话公司介绍）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">禁止：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 不使用"革命性""颠覆性"等空洞词汇</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 不使用被动语态</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- 不超过3个形容词</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>提示词工程的核心不是技巧，是思维方式：把"你想要什么"翻译成"模型能理解什么"。越具体，越可执行，效果越好。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-ai-产品评测体系>2.3 AI 产品评测体系<a href=#23-ai-产品评测体系 class=hash-link aria-label="2.3 AI 产品评测体系的直接链接" title="2.3 AI 产品评测体系的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=为什么要学ai产品评测>为什么要学AI产品评测<a href=#为什么要学ai产品评测 class=hash-link aria-label=为什么要学AI产品评测的直接链接 title=为什么要学AI产品评测的直接链接 translate=no>​</a></h3>
+<p>AI产品的质量和传统产品完全不同。传统产品测功能——按钮能不能点，页面能不能加载。AI产品测效果——回答准不准，输出好不好。</p>
+<p>不学评测，你就无法：</p>
+<ul>
+<li class="">判断模型升级是否真的改善了体验</li>
+<li class="">发现产品在哪些场景下表现差</li>
+<li class="">向团队和老板量化展示产品进步</li>
+<li class="">做出数据驱动的产品决策</li>
+</ul>
+<blockquote>
+<p>不评测的AI产品，就像不开仪表盘开车——你不知道自己在哪，也不知道该往哪走。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=过拟合与欠拟合>过拟合与欠拟合<a href=#过拟合与欠拟合 class=hash-link aria-label=过拟合与欠拟合的直接链接 title=过拟合与欠拟合的直接链接 translate=no>​</a></h3>
+<p>这两个概念来自机器学习，但对AI产品评测同样重要。</p>
+<p><strong>过拟合（Overfitting）</strong> 模型在训练数据上表现很好，但在新数据上表现差。类比到AI产品：你的提示词在你的测试案例上效果很好，但用户实际使用时效果差。</p>
+<p>常见原因：提示词太针对特定案例，缺乏泛化能力。</p>
+<p><strong>欠拟合（Underfitting）</strong> 模型在训练数据和新数据上表现都不好。类比到AI产品：你的提示词太笼统，模型没有被有效引导。</p>
+<p>常见原因：提示词太模糊，没有给模型足够的指令和约束。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>问题<th>表现<th>原因<th>解决方案<tbody><tr><td>过拟合<td>测试案例好，真实用户差<td>提示词太具体<td>增加测试案例多样性<tr><td>欠拟合<td>测试案例和真实用户都差<td>提示词太模糊<td>增加具体的规则和示例</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=数据漂移data-drift>数据漂移（Data Drift）<a href=#数据漂移data-drift class=hash-link aria-label="数据漂移（Data Drift）的直接链接" title="数据漂移（Data Drift）的直接链接" translate=no>​</a></h3>
+<p>数据漂移是指模型输入数据的分布随时间发生变化，导致模型表现下降。</p>
+<p>在AI产品中的典型表现：</p>
+<ul>
+<li class="">用户开始问之前没问过的问题（用户行为变化）</li>
+<li class="">知识库的内容过时（业务数据变化）</li>
+<li class="">新的对抗性攻击方式出现（恶意用户变化）</li>
+</ul>
+<p>数据漂移的检测方法：</p>
+<ol>
+<li class=""><strong>监控回答质量</strong> 定期抽样检查AI的回答质量</li>
+<li class=""><strong>监控用户反馈</strong> 跟踪负面反馈比例的变化</li>
+<li class=""><strong>监控输入分布</strong> 跟踪用户问题的类型分布是否变化</li>
+<li class=""><strong>A/B测试</strong> 定期用新模型和旧模型对比</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=分类型ai产品评测核心指标>分类型AI产品评测核心指标<a href=#分类型ai产品评测核心指标 class=hash-link aria-label=分类型AI产品评测核心指标的直接链接 title=分类型AI产品评测核心指标的直接链接 translate=no>​</a></h3>
+<p><strong>分类任务的评测指标</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标<th>含义<th>计算方式<th>适用场景<tbody><tr><td>准确率(Accuracy)<td>正确预测的比例<td>(TP+TN)/(TP+TN+FP+FN)<td>类别均衡<tr><td>精确率(Precision)<td>预测为正中真正为正的比例<td>TP/(TP+FP)<td>误报代价高<tr><td>召回率(Recall)<td>真正为正中被预测为正的比例<td>TP/(TP+FN)<td>漏报代价高<tr><td>F1 Score<td>精确率和召回率的调和平均<td>2<em>P</em>R/(P+R)<td>类别不均衡</table>
+<p>实际案例：AI客服的意图分类</p>
+<p>假设你的AI客服需要识别用户意图（退货咨询、物流查询、商品咨询、投诉建议），评测方法：</p>
+<ol>
+<li class="">准备测试集：每个意图类别50-100个真实用户问题</li>
+<li class="">运行模型，记录预测结果</li>
+<li class="">计算每个类别的精确率和召回率</li>
+<li class="">重点关注召回率——漏识别比误识别更严重（用户说了要退货，AI没识别出来）</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=生成式任务的评测方法>生成式任务的评测方法<a href=#生成式任务的评测方法 class=hash-link aria-label=生成式任务的评测方法的直接链接 title=生成式任务的评测方法的直接链接 translate=no>​</a></h3>
+<p>生成式任务（对话、写作、翻译）比分类任务难评测，因为没有标准答案。</p>
+<p><strong>方法一：人工评测</strong></p>
+<p>最直接但最贵。让评测人员对AI输出打分，常用维度：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度<th>评分标准(1-5)<th>说明<tbody><tr><td>准确性<td>1=完全错误，5=完全正确<td>信息是否准确<tr><td>相关性<td>1=完全无关，5=高度相关<td>是否回答了问题<tr><td>完整性<td>1=严重缺失，5=完整全面<td>是否覆盖了所有要点<tr><td>流畅性<td>1=难以理解，5=自然流畅<td>语言表达是否通顺<tr><td>安全性<td>1=有害内容，5=完全安全<td>是否包含不当内容</table>
+<p><strong>方法二：LLM-as-Judge</strong></p>
+<p>用强模型（如GPT-4）来评判弱模型的输出。成本低、速度快，但需要精心设计评判提示词。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">你是一位严格的内容质量评审专家。请评估以下AI回复的质量。</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">用户问题：{用户问题}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AI回复：{AI回复}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">参考答案：{参考答案}（如有）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">评分维度：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 准确性（1-5）：信息是否准确，有无幻觉</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 相关性（1-5）：是否直接回答了用户问题</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 完整性（1-5）：是否覆盖了所有关键信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 安全性（1-5）：是否包含不当或有害内容</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">输出格式：</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">| 维度 | 评分 | 理由 |</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">|------|------|------|</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">总体评价：{优秀/良好/一般/差}</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">关键问题：{列出主要问题}</span><br/></div></code></pre></div></div>
+<p><strong>方法三：自动化指标</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标<th>适用场景<th>说明<tbody><tr><td>BLEU<td>翻译、摘要<td>与参考答案的n-gram重叠度<tr><td>ROUGE<td>摘要<td>与参考答案的重叠度<tr><td>BERTScore<td>通用<td>语义相似度<tr><td>困惑度(PPL)<td>语言模型<td>模型对文本的"惊讶程度"</table>
+<p>注意：自动化指标只能辅助，不能替代人工评测。BLEU分数高不代表回复质量好，因为模型可能用不同的表达方式给出同样正确的答案。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=评测报告撰写指南>评测报告撰写指南<a href=#评测报告撰写指南 class=hash-link aria-label=评测报告撰写指南的直接链接 title=评测报告撰写指南的直接链接 translate=no>​</a></h3>
+<p>一份完整的AI产品评测报告应包含：</p>
+<ol>
+<li class=""><strong>评测背景</strong> 产品版本、评测时间、评测目的</li>
+<li class=""><strong>评测方法</strong> 数据集、评测指标、评测流程</li>
+<li class=""><strong>评测结果</strong> 各指标的数值和对比</li>
+<li class=""><strong>Badcase分析</strong> 典型错误案例和原因分析</li>
+<li class=""><strong>改进建议</strong> 针对性的优化方向</li>
+<li class=""><strong>风险提示</strong> 当前版本的已知问题和影响范围</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=实战ai产品评测案例>实战：AI产品评测案例<a href=#实战ai产品评测案例 class=hash-link aria-label=实战：AI产品评测案例的直接链接 title=实战：AI产品评测案例的直接链接 translate=no>​</a></h3>
+<p>以一个AI客服产品为例，完整走一遍评测流程。</p>
+<p><strong>步骤一：定义评测范围</strong></p>
+<ul>
+<li class="">产品：电商AI客服</li>
+<li class="">版本：v2.1</li>
+<li class="">评测范围：退货咨询、物流查询、商品咨询三大场景</li>
+</ul>
+<p><strong>步骤二：准备测试集</strong></p>
+<ul>
+<li class="">每个场景50个真实用户问题（从历史对话中抽取）</li>
+<li class="">每个问题标注标准答案和预期意图</li>
+</ul>
+<p><strong>步骤三：运行评测</strong></p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-python codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># 简单的评测脚本</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> json</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>from</span><span class="token plain"> openai </span><span class="token keyword" style=color:#00009f>import</span><span class="token plain"> OpenAI</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">client </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> OpenAI</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token keyword" style=color:#00009f>def</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>evaluate_qa</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain">test_cases</span><span class="token punctuation" style=color:#393A34>)</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    results </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>for</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>case</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>in</span><span class="token plain"> test_cases</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        response </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> client</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">chat</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">completions</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">create</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            model</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"gpt-4o-mini"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            messages</span><span class="token operator" style=color:#393A34>=</span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                </span><span class="token punctuation" style=color:#393A34>{</span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"system"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> SYSTEM_PROMPT</span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                </span><span class="token punctuation" style=color:#393A34>{</span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"user"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>case</span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"question"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        answer </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> response</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">choices</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">message</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">content</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># LLM-as-Judge</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        judge_result </span><span class="token operator" style=color:#393A34>=</span><span class="token plain"> client</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">chat</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">completions</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">create</span><span class="token punctuation" style=color:#393A34>(</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            model</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"gpt-4o"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            messages</span><span class="token operator" style=color:#393A34>=</span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                </span><span class="token string" style=color:#e3116c>"role"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"user"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                </span><span class="token string" style=color:#e3116c>"content"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string-interpolation string" style=color:#e3116c>f"""评估以下AI回复的质量。</span><br/></div><div class=token-line style=color:#393A34><span class="token string-interpolation string" style=color:#e3116c>用户问题：</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>{</span><span class="token string-interpolation interpolation keyword" style=color:#00009f>case</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>[</span><span class="token string-interpolation interpolation string" style=color:#e3116c>'question'</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>]</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>}</span><span class="token string-interpolation string" style=color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token string-interpolation string" style=color:#e3116c>AI回复：</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>{</span><span class="token string-interpolation interpolation">answer</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>}</span><span class="token string-interpolation string" style=color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token string-interpolation string" style=color:#e3116c>参考答案：</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>{</span><span class="token string-interpolation interpolation keyword" style=color:#00009f>case</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>[</span><span class="token string-interpolation interpolation string" style=color:#e3116c>'reference'</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>]</span><span class="token string-interpolation interpolation punctuation" style=color:#393A34>}</span><span class="token string-interpolation string" style=color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token string-interpolation string" style=color:#e3116c>评分(1-5)：准确性、相关性、完整性"""</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        results</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">append</span><span class="token punctuation" style=color:#393A34>(</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token string" style=color:#e3116c>"question"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>case</span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"question"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token string" style=color:#e3116c>"answer"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> answer</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token string" style=color:#e3116c>"reference"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token keyword" style=color:#00009f>case</span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"reference"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            </span><span class="token string" style=color:#e3116c>"judge_score"</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> judge_result</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">choices</span><span class="token punctuation" style=color:#393A34>[</span><span class="token number" style=color:#36acaa>0</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">message</span><span class="token punctuation" style=color:#393A34>.</span><span class="token plain">content</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token keyword" style=color:#00009f>return</span><span class="token plain"> results</span><br/></div></code></pre></div></div>
+<p><strong>步骤四：分析结果</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景<th>样本数<th>准确率<th>相关性<th>完整性<th>Badcase数<tbody><tr><td>退货咨询<td>50<td>4.2<td>4.5<td>3.8<td>6<tr><td>物流查询<td>50<td>3.5<td>4.0<td>3.2<td>12<tr><td>商品咨询<td>50<td>4.0<td>4.3<td>4.1<td>5</table>
+<p><strong>步骤五：Badcase分析和改进</strong></p>
+<p>物流查询场景得分最低，分析badcase发现主要问题：</p>
+<ul>
+<li class="">40%的badcase是因为知识库缺少特定物流公司的信息</li>
+<li class="">30%的badcase是因为用户的问题表述和知识库的表述差异大</li>
+<li class="">30%的badcase是因为模型编造了不存在的物流政策</li>
+</ul>
+<p>改进方向：</p>
+<ol>
+<li class="">补充缺失的物流公司信息到知识库</li>
+<li class="">增加Query优化步骤，将用户口语化表述转为知识库表述</li>
+<li class="">在提示词中强调"不编造，不确定就转人工"</li>
+</ol>
+<p><strong>本章小结</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>主题<th>核心要点<tbody><tr><td>提示词框架<td>CRISPE/CO-STAR/RTF三套框架<tr><td>思维链<td>一步一步想，最简单有效的推理增强<tr><td>自洽性<td>多路径推理+投票，过滤随机错误<tr><td>Few-Shot<td>3个高质量示例比10个平庸示例好<tr><td>Temperature<td>客服0.1-0.3，创作0.7-0.9，代码0-0.2<tr><td>人工评测<td>5维度打分，最直接但最贵<tr><td>LLM-as-Judge<td>用强模型评弱模型，性价比高<tr><td>评测报告<td>背景+方法+结果+Badcase+改进+风险</table>
+<p>觉得有用？收藏起来，下次直接照抄。</p>
+<p>你做AI产品评测时用什么方法？评论区聊聊。</p>
+<p>关注怕浪猫，下期我们讲RAG与知识库——让大模型真正懂你的业务。</p>
+<p>系列进度 2/13</p>
+<p><strong>下章预告：</strong> 第3章RAG与知识库，从知识分段到检索优化全链路，手把手教你打造让大模型更懂业务的RAG系统。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/ai-practice/ai-product-manager/chapter_2.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_1><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第1章 AI 行业认知与首个 MVP 实战</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/ai-practice/ai-product-manager/chapter_3><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第3章 RAG 与知识库：让大模型更懂业务</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#21-提示词工程从基础到进阶 class="table-of-contents__link toc-highlight">2.1 提示词工程：从基础到进阶</a><ul><li><a href=#基础提示词工程概念与3大框架 class="table-of-contents__link toc-highlight">基础提示词工程：概念与3大框架</a><li><a href=#思维链cot与思维树tot class="table-of-contents__link toc-highlight">思维链（CoT）与思维树（ToT）</a><li><a href=#自洽性推理self-consistency class="table-of-contents__link toc-highlight">自洽性推理（Self-Consistency）</a><li><a href=#少样本提示few-shot class="table-of-contents__link toc-highlight">少样本提示（Few-Shot）</a><li><a href=#系统提示词与用户提示词 class="table-of-contents__link toc-highlight">系统提示词与用户提示词</a><li><a href=#温度temperature与top-p采样 class="table-of-contents__link toc-highlight">温度（Temperature）与Top P采样</a></ul><li><a href=#22-提示词实战 class="table-of-contents__link toc-highlight">2.2 提示词实战</a><ul><li><a href=#实战人设打造 class="table-of-contents__link toc-highlight">实战：人设打造</a><li><a href=#实战项目风险评估 class="table-of-contents__link toc-highlight">实战：项目风险评估</a><li><a href=#实战用ai做商业决策 class="table-of-contents__link toc-highlight">实战：用AI做商业决策</a><li><a href=#实战风格化新闻稿 class="table-of-contents__link toc-highlight">实战：风格化新闻稿</a></ul><li><a href=#23-ai-产品评测体系 class="table-of-contents__link toc-highlight">2.3 AI 产品评测体系</a><ul><li><a href=#为什么要学ai产品评测 class="table-of-contents__link toc-highlight">为什么要学AI产品评测</a><li><a href=#过拟合与欠拟合 class="table-of-contents__link toc-highlight">过拟合与欠拟合</a><li><a href=#数据漂移data-drift class="table-of-contents__link toc-highlight">数据漂移（Data Drift）</a><li><a href=#分类型ai产品评测核心指标 class="table-of-contents__link toc-highlight">分类型AI产品评测核心指标</a><li><a href=#生成式任务的评测方法 class="table-of-contents__link toc-highlight">生成式任务的评测方法</a><li><a href=#评测报告撰写指南 class="table-of-contents__link toc-highlight">评测报告撰写指南</a><li><a href=#实战ai产品评测案例 class="table-of-contents__link toc-highlight">实战：AI产品评测案例</a></ul></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>

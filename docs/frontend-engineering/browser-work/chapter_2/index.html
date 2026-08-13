@@ -1,0 +1,617 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-frontend-engineering/browser-work/chapter_2" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>第2章 Chrome 多进程架构详解 | 知识库</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://jlnvv-tom.github.io/konwledge-docs/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2 /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="第2章 Chrome 多进程架构详解 | 知识库"/><meta data-rh=true name=description content="你每天打开几十个标签页，Chrome 却能做到一个页面崩溃其他页面安然无恙。这背后的秘密，就藏在一个叫「多进程架构」的设计里。"/><meta data-rh=true property=og:description content="你每天打开几十个标签页，Chrome 却能做到一个页面崩溃其他页面安然无恙。这背后的秘密，就藏在一个叫「多进程架构」的设计里。"/><link data-rh=true rel=icon href=/konwledge-docs/img/favicon.ico /><link data-rh=true rel=canonical href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2 /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2 hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2 hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/","name":"深入理解 Chrome 浏览器工作原理","position":1},{"@type":"ListItem","item":"https://jlnvv-tom.github.io/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2","name":"第2章 Chrome 多进程架构详解","position":2}]}</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css type=text/css crossorigin=anonymous><link rel=stylesheet href=/konwledge-docs/assets/css/styles.561fec99.css /><script src=/konwledge-docs/assets/js/runtime~main.71b9a341.js defer></script><script src=/konwledge-docs/assets/js/main.69eff037.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-0ef")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-0ef")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/konwledge-docs/img/logo.svg /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:var(--ifm-color-primary);color:#ffffff role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">🎉 知识库 v2.0 已发布，全新 7 大分类导航</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/konwledge-docs/><div class=navbar__logo><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/konwledge-docs/img/logo.svg alt=Logo class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">知识库</b></a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/history-humanities/>历史</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/business-economics/>商业</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/ai-practice/>AI</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/python-crawler/>Python</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/backend-database/>后端</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/konwledge-docs/docs/frontend-engineering/>前端</a><a class="navbar__item navbar__link" href=/konwledge-docs/docs/life-encyclopedia/>生活</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/konwledge-docs/docs/frontend-engineering/><span title="🎨 前端工程" class=linkLabel_WmDU>🎨 前端工程</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/konwledge-docs/docs/frontend-engineering/browser-work/><span title="深入理解 Chrome 浏览器工作原理" class=categoryLinkLabel_W154>深入理解 Chrome 浏览器工作原理</span></a><button aria-label="折叠侧边栏分类 '深入理解 Chrome 浏览器工作原理'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><span title="第1章 浏览器演进史与 Chrome 的诞生" class=linkLabel_WmDU>第1章 浏览器演进史与 Chrome 的诞生</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_2><span title="第2章 Chrome 多进程架构详解" class=linkLabel_WmDU>第2章 Chrome 多进程架构详解</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><span title="第3章 V8 引擎概览" class=linkLabel_WmDU>第3章 V8 引擎概览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_4><span title="第4章 V8 的高级机制" class=linkLabel_WmDU>第4章 V8 的高级机制</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_5><span title="第5章 JavaScript 执行的底层细节" class=linkLabel_WmDU>第5章 JavaScript 执行的底层细节</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_6><span title="第6章 从 HTML 到像素：渲染管线总览" class=linkLabel_WmDU>第6章 从 HTML 到像素：渲染管线总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_7><span title="第7章 DOM 与样式计算" class=linkLabel_WmDU>第7章 DOM 与样式计算</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_8><span title="第8章 布局（Layout）" class=linkLabel_WmDU>第8章 布局（Layout）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_9><span title="第9章 绘制与合成" class=linkLabel_WmDU>第9章 绘制与合成</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_10><span title="第10章 事件处理与输入管道" class=linkLabel_WmDU>第10章 事件处理与输入管道</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_11><span title="第11章 DNS 与网络协议基础" class=linkLabel_WmDU>第11章 DNS 与网络协议基础</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_12><span title="第12章 HTTP/1.1、HTTP/2 与 HTTP/3" class=linkLabel_WmDU>第12章 HTTP/1.1、HTTP/2 与 HTTP/3</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_13><span title="第13章 QUIC 协议与 TLS" class=linkLabel_WmDU>第13章 QUIC 协议与 TLS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_14><span title="第14章 同源策略与 CORS" class=linkLabel_WmDU>第14章 同源策略与 CORS</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_15><span title="第15章 浏览器沙箱与站点隔离" class=linkLabel_WmDU>第15章 浏览器沙箱与站点隔离</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_16><span title="第16章 Cookie 安全与隐私保护" class=linkLabel_WmDU>第16章 Cookie 安全与隐私保护</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_17><span title="第17章 Core Web Vitals 与性能指标" class=linkLabel_WmDU>第17章 Core Web Vitals 与性能指标</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_18><span title="第18章 渲染性能优化" class=linkLabel_WmDU>第18章 渲染性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_19><span title="第19章 内存管理与垃圾回收优化" class=linkLabel_WmDU>第19章 内存管理与垃圾回收优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_20><span title="第20章 加载性能优化" class=linkLabel_WmDU>第20章 加载性能优化</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_21><span title="第21章 Chrome 扩展开发（MV3）" class=linkLabel_WmDU>第21章 Chrome 扩展开发（MV3）</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_22><span title="第22章 DevTools 与调试技巧" class=linkLabel_WmDU>第22章 DevTools 与调试技巧</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_23><span title="第23章 WebGPU 与前端 AI" class=linkLabel_WmDU>第23章 WebGPU 与前端 AI</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_24><span title="第24章 Web 的未来与完结" class=linkLabel_WmDU>第24章 Web 的未来与完结</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/canvas-tool/><span title="Canvas 工程全书" class=categoryLinkLabel_W154>Canvas 工程全书</span></a><button aria-label="展开侧边栏分类 'Canvas 工程全书'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/nextjs/><span title="Next.js 开发实战" class=categoryLinkLabel_W154>Next.js 开发实战</span></a><button aria-label="展开侧边栏分类 'Next.js 开发实战'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/react-native/><span title="React Native 跨端开发" class=categoryLinkLabel_W154>React Native 跨端开发</span></a><button aria-label="展开侧边栏分类 'React Native 跨端开发'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/electron/><span title="Electron 学习" class=categoryLinkLabel_W154>Electron 学习</span></a><button aria-label="展开侧边栏分类 'Electron 学习'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/konwledge-docs/docs/frontend-engineering/h5-interview/><span title="H5 前端面试100题" class=categoryLinkLabel_W154>H5 前端面试100题</span></a><button aria-label="展开侧边栏分类 'H5 前端面试100题'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/konwledge-docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/konwledge-docs/docs/frontend-engineering/browser-work/><span>深入理解 Chrome 浏览器工作原理</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>第2章 Chrome 多进程架构详解</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>第2章 Chrome 多进程架构详解</h1></header>
+<blockquote>
+<p>你每天打开几十个标签页，Chrome 却能做到一个页面崩溃其他页面安然无恙。这背后的秘密，就藏在一个叫「多进程架构」的设计里。</p>
+</blockquote>
+<p>我是怕浪猫，一个喜欢把浏览器拆开看的技术博主。上期我们讲了浏览器的演进史和 Chrome 的诞生，今天进入第 2 章，我们拆解 Chrome 的多进程架构。这一章会讲清楚 Chrome 里到底有哪些进程，它们各自干什么活，进程之间怎么通信，以及站点隔离是怎么从架构层面保护你的安全的。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-进程模型总览>2.1 进程模型总览<a href=#21-进程模型总览 class=hash-link aria-label="2.1 进程模型总览的直接链接" title="2.1 进程模型总览的直接链接" translate=no>​</a></h2>
+<p>Chrome 的多进程架构不是一个简单的「一个标签页一个进程」模型，而是一个精细分工的进程体系。每个进程都有明确的职责边界，通过定义好的接口进行协作。</p>
+<p>当你打开 Chrome 浏览器，实际上启动了一组协同工作的进程。我们可以用 Chrome 自带的任务管理器（Shift+Esc 或 菜单 > 更多工具 > 任务管理器）看到所有进程。</p>
+<p>Chrome 的进程体系概览：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Chrome 进程架构总览</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│           Browser 进程（主进程）            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  UI 界面 / 标签页管理 / 用户输入            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└────────┬─────────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">         │ Mojo IPC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ┌────┼────────────────────────┬────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │    │                        │        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌───┴──┐ ┌───┴────┐ ┌──────────┐ ┌───┴──┐ │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│Renderer│ │Renderer│ │Renderer  │ │ GPU  │ │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 进程 A │ │ 进程 B │ │ 进程 C   │ │ 进程 │ │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│(标签1)│ │(标签2) │ │(iframe)  │ │      │ │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└───────┘ └────────┘ └──────────┘ └──────┘ │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────┐ ┌──────────┐ ┌──────────┴┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Network 进程 │ │Utility   │ │ Storage   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 网络请求     │ │ 进程     │ │ 进程      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────┘ └──────────┘ └───────────┘</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=211-浏览器主进程browser-process>2.1.1 浏览器主进程（Browser Process）<a href=#211-浏览器主进程browser-process class=hash-link aria-label="2.1.1 浏览器主进程（Browser Process）的直接链接" title="2.1.1 浏览器主进程（Browser Process）的直接链接" translate=no>​</a></h3>
+<p>Browser 进程是 Chrome 的「指挥中心」，也是用户启动 Chrome 时第一个创建的进程。它负责所有与用户直接交互的工作。</p>
+<p>Browser 进程的核心职责：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>职责<th>说明<tbody><tr><td>UI 渲染<td>地址栏、标签栏、书签栏、工具栏等浏览器界面的绘制<tr><td>标签页管理<td>创建、切换、关闭标签页，管理标签页的生命周期<tr><td>用户输入处理<td>鼠标点击、键盘输入、触摸手势等输入事件的路由<tr><td>导航管理<td>处理地址栏输入、链接点击，协调网络请求和渲染进程<tr><td>权限管理<td>位置、通知、摄像头等权限的授权弹窗和管理<tr><td>书签和历史<td>书签管理器、浏览历史的读写<tr><td>进程协调<td>创建和销毁渲染进程，管理进程间的任务分配</table>
+<p>Browser 进程内部也分为多个线程，主要包括：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Browser 进程内部线程模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│              Browser 进程                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────┐  ┌────────────┐         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  UI 线程    │  │ IO 线程    │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 界面绘制    │  │ IPC 通信   │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────┘  └────────────┘         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────┐  ┌────────────┐         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ File 线程   │  │ DB 线程    │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 文件操作    │  │ 数据库操作 │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────┘  └────────────┘         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────┐  ┌────────────┐         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Cache 线程  │  │ Process    │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 缓存管理    │  │ Launcher   │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │            │  │ 进程启动   │         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────┘  └────────────┘         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>UI 线程是最重要的线程，所有用户可见的界面更新都在 UI 线程上完成。IO 线程负责处理所有 IPC（Inter-Process Communication，进程间通信）消息，它是 Browser 进程与其他进程通信的枢纽。</p>
+<blockquote>
+<p>Browser 进程就像公司的前台：它不干具体的活，但所有的协调、调度、用户接待都由它负责。没有它，其他进程就各自为政了。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=212-渲染进程renderer-process>2.1.2 渲染进程（Renderer Process）<a href=#212-渲染进程renderer-process class=hash-link aria-label="2.1.2 渲染进程（Renderer Process）的直接链接" title="2.1.2 渲染进程（Renderer Process）的直接链接" translate=no>​</a></h3>
+<p>渲染进程是 Chrome 中数量最多的进程类型，它负责所有 Web 内容的渲染工作。当你打开一个网页，HTML 解析、CSS 计算、布局、绘制、JavaScript 执行，全部在渲染进程中完成。</p>
+<p>渲染进程的核心职责：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>职责<th>说明<tbody><tr><td>HTML 解析<td>将 HTML 文本转换为 DOM（Document Object Model，文档对象模型）树<tr><td>CSS 解析<td>将 CSS 文本转换为 CSSOM（CSS Object Model，CSS 对象模型）<tr><td>布局计算<td>计算每个元素的位置和大小<tr><td>绘制<td>将布局结果转换为绘制指令<tr><td>JavaScript 执行<td>运行页面中的 JavaScript 代码（通过 V8 引擎）<tr><td>事件处理<td>处理鼠标、键盘、触摸等事件</table>
+<p>渲染进程内部有一个主线程（Main Thread），这是最关键的线程。JavaScript 执行、DOM 操作、样式计算、布局、绘制几乎都在主线程上完成。这也是为什么 JavaScript 的执行会阻塞渲染：它们共享同一个线程。</p>
+<p>渲染进程的线程模型：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Renderer 进程内部线程模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│            Renderer 进程                 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────────────────────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │        Main Thread（主线程）       │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  JavaScript / DOM / CSS / Layout │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  Paint / 垃圾回收                  │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────────────────────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────┐  ┌──────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Compositor │  │ Compositor Raster│   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Thread     │  │ Thread           │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 合成线程    │  │ 光栅化线程        │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────┘  └──────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────┐  ┌──────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ IO Thread  │  │ Worker Threads   │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ IPC 通信    │  │ Web Worker       │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────┘  └──────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>主线程和合成线程的分离是 Chrome 渲染架构的关键设计。主线程负责 JavaScript、布局和绘制，合成线程负责将已绘制的内容合成到屏幕上。当页面滚动时，如果合成层已经准备好，合成线程可以直接处理滚动，不需要打扰主线程。这就是为什么 CSS transform 动画能做到 60fps 的原因。</p>
+<blockquote>
+<p>渲染进程的主线程是浏览器中最繁忙的线程，没有之一。JavaScript 执行、DOM 操作、布局计算、绘制指令生成，全都在这条线程上排队。理解主线程的忙碌，就理解了前端性能优化的一半。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=213-gpu-进程gpu-process>2.1.3 GPU 进程（GPU Process）<a href=#213-gpu-进程gpu-process class=hash-link aria-label="2.1.3 GPU 进程（GPU Process）的直接链接" title="2.1.3 GPU 进程（GPU Process）的直接链接" translate=no>​</a></h3>
+<p>GPU 进程是 Chrome 中唯一负责与 GPU（Graphics Processing Unit，图形处理器）交互的进程。无论你打开了多少个标签页，GPU 进程只有一个。</p>
+<p>为什么需要独立的 GPU 进程？因为 GPU 是共享资源，多个渲染进程不能直接访问 GPU。GPU 进程充当了 GPU 访问的中间人角色。</p>
+<p>GPU 进程的核心职责：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>职责<th>说明<tbody><tr><td>光栅化<td>将绘制指令转换为像素数据<tr><td>纹理上传<td>将光栅化结果作为纹理上传到 GPU<tr><td>合成输出<td>将多个合成层合并为最终画面<tr><td>WebGL 渲染<td>执行 WebGL（Web Graphics Library）绘图命令<tr><td>Canvas 加速<td>硬件加速的 Canvas 2D 绘制</table>
+<p>GPU 进程接收来自多个渲染进程的绘制指令，将这些指令转换为 GPU 命令缓冲区（Command Buffer），然后提交给 GPU 执行。命令缓冲区机制确保了渲染进程不能直接调用 GPU API，提供了安全隔离。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GPU 命令缓冲区工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 A ──┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 B ──┼──> 命令缓冲区 ──> GPU 进程 ──> GPU 硬件</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">渲染进程 C ──┘    (序列化)        (执行)</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=214-网络服务进程network-service>2.1.4 网络服务进程（Network Service）<a href=#214-网络服务进程network-service class=hash-link aria-label="2.1.4 网络服务进程（Network Service）的直接链接" title="2.1.4 网络服务进程（Network Service）的直接链接" translate=no>​</a></h3>
+<p>在早期版本中，网络请求由 Browser 进程负责。从 Chrome 73 开始，网络功能被独立为 Network Service 进程。这个变化叫做网络服务进程化（Network Service Process Isolation）。</p>
+<p>网络服务进程化的动机：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>动机<th>说明<tbody><tr><td>稳定性<td>网络栈崩溃不会影响 Browser 进程<tr><td>安全隔离<td>网络代码在沙箱中运行<tr><td>可扩展性<td>网络服务可独立重启或迁移</table>
+<p>网络服务进程负责所有 HTTP/HTTPS 请求、DNS（Domain Name System，域名系统）解析、Cookie 管理、证书验证等网络相关操作。当你在地址栏输入 URL 并回车时，Browser 进程会将请求转发给 Network Service 进程，后者完成 DNS 解析和 HTTP 请求后，将响应数据传回渲染进程。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=215-其他进程>2.1.5 其他进程<a href=#215-其他进程 class=hash-link aria-label="2.1.5 其他进程的直接链接" title="2.1.5 其他进程的直接链接" translate=no>​</a></h3>
+<p><strong>插件进程（Plugin Process）</strong>：为每种类型的插件运行独立进程，如 Pepper 插件（PPAPI，Pepper Plugin API）。由于 Flash 等插件已逐步淘汰，插件进程的使用频率越来越低。</p>
+<p><strong>实用程序进程（Utility Process）</strong>：处理各种低优先级的后台任务，如文件解压、数据解析等。将这些任务放到独立进程可以避免阻塞 Browser 进程。</p>
+<p><strong>存储进程（Storage Service）</strong>：管理 Web Storage（localStorage、sessionStorage）、IndexedDB、Cache API 等浏览器存储。独立的存储进程确保了存储操作不会阻塞网络或 UI。</p>
+<blockquote>
+<p>Chrome 的进程分工就像一个精密的工厂：Browser 是管理层，Renderer 是生产线，GPU 是美工车间，Network 是物流部，Storage 是仓库。每个部门独立运作，又通过 IPC 紧密协作。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-进程间通信ipc>2.2 进程间通信（IPC）<a href=#22-进程间通信ipc class=hash-link aria-label="2.2 进程间通信（IPC）的直接链接" title="2.2 进程间通信（IPC）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=221-mojo-ipc-框架>2.2.1 Mojo IPC 框架<a href=#221-mojo-ipc-框架 class=hash-link aria-label="2.2.1 Mojo IPC 框架的直接链接" title="2.2.1 Mojo IPC 框架的直接链接" translate=no>​</a></h3>
+<p>多进程架构的核心挑战是进程间通信。Chrome 早期使用基于命名管道的自定义 IPC 系统，后来逐步迁移到 Mojo 框架。</p>
+<p>Mojo 是 Chrome 现代的 IPC（Inter-Process Communication，进程间通信）框架，它提供了多种通信方式：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>通信方式<th>特点<th>适用场景<tbody><tr><td>MessagePipe<td>双向消息管道，异步<td>通用进程间消息传递<tr><td>DataPipe<td>单向数据流，支持大数据<td>文件传输、媒体流<tr><td>SharedBuffer<td>共享内存，零拷贝<td>大块数据共享<tr><td>Interface<td>类型安全的 RPC 接口<td>结构化的服务调用</table>
+<p>Mojo 的接口定义语言（IDL，Interface Definition Language）让开发者可以定义类型安全的接口。例如：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">// Mojo IDL 示例（简化版）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">interface NavigationHost {</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 从 Renderer 请求导航</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  RequestNavigation(url.mojom.Url url);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  // 通知导航完成</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  DidFinishNavigation(bool success);</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">};</span><br/></div></code></pre></div></div>
+<p>这段 IDL 定义会被代码生成器转换为 C++、JavaScript 等语言的接口代码，各进程通过这些接口进行类型安全的通信。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=222-chromium-中的管道通信>2.2.2 Chromium 中的管道通信<a href=#222-chromium-中的管道通信 class=hash-link aria-label="2.2.2 Chromium 中的管道通信的直接链接" title="2.2.2 Chromium 中的管道通信的直接链接" translate=no>​</a></h3>
+<p>Mojo 的底层实现基于操作系统的 IPC 原语。在不同平台上，Mojo 使用不同的底层机制：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Mojo 底层通信机制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Mojo API   │  对上层提供统一接口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Channel    │  序列化/反序列化</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├──────┬──────┴──────┬──────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Linux│   macOS     │ Windows  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Unix │  Mach       │ Named    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Socket│ Port       │ Pipe     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────┴─────────────┴──────────┘</span><br/></div></code></pre></div></div>
+<p>无论底层使用什么机制，Mojo 对上层提供统一的 API。这意味着 Chrome 的业务代码不需要关心平台差异，只需使用 Mojo 接口即可。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=223-共享内存与消息传递>2.2.3 共享内存与消息传递<a href=#223-共享内存与消息传递 class=hash-link aria-label="2.2.3 共享内存与消息传递的直接链接" title="2.2.3 共享内存与消息传递的直接链接" translate=no>​</a></h3>
+<p>对于大数据传递，Mojo 提供了共享内存（Shared Memory）机制。共享内存允许多个进程访问同一块物理内存，避免了数据拷贝的开销。</p>
+<p>共享内存的典型使用场景是 GPU 纹理传递。渲染进程将绘制结果写入共享内存，GPU 进程从同一块内存读取数据并生成纹理，整个过程不需要拷贝数据。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">共享内存工作流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程 A                     进程 B</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  写入数据到共享内存         │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │────────────────────────►│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │  (Mojo 通知)              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                          │  从共享内存读取数据</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │                          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ▼                          ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│       共享内存区域            │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  (物理内存，两个进程都可访问)   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────┘</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>IPC 的性能不仅仅是消息传递的速度，更是减少不必要拷贝的艺术。Mojo 的共享内存机制让大数据传递的成本趋近于零。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-站点隔离site-isolation>2.3 站点隔离（Site Isolation）<a href=#23-站点隔离site-isolation class=hash-link aria-label="2.3 站点隔离（Site Isolation）的直接链接" title="2.3 站点隔离（Site Isolation）的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=231-站点隔离的动机与安全收益>2.3.1 站点隔离的动机与安全收益<a href=#231-站点隔离的动机与安全收益 class=hash-link aria-label="2.3.1 站点隔离的动机与安全收益的直接链接" title="2.3.1 站点隔离的动机与安全收益的直接链接" translate=no>​</a></h3>
+<p>站点隔离（Site Isolation）是 Chrome 架构层面最重要的安全特性之一。它的核心思想是：不同站点的页面必须运行在不同的渲染进程中。</p>
+<p>为什么需要站点隔离？2018 年发现的 Spectre 和 Meltdown 漏洞证明了：即使有同源策略的保护，共享同一进程的页面仍然可以通过 CPU 侧信道攻击读取彼此的数据。</p>
+<p>站点隔离前的架构问题：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">站点隔离前（同一进程内可能有多个站点）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│       Renderer 进程           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  页面 A（example.com）  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌──────────────────┐  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ iframe B（evil.com）│  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └──────────────────┘  │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  两个站点共享同一进程内存空间    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Spectre 可跨站点读取数据     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>站点隔离后的架构：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">站点隔离后（每个站点独立进程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────────────────┐  ┌──────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   Renderer 进程 A     │  │   Renderer 进程 B     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  页面（example.com）   │  │  iframe（evil.com）   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  独立内存空间          │  │  独立内存空间          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  独立沙箱             │  │  独立沙箱             │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────────────────┘  └──────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │                           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        └──── IPC 通信（受控）────────┘</span><br/></div></code></pre></div></div>
+<p>站点隔离带来的安全收益：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>安全收益<th>说明<tbody><tr><td>内存隔离<td>不同站点的数据在物理上隔离<tr><td>Spectre 防御<td>侧信道攻击无法跨进程<tr><td>沙箱增强<td>每个站点独立的沙箱限制<tr><td>权限隔离<td>一个站点的权限不影响其他站点</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=232-跨站点-iframe-的进程分配>2.3.2 跨站点 iframe 的进程分配<a href=#232-跨站点-iframe-的进程分配 class=hash-link aria-label="2.3.2 跨站点 iframe 的进程分配的直接链接" title="2.3.2 跨站点 iframe 的进程分配的直接链接" translate=no>​</a></h3>
+<p>站点隔离引入了一个复杂的问题：一个页面中的跨站点 iframe 需要分配到不同的渲染进程。</p>
+<p>例如，你在 example.com 的页面中嵌入了来自 youtube.com 的 iframe，Chrome 会为 example.com 分配一个渲染进程，为 youtube.com 分配另一个渲染进程。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">跨站点 iframe 的进程分配</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">浏览器窗口</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  example.com 的内容              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌───────────────────────────┐  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  youtube.com 的 iframe     │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  (独立渲染进程)             │  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └───────────────────────────┘  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  (主页面渲染进程)                 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程视图</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────────┐  ┌──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ Renderer 进程 │  │ Renderer 进程 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ example.com   │  │ youtube.com   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ (主框架)      │  │ (iframe)     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────────┘  └──────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     │  IPC 通信        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     └──────────────────┘</span><br/></div></code></pre></div></div>
+<p>跨进程的 iframe 需要处理很多复杂的情况：事件传播需要跨进程、布局计算需要协调主框架和 iframe 的尺寸、滚动需要同步。Chrome 通过一系列代理对象和 IPC 消息来解决这些问题。</p>
+<blockquote>
+<p>站点隔离是 Chrome 安全架构的基石。它不是在代码层面修补漏洞，而是在进程层面隔离风险。一个进程被攻破，不代表所有站点都被攻破。</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=233-coopcoep-与进程隔离的配合>2.3.3 COOP/COEP 与进程隔离的配合<a href=#233-coopcoep-与进程隔离的配合 class=hash-link aria-label="2.3.3 COOP/COEP 与进程隔离的配合的直接链接" title="2.3.3 COOP/COEP 与进程隔离的配合的直接链接" translate=no>​</a></h3>
+<p>COOP（Cross-Origin Opener Policy，跨源 opener 策略）和 COEP（Cross-Origin Embedder Policy，跨源嵌入策略）是两个 HTTP 头，它们允许页面选择进入更强的隔离级别。</p>
+<p>COOP 的作用是确保一个页面不会被其他源的页面通过 window.open 或 target="_blank" 访问到。设置 COOP 后，通过 window.open 打开的页面会运行在独立的进程中。</p>
+<p>COEP 的作用是确保页面不加载未经授权的跨源资源。配合 COOP，可以让页面进入「跨源隔离」（Cross-Origin Isolation）状态，从而获得使用 SharedArrayBuffer 等高精度计时器的权限。</p>
+<p>关键 HTTP 头配置：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain"># COOP 配置</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Cross-Origin-Opener-Policy: same-origin</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># COEP 配置</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Cross-Origin-Embedder-Policy: require-corp</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># 达到跨源隔离状态后可使用</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"># SharedArrayBuffer、高性能计时器等</span><br/></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-进程模型策略>2.4 进程模型策略<a href=#24-进程模型策略 class=hash-link aria-label="2.4 进程模型策略的直接链接" title="2.4 进程模型策略的直接链接" translate=no>​</a></h2>
+<p>Chrome 支持多种进程模型策略，默认使用 process-per-site-instance。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>策略<th>说明<th>适用场景<tbody><tr><td>process-per-site-instance<td>每个站点实例一个进程（默认）<td>普通用户<tr><td>process-per-site<td>每个站点一个进程<td>低内存设备<tr><td>single-process<td>所有页面共享一个进程<td>调试/测试</table>
+<p>process-per-site-instance 的含义是：每个标签页中的每个站点实例都运行在独立的渲染进程中。如果你打开了两个标签页访问同一个网站，它们会各自有独立的渲染进程。这种策略提供了最好的隔离性，但内存开销最大。</p>
+<p>在内存受限的设备上（如低端 Android 手机），Chrome 可能会自动切换到 process-per-site 策略，同一站点的所有实例共享一个进程，以减少内存使用。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-进程生命周期管理>2.5 进程生命周期管理<a href=#25-进程生命周期管理 class=hash-link aria-label="2.5 进程生命周期管理的直接链接" title="2.5 进程生命周期管理的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=251-进程的创建与销毁>2.5.1 进程的创建与销毁<a href=#251-进程的创建与销毁 class=hash-link aria-label="2.5.1 进程的创建与销毁的直接链接" title="2.5.1 进程的创建与销毁的直接链接" translate=no>​</a></h3>
+<p>渲染进程的创建时机是在导航开始时。当用户在地址栏输入 URL 或点击链接时，Browser 进程会检查目标 URL 的站点，然后决定是否创建新的渲染进程或复用现有的。</p>
+<p>渲染进程创建流程：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">导航 → Browser 判断站点 → 是否有同站点可用进程？</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    ┌─── 是 ──┤── 否 ───┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    │                    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              复用现有进程            创建新进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    │                    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    └──── 导航到目标 URL ──┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                        渲染进程加载页面</span><br/></div></code></pre></div></div>
+<p>进程销毁的时机包括：用户关闭标签页、导航到不同站点的页面、以及系统内存压力下的回收。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=252-内存压力下的进程回收>2.5.2 内存压力下的进程回收<a href=#252-内存压力下的进程回收 class=hash-link aria-label="2.5.2 内存压力下的进程回收的直接链接" title="2.5.2 内存压力下的进程回收的直接链接" translate=no>​</a></h3>
+<p>Chrome 有一个「标签页丢弃」（Tab Discarding）机制。当系统内存不足时，Chrome 会自动丢弃（Discard）一些不活跃的标签页，释放它们占用的渲染进程内存。</p>
+<p>被丢弃的标签页在标签栏仍然可见，但当用户切换到它时，Chrome 会重新创建渲染进程并重新加载页面。</p>
+<p>丢弃优先级从低到高：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>优先级<th>标签页类型<th>被丢弃概率<tbody><tr><td>1<td>后台标签页（有未保存的表单）<td>低<tr><td>2<td>后台标签页（最近活跃过）<td>中<tr><td>3<td>后台标签页（长时间未活跃）<td>高<tr><td>4<td>被挂起的标签页<td>最高</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=253-渲染进程的挂起与恢复>2.5.3 渲染进程的挂起与恢复<a href=#253-渲染进程的挂起与恢复 class=hash-link aria-label="2.5.3 渲染进程的挂起与恢复的直接链接" title="2.5.3 渲染进程的挂起与恢复的直接链接" translate=no>​</a></h3>
+<p>Chrome 还有一个「渲染进程挂起」（Renderer Suspension）机制。对于长时间不活跃的后台标签页，Chrome 会降低其执行频率，甚至完全挂起 JavaScript 执行。</p>
+<p>挂起机制的策略：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>状态<th>JavaScript 执行<th>定时器<th>网络请求<tbody><tr><td>活跃（前台）<td>正常<td>正常<td>正常<tr><td>后台（短期）<td>正常<td>限频（最低 1 次/秒）<td>正常<tr><td>后台（长期）<td>挂起<td>暂停<td>暂停<tr><td>被丢弃<td>进程已销毁<td>N/A<td>N/A</table>
+<p>这种策略可以显著减少后台标签页的资源消耗。对于需要持续运行的任务（如音乐播放、实时通信），页面可以通过 Page Visibility API 和 Wake Lock API 来避免被挂起。</p>
+<blockquote>
+<p>进程管理就像城市交通调度：高峰期要多开公交线路（创建进程），空闲期要减少班次（挂起进程），拥堵时要砍掉一些线路（丢弃标签页）。目标是在有限的资源下，让用户体验最大化。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=26-进程间内存共享机制>2.6 进程间内存共享机制<a href=#26-进程间内存共享机制 class=hash-link aria-label="2.6 进程间内存共享机制的直接链接" title="2.6 进程间内存共享机制的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=261-sharedmemory-的设计与使用>2.6.1 SharedMemory 的设计与使用<a href=#261-sharedmemory-的设计与使用 class=hash-link aria-label="2.6.1 SharedMemory 的设计与使用的直接链接" title="2.6.1 SharedMemory 的设计与使用的直接链接" translate=no>​</a></h3>
+<p>Chrome 的多进程架构中，进程间共享数据是一个核心需求。Mojo 提供了 SharedBuffer 接口来实现共享内存，但在更底层，Chrome 还有自己的 SharedMemory 抽象层。</p>
+<p>SharedMemory 的核心思想是：让多个进程映射同一块物理内存到各自的虚拟地址空间。一个进程写入的数据，其他进程可以立即读到，无需任何数据拷贝。这在处理大型数据（如 GPU 纹理、位图、音频缓冲区）时极为关键。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">SharedMemory 工作原理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程 A 的虚拟地址空间        物理内存页        进程 B 的虚拟地址空间</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌───────────┐              ┌──────────┐              ┌───────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 0x7f0000  │──────────────│  Page X   │──────────────│ 0x5a2000  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ (映射)    │              │ (实际数据) │              │ (映射)    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└───────────┘              └──────────┘              └───────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程 A 写入: 0x7f0000 = 42</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程 B 读取: *0x5a2000 = 42 (立即可见)</span><br/></div></code></pre></div></div>
+<p>SharedMemory 在 Chrome 中的典型使用场景包括：GPU 纹理传递（渲染进程将光栅化结果写入共享内存，GPU 进程读取并上传为纹理）、位图共享（渲染进程之间的截图传输）、音频流传输（渲染进程与音频服务之间的音频缓冲区）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>共享场景<th>数据量<th>频率<th>共享方式<tbody><tr><td>GPU 纹理<td>数百 KB - 数 MB<td>每帧<td>SharedMemory + Mojo 通知<tr><td>位图截图<td>数 MB<td>偶发<td>SharedMemory 一次性创建<tr><td>音频缓冲<td>数 KB<td>持续<td>Ring Buffer in SharedMemory<tr><td>文件描述符<td>4 字节<td>偶发<td>Platform-specific FD passing</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=262-浏览器进程的-ui-线程与-io-线程模型>2.6.2 浏览器进程的 UI 线程与 IO 线程模型<a href=#262-浏览器进程的-ui-线程与-io-线程模型 class=hash-link aria-label="2.6.2 浏览器进程的 UI 线程与 IO 线程模型的直接链接" title="2.6.2 浏览器进程的 UI 线程与 IO 线程模型的直接链接" translate=no>​</a></h3>
+<p>Browser 进程虽然不负责 Web 内容渲染，但它的线程模型同样精密。UI 线程和 IO 线程是两个最关键的线程，它们的分工决定了浏览器界面的响应速度。</p>
+<p>UI 线程负责所有用户可见的界面操作：地址栏输入、标签页切换、工具栏按钮点击、权限弹窗显示。UI 线程必须是响应迅速的，任何超过 16ms 的阻塞都会导致界面掉帧。</p>
+<p>IO 线程是 Browser 进程的通信枢纽。所有来自渲染进程、GPU 进程、网络服务的 IPC 消息都在 IO 线程上接收和分发。IO 线程的设计原则是「不做任何阻塞操作」——它只负责消息路由，实际的业务处理分发给其他线程或异步任务。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Browser 进程消息处理流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">IO 线程                    UI 线程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────┐              ┌──────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 接收 IPC  │              │ 用户界面  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 消息      │              │ 绘制     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│           │              │           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 路由消息  │─────────────►│ 处理需要  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 到目标    │  PostTask    │ UI 更新   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 线程      │              │ 的消息    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────┘              └──────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     │                          ▲</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     │ PostTask                 │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">     ▼                          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌──────────┐              ┌──────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ File 线程 │              │ Cache 线程│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│ 文件 I/O  │              │ 缓存操作  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└──────────┘              └──────────┘</span><br/></div></code></pre></div></div>
+<p>这种分离设计确保了 IPC 消息的处理不会阻塞 UI 线程，UI 绘制也不会阻塞 IPC 通信。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=263-渲染进程的线程架构详解>2.6.3 渲染进程的线程架构详解<a href=#263-渲染进程的线程架构详解 class=hash-link aria-label="2.6.3 渲染进程的线程架构详解的直接链接" title="2.6.3 渲染进程的线程架构详解的直接链接" translate=no>​</a></h3>
+<p>渲染进程的线程模型比 Browser 进程更复杂，因为它需要处理 JavaScript 执行、DOM 操作、样式计算、布局、绘制、合成、IPC 通信等多种任务。</p>
+<p>主线程（Main Thread）是渲染进程中最繁忙的线程。JavaScript 执行、DOM 操作、样式计算（Style Recalc）、布局计算（Layout）、绘制记录生成（Paint）几乎都在主线程上完成。这意味着 JavaScript 执行会阻塞渲染，渲染也会阻塞 JavaScript 执行。理解这一点是前端性能优化的基础。</p>
+<p>合成线程（Compositor Thread）独立于主线程运行，负责接收已绘制的内容并合成到屏幕上。当页面滚动时，如果合成层已经准备好，合成线程可以直接处理滚动，不需要打扰主线程。这就是为什么 CSS transform 动画能做到 60fps——动画完全在合成线程上处理。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">渲染进程完整线程模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│              Renderer 进程                     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌────────────────────────────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │         Main Thread (主线程)             │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  ┌──────────┐  ┌──────────┐            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ V8 引擎   │  │ Blink    │            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │ JS 执行   │  │ DOM/CSS  │            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │           │  │ Layout  │            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  │           │  │ Paint   │            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │  └──────────┘  └──────────┘            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └────────────────────────────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────────────┐  ┌──────────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Compositor   │  │ Compositor Raster    │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Thread       │  │ Threads (多个)        │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 合成 + 滚动   │  │ 光栅化工作线程        │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────────────┘  └──────────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────────────┐  ┌──────────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ IO Thread    │  │ Worker Threads       │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Mojo IPC     │  │ Web Worker / Worklet │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ 网络请求转发  │  │ 后台计算              │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────────────┘  └──────────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│                                               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  ┌──────────────┐  ┌──────────────────────┐   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Audio Thread │  │ Database Thread      │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  │ Web Audio    │  │ IndexedDB            │   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  └──────────────┘  └──────────────────────┘   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>Web Worker 线程用于执行 Web Worker 中的 JavaScript 代码，独立于主线程。Worklet 线程用于执行 AudioWorklet、PaintWorklet 等特殊工作器。每个 Worker 都有自己的 V8 实例和事件循环。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=264-进程崩溃恢复机制>2.6.4 进程崩溃恢复机制<a href=#264-进程崩溃恢复机制 class=hash-link aria-label="2.6.4 进程崩溃恢复机制的直接链接" title="2.6.4 进程崩溃恢复机制的直接链接" translate=no>​</a></h3>
+<p>Chrome 的多进程架构带来了一个天然优势：进程崩溃可以被隔离和恢复。当一个渲染进程崩溃时，Browser 进程会检测到并启动恢复流程。</p>
+<p>崩溃检测通过进程监控机制实现。Browser 进程的 Process Launcher 线程监控所有子进程的状态。当子进程异常退出时，操作系统会通知 Browser 进程（通过 SIGCHLD 信号或 WaitForSingleObject 返回）。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">渲染进程崩溃恢复流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 渲染进程崩溃（段错误/OOM/被杀）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. Browser 进程检测到子进程退出</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  Process Launcher 线程收到通知</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 检查崩溃的标签页</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  记录当前 URL 和导航历史</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  显示"Aw, Snap!"错误页面</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">4. 用户点击"重新加载"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  Browser 进程创建新渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  将 URL 和会话历史传递给新进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">5. 新渲染进程加载页面</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  恢复到崩溃前的 URL</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │  （但页面状态如表单内容无法恢复）</span><br/></div></code></pre></div></div>
+<p>崩溃报告通过 Crashpad（Chrome 的崩溃报告系统）自动收集。Crashpad 在子进程崩溃时生成 minidump 文件，包含崩溃时的调用栈和寄存器状态。这些报告在用户授权后上传到 Google 的服务器，用于分析崩溃原因并修复。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=265-chrome-on-androidios-的进程模型差异>2.6.5 Chrome on Android/iOS 的进程模型差异<a href=#265-chrome-on-androidios-的进程模型差异 class=hash-link aria-label="2.6.5 Chrome on Android/iOS 的进程模型差异的直接链接" title="2.6.5 Chrome on Android/iOS 的进程模型差异的直接链接" translate=no>​</a></h3>
+<p>Chrome 的多进程架构在不同平台上有不同的实现方式，主要受限于移动设备的资源约束和平台限制。</p>
+<p>在 Android 上，Chrome 使用与桌面版类似的多进程架构，但做了大量优化以适应移动设备的内存限制。Android 版 Chrome 的进程上限更低，默认使用 process-per-site 策略（而非桌面版的 process-per-site-instance）。Android 还使用了 Partitions 机制来隔离不同站点的存储。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Android Chrome 进程模型</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Browser 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Renderer 进程 A (site: example.com)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   ├─ 标签页 1 (example.com)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 标签页 2 (example.com)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ Renderer 进程 B (site: other.com)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  │   └─ 标签页 3 (other.com)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ├─ GPU 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └─ Network Service 进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">进程上限：根据设备内存动态调整</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  &lt; 2GB RAM: ~10 个进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2-4GB RAM: ~20 个进程</span><br/></div></code></pre></div></div>
+<p>在 iOS 上，情况完全不同。Apple 强制要求所有浏览器使用 WebKit 引擎和 Nitro JavaScript 引擎。Chrome on iOS 本质上是 WebKit 的一个壳，不能使用 Blink 和 V8。这意味着 Chrome on iOS 的多进程架构受限于 WebKit2 的多进程模型（Web 进程 + UI 进程），而非 Chrome 自己的多进程架构。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>渲染引擎<th>JS 引擎<th>进程模型<th>站点隔离<tbody><tr><td>Windows/macOS/Linux<td>Blink<td>V8<td>process-per-site-instance<td>完整支持<tr><td>Android<td>Blink<td>V8<td>process-per-site（低内存）<td>部分支持<tr><td>iOS<td>WebKit<td>Nitro<td>WebKit2 模型<td>受限于 WebKit</table>
+<p>在 Android 低内存设备上，Chrome 还使用了一种叫做「渲染进程合并」的技术。当内存压力较大时，多个站点的标签页可能被合并到同一个渲染进程中，牺牲部分隔离性来换取内存节省。这种策略是动态的——当内存压力解除时，Chrome 会重新拆分进程。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-渲染进程的线程架构>2.5 渲染进程的线程架构<a href=#25-渲染进程的线程架构 class=hash-link aria-label="2.5 渲染进程的线程架构的直接链接" title="2.5 渲染进程的线程架构的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=251-四个核心线程>2.5.1 四个核心线程<a href=#251-四个核心线程 class=hash-link aria-label="2.5.1 四个核心线程的直接链接" title="2.5.1 四个核心线程的直接链接" translate=no>​</a></h3>
+<p>渲染进程内部有四个核心线程，各司其职。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">渲染进程线程架构</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─ Main Thread（主线程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → JavaScript 执行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → DOM 操作</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 样式计算、布局、绘制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 事件处理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─ Compositor Thread（合成线程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 接收滚动输入</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 合成层管理</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → Tile 调度</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 独立于主线程运行</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─ IO Thread（IO 线程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 处理 IPC 消息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 网络请求</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   → 计时器</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─ Worker Threads（Worker 线程）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    → Web Worker</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    → Service Worker</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    → Worklet</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>线程<th>职责<th>可被阻塞<tbody><tr><td>Main<td>JS + 渲染<td>是（JS 阻塞）<tr><td>Compositor<td>合成 + 滚动<td>否（独立运行）<tr><td>IO<td>IPC + 网络<td>否<tr><td>Worker<td>后台计算<td>是（不影响主线程）</table>
+<blockquote>
+<p>主线程被 JavaScript 阻塞时，合成线程仍然可以处理滚动。这就是为什么长任务执行期间页面仍然可以滚动（但无法响应点击等交互）。理解这个架构是渲染性能优化的基础。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=26-chrome-on-androidios-进程模型差异>2.6 Chrome on Android/iOS 进程模型差异<a href=#26-chrome-on-androidios-进程模型差异 class=hash-link aria-label="2.6 Chrome on Android/iOS 进程模型差异的直接链接" title="2.6 Chrome on Android/iOS 进程模型差异的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=261-android-进程模型>2.6.1 Android 进程模型<a href=#261-android-进程模型 class=hash-link aria-label="2.6.1 Android 进程模型的直接链接" title="2.6.1 Android 进程模型的直接链接" translate=no>​</a></h3>
+<p>Android Chrome 与桌面版共享大部分代码，但因内存限制采用不同的进程策略。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Android Chrome 进程策略</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 渲染进程优先级</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 前台标签: HIGH</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 后台标签: LOW</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 后台 5 分钟后: KILLED</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 内存压力响应</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → MEMORY_PRESSURE_MODERATE: 释放缓存</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → MEMORY_PRESSURE_CRITICAL: 合并渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 进程数限制</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 低内存设备: 最多 2-3 个渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 高内存设备: 最多 5-8 个渲染进程</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=262-ios-进程模型>2.6.2 iOS 进程模型<a href=#262-ios-进程模型 class=hash-link aria-label="2.6.2 iOS 进程模型的直接链接" title="2.6.2 iOS 进程模型的直接链接" translate=no>​</a></h3>
+<p>iOS 上 Chrome 使用 WKWebView（WebKit 引擎），因为 Apple 不允许第三方浏览器引擎。Chrome on iOS 的架构与桌面完全不同。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>平台<th>引擎<th>进程模型<tbody><tr><td>Desktop<td>Blink + V8<td>多进程<tr><td>Android<td>Blink + V8<td>多进程（受限）<tr><td>iOS<td>WebKit (WKWebView)<td>单进程（iOS 限制）</table>
+<blockquote>
+<p>iOS 的限制意味着 Chrome on iOS 实际上是套了 Chrome UI 的 Safari。所有渲染和 JavaScript 执行都由系统提供的 WKWebView 完成。这也是为什么 Chrome on iOS 的某些行为与桌面版不同。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=27-进程崩溃恢复>2.7 进程崩溃恢复<a href=#27-进程崩溃恢复 class=hash-link aria-label="2.7 进程崩溃恢复的直接链接" title="2.7 进程崩溃恢复的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=271-crashpad-崩溃报告系统>2.7.1 Crashpad 崩溃报告系统<a href=#271-crashpad-崩溃报告系统 class=hash-link aria-label="2.7.1 Crashpad 崩溃报告系统的直接链接" title="2.7.1 Crashpad 崩溃报告系统的直接链接" translate=no>​</a></h3>
+<p>Chrome 使用 Crashpad（Crash Reporter）收集崩溃信息并生成崩溃报告。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">崩溃恢复流程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">1. 渲染进程崩溃</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → Crashpad 捕获崩溃信息</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 生成 minidump（小型崩溃转储）</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 上传到 Crash Server</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">2. 浏览器进程检测到崩溃</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 显示「Aw, Snap!」页面</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 记录崩溃 URL</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">3. 恢复</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 用户点击「重新加载」</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 创建新渲染进程</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   → 重新加载页面</span><br/></div></code></pre></div></div>
+<blockquote>
+<p>Crashpad 是 Breakpad 的继任者，支持 macOS、Windows、Linux 和 Android。崩溃报告包含调用栈、寄存器状态和内存信息，帮助开发团队定位和修复崩溃。</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=本章核心知识总结>本章核心知识总结<a href=#本章核心知识总结 class=hash-link aria-label=本章核心知识总结的直接链接 title=本章核心知识总结的直接链接 translate=no>​</a></h2>
+<p>Chrome 的多进程架构是整个浏览器工作的基础。本章我们拆解了 7 种进程的职责、Mojo IPC 通信框架、站点隔离的安全模型、进程模型策略和生命周期管理。</p>
+<p>核心架构对比总结：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>架构维度<th>传统单进程<th>Chrome 多进程<tbody><tr><td>进程数量<td>1<td>N（Browser + N*Renderer + GPU + Network + ...）<tr><td>标签页隔离<td>无<td>每个站点实例独立进程<tr><td>崩溃影响<td>全局崩溃<td>仅影响单个标签页<tr><td>安全隔离<td>无内存隔离<td>进程级内存隔离 + 沙箱<tr><td>IPC 机制<td>不需要<td>Mojo（MessagePipe + DataPipe + SharedBuffer）<tr><td>内存开销<td>低<td>高（多进程基础开销）<tr><td>进程管理<td>不需要<td>创建/销毁/挂起/丢弃</table>
+<p>觉得有用？收藏起来，下次想回顾 Chrome 进程架构的时候直接翻出来看。</p>
+<p>你有没有遇到过 Chrome 标签页崩溃但其他标签页正常的情况？评论区说说你的经历。</p>
+<p>关注怕浪猫，下期我们进入 V8 引擎的世界，讲清楚 JavaScript 到底是怎么被解析和执行的。系列进度 2/24，这是《深入理解 Chrome 浏览器工作原理》系列的第二篇。</p>
+<p>下期预告：第 3 章「V8 引擎概览」。我们会拆解 V8 的执行管道（Execution Pipeline），从源代码到机器码的完整流程：Scanner、Parser、Ignition、Sparkplug、Maglev、TurboFan，每一层都干什么、怎么协作。还会讲 V8 的内存管理和垃圾回收（GC，Garbage Collection）机制。怕浪猫下期见。</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/docs/frontend-engineering/browser-work/chapter_2.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_1><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>第1章 浏览器演进史与 Chrome 的诞生</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/konwledge-docs/docs/frontend-engineering/browser-work/chapter_3><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>第3章 V8 引擎概览</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#21-进程模型总览 class="table-of-contents__link toc-highlight">2.1 进程模型总览</a><ul><li><a href=#211-浏览器主进程browser-process class="table-of-contents__link toc-highlight">2.1.1 浏览器主进程（Browser Process）</a><li><a href=#212-渲染进程renderer-process class="table-of-contents__link toc-highlight">2.1.2 渲染进程（Renderer Process）</a><li><a href=#213-gpu-进程gpu-process class="table-of-contents__link toc-highlight">2.1.3 GPU 进程（GPU Process）</a><li><a href=#214-网络服务进程network-service class="table-of-contents__link toc-highlight">2.1.4 网络服务进程（Network Service）</a><li><a href=#215-其他进程 class="table-of-contents__link toc-highlight">2.1.5 其他进程</a></ul><li><a href=#22-进程间通信ipc class="table-of-contents__link toc-highlight">2.2 进程间通信（IPC）</a><ul><li><a href=#221-mojo-ipc-框架 class="table-of-contents__link toc-highlight">2.2.1 Mojo IPC 框架</a><li><a href=#222-chromium-中的管道通信 class="table-of-contents__link toc-highlight">2.2.2 Chromium 中的管道通信</a><li><a href=#223-共享内存与消息传递 class="table-of-contents__link toc-highlight">2.2.3 共享内存与消息传递</a></ul><li><a href=#23-站点隔离site-isolation class="table-of-contents__link toc-highlight">2.3 站点隔离（Site Isolation）</a><ul><li><a href=#231-站点隔离的动机与安全收益 class="table-of-contents__link toc-highlight">2.3.1 站点隔离的动机与安全收益</a><li><a href=#232-跨站点-iframe-的进程分配 class="table-of-contents__link toc-highlight">2.3.2 跨站点 iframe 的进程分配</a><li><a href=#233-coopcoep-与进程隔离的配合 class="table-of-contents__link toc-highlight">2.3.3 COOP/COEP 与进程隔离的配合</a></ul><li><a href=#24-进程模型策略 class="table-of-contents__link toc-highlight">2.4 进程模型策略</a><li><a href=#25-进程生命周期管理 class="table-of-contents__link toc-highlight">2.5 进程生命周期管理</a><ul><li><a href=#251-进程的创建与销毁 class="table-of-contents__link toc-highlight">2.5.1 进程的创建与销毁</a><li><a href=#252-内存压力下的进程回收 class="table-of-contents__link toc-highlight">2.5.2 内存压力下的进程回收</a><li><a href=#253-渲染进程的挂起与恢复 class="table-of-contents__link toc-highlight">2.5.3 渲染进程的挂起与恢复</a></ul><li><a href=#26-进程间内存共享机制 class="table-of-contents__link toc-highlight">2.6 进程间内存共享机制</a><ul><li><a href=#261-sharedmemory-的设计与使用 class="table-of-contents__link toc-highlight">2.6.1 SharedMemory 的设计与使用</a><li><a href=#262-浏览器进程的-ui-线程与-io-线程模型 class="table-of-contents__link toc-highlight">2.6.2 浏览器进程的 UI 线程与 IO 线程模型</a><li><a href=#263-渲染进程的线程架构详解 class="table-of-contents__link toc-highlight">2.6.3 渲染进程的线程架构详解</a><li><a href=#264-进程崩溃恢复机制 class="table-of-contents__link toc-highlight">2.6.4 进程崩溃恢复机制</a><li><a href=#265-chrome-on-androidios-的进程模型差异 class="table-of-contents__link toc-highlight">2.6.5 Chrome on Android/iOS 的进程模型差异</a></ul><li><a href=#25-渲染进程的线程架构 class="table-of-contents__link toc-highlight">2.5 渲染进程的线程架构</a><ul><li><a href=#251-四个核心线程 class="table-of-contents__link toc-highlight">2.5.1 四个核心线程</a></ul><li><a href=#26-chrome-on-androidios-进程模型差异 class="table-of-contents__link toc-highlight">2.6 Chrome on Android/iOS 进程模型差异</a><ul><li><a href=#261-android-进程模型 class="table-of-contents__link toc-highlight">2.6.1 Android 进程模型</a><li><a href=#262-ios-进程模型 class="table-of-contents__link toc-highlight">2.6.2 iOS 进程模型</a></ul><li><a href=#27-进程崩溃恢复 class="table-of-contents__link toc-highlight">2.7 进程崩溃恢复</a><ul><li><a href=#271-crashpad-崩溃报告系统 class="table-of-contents__link toc-highlight">2.7.1 Crashpad 崩溃报告系统</a></ul><li><a href=#本章核心知识总结 class="table-of-contents__link toc-highlight">本章核心知识总结</a></ul></div></div></div><div class=feedbackSection_cJvj><div class=container><div class=feedbackInner_akow><span class=feedbackText_pqci>这篇文档对你有帮助吗？</span><div class=feedbackButtons_X7j4><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues/new target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>📝 提交反馈</a><a href=https://github.com/Jlnvv-tom/konwledge-docs/edit/master/ target=_blank rel="noopener noreferrer" class=feedbackBtn_io_e>✏️ 编辑此页</a></div></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>社区</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/issues target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub Issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs/discussions target=_blank rel="noopener noreferrer" class=footer__link-item>讨论区<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>更多</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/Jlnvv-tom/konwledge-docs target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 知识库. Built with Docusaurus.</div></div></div></footer></div></body>
