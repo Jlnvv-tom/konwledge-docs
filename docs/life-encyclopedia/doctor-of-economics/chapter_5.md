@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # 第5章：宏观理论课程精解——从经济增长到DSGE
 
 DSGE模型的一个求解，要写200行MATLAB代码。

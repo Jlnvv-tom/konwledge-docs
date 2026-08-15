@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 里程碑论文精读（下）——从ResNet到GPT时代
 
 Transformer论文刚发表时被拒了，审稿人觉得只是个attention变体。好的论文不一定一开始就被认可。

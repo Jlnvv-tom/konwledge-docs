@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # 第7章：必读经典图书精要——从MWG到Mostly Harmless
 
 读博士不读MWG，等于上大学没翻过教材。

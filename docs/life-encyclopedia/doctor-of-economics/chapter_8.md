@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 第8章：必做里程碑论文精读——从Arrow到Acemoglu
 
 博士资格考试考的不是教材，是论文。
