@@ -1,0 +1,9 @@
+{
+  "label": "DeepSeek Harness",
+  "position": 19,
+  "link": {
+    "type": "generated-index",
+    "description": "DeepSeek AI 开源的插件化 Agent Harness：架构解析、核心机制与扩展指南"
+  },
+  "collapsed": true
+}
